@@ -1,0 +1,108 @@
+/**
+ * [INPUT]: 依赖 Tailwind CSS 4 与 docs/archive/07-17-design-system.md 的设计基线
+ * [OUTPUT]: 对外提供全站 reset、design tokens、主题映射与共享组件类
+ * [POS]: src/app 的全局样式真相源，被两套根布局共同加载
+ * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
+ */
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-elevated: var(--bg-elevated);
+  --color-subtle: var(--bg-subtle);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-text: var(--accent-text);
+  --color-warn: var(--warn);
+  --font-serif: var(--serif);
+  --font-sans: var(--sans);
+  --font-mono: var(--mono);
+}
+
+/* ============================== Design Tokens ============================== */
+:root {
+  --bg:            #FAF8F4;
+  --bg-elevated:   #FFFFFF;
+  --bg-subtle:     #F2EFE8;
+
+  --ink:           #1A1814;
+  --ink-soft:      #5A554C;
+  --ink-faint:     #8E8678;
+
+  --hairline:         #E4DFD4;
+  --hairline-strong:  #C8C2B3;
+
+  --accent:      oklch(0.45 0.08 250);
+  --accent-soft: oklch(0.92 0.03 250);
+  --accent-text: oklch(0.35 0.10 250);
+  --warn:        oklch(0.55 0.12 30);
+
+  --serif: "Newsreader", Georgia, serif;
+  --sans:  "Inter", -apple-system, sans-serif;
+  --mono:  "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* CJK 页面衬线回落宋体系，等宽保持拉丁字体渲染数字 */
+[lang="zh-CN"] { --serif: "Newsreader", Georgia, "Songti SC", "Noto Serif SC", serif; }
+[lang="ja"]    { --serif: "Newsreader", Georgia, "Hiragino Mincho ProN", "Noto Serif JP", serif; }
+[lang="ko"]    { --serif: "Newsreader", Georgia, "Apple Myungjo", "Noto Serif KR", serif; }
+
+/* ============================== Components ============================== */
+@layer components {
+  /* Section 眉标：顶部发丝线 + mono 大写小字 */
+  .section-label {
+    @apply border-t border-hairline pt-6 mb-3.5 font-mono text-[10px] font-medium uppercase tracking-[.12em] text-ink-faint;
+  }
+
+  /* Hero 指标卡大数字：衬线 + 强调蓝 + tnum */
+  .stat-value {
+    @apply font-serif text-4xl font-medium leading-none text-accent [font-feature-settings:'tnum'];
+  }
+
+  /* 重点引述框：左侧 3px 强调线是灵魂 */
+  .tldr-box {
+    @apply rounded border border-hairline bg-elevated py-[18px] pl-6 pr-[22px] font-serif text-[15px] leading-[1.6];
+    border-left: 3px solid var(--accent);
+  }
+  .tldr-warn { border-left-color: var(--warn); }
+
+  .consensus-list li {
+    @apply text-[13.5px] text-ink-soft;
+  }
+  .consensus-list li + li {
+    @apply mt-2 border-t border-hairline pt-2;
+  }
+
+  /* 按钮：全站统一 32px 次级按钮 */
+  .btn {
+    @apply inline-flex h-8 items-center gap-1.5 rounded-md border border-hairline bg-elevated px-3 font-mono text-[11px] font-medium text-ink-soft transition-colors hover:border-hairline-strong hover:bg-subtle;
+  }
+
+  /* 数据源徽章 */
+  .tag-chip {
+    @apply inline-flex items-center gap-[5px] rounded border border-hairline bg-elevated px-[9px] py-[3px] font-mono text-[11px] font-medium text-ink-soft transition hover:border-hairline-strong hover:bg-subtle;
+  }
+  .banner-tag {
+    @apply rounded-[3px] bg-accent px-1.5 py-0.5 font-mono text-[10px] font-semibold tracking-[.05em] text-white;
+  }
+  .metric-pill {
+    @apply inline-flex gap-[5px] rounded border border-hairline bg-elevated px-2 py-[3px] font-mono text-[11px] lowercase text-ink-soft;
+  }
+
+  /* 跑分表：数字列 mono + tnum 右对齐；Kimi K3 列 accent-soft 高亮 */
+  .bench-num,
+  .k3-cell {
+    @apply px-3 py-2.5 text-right align-top font-mono text-[12px] text-ink-soft [font-feature-settings:'tnum'];
+  }
+  .k3-head { background: var(--accent-soft); color: var(--accent-text); }
+  .k3-cell {
+    @apply font-semibold;
+    background: var(--accent-soft);
+    color: var(--accent-text);
+  }
+}
