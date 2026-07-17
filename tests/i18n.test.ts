@@ -7,7 +7,7 @@ describe("i18n fallback", () => {
   it("只覆盖指定字段，其余字段回落英文母本", () => {
     const dictionary = mergeDictionary({ header: { language: "语言" } });
     expect(dictionary.header.language).toBe("语言");
-    expect(dictionary.header.tagline).toBe("AI model scores and real-world reviews, together");
+    expect(dictionary.footer.tagline).toBe("AI model scores and real-world reviews, together");
     expect(dictionary.footer.sources).toBe("Data sources");
   });
 

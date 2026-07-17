@@ -12,7 +12,6 @@ const dictionary = {
     "description": "Moonshot AI Kimi K3 的官方跑分、竞技场排名与人工精选社区评价——每个数字都可回溯到数据源。"
   },
   "header": {
-    "tagline": "AI 模型评分与真实评价，一站看懂",
     "language": "语言"
   },
   "hero": {
@@ -50,6 +49,7 @@ const dictionary = {
     "readOriginal": "阅读原文"
   },
   "footer": {
+    "tagline": "AI 模型评分与真实评价，一站看懂",
     "sources": "数据来源",
     "updated": "数据核对于",
     "disclaimer": "AIEvalIndex 汇总公开跑分数据与社区评价，每个数字均可回溯到数据源。",

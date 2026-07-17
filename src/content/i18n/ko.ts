@@ -12,7 +12,6 @@ const dictionary = {
     "description": "Moonshot AI Kimi K3의 공식 벤치마크, 아레나 순위, 엄선된 커뮤니티 리뷰 — 모든 수치는 출처로 연결됩니다."
   },
   "header": {
-    "tagline": "AI 모델 점수와 실제 사용 후기를 한눈에",
     "language": "언어"
   },
   "hero": {
@@ -50,6 +49,7 @@ const dictionary = {
     "readOriginal": "원문 읽기"
   },
   "footer": {
+    "tagline": "AI 모델 점수와 실제 사용 후기를 한눈에",
     "sources": "데이터 출처",
     "updated": "데이터 확인일",
     "disclaimer": "AIEvalIndex는 공개 벤치마크 데이터와 커뮤니티 리뷰를 모읍니다. 모든 수치는 출처로 연결됩니다.",

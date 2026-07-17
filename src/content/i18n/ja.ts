@@ -12,7 +12,6 @@ const dictionary = {
     "description": "Moonshot AI「Kimi K3」の公式ベンチマーク、アリーナ順位、厳選コミュニティレビュー——すべての数値は出典にリンク。"
   },
   "header": {
-    "tagline": "AIモデル評価と実利用レビューを、ひとつに",
     "language": "言語"
   },
   "hero": {
@@ -50,6 +49,7 @@ const dictionary = {
     "readOriginal": "原文を読む"
   },
   "footer": {
+    "tagline": "AIモデル評価と実利用レビューを、ひとつに",
     "sources": "データ出典",
     "updated": "データ確認日",
     "disclaimer": "AIEvalIndex は公開ベンチマークとコミュニティレビューを集約。すべての数値は出典にリンクしています。",

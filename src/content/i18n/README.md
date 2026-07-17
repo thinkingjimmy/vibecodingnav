@@ -12,6 +12,6 @@ zh-CN.ts: 简体中文覆盖字典
 
 所有覆盖字典满足 `DeepPartial<Dictionary>`；合并发生在 `src/lib/i18n.ts`。
 
-Header `tagline` 以英文语义为基准做母语化营销转译，不逐字直译；文案须在 390px Header 中最多占两行。
+Footer `tagline` 以英文语义为基准做母语化营销转译，不逐字直译。
 
 [PROTOCOL]: 变更时更新此头部，然后检查 README.md

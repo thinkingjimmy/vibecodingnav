@@ -12,7 +12,6 @@ const dictionary = {
     "description": "Benchmarks oficiales, rankings de arena y reseñas comunitarias seleccionadas de Kimi K3 de Moonshot AI — cada cifra enlaza a su fuente."
   },
   "header": {
-    "tagline": "Puntuaciones de modelos de IA y reseñas reales, en un solo lugar",
     "language": "Idioma"
   },
   "hero": {
@@ -50,6 +49,7 @@ const dictionary = {
     "readOriginal": "Leer original"
   },
   "footer": {
+    "tagline": "Puntuaciones de modelos de IA y reseñas reales, en un solo lugar",
     "sources": "Fuentes de datos",
     "updated": "Datos verificados",
     "disclaimer": "AIEvalIndex agrega datos públicos de benchmarks y reseñas comunitarias. Cada cifra enlaza a su fuente.",

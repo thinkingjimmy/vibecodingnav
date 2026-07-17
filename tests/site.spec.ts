@@ -116,6 +116,22 @@ test("Header 与浏览器标签共享品牌图标", async ({ page }) => {
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/aievalindex-mark.png");
 });
 
+test("Header 置顶、背景一致且品牌副标题归入 Footer", async ({ page }) => {
+  await page.goto("/en/");
+  const tagline = "AI model scores and real-world reviews, together";
+  const header = page.locator("header");
+  const [headerBackground, bodyBackground] = await Promise.all([
+    header.evaluate((element) => getComputedStyle(element).backgroundColor),
+    page.locator("body").evaluate((element) => getComputedStyle(element).backgroundColor),
+  ]);
+
+  await expect(header).toHaveCSS("position", "sticky");
+  await expect(header).toHaveCSS("top", "0px");
+  expect(headerBackground).toBe(bodyBackground);
+  await expect(header.getByText(tagline, { exact: true })).toHaveCount(0);
+  await expect(page.locator("footer").getByText(tagline, { exact: true })).toBeVisible();
+});
+
 test("移动端仅跑分容器横向滚动", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/en/");

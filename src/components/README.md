@@ -4,8 +4,8 @@
 
 成员清单
 benchmark-table.tsx: 跑分锚点对照表与来源回链
-footer.tsx: 数据源、免责声明、更新时间与翻译说明
-header.tsx: 共享汇聚棱镜标记、编辑部风格字标、本地化营销副标题与地球图标语言菜单容器
+footer.tsx: 本地化品牌副标题、数据源、免责声明、更新时间与翻译说明
+header.tsx: 紧凑置顶的共享汇聚棱镜标记、编辑部风格字标与地球图标语言菜单容器
 hero.tsx: 模型标题、元数据与四张指标卡
 language-select.tsx: Phosphor 地球触发器、国旗/原生语言单选菜单、客户端语言记忆和静态路由切换
 locale-redirect.tsx: 根路径客户端语言检测与 replace 跳转

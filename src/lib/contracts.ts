@@ -15,7 +15,7 @@ export type LocalizedText = { en: string } & Partial<Record<Exclude<Locale, "en"
 
 export interface Dictionary {
   meta: { title: string; description: string };
-  header: { tagline: string; language: string };
+  header: { language: string };
   hero: {
     by: string;
     released: string;
@@ -45,7 +45,7 @@ export interface Dictionary {
     consensusCons: string;
     readOriginal: string;
   };
-  footer: { sources: string; updated: string; disclaimer: string; aiNote: string };
+  footer: { tagline: string; sources: string; updated: string; disclaimer: string; aiNote: string };
 }
 
 export interface ModelEvaluation {
