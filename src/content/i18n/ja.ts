@@ -28,20 +28,21 @@ const dictionary = {
     "modality": "モダリティ"
   },
   "stats": {
-    "intelligence": "Intelligence Index",
-    "intelligenceSub": "中央値 30 比 · Artificial Analysis",
+    "intelligence": "知能指数",
+    "intelligenceSub": "82パーセンタイル · 中央値30",
     "speed": "出力速度",
-    "speedSub": "tok/s · 中央値 73 未満",
+    "speedSub": "中央値73未満",
     "price": "料金 / 1M",
-    "priceSub": "入力 / 出力 · キャッシュヒット $0.30",
-    "context": "コンテキストウィンドウ",
-    "contextSub": "トークン · A4 約 1,573 ページ"
+    "priceSub": "入力 / 出力 · キャッシュ $0.30",
+    "context": "コンテキスト",
+    "contextSub": "A4 約1,573ページ"
   },
   "bench": {
     "title": "ベンチマーク",
     "versus": "対",
     "anchors": "フロンティア級アンカー",
     "subtitle": "高いほど良い · 行内最高値を太字",
+    "compare": "比較",
     "benchmark": "ベンチマーク",
     "wins": "勝利数"
   },
@@ -54,6 +55,17 @@ const dictionary = {
     "critical": "批判的",
     "takes": "件の評価",
     "sources": "レビュー出典"
+  },
+  "feed": {
+    "title": "コミュニティレビュー",
+    "headlineLead": "フィードから届く",
+    "headlineQualifier": "生の声",
+    "subtitle": "各カードは元のプラットフォームらしさを維持",
+    "positiveLabel": "強み",
+    "negativeLabel": "弱み",
+    "readArticle": "記事を読む",
+    "watchVideo": "動画を見る",
+    "minRead": "分で読めます"
   },
   "footer": {
     "description": "独立した手作業によるフロンティアモデル評価索引。すべての数値から出典を確認できます。",

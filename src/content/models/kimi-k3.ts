@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 src/lib/contracts 的 ModelEvaluation 类型，内容来自 2026-07-17 人工核验快照
- * [OUTPUT]: 对外提供 Kimi K3 模型信息、跑分、评价、社区结论、共识与数据源
+ * [OUTPUT]: 对外提供 Kimi K3 模型信息、带单位/色调的顶部指标、跑分、含正负关键短语的评价原声流元数据、社区结论、共识与数据源
  * [POS]: src/content/models 的首个类型化模型内容模块，被 src/lib/model.ts 消费
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -25,10 +25,10 @@ const evaluation = {
   "pricing": { "input": 3.0, "output": 15.0, "cached": 0.3 },
 
   "performance": {
-    "outputSpeed": "62 tok/s",
+    "outputSpeed": "62 tokens/s",
     "speedRank": "#90 / 189",
     "ttft": "1.99 s",
-    "verbosity": "130M tok"
+    "verbosity": "130M tokens"
   },
 
   "anchors": [
@@ -38,10 +38,10 @@ const evaluation = {
   ],
 
   "heroStats": [
-    { "value": "57", "badge": "#4 / 189", "bar": 88, "labelKey": "intelligence", "subKey": "intelligenceSub" },
-    { "value": "62", "badge": "#90 / 189", "bar": 42, "labelKey": "speed", "subKey": "speedSub" },
-    { "value": "$3/$15", "badge": "#127 / 189", "bar": 15, "labelKey": "price", "subKey": "priceSub" },
-    { "value": "1M", "badge": "top 5%", "bar": 100, "labelKey": "context", "subKey": "contextSub" }
+    { "value": "57", "unit": "idx", "badge": "#4/189", "bar": 82, "tone": "accent", "labelKey": "intelligence", "subKey": "intelligenceSub" },
+    { "value": "62", "unit": "tokens/s", "badge": "#90/189", "bar": 46, "tone": "neutral", "labelKey": "speed", "subKey": "speedSub" },
+    { "value": "$3/$15", "unit": "", "badge": "#127/189", "bar": 33, "tone": "neutral", "labelKey": "price", "subKey": "priceSub" },
+    { "value": "1M", "unit": "tokens", "badge": "top 5%", "bar": 95, "tone": "accent", "labelKey": "context", "subKey": "contextSub" }
   ],
 
   "benchmarks": [
@@ -169,7 +169,31 @@ const evaluation = {
         { "en": "Priciest Chinese-lab model yet ($3 / $15 per 1M tokens)" },
         { "en": "Heavy reasoning-token spend — one SVG ≈ 16.7K tokens ≈ $0.25" },
         { "en": "Single reasoning-effort level; ~85-token hidden system prompt" }
-      ]
+      ],
+      "feed": {
+        "displayName": "Simon Willison",
+        "initials": "SW",
+        "sourceLabel": "simonwillison.net",
+        "readMinutes": 4,
+        "highlights": {
+          "positive": {
+            "en": ["Beats Claude Opus 4.8 and GPT-5.5", "21% fewer output tokens than K2.6"],
+            "zh-CN": ["多项跑分超过 Claude Opus 4.8 与 GPT-5.5", "输出 token 比 K2.6 省 21%"],
+            "ja": ["複数のベンチマークで Claude Opus 4.8 と GPT-5.5 を上回り", "出力トークンは K2.6 比 21 % 減"],
+            "ko": ["여러 벤치마크에서 Claude Opus 4.8과 GPT-5.5를 능가하고", "출력 토큰은 K2.6보다 21% 적다"],
+            "es": ["Supera a Claude Opus 4.8 y GPT-5.5", "un 21% menos de tokens de salida que K2.6"],
+            "fr": ["Il dépasse Claude Opus 4.8 et GPT-5.5", "21 % de tokens de sortie en moins que K2.6"]
+          },
+          "negative": {
+            "en": ["priciest Chinese-lab model yet"],
+            "zh-CN": ["迄今最贵的中国实验室模型"],
+            "ja": ["中国ラボ製で最も高価"],
+            "ko": ["중국 랩 모델 중 가장 비싸고"],
+            "es": ["el modelo más caro de un laboratorio chino hasta la fecha"],
+            "fr": ["le modèle de laboratoire chinois le plus cher à ce jour"]
+          }
+        }
+      }
     },
     {
       "author": "Lentils (@Lentils80)",
@@ -185,7 +209,31 @@ const evaluation = {
         "fr": "K3 testé sur du frontend : TRÈS lent — encore plus lent que Fable, une exécution a pris 35 minutes — mais le résultat est l'une des meilleures sorties jamais vues avec ce prompt, meilleure que celle de nombreux modèles frontière."
       },
       "pros": [],
-      "cons": []
+      "cons": [],
+      "feed": {
+        "displayName": "Lentils",
+        "handle": "@Lentils80",
+        "initials": "LL",
+        "sourceLabel": "X",
+        "highlights": {
+          "positive": {
+            "en": ["one of the best outputs ever seen"],
+            "zh-CN": ["最佳输出之一"],
+            "ja": ["最高クラスの出力"],
+            "ko": ["최고 수준"],
+            "es": ["una de las mejores salidas jamás vistas"],
+            "fr": ["l'une des meilleures sorties jamais vues"]
+          },
+          "negative": {
+            "en": ["VERY slow", "35 minutes"],
+            "zh-CN": ["非常慢", "35 分钟"],
+            "ja": ["非常に遅い", "35 分"],
+            "ko": ["매우 느리다", "35분"],
+            "es": ["MUY lento", "35 minutos"],
+            "fr": ["TRÈS lent", "35 minutes"]
+          }
+        }
+      }
     },
     {
       "author": "Peter — \"Kimi K3 | First impressions\"",
@@ -201,7 +249,25 @@ const evaluation = {
         "fr": "Il confronte le battage du jour du lancement à des tests concrets : sur ses tâches de code, K3 devance certains des plus grands modèles actuels — dont Claude Fable."
       },
       "pros": [],
-      "cons": []
+      "cons": [],
+      "feed": {
+        "displayName": "Peter",
+        "handle": "Kimi K3 · First impressions",
+        "initials": "P",
+        "sourceLabel": "YouTube",
+        "highlights": {
+          "positive": {
+            "en": ["ahead of some of today's biggest models", "including Claude Fable"],
+            "zh-CN": ["K3 领先于当下一些最强模型", "包括 Claude Fable"],
+            "ja": ["K3 が Claude Fable を含む現行トップモデルの一部を上回る"],
+            "ko": ["K3가 Claude Fable을 포함한 현존 최강 모델 일부를 앞선다"],
+            "es": ["K3 supera a algunos de los modelos más grandes de hoy", "incluido Claude Fable"],
+            "fr": ["K3 devance certains des plus grands modèles actuels", "dont Claude Fable"]
+          },
+          "negative": { "en": [] }
+        },
+        "thumbnail": "/kimi-k3-review-video-editorial.png"
+      }
     },
     {
       "author": "AIReiter",
@@ -217,7 +283,31 @@ const evaluation = {
         "fr": "Prise en main du fleuron agentique à contexte 1M : raisonnement de niveau frontière et de très longues sessions de code grâce à un quota généreux basé sur le temps — mais il ne tourne qu'à l'effort de réflexion maximal, et les poids ouverts ne seront téléchargeables que le 27 juillet."
       },
       "pros": [],
-      "cons": []
+      "cons": [],
+      "feed": {
+        "displayName": "AIReiter",
+        "initials": "AR",
+        "sourceLabel": "aireiter.com",
+        "readMinutes": 6,
+        "highlights": {
+          "positive": {
+            "en": ["frontier-tier reasoning", "genuinely long coding sessions"],
+            "zh-CN": ["一线推理水准", "真正的长编码会话"],
+            "ja": ["フロンティア級の推論力", "長時間コーディングセッション"],
+            "ko": ["프런티어급 추론력", "진짜 긴 코딩 세션"],
+            "es": ["razonamiento de nivel frontera", "sesiones de código realmente largas"],
+            "fr": ["raisonnement de niveau frontière", "de très longues sessions de code"]
+          },
+          "negative": {
+            "en": ["max thinking effort", "open weights aren't downloadable until Jul 27"],
+            "zh-CN": ["max 思考强度一档", "开源权重要到 7 月 27 日才可下载"],
+            "ja": ["max 思考強度のみ", "オープンウェイトの公開は 7/27 まで待ち"],
+            "ko": ["max 추론 강도 한 단계뿐", "오픈 웨이트는 7월 27일에야 공개"],
+            "es": ["esfuerzo máximo de razonamiento", "los pesos abiertos no estarán disponibles hasta el 27 de julio"],
+            "fr": ["l'effort de réflexion maximal", "les poids ouverts ne seront téléchargeables que le 27 juillet"]
+          }
+        }
+      }
     }
   ],
 

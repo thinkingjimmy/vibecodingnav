@@ -28,20 +28,21 @@ const dictionary = {
     "modality": "Modalidad"
   },
   "stats": {
-    "intelligence": "Intelligence Index",
-    "intelligenceSub": "vs mediana 30 · Artificial Analysis",
+    "intelligence": "Inteligencia",
+    "intelligenceSub": "percentil 82 · mediana 30",
     "speed": "Velocidad de salida",
-    "speedSub": "tok/s · bajo la mediana 73",
+    "speedSub": "bajo la mediana 73",
     "price": "Precio / 1M",
     "priceSub": "entrada / salida · caché $0.30",
-    "context": "Ventana de contexto",
-    "contextSub": "tokens · ≈ 1,573 páginas A4"
+    "context": "Contexto",
+    "contextSub": "≈ 1,573 páginas A4"
   },
   "bench": {
     "title": "Benchmarks",
     "versus": "vs.",
     "anchors": "anclas de frontera",
     "subtitle": "Más alto es mejor · mejor de cada fila en negrita",
+    "compare": "Comparar",
     "benchmark": "Benchmark",
     "wins": "Victorias"
   },
@@ -54,6 +55,17 @@ const dictionary = {
     "critical": "crítica",
     "takes": "opiniones",
     "sources": "Fuentes de reseñas"
+  },
+  "feed": {
+    "title": "Reseñas de la comunidad",
+    "headlineLead": "Directo desde el",
+    "headlineQualifier": "feed",
+    "subtitle": "Cada tarjeta conserva el aspecto de su plataforma",
+    "positiveLabel": "fortalezas",
+    "negativeLabel": "límites",
+    "readArticle": "Leer artículo",
+    "watchVideo": "Ver vídeo",
+    "minRead": "min de lectura"
   },
   "footer": {
     "description": "Un índice independiente y seleccionado a mano de evaluaciones de modelos frontera; cada cifra enlaza a su fuente.",

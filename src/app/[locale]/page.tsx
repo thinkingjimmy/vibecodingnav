@@ -1,5 +1,5 @@
 /**
- * [INPUT]: 依赖 locale 静态参数、类型化内容、字典访问层与五个页面区块组件
+ * [INPUT]: 依赖 locale 静态参数、类型化内容、字典访问层与六个页面区块组件
  * [OUTPUT]: 对外生成六语言 Kimi K3 静态详情页及含共享品牌图标的本地化 SEO metadata
  * [POS]: src/app/[locale] 的页面组装根，保持数据读取在 Server Component 边界内
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
@@ -11,6 +11,7 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { Hero } from "@/components/hero";
 import { Reviews } from "@/components/reviews";
+import { ReviewFeed } from "@/components/review-feed";
 import { LOCALES } from "@/lib/contracts";
 import { getDictionary } from "@/lib/i18n";
 import { isLocale } from "@/lib/locale";
@@ -54,6 +55,7 @@ export default async function LocalePage({ params }: LocalePageProps) {
         <Hero dictionary={dictionary} evaluation={evaluation} />
         <BenchmarkTable dictionary={dictionary} evaluation={evaluation} />
         <Reviews dictionary={dictionary} evaluation={evaluation} locale={locale} />
+        <ReviewFeed dictionary={dictionary} evaluation={evaluation} locale={locale} />
       </main>
       <Footer dictionary={dictionary} evaluation={evaluation} locale={locale} />
     </>

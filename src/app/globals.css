@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Tailwind CSS 4 与 docs/archive/07-17-design-system.md 的设计基线
- * [OUTPUT]: 对外提供全站 reset、design tokens、主题映射与共享组件类
+ * [OUTPUT]: 对外提供全站 reset、design tokens、主题映射与共享组件类，含可筛选跑分表样式及社区结论/原声流的正负情绪色
  * [POS]: src/app 的全局样式真相源，被两套根布局共同加载
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -41,9 +41,11 @@
   --accent-soft: oklch(0.92 0.03 250);
   --accent-text: oklch(0.35 0.10 250);
   --warn:        oklch(0.55 0.12 30);
-  --review-mixed: #DC8D85;
-  --review-critical: #B4473D;
-  --review-negative-soft: #FADFD9;
+  --review-positive: #2F8666;
+  --review-positive-soft: #E0F0E8;
+  --review-mixed: #C7C0AE;
+  --review-critical: #C85A47;
+  --review-negative-soft: #F8E1DA;
 
   --serif: "Newsreader", Georgia, serif;
   --sans:  "Inter", -apple-system, sans-serif;
@@ -62,23 +64,35 @@
     @apply border-t border-hairline pt-6 mb-3.5 font-mono text-[10px] font-medium uppercase tracking-[.12em] text-ink-faint;
   }
 
-  /* Hero 指标卡：衬线大数字 + 排名徽章 + 进度条 */
+  /* Hero 指标卡：衬线大数字 + 行内单位 + 语义排名徽章 + 进度条 */
   .stat-value {
     @apply font-serif text-[44px] font-medium leading-none text-accent [font-feature-settings:'tnum'];
+  }
+  .stat-unit {
+    @apply font-mono text-[11px] font-medium text-ink-faint;
   }
   .stat-badge {
     @apply shrink-0 rounded-[3px] bg-accent-soft px-1.5 py-0.5 font-mono text-[10px] font-medium text-accent-text [font-feature-settings:'tnum'];
   }
+  .stat-badge-neutral {
+    @apply bg-subtle text-ink-faint;
+  }
   .stat-bar {
-    @apply h-[3px] w-full bg-hairline;
+    @apply h-[5px] w-full overflow-hidden rounded-full bg-hairline;
   }
   .stat-bar i {
-    @apply block h-full bg-accent;
+    @apply block h-full rounded-full bg-accent;
+  }
+  .stat-bar i.stat-bar-neutral {
+    @apply bg-hairline-strong;
   }
   /* 货币符号：Newsreader 断笔画 $ 回落 Georgia 单笔画字形 */
   .stat-currency {
     font-family: Georgia, serif;
     font-size: 0.82em;
+  }
+  .stat-separator {
+    @apply text-ink-faint;
   }
 
   /* Header 主导航：与编辑部字标拉开层级，保持截图中的大写字距 */
@@ -93,7 +107,7 @@
   /* 跑分表：Kimi 列蓝色数据带，每行最佳成绩才加粗 */
   .bench-num,
   .k3-cell {
-    @apply px-3 py-3 text-right align-middle font-mono text-[13px] text-ink-soft [font-feature-settings:'tnum'];
+    @apply px-3 py-2 text-right align-middle font-mono text-[13px] text-ink-soft [font-feature-settings:'tnum'];
   }
   .k3-cell {
     background: var(--accent-soft);
@@ -103,7 +117,11 @@
   .k3-cell.best-score { color: var(--accent-text); }
   /* 吸顶表头不依赖 border-collapse 绘制边线，避免滚动层合成时分隔线消失 */
   .benchmark-head th {
+    background: var(--bg);
     box-shadow: inset 0 -1px 0 var(--ink);
+  }
+  .benchmark-head .benchmark-model-header {
+    background: var(--accent-soft);
   }
   /* 注释与来源图标默认隐身，行悬停或键盘聚焦时浮现 */
   .benchmark-icon {

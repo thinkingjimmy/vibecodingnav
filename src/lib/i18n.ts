@@ -29,6 +29,7 @@ export const mergeDictionary = (override: DeepPartial<Dictionary>): Dictionary =
   stats: { ...en.stats, ...override.stats },
   bench: { ...en.bench, ...override.bench },
   reviews: { ...en.reviews, ...override.reviews },
+  feed: { ...en.feed, ...override.feed },
   footer: { ...en.footer, ...override.footer },
 });
 

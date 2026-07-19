@@ -28,20 +28,21 @@ const dictionary = {
     "modality": "모달리티"
   },
   "stats": {
-    "intelligence": "Intelligence Index",
-    "intelligenceSub": "중앙값 30 대비 · Artificial Analysis",
+    "intelligence": "지능 지수",
+    "intelligenceSub": "82백분위 · 중앙값 30",
     "speed": "출력 속도",
-    "speedSub": "tok/s · 중앙값 73 미만",
+    "speedSub": "중앙값 73 미만",
     "price": "가격 / 1M",
-    "priceSub": "입력 / 출력 · 캐시 히트 $0.30",
-    "context": "컨텍스트 윈도우",
-    "contextSub": "토큰 · A4 약 1,573쪽"
+    "priceSub": "입력 / 출력 · 캐시 $0.30",
+    "context": "컨텍스트",
+    "contextSub": "A4 약 1,573쪽"
   },
   "bench": {
     "title": "벤치마크",
     "versus": "vs.",
     "anchors": "프런티어 앵커",
     "subtitle": "높을수록 좋음 · 행별 최고값 굵게",
+    "compare": "비교",
     "benchmark": "벤치마크",
     "wins": "승리 항목"
   },
@@ -54,6 +55,17 @@ const dictionary = {
     "critical": "비판",
     "takes": "개 평가",
     "sources": "리뷰 출처"
+  },
+  "feed": {
+    "title": "커뮤니티 리뷰",
+    "headlineLead": "피드에서 바로 온",
+    "headlineQualifier": "생생한 목소리",
+    "subtitle": "각 카드는 원래 플랫폼의 인상을 유지",
+    "positiveLabel": "강점",
+    "negativeLabel": "약점",
+    "readArticle": "글 읽기",
+    "watchVideo": "영상 보기",
+    "minRead": "분 읽기"
   },
   "footer": {
     "description": "독립적으로 엄선한 프런티어 모델 평가 인덱스입니다. 모든 수치는 원출처로 연결됩니다.",

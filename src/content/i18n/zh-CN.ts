@@ -28,20 +28,21 @@ const dictionary = {
     "modality": "模态"
   },
   "stats": {
-    "intelligence": "Intelligence Index",
-    "intelligenceSub": "对比中位数 30 · Artificial Analysis",
+    "intelligence": "智能指数",
+    "intelligenceSub": "第 82 百分位 · 中位数 30",
     "speed": "输出速度",
-    "speedSub": "tok/s · 低于中位数 73",
+    "speedSub": "低于中位数 73",
     "price": "定价 / 1M",
-    "priceSub": "输入 / 输出 · 缓存命中 $0.30",
-    "context": "上下文窗口",
-    "contextSub": "tokens · 约 1,573 页 A4"
+    "priceSub": "输入 / 输出 · 缓存 $0.30",
+    "context": "上下文",
+    "contextSub": "约 1,573 页 A4"
   },
   "bench": {
     "title": "跑分对照",
     "versus": "对阵",
     "anchors": "前沿锚点模型",
     "subtitle": "分数越高越好 · 每行最佳成绩加粗",
+    "compare": "比较",
     "benchmark": "跑分项",
     "wins": "胜出项"
   },
@@ -54,6 +55,17 @@ const dictionary = {
     "critical": "负面",
     "takes": "份评价",
     "sources": "评价来源"
+  },
+  "feed": {
+    "title": "社区评价",
+    "headlineLead": "来自信息流的",
+    "headlineQualifier": "真实声音",
+    "subtitle": "每张卡片保留原平台观感",
+    "positiveLabel": "亮点",
+    "negativeLabel": "缺点",
+    "readArticle": "阅读原文",
+    "watchVideo": "观看视频",
+    "minRead": "分钟阅读"
   },
   "footer": {
     "description": "一个独立、人工精选的前沿模型评估索引——每个数字都可回溯至原始来源。",

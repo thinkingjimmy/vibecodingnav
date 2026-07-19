@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 无运行时依赖，承接内容层与页面层共享的数据约束
- * [OUTPUT]: 对外提供 Locale、Dictionary、LocalizedText、ModelEvaluation、DeepPartial 类型与 LOCALES 常量
+ * [OUTPUT]: 对外提供 Locale、Dictionary（含跑分 Compare 与原声流情绪图例文案）、LocalizedText、带指标单位/色调和正负关键短语的 ModelEvaluation、DeepPartial 类型与 LOCALES 常量
  * [POS]: src/lib 的领域契约中心，是内容模块与渲染组件之间的单一类型边界
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -46,6 +46,7 @@ export interface Dictionary {
     versus: string;
     anchors: string;
     subtitle: string;
+    compare: string;
     benchmark: string;
     wins: string;
   };
@@ -58,6 +59,17 @@ export interface Dictionary {
     critical: string;
     takes: string;
     sources: string;
+  };
+  feed: {
+    title: string;
+    headlineLead: string;
+    headlineQualifier: string;
+    subtitle: string;
+    positiveLabel: string;
+    negativeLabel: string;
+    readArticle: string;
+    watchVideo: string;
+    minRead: string;
   };
   footer: {
     description: string;
@@ -93,8 +105,10 @@ export interface ModelEvaluation {
   anchors: Array<{ name: string; label: string }>;
   heroStats: Array<{
     value: string;
+    unit: string;
     badge: string;
     bar: number;
+    tone: "accent" | "neutral";
     labelKey: keyof Dictionary["stats"];
     subKey: keyof Dictionary["stats"];
   }>;
@@ -109,12 +123,24 @@ export interface ModelEvaluation {
   }>;
   reviews: Array<{
     author: string;
-    source: string;
+    source: "blog" | "x" | "youtube";
     url: string;
     date: string;
     summary: LocalizedText;
     pros: LocalizedText[];
     cons: LocalizedText[];
+    feed: {
+      displayName: string;
+      handle?: string;
+      initials: string;
+      sourceLabel: string;
+      readMinutes?: number;
+      highlights: {
+        positive: Partial<Record<Locale, string[]>> & { en: string[] };
+        negative: Partial<Record<Locale, string[]>> & { en: string[] };
+      };
+      thumbnail?: string;
+    };
   }>;
   verdict: {
     score: string;

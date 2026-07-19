@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 next/image、public/moonshot.svg、ModelEvaluation 与 Dictionary 的模型信息、性能指标和本地化文案
- * [OUTPUT]: 对外提供 Models 页内导航目标、与标题基线对齐的 Moonshot 标记 + 超大标题、眉标行、规格条与两列到四列自适应指标卡
+ * [OUTPUT]: 对外提供 Models 页内导航目标、与标题基线对齐的 Moonshot 标记 + 超大标题、右对齐发布元信息、规格条与紧凑两列到四列指标卡
  * [POS]: src/components 的详情页 Hero Server Component
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -15,10 +15,14 @@ interface HeroProps {
 /* Newsreader 的 $ 是断笔画编辑字形，大字号下突兀；货币符号统一回落 Georgia 单笔画 */
 function StatValue({ value }: { value: string }) {
   return value
-    .split(/(\$)/)
+    .split(/(\$|\/)/)
     .filter(Boolean)
     .map((part, index) =>
-      part === "$" ? <span className="stat-currency" key={index}>$</span> : <span key={index}>{part}</span>,
+      part === "$"
+        ? <span className="stat-currency" key={index}>$</span>
+        : part === "/"
+          ? <span className="stat-separator" key={index}>/</span>
+          : <span key={index}>{part}</span>,
     );
 }
 
@@ -37,7 +41,7 @@ export function Hero({ dictionary, evaluation }: HeroProps) {
         <p className="font-mono text-[11px] font-semibold uppercase tracking-[.24em] text-accent-text">
           {model.kicker}
         </p>
-        <dl className="grid shrink-0 grid-cols-[auto_auto] gap-x-3 gap-y-1 font-mono text-[11px] [font-feature-settings:'tnum']">
+        <dl className="grid shrink-0 grid-cols-[auto_auto] justify-items-end gap-x-3 gap-y-1 text-right font-mono text-[11px] [font-feature-settings:'tnum']">
           <dt className="text-right uppercase tracking-[.08em] text-ink-faint">{dictionary.hero.released}</dt>
           <dd className="font-medium text-ink">{model.released}</dd>
           <dt className="text-right uppercase tracking-[.08em] text-ink-faint">{dictionary.hero.weights}</dt>
@@ -71,18 +75,21 @@ export function Hero({ dictionary, evaluation }: HeroProps) {
       </div>
       <div className="hero-stats mt-7 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {evaluation.heroStats.map((stat) => (
-          <div className="border border-hairline p-5" key={stat.labelKey}>
-            <div className="hero-stat-header flex min-h-[34px] items-start justify-between gap-2">
-              <div className="font-mono text-[10px] font-medium uppercase leading-[1.7] tracking-[.1em] text-ink-faint">
+          <div className="hero-stat-card flex min-h-[136px] flex-col rounded-lg border border-hairline bg-elevated px-4 pb-2.5 pt-4 shadow-[0_1px_2px_rgba(56,48,35,.04)]" key={stat.labelKey}>
+            <div className="hero-stat-header flex min-h-[18px] items-start justify-between gap-2">
+              <div className="whitespace-nowrap font-mono text-[10px] font-medium uppercase leading-[1.4] tracking-[.1em] text-ink-faint">
                 {dictionary.stats[stat.labelKey]}
               </div>
-              <span className="stat-badge">{stat.badge}</span>
+              <span className={`stat-badge ${stat.tone === "neutral" ? "stat-badge-neutral" : ""}`}>{stat.badge}</span>
             </div>
-            <div className="stat-value mt-5"><StatValue value={stat.value} /></div>
-            <div aria-hidden="true" className="stat-bar mt-6">
-              <i style={{ width: `${stat.bar}%` }} />
+            <div className="stat-value mt-3 flex items-baseline gap-1.5">
+              <span><StatValue value={stat.value} /></span>
+              {stat.unit ? <span className="stat-unit">{stat.unit}</span> : null}
             </div>
-            <div className="mt-3 font-mono text-[10px] leading-[1.7] text-ink-faint [font-feature-settings:'tnum']">
+            <div aria-hidden="true" className="stat-bar mt-1.5">
+              <i className={stat.tone === "neutral" ? "stat-bar-neutral" : ""} style={{ width: `${stat.bar}%` }} />
+            </div>
+            <div className="mt-2 truncate font-mono text-[10px] leading-[1.4] text-ink-faint [font-feature-settings:'tnum']" title={dictionary.stats[stat.subKey]}>
               {dictionary.stats[stat.subKey]}
             </div>
           </div>

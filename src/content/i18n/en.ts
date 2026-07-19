@@ -28,20 +28,21 @@ const dictionary = {
     "modality": "Modality"
   },
   "stats": {
-    "intelligence": "Intelligence Index",
-    "intelligenceSub": "vs median 30 · Artificial Analysis",
+    "intelligence": "Intelligence",
+    "intelligenceSub": "82nd pct · median 30",
     "speed": "Output Speed",
-    "speedSub": "tok/s · below median 73",
+    "speedSub": "below median 73",
     "price": "Price / 1M",
-    "priceSub": "in / out · cache hit $0.30",
-    "context": "Context Window",
-    "contextSub": "tokens · ≈ 1,573 A4 pages"
+    "priceSub": "in / out · cache $0.30",
+    "context": "Context",
+    "contextSub": "≈ 1,573 A4 pages"
   },
   "bench": {
     "title": "Benchmarks",
     "versus": "vs.",
     "anchors": "frontier anchors",
     "subtitle": "Higher is better · best in row bold",
+    "compare": "Compare",
     "benchmark": "Benchmark",
     "wins": "Wins"
   },
@@ -54,6 +55,17 @@ const dictionary = {
     "critical": "critical",
     "takes": "takes",
     "sources": "Review sources"
+  },
+  "feed": {
+    "title": "Community Reviews",
+    "headlineLead": "Straight from the",
+    "headlineQualifier": "feed",
+    "subtitle": "Each card keeps its platform's look",
+    "positiveLabel": "strengths",
+    "negativeLabel": "caveats",
+    "readArticle": "Read article",
+    "watchVideo": "Watch video",
+    "minRead": "min read"
   },
   "footer": {
     "description": "An independent, hand-curated index of frontier model evaluations — every number links back to its source.",

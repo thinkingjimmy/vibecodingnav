@@ -123,6 +123,8 @@ test("Hero 标题使用 Moonshot 模型厂商标记", async ({ page }) => {
   await expect(hero.locator('img[src="/moonshot.svg"]')).toHaveCount(1);
   await expect(hero.getByRole("heading", { level: 1 })).toHaveText("Kimi K3");
   await expect(hero.locator(".hero-model-lockup")).toHaveCSS("align-items", "baseline");
+  await expect(hero.locator("dl")).toHaveCSS("text-align", "right");
+  await expect(hero.locator("dl")).toHaveCSS("justify-items", "end");
 });
 
 test("指标卡在中等宽度保持两列，宽屏展开四列且标题区对齐", async ({ page }) => {
@@ -144,8 +146,30 @@ test("指标卡在中等宽度保持两列，宽屏展开四列且标题区对�
   expect(new Set(mediumLayout.firstRowValueTops).size).toBe(1);
 
   await page.setViewportSize({ width: 1280, height: 900 });
-  const desktopColumns = await stats.evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(" ").length);
-  expect(desktopColumns).toBe(4);
+  const desktopLayout = await stats.evaluate((grid) => {
+    const cards = Array.from(grid.children) as HTMLElement[];
+    const badges = Array.from(grid.querySelectorAll<HTMLElement>(".stat-badge"));
+    const bars = Array.from(grid.querySelectorAll<HTMLElement>(".stat-bar"));
+    return {
+      columns: getComputedStyle(grid).gridTemplateColumns.split(" ").length,
+      cardHeights: cards.map((card) => card.offsetHeight),
+      cardRadii: cards.map((card) => getComputedStyle(card).borderRadius),
+      labels: cards.map((card) => card.querySelector<HTMLElement>(".hero-stat-header div")!.textContent),
+      units: Array.from(grid.querySelectorAll<HTMLElement>(".stat-unit")).map((unit) => unit.textContent),
+      badgeColors: badges.map((badge) => getComputedStyle(badge).backgroundColor),
+      barHeights: bars.map((bar) => bar.offsetHeight),
+      barColors: bars.map((bar) => getComputedStyle(bar.firstElementChild!).backgroundColor),
+    };
+  });
+  expect(desktopLayout.columns).toBe(4);
+  expect(new Set(desktopLayout.cardHeights)).toEqual(new Set([136]));
+  expect(new Set(desktopLayout.cardRadii)).toEqual(new Set(["8px"]));
+  expect(desktopLayout.labels).toEqual(["Intelligence", "Output Speed", "Price / 1M", "Context"]);
+  expect(desktopLayout.units).toEqual(["idx", "tokens/s", "tokens"]);
+  expect(desktopLayout.badgeColors[0]).not.toBe(desktopLayout.badgeColors[1]);
+  expect(desktopLayout.badgeColors[1]).toBe(desktopLayout.badgeColors[2]);
+  expect(new Set(desktopLayout.barHeights)).toEqual(new Set([5]));
+  expect(desktopLayout.barColors[0]).not.toBe(desktopLayout.barColors[1]);
 });
 
 test("Header 桌面端主导航指向真实页内区块", async ({ page }) => {
@@ -183,12 +207,17 @@ test("移动端仅跑分容器横向滚动", async ({ page }) => {
   await page.goto("/en/");
   const widths = await page.evaluate(() => {
     const scroller = document.querySelector<HTMLElement>(".benchmark-scroll");
+    const tableHead = scroller?.querySelector("thead");
+    const firstRow = scroller?.querySelector("tbody tr");
     return {
       body: document.documentElement.scrollWidth === document.documentElement.clientWidth,
+      rowsDoNotOverlap: Boolean(
+        tableHead && firstRow && tableHead.getBoundingClientRect().bottom <= firstRow.getBoundingClientRect().top + 1,
+      ),
       table: Boolean(scroller && scroller.scrollWidth > scroller.clientWidth),
     };
   });
-  expect(widths).toEqual({ body: true, table: true });
+  expect(widths).toEqual({ body: true, rowsDoNotOverlap: true, table: true });
 });
 
 test("跑分表头滚动时吸附在全局 Header 下方", async ({ page }) => {
@@ -220,7 +249,7 @@ test("跑分表以图标承载注释和来源", async ({ page }) => {
   await expect(row.getByText("#4/189", { exact: false })).not.toBeVisible();
   await note.hover();
   await expect(page.getByRole("tooltip")).toContainText("#4/189 · GPT-5.6 Sol = xhigh effort");
-  await expect(row.getByRole("link", { name: "Open source: Artificial Analysis" })).toHaveAttribute("target", "_blank");
+  await expect(row.getByRole("link", { name: "Intelligence Index v4.1" })).toHaveAttribute("target", "_blank");
   await expect(page.getByRole("columnheader", { name: "Source" })).toHaveCount(0);
 });
 
@@ -230,6 +259,9 @@ test("跑分区使用比较标题并解释加粗规则", async ({ page }) => {
 
   await expect(leaderboard.getByRole("heading", { level: 2 })).toHaveText("Kimi K3 vs. frontier anchors");
   await expect(leaderboard.getByText("Higher is better · best in row bold", { exact: true })).toBeVisible();
+  await expect(leaderboard.locator("strong")).toHaveText("best in row bold");
+  await expect(leaderboard.locator("strong")).toHaveCSS("font-weight", "700");
+  await expect(leaderboard.locator(".benchmark-name").first()).toHaveCSS("top", "-2px");
 });
 
 test("跑分表只加粗每行最佳成绩", async ({ page }) => {
@@ -247,7 +279,33 @@ test("跑分表底部统计每个模型的胜出项", async ({ page }) => {
   await expect(page.getByRole("row", { name: "Wins 4 3 4 0" })).toBeVisible();
 });
 
-test("社区结论使用评分分布、精简双栏与来源回链", async ({ page }) => {
+test("跑分比较筛选同步更新可见列、最佳成绩与胜出项", async ({ page }) => {
+  await page.goto("/en/");
+  const leaderboard = page.locator("#leaderboard");
+  const opus = leaderboard.getByRole("button", { name: "Opus 4.8", exact: true });
+  const gpt = leaderboard.getByRole("button", { name: "GPT-5.6", exact: true });
+  const fable = leaderboard.getByRole("button", { name: "Fable 5", exact: true });
+
+  await expect(opus).toHaveAttribute("aria-pressed", "true");
+  await opus.click();
+  await gpt.click();
+  await expect(opus).toHaveAttribute("aria-pressed", "false");
+  await expect(leaderboard.getByRole("columnheader", { name: "Opus 4.8" })).toHaveCount(0);
+  await expect(leaderboard.getByRole("columnheader", { name: "GPT-5.6" })).toHaveCount(0);
+  await expect(leaderboard.getByRole("row", { name: "Wins 6 5" })).toBeVisible();
+
+  const intelligence = leaderboard.getByRole("row").filter({ hasText: "Intelligence Index v4.1" });
+  const programBench = leaderboard.getByRole("row").filter({ hasText: "Program Bench" });
+  await expect(intelligence.getByRole("cell").nth(2)).toHaveAttribute("data-best", "true");
+  await expect(programBench.getByRole("cell").nth(1)).toHaveAttribute("data-best", "true");
+
+  await fable.click();
+  await expect(leaderboard.getByRole("columnheader", { name: "Fable 5" })).toHaveCount(0);
+  await expect(leaderboard.getByRole("row", { name: "Wins 11" })).toBeVisible();
+  await expect(intelligence.getByRole("cell").nth(1)).toHaveAttribute("data-best", "true");
+});
+
+test("社区结论使用紧凑圆角评分分布与带分隔线双栏", async ({ page }) => {
   await page.goto("/en/");
   const verdict = page.locator("#community-verdict");
 
@@ -256,18 +314,71 @@ test("社区结论使用评分分布、精简双栏与来源回链", async ({ pa
   await expect(verdict.getByRole("img", { name: "3.8 / 5 · 1 rave, 5 mixed, 0 critical" })).toBeVisible();
   await expect(verdict.getByText("Frontier-tier, and open", { exact: true })).toBeVisible();
   await expect(verdict.getByText("Weights not out yet", { exact: true })).toBeVisible();
-  await expect(verdict.getByRole("navigation", { name: "Review sources" }).getByRole("link")).toHaveCount(4);
+  await expect(verdict.getByRole("navigation", { name: "Review sources" })).toHaveCount(0);
+  await expect(verdict.locator(".verdict-score")).toHaveCSS("border-radius", "6px");
+  await expect(verdict.locator(".verdict-score-summary")).toHaveCSS("translate", "0px 2px");
+  expect(await verdict.locator("li").evaluateAll((items) => items.every((item) => getComputedStyle(item).borderBottomWidth === "1px"))).toBe(true);
   await expect(verdict.locator("article")).toHaveCount(0);
+});
+
+test("社区原声流使用三列小圆角平台卡片与正负双色高亮", async ({ page }) => {
+  await page.setViewportSize({ width: 875, height: 814 });
+  await page.goto("/en/");
+  const feed = page.locator("#community-reviews");
+
+  await expect(feed.getByRole("heading", { level: 2 })).toHaveText("Straight from the feed");
+  await expect(feed.locator("article")).toHaveCount(4);
+  expect(await feed.locator("article").evaluateAll((cards) => cards.every((card) => getComputedStyle(card).borderRadius === "4px"))).toBe(true);
+  await expect(feed.locator(".review-grid")).toHaveCSS("grid-template-columns", /\S+ \S+ \S+/);
+  await expect(feed.locator('mark[data-tone="positive"]')).not.toHaveCount(0);
+  await expect(feed.locator('mark[data-tone="negative"]')).not.toHaveCount(0);
+  await expect(feed.locator('img[src="/kimi-k3-review-video-editorial.png"]')).toHaveCount(1);
+  const order = await feed.locator("article").evaluateAll((cards) => cards.map((card) => card.textContent ?? ""));
+  expect(order[0]).toContain("Simon Willison");
+  expect(order[1]).toContain("AIReiter");
+  expect(order[2]).toContain("Peter");
+  expect(order[3]).toContain("Lentils");
+  expect(await feed.locator("article").nth(3).evaluate((card) => getComputedStyle(card).gridColumnStart)).toBe("2");
+  await expect(feed.getByRole("link", { name: "Read article" })).toHaveCount(2);
+  await expect(feed.getByRole("link", { name: "Open Lentils on X" })).toHaveAttribute("href", "https://x.com/Lentils80/status/2077387333154857151");
+  await expect(feed.getByRole("link", { name: /Watch video: Peter/ })).toHaveAttribute("href", "https://www.youtube.com/watch?v=LSlV206xPqM");
+});
+
+test("社区原声流在移动端回落单列且不产生页面横向滚动", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/en/");
+  const feed = page.locator("#community-reviews");
+
+  await expect(feed.locator(".review-grid")).toHaveCSS("grid-template-columns", "350px");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth === document.documentElement.clientWidth)).toBe(true);
 });
 
 test("页脚使用品牌说明、真实页内导航与数据来源元信息", async ({ page }) => {
   await page.goto("/en/");
   const footer = page.getByRole("contentinfo");
+  const footerPrimary = footer.locator(".footer-primary");
+  const main = page.locator("main");
 
   await expect(footer.getByRole("link", { name: "AIEvalIndex" })).toHaveAttribute("href", "/en/");
   await expect(footer.getByText("An independent, hand-curated index of frontier model evaluations — every number links back to its source.", { exact: true })).toBeVisible();
   await expect(footer.getByRole("navigation", { name: "Explore" }).getByRole("link")).toHaveCount(4);
+  await expect(footer.getByRole("link", { name: "Reviews" })).toHaveAttribute("href", "#community-reviews");
   await expect(footer.getByRole("navigation", { name: "About" }).getByRole("link")).toHaveCount(2);
   await expect(footer.getByRole("link", { name: "Artificial Analysis" })).toHaveAttribute("href", "https://artificialanalysis.ai/models/kimi-k3");
   await expect(footer.getByText("© 2026 AI Eval Index", { exact: true })).toBeVisible();
+  const [mainBox, footerBox] = await Promise.all([main.boundingBox(), footerPrimary.boundingBox()]);
+  expect(footerBox?.x).toBeCloseTo(mainBox?.x ?? 0, 0);
+  expect(footerBox?.width).toBeCloseTo(mainBox?.width ?? 0, 0);
+  expect(await footer.getByRole("link", { name: "Models" }).evaluate((link) => getComputedStyle(link).fontFamily)).toContain("Newsreader");
+  await expect(footer.locator(".footer-primary-grid")).toHaveCSS("grid-template-columns", /.+ .+ .+/);
+});
+
+test("页脚在移动端顺序堆叠并保持正文版心", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/en/");
+  const footer = page.getByRole("contentinfo");
+
+  await expect(footer.locator(".footer-primary-grid")).toHaveCSS("grid-template-columns", "350px");
+  await expect(footer.locator(".footer-meta")).toHaveCSS("grid-template-columns", "350px");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth === document.documentElement.clientWidth)).toBe(true);
 });
