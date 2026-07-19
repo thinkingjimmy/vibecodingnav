@@ -54,8 +54,8 @@ export default async function LocalePage({ params }: LocalePageProps) {
         <Hero dictionary={dictionary} evaluation={evaluation} />
         <BenchmarkTable dictionary={dictionary} evaluation={evaluation} />
         <Reviews dictionary={dictionary} evaluation={evaluation} locale={locale} />
-        <Footer dictionary={dictionary} evaluation={evaluation} />
       </main>
+      <Footer dictionary={dictionary} evaluation={evaluation} locale={locale} />
     </>
   );
 }

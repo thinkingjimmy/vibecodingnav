@@ -1,6 +1,6 @@
 /**
- * [INPUT]: 依赖 next/image、SITE_ICON 共享品牌资产、当前 Locale、Dictionary 的语言文案与 LanguageSelect 客户端组件
- * [OUTPUT]: 对外提供紧凑置顶的编辑部品牌字标与地球图标语言菜单
+ * [INPUT]: 依赖 next/image、SITE_ICON 共享品牌资产、当前 Locale、Dictionary 的导航/语言文案与 LanguageSelect 客户端组件
+ * [OUTPUT]: 对外提供紧凑置顶的品牌字标、桌面端页内主导航与地球图标语言菜单
  * [POS]: src/components 的页面头部 Server Component，仅承担全局导航与品牌识别
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -39,6 +39,11 @@ export function Header({ locale, dictionary }: HeaderProps) {
             </span>
           </span>
         </a>
+        <nav aria-label="Primary" className="mr-2 hidden items-center gap-8 md:flex">
+          <a className="header-nav-link" href="#models">{dictionary.header.models}</a>
+          <a className="header-nav-link" href="#leaderboard">{dictionary.header.leaderboard}</a>
+          <a className="header-nav-link" href="#methodology">{dictionary.header.methodology}</a>
+        </nav>
         <LanguageSelect ariaLabel={dictionary.header.language} locale={locale} />
       </div>
     </header>

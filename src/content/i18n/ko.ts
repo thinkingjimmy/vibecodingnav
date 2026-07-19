@@ -12,48 +12,61 @@ const dictionary = {
     "description": "Moonshot AI Kimi K3의 공식 벤치마크, 아레나 순위, 엄선된 커뮤니티 리뷰 — 모든 수치는 출처로 연결됩니다."
   },
   "header": {
-    "language": "언어"
+    "language": "언어",
+    "models": "모델",
+    "leaderboard": "리더보드",
+    "methodology": "평가 방법"
   },
   "hero": {
     "by": "개발",
     "released": "출시",
-    "openWeights": "오픈 웨이트 공개",
-    "params": "파라미터",
-    "context": "컨텍스트",
-    "license": "라이선스",
-    "outputSpeed": "출력 속도",
-    "ttft": "첫 토큰",
-    "cached": "캐시 히트"
+    "weights": "웨이트",
+    "weightsDue": "공개 예정",
+    "firstToken": "첫 토큰",
+    "verbosity": "출력량",
+    "parameters": "파라미터",
+    "modality": "모달리티"
   },
   "stats": {
     "intelligence": "Intelligence Index",
-    "intelligenceSub": "189개 모델 중 4위 · Artificial Analysis",
-    "arena": "WebDev Arena 순위",
-    "arenaSub": "1679 Elo · 1,757표",
-    "price": "가격 / 100만 토큰",
+    "intelligenceSub": "중앙값 30 대비 · Artificial Analysis",
+    "speed": "출력 속도",
+    "speedSub": "tok/s · 중앙값 73 미만",
+    "price": "가격 / 1M",
     "priceSub": "입력 / 출력 · 캐시 히트 $0.30",
     "context": "컨텍스트 윈도우",
     "contextSub": "토큰 · A4 약 1,573쪽"
   },
   "bench": {
     "title": "벤치마크",
-    "subtitle": "Kimi K3 vs 프런티어 앵커 모델. 모든 수치는 출처로 연결됩니다.",
+    "versus": "vs.",
+    "anchors": "프런티어 앵커",
+    "subtitle": "높을수록 좋음 · 행별 최고값 굵게",
     "benchmark": "벤치마크",
-    "source": "출처"
+    "wins": "승리 항목"
   },
   "reviews": {
-    "title": "커뮤니티 리뷰",
-    "subtitle": "블로그·X·YouTube에서 엄선 — 요약과 원문 링크 제공.",
-    "consensusPros": "컨센서스 · 강점",
-    "consensusCons": "컨센서스 · 약점",
-    "readOriginal": "원문 읽기"
+    "title": "커뮤니티 평가",
+    "consensusPros": "강점",
+    "consensusCons": "약점",
+    "rave": "극찬",
+    "mixed": "엇갈림",
+    "critical": "비판",
+    "takes": "개 평가",
+    "sources": "리뷰 출처"
   },
   "footer": {
-    "tagline": "AI 모델 점수와 실제 사용 후기를 한눈에",
-    "sources": "데이터 출처",
-    "updated": "데이터 확인일",
-    "disclaimer": "AIEvalIndex는 공개 벤치마크 데이터와 커뮤니티 리뷰를 모읍니다. 모든 수치는 출처로 연결됩니다.",
-    "aiNote": "ja · ko · es · fr 페이지는 영어 원본의 AI 번역입니다. 오류 제보를 환영합니다."
+    "description": "독립적으로 엄선한 프런티어 모델 평가 인덱스입니다. 모든 수치는 원출처로 연결됩니다.",
+    "explore": "둘러보기",
+    "about": "소개",
+    "models": "모델",
+    "leaderboards": "리더보드",
+    "benchmarks": "벤치마크",
+    "reviews": "리뷰",
+    "methodology": "평가 방법",
+    "dataSources": "데이터 출처",
+    "modelDataFrom": "모델 데이터 출처",
+    "updated": "업데이트"
   }
 } satisfies DeepPartial<Dictionary>;
 

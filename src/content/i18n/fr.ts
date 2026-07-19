@@ -12,48 +12,61 @@ const dictionary = {
     "description": "Benchmarks officiels, classements d'arène et avis communautaires sélectionnés pour Kimi K3 de Moonshot AI — chaque chiffre renvoie à sa source."
   },
   "header": {
-    "language": "Langue"
+    "language": "Langue",
+    "models": "Modèles",
+    "leaderboard": "Classement",
+    "methodology": "Méthodologie"
   },
   "hero": {
     "by": "par",
-    "released": "Sorti le",
-    "openWeights": "poids ouverts le",
-    "params": "paramètres",
-    "context": "contexte",
-    "license": "licence",
-    "outputSpeed": "vitesse de sortie",
-    "ttft": "premier token",
-    "cached": "cache"
+    "released": "Sorti",
+    "weights": "Poids",
+    "weightsDue": "prévu",
+    "firstToken": "Premier token",
+    "verbosity": "Verbosité",
+    "parameters": "Paramètres",
+    "modality": "Modalité"
   },
   "stats": {
     "intelligence": "Intelligence Index",
-    "intelligenceSub": "4e sur 189 · Artificial Analysis",
-    "arena": "Classement WebDev Arena",
-    "arenaSub": "1679 Elo · 1 757 votes",
-    "price": "Tarif / 1M tokens",
+    "intelligenceSub": "vs médiane 30 · Artificial Analysis",
+    "speed": "Vitesse de sortie",
+    "speedSub": "tok/s · sous la médiane 73",
+    "price": "Tarif / 1M",
     "priceSub": "entrée / sortie · cache 0,30 $",
     "context": "Fenêtre de contexte",
     "contextSub": "tokens · ≈ 1 573 pages A4"
   },
   "bench": {
     "title": "Benchmarks",
-    "subtitle": "Kimi K3 face aux ancres de la frontière. Chaque chiffre renvoie à sa source.",
+    "versus": "vs",
+    "anchors": "ancres de référence",
+    "subtitle": "Plus haut est meilleur · meilleur de la ligne en gras",
     "benchmark": "Benchmark",
-    "source": "source"
+    "wins": "Victoires"
   },
   "reviews": {
-    "title": "Avis de la communauté",
-    "subtitle": "Sélection manuelle issue de blogs, de X et de YouTube — résumés, avec liens vers les originaux.",
-    "consensusPros": "Consensus · Points forts",
-    "consensusCons": "Consensus · Points faibles",
-    "readOriginal": "Lire l'original"
+    "title": "Verdict de la communauté",
+    "consensusPros": "Ses points forts",
+    "consensusCons": "Ses points faibles",
+    "rave": "enthousiaste",
+    "mixed": "mitigé",
+    "critical": "critique",
+    "takes": "avis",
+    "sources": "Sources des avis"
   },
   "footer": {
-    "tagline": "Scores des modèles d’IA et avis réels, réunis",
-    "sources": "Sources des données",
-    "updated": "Données vérifiées le",
-    "disclaimer": "AIEvalIndex agrège des données publiques de benchmarks et des avis communautaires. Chaque chiffre renvoie à sa source.",
-    "aiNote": "Les pages ja · ko · es · fr sont des traductions IA de l'original anglais ; les corrections sont bienvenues."
+    "description": "Un index indépendant, sélectionné à la main, des évaluations de modèles de pointe — chaque chiffre renvoie à sa source.",
+    "explore": "Explorer",
+    "about": "À propos",
+    "models": "Modèles",
+    "leaderboards": "Classements",
+    "benchmarks": "Benchmarks",
+    "reviews": "Avis",
+    "methodology": "Méthodologie",
+    "dataSources": "Sources des données",
+    "modelDataFrom": "Données du modèle par",
+    "updated": "mis à jour"
   }
 } satisfies DeepPartial<Dictionary>;
 

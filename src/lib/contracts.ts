@@ -15,56 +15,86 @@ export type LocalizedText = { en: string } & Partial<Record<Exclude<Locale, "en"
 
 export interface Dictionary {
   meta: { title: string; description: string };
-  header: { language: string };
+  header: {
+    language: string;
+    models: string;
+    leaderboard: string;
+    methodology: string;
+  };
   hero: {
     by: string;
     released: string;
-    openWeights: string;
-    params: string;
-    context: string;
-    license: string;
-    outputSpeed: string;
-    ttft: string;
-    cached: string;
+    weights: string;
+    weightsDue: string;
+    firstToken: string;
+    verbosity: string;
+    parameters: string;
+    modality: string;
   };
   stats: {
     intelligence: string;
     intelligenceSub: string;
-    arena: string;
-    arenaSub: string;
+    speed: string;
+    speedSub: string;
     price: string;
     priceSub: string;
     context: string;
     contextSub: string;
   };
-  bench: { title: string; subtitle: string; benchmark: string; source: string };
+  bench: {
+    title: string;
+    versus: string;
+    anchors: string;
+    subtitle: string;
+    benchmark: string;
+    wins: string;
+  };
   reviews: {
     title: string;
-    subtitle: string;
     consensusPros: string;
     consensusCons: string;
-    readOriginal: string;
+    rave: string;
+    mixed: string;
+    critical: string;
+    takes: string;
+    sources: string;
   };
-  footer: { tagline: string; sources: string; updated: string; disclaimer: string; aiNote: string };
+  footer: {
+    description: string;
+    explore: string;
+    about: string;
+    models: string;
+    leaderboards: string;
+    benchmarks: string;
+    reviews: string;
+    methodology: string;
+    dataSources: string;
+    modelDataFrom: string;
+    updated: string;
+  };
 }
 
 export interface ModelEvaluation {
   updated: string;
   model: {
     name: string;
+    kicker: string;
     vendor: string;
     params: string;
     architecture: string;
     context: string;
+    modality: string;
     license: string;
     released: string;
     openWeights: string;
   };
   pricing: { input: number; output: number; cached: number };
-  performance: { outputSpeed: string; speedRank: string; ttft: string };
-  anchors: string[];
+  performance: { outputSpeed: string; speedRank: string; ttft: string; verbosity: string };
+  anchors: Array<{ name: string; label: string }>;
   heroStats: Array<{
     value: string;
+    badge: string;
+    bar: number;
     labelKey: keyof Dictionary["stats"];
     subKey: keyof Dictionary["stats"];
   }>;
@@ -86,6 +116,13 @@ export interface ModelEvaluation {
     pros: LocalizedText[];
     cons: LocalizedText[];
   }>;
+  verdict: {
+    score: string;
+    distribution: { rave: number; mixed: number; critical: number };
+    headline: { lead: LocalizedText; qualifier: LocalizedText };
+    pros: LocalizedText[];
+    cons: LocalizedText[];
+  };
   consensus: { pros: LocalizedText[]; cons: LocalizedText[] };
   sources: Array<{ name: string; url: string }>;
 }

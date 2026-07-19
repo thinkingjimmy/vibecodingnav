@@ -12,48 +12,61 @@ const dictionary = {
     "description": "Benchmarks oficiales, rankings de arena y reseñas comunitarias seleccionadas de Kimi K3 de Moonshot AI — cada cifra enlaza a su fuente."
   },
   "header": {
-    "language": "Idioma"
+    "language": "Idioma",
+    "models": "Modelos",
+    "leaderboard": "Clasificación",
+    "methodology": "Metodología"
   },
   "hero": {
     "by": "por",
-    "released": "Lanzado el",
-    "openWeights": "pesos abiertos",
-    "params": "parámetros",
-    "context": "contexto",
-    "license": "licencia",
-    "outputSpeed": "velocidad de salida",
-    "ttft": "primer token",
-    "cached": "caché"
+    "released": "Lanzado",
+    "weights": "Pesos",
+    "weightsDue": "previsto",
+    "firstToken": "Primer token",
+    "verbosity": "Verbosidad",
+    "parameters": "Parámetros",
+    "modality": "Modalidad"
   },
   "stats": {
     "intelligence": "Intelligence Index",
-    "intelligenceSub": "#4 de 189 · Artificial Analysis",
-    "arena": "Ranking WebDev Arena",
-    "arenaSub": "1679 Elo · 1,757 votos",
-    "price": "Precio / 1M tokens",
+    "intelligenceSub": "vs mediana 30 · Artificial Analysis",
+    "speed": "Velocidad de salida",
+    "speedSub": "tok/s · bajo la mediana 73",
+    "price": "Precio / 1M",
     "priceSub": "entrada / salida · caché $0.30",
     "context": "Ventana de contexto",
     "contextSub": "tokens · ≈ 1,573 páginas A4"
   },
   "bench": {
     "title": "Benchmarks",
-    "subtitle": "Kimi K3 frente a anclas de frontera. Cada número enlaza a su fuente.",
+    "versus": "vs.",
+    "anchors": "anclas de frontera",
+    "subtitle": "Más alto es mejor · mejor de cada fila en negrita",
     "benchmark": "Benchmark",
-    "source": "fuente"
+    "wins": "Victorias"
   },
   "reviews": {
-    "title": "Reseñas de la comunidad",
-    "subtitle": "Selección manual de blogs, X y YouTube — resumidas, con enlaces a los originales.",
-    "consensusPros": "Consenso · Fortalezas",
-    "consensusCons": "Consenso · Debilidades",
-    "readOriginal": "Leer original"
+    "title": "Veredicto de la comunidad",
+    "consensusPros": "Dónde destaca",
+    "consensusCons": "Dónde flaquea",
+    "rave": "entusiasta",
+    "mixed": "mixta",
+    "critical": "crítica",
+    "takes": "opiniones",
+    "sources": "Fuentes de reseñas"
   },
   "footer": {
-    "tagline": "Puntuaciones de modelos de IA y reseñas reales, en un solo lugar",
-    "sources": "Fuentes de datos",
-    "updated": "Datos verificados",
-    "disclaimer": "AIEvalIndex agrega datos públicos de benchmarks y reseñas comunitarias. Cada cifra enlaza a su fuente.",
-    "aiNote": "Las páginas ja · ko · es · fr son traducciones por IA del original en inglés; se agradecen correcciones."
+    "description": "Un índice independiente y seleccionado a mano de evaluaciones de modelos frontera; cada cifra enlaza a su fuente.",
+    "explore": "Explorar",
+    "about": "Acerca de",
+    "models": "Modelos",
+    "leaderboards": "Clasificaciones",
+    "benchmarks": "Benchmarks",
+    "reviews": "Reseñas",
+    "methodology": "Metodología",
+    "dataSources": "Fuentes de datos",
+    "modelDataFrom": "Datos del modelo de",
+    "updated": "actualizado"
   }
 } satisfies DeepPartial<Dictionary>;
 

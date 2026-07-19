@@ -12,48 +12,61 @@ const dictionary = {
     "description": "Official benchmarks, arena rankings and hand-curated community reviews for Moonshot AI's Kimi K3 — every figure linked back to its source."
   },
   "header": {
-    "language": "Language"
+    "language": "Language",
+    "models": "Models",
+    "leaderboard": "Leaderboard",
+    "methodology": "Methodology"
   },
   "hero": {
     "by": "by",
     "released": "Released",
-    "openWeights": "open weights due",
-    "params": "params",
-    "context": "context",
-    "license": "license",
-    "outputSpeed": "output speed",
-    "ttft": "first token",
-    "cached": "cache hit"
+    "weights": "Weights",
+    "weightsDue": "due",
+    "firstToken": "First token",
+    "verbosity": "Verbosity",
+    "parameters": "Parameters",
+    "modality": "Modality"
   },
   "stats": {
     "intelligence": "Intelligence Index",
-    "intelligenceSub": "#4 of 189 · Artificial Analysis",
-    "arena": "WebDev Arena rank",
-    "arenaSub": "1679 Elo · 1,757 votes",
-    "price": "Pricing / 1M tokens",
-    "priceSub": "input / output · cache hit $0.30",
-    "context": "Context window",
+    "intelligenceSub": "vs median 30 · Artificial Analysis",
+    "speed": "Output Speed",
+    "speedSub": "tok/s · below median 73",
+    "price": "Price / 1M",
+    "priceSub": "in / out · cache hit $0.30",
+    "context": "Context Window",
     "contextSub": "tokens · ≈ 1,573 A4 pages"
   },
   "bench": {
     "title": "Benchmarks",
-    "subtitle": "Kimi K3 against frontier anchors. Every number links back to its source.",
+    "versus": "vs.",
+    "anchors": "frontier anchors",
+    "subtitle": "Higher is better · best in row bold",
     "benchmark": "Benchmark",
-    "source": "source"
+    "wins": "Wins"
   },
   "reviews": {
-    "title": "Community Reviews",
-    "subtitle": "Hand-curated from blogs, X and YouTube — summarized, with links to the originals.",
-    "consensusPros": "Consensus · Strengths",
-    "consensusCons": "Consensus · Weaknesses",
-    "readOriginal": "Read original"
+    "title": "Community Verdict",
+    "consensusPros": "Where it wins",
+    "consensusCons": "Where it lags",
+    "rave": "rave",
+    "mixed": "mixed",
+    "critical": "critical",
+    "takes": "takes",
+    "sources": "Review sources"
   },
   "footer": {
-    "tagline": "AI model scores and real-world reviews, together",
-    "sources": "Data sources",
-    "updated": "Data verified",
-    "disclaimer": "AIEvalIndex aggregates public benchmark data and community reviews. Every figure links back to its source.",
-    "aiNote": "ja · ko · es · fr pages are AI-translated from the English master; corrections are welcome."
+    "description": "An independent, hand-curated index of frontier model evaluations — every number links back to its source.",
+    "explore": "Explore",
+    "about": "About",
+    "models": "Models",
+    "leaderboards": "Leaderboards",
+    "benchmarks": "Benchmarks",
+    "reviews": "Reviews",
+    "methodology": "Methodology",
+    "dataSources": "Data sources",
+    "modelDataFrom": "Model data from",
+    "updated": "updated"
   }
 } satisfies Dictionary;
 

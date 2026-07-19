@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 src/lib/contracts 的 ModelEvaluation 类型，内容来自 2026-07-17 人工核验快照
- * [OUTPUT]: 对外提供 Kimi K3 模型信息、跑分、评价、共识与数据源
+ * [OUTPUT]: 对外提供 Kimi K3 模型信息、跑分、评价、社区结论、共识与数据源
  * [POS]: src/content/models 的首个类型化模型内容模块，被 src/lib/model.ts 消费
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -11,10 +11,12 @@ const evaluation = {
 
   "model": {
     "name": "Kimi K3",
+    "kicker": "Reasoning · Multimodal",
     "vendor": "Moonshot AI",
     "params": "2.8T",
     "architecture": "MoE",
     "context": "1M",
+    "modality": "Text + Image",
     "license": "Modified MIT",
     "released": "2026-07-16",
     "openWeights": "2026-07-27"
@@ -23,18 +25,23 @@ const evaluation = {
   "pricing": { "input": 3.0, "output": 15.0, "cached": 0.3 },
 
   "performance": {
-    "outputSpeed": "62.0 tok/s",
-    "speedRank": "#88/189",
-    "ttft": "1.99 s"
+    "outputSpeed": "62 tok/s",
+    "speedRank": "#90 / 189",
+    "ttft": "1.99 s",
+    "verbosity": "130M tok"
   },
 
-  "anchors": ["Claude Fable 5", "GPT-5.6 Sol", "Claude Opus 4.8"],
+  "anchors": [
+    { "name": "Claude Fable 5", "label": "Fable 5" },
+    { "name": "GPT-5.6 Sol", "label": "GPT-5.6" },
+    { "name": "Claude Opus 4.8", "label": "Opus 4.8" }
+  ],
 
   "heroStats": [
-    { "value": "57", "labelKey": "intelligence", "subKey": "intelligenceSub" },
-    { "value": "#1", "labelKey": "arena", "subKey": "arenaSub" },
-    { "value": "$3 / $15", "labelKey": "price", "subKey": "priceSub" },
-    { "value": "1M", "labelKey": "context", "subKey": "contextSub" }
+    { "value": "57", "badge": "#4 / 189", "bar": 88, "labelKey": "intelligence", "subKey": "intelligenceSub" },
+    { "value": "62", "badge": "#90 / 189", "bar": 42, "labelKey": "speed", "subKey": "speedSub" },
+    { "value": "$3/$15", "badge": "#127 / 189", "bar": 15, "labelKey": "price", "subKey": "priceSub" },
+    { "value": "1M", "badge": "top 5%", "bar": 100, "labelKey": "context", "subKey": "contextSub" }
   ],
 
   "benchmarks": [
@@ -71,7 +78,7 @@ const evaluation = {
       "url": "https://www.kimi.com/blog/kimi-k3",
       "score": "93.5",
       "detail": "%",
-      "peers": { "Claude Fable 5": "92.6", "GPT-5.6 Sol": "94.1", "Claude Opus 4.8": "91.0" },
+      "peers": { "Claude Fable 5": "92.6", "GPT-5.6 Sol": "94.1", "Claude Opus 4.8": "91" },
       "note": ""
     },
     {
@@ -98,7 +105,7 @@ const evaluation = {
       "url": "https://www.kimi.com/blog/kimi-k3",
       "score": "67.5",
       "detail": "",
-      "peers": { "Claude Fable 5": "70.0", "GPT-5.6 Sol": "73.0", "Claude Opus 4.8": "59.0" },
+      "peers": { "Claude Fable 5": "70", "GPT-5.6 Sol": "73", "Claude Opus 4.8": "59" },
       "note": "GPT-5.5: 67.0"
     },
     {
@@ -116,7 +123,7 @@ const evaluation = {
       "url": "https://www.kimi.com/blog/kimi-k3",
       "score": "91.2",
       "detail": "%",
-      "peers": { "Claude Fable 5": "88.0", "GPT-5.6 Sol": "90.4" },
+      "peers": { "Claude Fable 5": "88", "GPT-5.6 Sol": "90.4" },
       "note": ""
     },
     {
@@ -134,7 +141,7 @@ const evaluation = {
       "url": "https://kingy.ai/blog/kimi-k3-benchmarks-specs-price-fable-5-gpt-5-6-sol/",
       "score": "80.5",
       "detail": "%",
-      "peers": { "Claude Fable 5": "81.2", "GPT-5.6 Sol": "83.0" },
+      "peers": { "Claude Fable 5": "81.2", "GPT-5.6 Sol": "83" },
       "note": ""
     }
   ],
@@ -213,6 +220,97 @@ const evaluation = {
       "cons": []
     }
   ],
+
+  "verdict": {
+    "score": "3.8",
+    "distribution": { "rave": 1, "mixed": 5, "critical": 0 },
+    "headline": {
+      "lead": {
+        "en": "Admired,",
+        "zh-CN": "备受赞赏，",
+        "ja": "高評価、",
+        "ko": "호평,",
+        "es": "Admirado,",
+        "fr": "Admiré,"
+      },
+      "qualifier": {
+        "en": "with caveats",
+        "zh-CN": "但有保留",
+        "ja": "ただし注意点も",
+        "ko": "단, 아쉬움도",
+        "es": "con reservas",
+        "fr": "avec réserves"
+      }
+    },
+    "pros": [
+      {
+        "en": "Frontier-tier, and open",
+        "zh-CN": "一线水准，且开放权重",
+        "ja": "フロンティア級、かつオープン",
+        "ko": "프런티어급, 그리고 오픈",
+        "es": "Nivel frontera y abierto",
+        "fr": "Niveau frontière et ouvert"
+      },
+      {
+        "en": "Beats Opus 4.8 on code",
+        "zh-CN": "编码表现胜过 Opus 4.8",
+        "ja": "コードで Opus 4.8 を上回る",
+        "ko": "코딩에서 Opus 4.8 능가",
+        "es": "Supera a Opus 4.8 en código",
+        "fr": "Dépasse Opus 4.8 en code"
+      },
+      {
+        "en": "Loved for real output",
+        "zh-CN": "真实任务输出广受好评",
+        "ja": "実タスクの出力が好評",
+        "ko": "실전 출력 품질 호평",
+        "es": "Muy querido por su salida real",
+        "fr": "Apprécié pour ses sorties réelles"
+      },
+      {
+        "en": "1M context, efficient",
+        "zh-CN": "1M 上下文，token 高效",
+        "ja": "1M コンテキスト、高効率",
+        "ko": "1M 컨텍스트, 높은 효율",
+        "es": "Contexto de 1M, eficiente",
+        "fr": "Contexte 1M, efficace"
+      }
+    ],
+    "cons": [
+      {
+        "en": "Slow to think",
+        "zh-CN": "思考速度偏慢",
+        "ja": "思考が遅い",
+        "ko": "생각이 느림",
+        "es": "Lento al razonar",
+        "fr": "Lent à réfléchir"
+      },
+      {
+        "en": "Expensive to run",
+        "zh-CN": "运行成本偏高",
+        "ja": "実行コストが高い",
+        "ko": "실행 비용이 높음",
+        "es": "Caro de ejecutar",
+        "fr": "Coûteux à utiliser"
+      },
+      {
+        "en": "Trails on some evals",
+        "zh-CN": "部分评测仍然落后",
+        "ja": "一部評価では後れを取る",
+        "ko": "일부 평가에서 뒤처짐",
+        "es": "Queda atrás en algunas pruebas",
+        "fr": "En retrait sur certains tests"
+      },
+      {
+        "en": "Weights not out yet",
+        "zh-CN": "权重尚未开放下载",
+        "ja": "ウェイトは未公開",
+        "ko": "웨이트 아직 미공개",
+        "es": "Los pesos aún no están disponibles",
+        "fr": "Poids pas encore disponibles"
+      }
+    ]
+  },
 
   "consensus": {
     "pros": [

@@ -4,7 +4,7 @@ Next.js 16.2.10 + React 19.2.7 + TypeScript 6 + Tailwind CSS 4 + shadcn Base UI 
 
 <directory>
 docs/ - 开发状态（CURRENT.md）与历史归档（archive/）
-public/ - 静态品牌资产（AIEvalIndex 汇聚棱镜标记，Header 与 favicon 共用）
+public/ - 站点静态资产（AIEvalIndex 汇聚棱镜标记 + Moonshot 模型厂商标记）
 src/ - App Router、组件、类型化内容与领域工具（4 模块: app/components/content/lib）
 tests/ - 语言策略单测、端到端流程与当前批准的视觉基线
 </directory>

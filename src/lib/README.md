@@ -3,7 +3,7 @@
 > L2 | 父级: ../README.md
 
 成员清单
-contracts.ts: Locale、Dictionary、ModelEvaluation 与共享类型契约
+contracts.ts: Locale、Dictionary（含编辑式 Footer 导航文案）、ModelEvaluation（含社区结论与情绪分布）及共享类型契约
 i18n.ts: 六语言字典合并与英文兜底入口
 locale.ts: 语言合法性、地区匹配与优先级决策纯函数
 model.ts: 模型内容访问与 LocalizedText 英文兜底
