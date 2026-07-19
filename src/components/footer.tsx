@@ -1,18 +1,18 @@
 /**
- * [INPUT]: 依赖 next/image、共享品牌资产、当前 Locale、ModelEvaluation 的首要数据源与 Dictionary 页脚文案
+ * [INPUT]: 依赖 next/image、共享品牌资产、ModelEvaluation 的首要数据源与 Dictionary 页脚文案
  * [OUTPUT]: 对外提供与正文同版心的编辑式 Footer：品牌说明、真实页内导航、数据来源、更新时间与版权信息
  * [POS]: src/components 的详情页 Footer Server Component，以共享字体与宽度 token 收束页面信息层级
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 import Image from "next/image";
+import Link from "next/link";
 
-import type { Dictionary, Locale, ModelEvaluation } from "@/lib/contracts";
-import { localePath, SITE_ICON } from "@/lib/site";
+import type { Dictionary, ModelEvaluation } from "@/lib/contracts";
+import { SITE_ICON } from "@/lib/site";
 
 interface FooterProps {
   dictionary: Dictionary;
   evaluation: ModelEvaluation;
-  locale: Locale;
 }
 
 interface FooterLink {
@@ -20,17 +20,17 @@ interface FooterLink {
   label: string;
 }
 
-function BrandIntro({ description, locale }: { description: string; locale: Locale }) {
+function BrandIntro({ description }: { description: string }) {
   return (
     <div className="max-w-[360px] lg:max-w-[390px]">
       <hr className="mb-6 w-12 border-0 border-t-[3px] border-accent" />
-      <a aria-label="AIEvalIndex" className="group inline-flex items-center gap-2.5" href={localePath(locale)}>
+      <Link aria-label="AIEvalIndex" className="group inline-flex items-center gap-2.5" href="/">
         <Image alt="" aria-hidden="true" className="size-8 shrink-0" height={32} src={SITE_ICON.url} unoptimized width={32} />
         <span className="translate-y-px whitespace-nowrap font-serif text-[27px] leading-none tracking-[-.03em] text-ink">
           <span className="font-semibold">AI Eval</span>{" "}
           <span className="font-normal italic transition-colors group-hover:text-ink-soft">Index</span>
         </span>
-      </a>
+      </Link>
       <p className="mt-5 font-serif text-[16px] leading-[1.55] text-ink-soft sm:text-[17px]">{description}</p>
     </div>
   );
@@ -68,7 +68,7 @@ function FooterMeta({ dictionary, evaluation }: Pick<FooterProps, "dictionary" |
   );
 }
 
-export function Footer({ dictionary, evaluation, locale }: FooterProps) {
+export function Footer({ dictionary, evaluation }: FooterProps) {
   const exploreLinks = [
     { href: "#models", label: dictionary.footer.models },
     { href: "#leaderboard", label: dictionary.footer.leaderboards },
@@ -85,7 +85,7 @@ export function Footer({ dictionary, evaluation, locale }: FooterProps) {
       <div className="footer-primary mx-auto max-w-5xl px-5 py-10 sm:py-12">
         <div className="footer-primary-grid grid gap-9 sm:grid-cols-2 sm:gap-x-14 sm:gap-y-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,.72fr)_minmax(0,.72fr)] lg:gap-14">
           <div className="sm:col-span-2 lg:col-span-1">
-            <BrandIntro description={dictionary.footer.description} locale={locale} />
+            <BrandIntro description={dictionary.footer.description} />
           </div>
           <FooterLinkGroup label={dictionary.footer.explore} links={exploreLinks} />
           <FooterLinkGroup label={dictionary.footer.about} links={aboutLinks} />

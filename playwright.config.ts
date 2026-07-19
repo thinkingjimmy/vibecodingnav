@@ -18,7 +18,7 @@ export default defineConfig({
   },
   webServer: {
     command: "./node_modules/.bin/serve out -l 8080",
-    url: "http://127.0.0.1:8080/en/",
+    url: "http://127.0.0.1:8080/models/kimi-k3/",
     reuseExistingServer: true,
   },
 });

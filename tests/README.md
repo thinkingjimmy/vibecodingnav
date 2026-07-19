@@ -4,9 +4,9 @@
 
 ## 文件
 
-- locale.test.ts: 语言元数据完整性、记忆优先级、地区归并与默认语言（Vitest）
+- locale.test.ts: 语言元数据、默认语言模型路径与模型 slug 注册表（Vitest）
 - i18n.test.ts: UI 字典和内容字段英文兜底（Vitest）
-- site.spec.ts: 六语言路由、品牌一致性、语言菜单、键盘交互、SEO、响应式与截图回归（Playwright）
+- site.spec.ts: 根占位、六语言模型路由、模型/语言菜单、品牌一致性、SEO、响应式与截图回归（Playwright）
 - baseline/: 视觉回归金本，仅在确认视觉变更后更新
 
 ## 运行

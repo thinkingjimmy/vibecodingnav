@@ -1,5 +1,5 @@
 /**
- * [INPUT]: 依赖 next/image、public/moonshot.svg、ModelEvaluation 与 Dictionary 的模型信息、性能指标和本地化文案
+ * [INPUT]: 依赖 next/image、public/model-logos/moonshot.svg、ModelEvaluation 与 Dictionary 的模型信息、性能指标和本地化文案
  * [OUTPUT]: 对外提供 Models 页内导航目标、与标题基线对齐的 Moonshot 标记 + 超大标题、右对齐发布元信息、规格条与紧凑两列到四列指标卡
  * [POS]: src/components 的详情页 Hero Server Component
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
@@ -54,7 +54,7 @@ export function Hero({ dictionary, evaluation }: HeroProps) {
           aria-hidden="true"
           className="size-11 shrink-0 md:size-14"
           height={56}
-          src="/moonshot.svg"
+          src="/model-logos/moonshot.svg"
           unoptimized
           width={56}
         />

@@ -3,10 +3,10 @@
 > L2 | 父级: ../README.md
 
 成员清单
-app/: Next.js App Router，负责根路径检测、六语言静态路由、Metadata 与全局样式
-components/: 页面区块、两个最小客户端交互叶子与 shadcn Base UI primitives
-content/: 类型化模型数据和六语言 UI 字典
-lib/: 领域契约、语言决策、内容访问与站点常量
+app/: Next.js App Router，负责根占位、默认/本地化动态模型路由、Metadata 与全局样式
+components/: 页面区块、三个最小客户端交互叶子与 shadcn Base UI primitives
+content/: 类型化模型详情、Header 模型目录和六语言 UI 字典
+lib/: 领域契约、语言决策、模型注册表与站点路径常量
 
 依赖方向
 content → lib/contracts；app/components → lib；app → components。禁止 content 反向依赖 UI。

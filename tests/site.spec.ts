@@ -3,6 +3,14 @@ import { expect, test } from "@playwright/test";
 
 const locales = ["en", "zh-CN", "ja", "ko", "es", "fr"] as const;
 const nativeNames = ["English", "中文", "日本語", "한국어", "Español", "Français"] as const;
+const modelRoutes = {
+  en: "/models/kimi-k3/",
+  "zh-CN": "/zh-CN/models/kimi-k3/",
+  ja: "/ja/models/kimi-k3/",
+  ko: "/ko/models/kimi-k3/",
+  es: "/es/models/kimi-k3/",
+  fr: "/fr/models/kimi-k3/",
+} as const;
 
 const cases = [
   { name: "en-desktop", locale: "en", viewport: { width: 1280, height: 900 } },
@@ -14,7 +22,7 @@ const cases = [
 for (const current of cases) {
   test(`visual ${current.name}`, async ({ browser }) => {
     const page = await browser.newPage({ viewport: current.viewport });
-    await page.goto(`/${current.locale}/`);
+    await page.goto(modelRoutes[current.locale]);
     await page.waitForLoadState("networkidle");
     await page.evaluate(async () => document.fonts.ready);
     await expect(page).toHaveScreenshot(`${current.name}.png`, {
@@ -31,7 +39,7 @@ for (const current of [
 ] as const) {
   test(`visual ${current.name}`, async ({ browser }) => {
     const page = await browser.newPage({ viewport: current.viewport });
-    await page.goto("/en/");
+    await page.goto(modelRoutes.en);
     await page.waitForLoadState("networkidle");
     await page.evaluate(async () => document.fonts.ready);
     await page.getByRole("button", { name: "Language: English" }).click();
@@ -44,30 +52,45 @@ for (const current of [
   });
 }
 
+test("visual model-menu-desktop", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(modelRoutes.en);
+  await page.waitForLoadState("networkidle");
+  await page.evaluate(async () => document.fonts.ready);
+  await page.getByRole("button", { name: "Models: Kimi K3" }).click();
+  await expect(page).toHaveScreenshot("model-menu-desktop.png", {
+    animations: "disabled",
+    fullPage: false,
+  });
+});
+
 for (const locale of locales) {
   test(`${locale} 静态页面可达`, async ({ page }) => {
-    await page.goto(`/${locale}/`);
+    await page.goto(modelRoutes[locale]);
     await expect(page.locator("html")).toHaveAttribute("lang", locale);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Kimi K3");
   });
 }
 
-test("根路径优先使用 localStorage", async ({ page }) => {
+test("根路径显示 noindex 占位与模型入口", async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("lang", "fr"));
   await page.goto("/");
-  await expect(page).toHaveURL(/\/fr\/$/);
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Home is coming soon.");
+  await expect(page.getByRole("link", { name: /View Kimi K3/ })).toHaveAttribute("href", modelRoutes.en);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
 });
 
-test("根路径归并浏览器中文地区", async ({ browser }) => {
-  const context = await browser.newContext({ locale: "zh-TW" });
-  const page = await context.newPage();
-  await page.goto("/");
-  await expect(page).toHaveURL(/\/zh-CN\/$/);
-  await context.close();
+test("旧 locale 首页不再承载模型内容", async ({ page }) => {
+  for (const route of ["/en/", "/zh-CN/"]) {
+    await page.goto(route);
+    await expect(page.getByRole("heading", { level: 1, name: "Kimi K3" })).toHaveCount(0);
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+  }
 });
 
 test("语言选择器写入记忆并导航", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const header = page.locator("header");
   const trigger = page.getByRole("button", { name: "Language: English" });
 
@@ -84,7 +107,7 @@ test("语言选择器写入记忆并导航", async ({ page }) => {
   await expect(page.getByRole("menuitemradio", { name: "English" })).toHaveAttribute("aria-checked", "true");
 
   await page.getByRole("menuitemradio", { name: "中文" }).click();
-  await expect(page).toHaveURL(/\/zh-CN\/$/);
+  await expect(page).toHaveURL(/\/zh-CN\/models\/kimi-k3\/$/);
   await expect(page.evaluate(() => localStorage.getItem("lang"))).resolves.toBe("zh-CN");
   const nextTrigger = page.getByRole("button", { name: "语言: 中文" });
   await expect(nextTrigger).toHaveText("");
@@ -92,7 +115,7 @@ test("语言选择器写入记忆并导航", async ({ page }) => {
 });
 
 test("语言菜单支持键盘开启、导航与关闭", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const trigger = page.getByRole("button", { name: "Language: English" });
   await trigger.focus();
   await page.keyboard.press("Enter");
@@ -104,23 +127,24 @@ test("语言菜单支持键盘开启、导航与关闭", async ({ page }) => {
 });
 
 test("canonical 与 hreflang 完整", async ({ page }) => {
-  await page.goto("/en/");
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://aievalindex.vercel.app/en/");
+  await page.goto(modelRoutes.en);
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://aievalindex.vercel.app/models/kimi-k3/");
   await expect(page.locator('link[rel="alternate"]')).toHaveCount(7);
-  await expect(page.locator('link[hreflang="x-default"]')).toHaveAttribute("href", "https://aievalindex.vercel.app/en/");
+  await expect(page.locator('link[hreflang="zh-CN"]')).toHaveAttribute("href", "https://aievalindex.vercel.app/zh-CN/models/kimi-k3/");
+  await expect(page.locator('link[hreflang="x-default"]')).toHaveAttribute("href", "https://aievalindex.vercel.app/models/kimi-k3/");
 });
 
 test("Header 与浏览器标签共享品牌图标", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   await expect(page.locator('header img[src="/aievalindex-mark.png"]')).toHaveCount(1);
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/aievalindex-mark.png");
 });
 
 test("Hero 标题使用 Moonshot 模型厂商标记", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const hero = page.locator("#models");
 
-  await expect(hero.locator('img[src="/moonshot.svg"]')).toHaveCount(1);
+  await expect(hero.locator('img[src="/model-logos/moonshot.svg"]')).toHaveCount(1);
   await expect(hero.getByRole("heading", { level: 1 })).toHaveText("Kimi K3");
   await expect(hero.locator(".hero-model-lockup")).toHaveCSS("align-items", "baseline");
   await expect(hero.locator("dl")).toHaveCSS("text-align", "right");
@@ -129,7 +153,7 @@ test("Hero 标题使用 Moonshot 模型厂商标记", async ({ page }) => {
 
 test("指标卡在中等宽度保持两列，宽屏展开四列且标题区对齐", async ({ page }) => {
   await page.setViewportSize({ width: 876, height: 844 });
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const stats = page.locator(".hero-stats");
 
   const mediumLayout = await stats.evaluate((grid) => {
@@ -174,10 +198,10 @@ test("指标卡在中等宽度保持两列，宽屏展开四列且标题区对�
 
 test("Header 桌面端主导航指向真实页内区块", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const navigation = page.getByRole("navigation", { name: "Primary" });
 
-  await expect(navigation.getByRole("link", { name: "Models" })).toHaveAttribute("href", "#models");
+  await expect(navigation.getByRole("button", { name: "Models: Kimi K3" })).toBeVisible();
   await expect(navigation.getByRole("link", { name: "Leaderboard" })).toHaveAttribute("href", "#leaderboard");
   await expect(navigation.getByRole("link", { name: "Methodology" })).toHaveAttribute("href", "#methodology");
   await expect(page.locator("#models, #leaderboard, #methodology")).toHaveCount(3);
@@ -186,8 +210,41 @@ test("Header 桌面端主导航指向真实页内区块", async ({ page }) => {
   await expect(navigation).toBeHidden();
 });
 
+test("Header 模型菜单按厂商分组并只链接已收录模型", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(modelRoutes.en);
+  const trigger = page.getByRole("button", { name: "Models: Kimi K3" });
+  await trigger.click();
+
+  const menu = page.getByRole("menu");
+  await expect(menu).toBeVisible();
+  await expect(menu.getByRole("group")).toHaveCount(4);
+  await expect(menu.getByRole("menuitem")).toHaveCount(10);
+  await expect(menu.locator('[role="menuitem"][aria-disabled="true"]')).toHaveCount(9);
+  await expect(menu.locator(`a[href="${modelRoutes.en}"][aria-current="page"]`)).toContainText("Kimi K3");
+  await expect(menu.getByText("GPT-5.6", { exact: true })).toBeVisible();
+  await expect(menu.getByText("Claude Opus 4.8", { exact: true })).toBeVisible();
+  await expect(menu.getByText("Gemini 3.5 Flash", { exact: true })).toBeVisible();
+  for (const logo of ["openai.svg", "claude-color.svg", "moonshot.svg", "gemini-color.svg"]) {
+    await expect(menu.locator(`img[src="/model-logos/${logo}"]`)).toHaveCount(1);
+  }
+
+  const box = await menu.boundingBox();
+  expect(box).not.toBeNull();
+  expect(box!.x).toBeGreaterThanOrEqual(0);
+  expect(box!.x + box!.width).toBeLessThanOrEqual(1280);
+  await expect(menu.locator(".grid").first()).toHaveCSS("grid-template-columns", /\S+ \S+ \S+/);
+
+  await page.keyboard.press("Escape");
+  await expect(trigger).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(menu.locator(`a[href="${modelRoutes.en}"]`)).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(trigger).toBeFocused();
+});
+
 test("Header 置顶、背景一致且品牌说明归入 Footer", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const description = "An independent, hand-curated index of frontier model evaluations — every number links back to its source.";
   const header = page.locator("header");
   const [headerBackground, bodyBackground] = await Promise.all([
@@ -204,7 +261,7 @@ test("Header 置顶、背景一致且品牌说明归入 Footer", async ({ page }
 
 test("移动端仅跑分容器横向滚动", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const widths = await page.evaluate(() => {
     const scroller = document.querySelector<HTMLElement>(".benchmark-scroll");
     const tableHead = scroller?.querySelector("thead");
@@ -222,7 +279,7 @@ test("移动端仅跑分容器横向滚动", async ({ page }) => {
 
 test("跑分表头滚动时吸附在全局 Header 下方", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 700 });
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const header = page.locator("header");
   const tableHead = page.locator("#leaderboard thead");
   const benchmarkHeader = tableHead.getByRole("columnheader", { name: "Benchmark" });
@@ -242,7 +299,7 @@ test("跑分表头滚动时吸附在全局 Header 下方", async ({ page }) => {
 });
 
 test("跑分表以图标承载注释和来源", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const row = page.getByRole("row").filter({ hasText: "Intelligence Index v4.1" });
   const note = row.getByRole("button", { name: /Benchmark note:/ });
 
@@ -254,7 +311,7 @@ test("跑分表以图标承载注释和来源", async ({ page }) => {
 });
 
 test("跑分区使用比较标题并解释加粗规则", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const leaderboard = page.locator("#leaderboard");
 
   await expect(leaderboard.getByRole("heading", { level: 2 })).toHaveText("Kimi K3 vs. frontier anchors");
@@ -265,7 +322,7 @@ test("跑分区使用比较标题并解释加粗规则", async ({ page }) => {
 });
 
 test("跑分表只加粗每行最佳成绩", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const intelligence = page.getByRole("row").filter({ hasText: "Intelligence Index v4.1" });
   const programBench = page.getByRole("row").filter({ hasText: "Program Bench" });
 
@@ -275,12 +332,12 @@ test("跑分表只加粗每行最佳成绩", async ({ page }) => {
 });
 
 test("跑分表底部统计每个模型的胜出项", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   await expect(page.getByRole("row", { name: "Wins 4 3 4 0" })).toBeVisible();
 });
 
 test("跑分比较筛选同步更新可见列、最佳成绩与胜出项", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const leaderboard = page.locator("#leaderboard");
   const opus = leaderboard.getByRole("button", { name: "Opus 4.8", exact: true });
   const gpt = leaderboard.getByRole("button", { name: "GPT-5.6", exact: true });
@@ -306,7 +363,7 @@ test("跑分比较筛选同步更新可见列、最佳成绩与胜出项", async
 });
 
 test("社区结论使用紧凑圆角评分分布与带分隔线双栏", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const verdict = page.locator("#community-verdict");
 
   await expect(verdict.getByText("Community Verdict", { exact: true })).toBeVisible();
@@ -323,7 +380,7 @@ test("社区结论使用紧凑圆角评分分布与带分隔线双栏", async ({
 
 test("社区原声流使用三列小圆角平台卡片与正负双色高亮", async ({ page }) => {
   await page.setViewportSize({ width: 875, height: 814 });
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const feed = page.locator("#community-reviews");
 
   await expect(feed.getByRole("heading", { level: 2 })).toHaveText("Straight from the feed");
@@ -346,7 +403,7 @@ test("社区原声流使用三列小圆角平台卡片与正负双色高亮", as
 
 test("社区原声流在移动端回落单列且不产生页面横向滚动", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const feed = page.locator("#community-reviews");
 
   await expect(feed.locator(".review-grid")).toHaveCSS("grid-template-columns", "350px");
@@ -354,12 +411,12 @@ test("社区原声流在移动端回落单列且不产生页面横向滚动", as
 });
 
 test("页脚使用品牌说明、真实页内导航与数据来源元信息", async ({ page }) => {
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const footer = page.getByRole("contentinfo");
   const footerPrimary = footer.locator(".footer-primary");
   const main = page.locator("main");
 
-  await expect(footer.getByRole("link", { name: "AIEvalIndex" })).toHaveAttribute("href", "/en/");
+  await expect(footer.getByRole("link", { name: "AIEvalIndex" })).toHaveAttribute("href", "/");
   await expect(footer.getByText("An independent, hand-curated index of frontier model evaluations — every number links back to its source.", { exact: true })).toBeVisible();
   await expect(footer.getByRole("navigation", { name: "Explore" }).getByRole("link")).toHaveCount(4);
   await expect(footer.getByRole("link", { name: "Reviews" })).toHaveAttribute("href", "#community-reviews");
@@ -375,7 +432,7 @@ test("页脚使用品牌说明、真实页内导航与数据来源元信息", as
 
 test("页脚在移动端顺序堆叠并保持正文版心", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/en/");
+  await page.goto(modelRoutes.en);
   const footer = page.getByRole("contentinfo");
 
   await expect(footer.locator(".footer-primary-grid")).toHaveCSS("grid-template-columns", "350px");

@@ -20,15 +20,24 @@
 ### 新增
 
 - Community Verdict 后新增 Community Reviews 原声流：以 blog / X / YouTube 三类平台化卡片呈现四条真实评价来源，关键短语按情绪色与当前语言高亮，并接入真实视频封面与来源外链。
+- Header 新增截图同构的 Models 厂商分组菜单：使用 OpenAI、Anthropic、Moonshot、Google 官方 logo 展示十个模型及分数，当前 Kimi K3 可访问，未收录模型保持明确不可用。
+- 根路径新增 noindex 临时占位与 Kimi K3 直接入口，为后续正式 Home 保留独立信息架构。
 
 ### 变更
 
+- 模型页迁入可扩展 slug 路由：英文使用 `/models/kimi-k3/`，其他五种语言使用 `/{locale}/models/kimi-k3/`；共享模型注册表、页面组装与 SEO metadata，canonical/hreflang 同步新 URL。
+- 语言菜单改为在相同模型 slug 间切换语言；Header/Footer 品牌入口统一指向根占位页。
+- Kimi Hero 与模型菜单统一使用 `public/model-logos/moonshot.svg`，厂商标记集中到模型 logo 资产目录。
 - Benchmark 对照表按编辑式参考重构：新增可开关的 Compare 胶囊筛选、来源虚线链接、蓝色 Kimi 表头与更明确的 Wins 收口线；隐藏比较项时同步重算行内最佳成绩与胜出项，并保留全局 Header 下方的吸顶表头。
 - 六语言字典和模型内容契约新增原声流标题、动作标签、卡片展示元数据与逐语言关键短语；Footer 的 Reviews 导航改为直达新板块。
 - Community Verdict 按编辑式参考收口：评分面板改为紧凑白底小圆角，情绪分布统一为绿/米灰/红，赢点与短板改为无底色符号加逐行分隔，并移除重复的 Review sources；Community Reviews 去除重复眉标，固定首排三列与次排居中结构，卡片改为 4px 小圆角并支持同卡正负双色短语高亮。
 - Community Reviews 的 Peter 视频卡片换用与参考一致的深绿斜纹编辑式封面；六语言新增原声流正负图例，评价数据契约由单组高亮升级为 positive / negative 双组关键短语。
 - 顶部四张指标卡改为紧凑圆角布局：数值与单位同排，排名徽章和进度条按强调/中性色区分，说明文案去除重复单位并保持同一底线。
 - Footer 收回与正文一致的 `max-w-5xl` 版心，品牌、说明、导航与元信息统一到页面既有的 Newsreader / JetBrains Mono 字阶；桌面改为紧凑三栏，移动端保持自然堆叠。
+
+### 移除
+
+- 移除旧的 `/en/`、`/zh-CN/` 等 locale 首页、根路径语言自动跳转组件与重复的 `public/moonshot.svg`。
 
 ## 2026-07-18
 

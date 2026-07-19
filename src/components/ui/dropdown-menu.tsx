@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 @base-ui/react/menu 的无障碍菜单 primitive、Phosphor 选中图标与 cn 类名合并工具
- * [OUTPUT]: 对外提供 DropdownMenu Root、Trigger、Content、RadioGroup 与 RadioItem 组件
+ * [OUTPUT]: 对外提供 DropdownMenu Root、Trigger、Content、Item、RadioGroup 与 RadioItem 组件
  * [POS]: src/components/ui 的 shadcn Base UI 菜单 primitive，为上层业务组件统一弹层与键盘交互
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -61,6 +61,19 @@ function DropdownMenuRadioGroup(props: MenuPrimitive.RadioGroup.Props) {
   );
 }
 
+function DropdownMenuItem({ className, ...props }: MenuPrimitive.Item.Props) {
+  return (
+    <MenuPrimitive.Item
+      className={cn(
+        "relative flex cursor-default select-none items-center rounded-sm px-2 py-2 text-ink outline-none focus:bg-subtle data-disabled:pointer-events-none data-disabled:opacity-50",
+        className,
+      )}
+      data-slot="dropdown-menu-item"
+      {...props}
+    />
+  );
+}
+
 function DropdownMenuRadioItem({
   children,
   className,
@@ -91,6 +104,7 @@ function DropdownMenuRadioItem({
 export {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,

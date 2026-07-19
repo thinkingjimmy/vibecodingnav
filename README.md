@@ -4,7 +4,7 @@ Next.js 16.2.10 + React 19.2.7 + TypeScript 6 + Tailwind CSS 4 + shadcn Base UI 
 
 <directory>
 docs/ - 开发状态（CURRENT.md）与历史归档（archive/）
-public/ - 站点静态资产（AIEvalIndex 汇聚棱镜标记 + Moonshot 模型厂商标记）
+public/ - 站点静态资产（AIEvalIndex 汇聚棱镜标记 + 模型厂商官方 logo + 评价封面）
 src/ - App Router、组件、类型化内容与领域工具（4 模块: app/components/content/lib）
 tests/ - 语言策略单测、端到端流程与当前批准的视觉基线
 </directory>
@@ -24,16 +24,19 @@ package.json - pnpm 脚本、Node 版本与依赖真相源
 
 ## 路由与数据流
 
-`/` 在浏览器端按 `localStorage.lang → navigator.languages → en` 跳转；`/[locale]/` 由 `generateStaticParams` 生成 en、zh-CN、ja、ko、es、fr 六份静态页面。
+`/` 是 noindex 临时占位；英文模型页不带语言前缀，其他五种语言由 `generateStaticParams` 生成带 locale 的独立静态 URL。
 
 ```text
 src/content/models + src/content/i18n
                  │ satisfies 类型契约
                  ▼
-             src/lib
-                 │ Server Components
+       src/lib/model + modelPath
+                 │ slug/locale 校验
                  ▼
-src/app/[locale] → out/{locale}/index.html
+        src/app/model-detail
+          ┌──────┴────────┐
+          ▼               ▼
+/models/{slug}/   /{locale}/models/{slug}/
 ```
 
 ## 开发与验收

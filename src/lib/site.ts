@@ -1,10 +1,11 @@
 /**
- * [INPUT]: 依赖 src/lib/contracts 的 Locale
- * [OUTPUT]: 对外提供站点 URL、共享品牌图标、语言名/国旗元数据与语言链接生成器
- * [POS]: src/lib 的站点级常量模块，集中消除路由与 SEO 硬编码
+ * [INPUT]: 依赖 Locale 与模型注册表的 ModelSlug
+ * [OUTPUT]: 对外提供站点 URL、共享品牌图标、语言元数据与默认语言无前缀的模型路径生成器
+ * [POS]: src/lib 的站点级常量模块，集中消除模型路由、语言路由与 SEO 硬编码
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 import type { Locale } from "./contracts";
+import type { ModelSlug } from "./model";
 
 export const SITE_URL = "https://aievalindex.vercel.app";
 
@@ -23,4 +24,5 @@ export const LOCALE_METADATA: Record<Locale, { flag: string; name: string }> = {
   fr: { flag: "🇫🇷", name: "Français" },
 };
 
-export const localePath = (locale: Locale) => `/${locale}/`;
+export const modelPath = (locale: Locale, slug: ModelSlug) =>
+  locale === "en" ? `/models/${slug}/` : `/${locale}/models/${slug}/`;

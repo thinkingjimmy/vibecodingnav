@@ -1,5 +1,54 @@
 # UI 设计 QA
 
+## Header 模型菜单
+
+- source visual truth: `/var/folders/rk/_1dby6rx6yn5w9_nxbvg42kr0000gn/T/codex-clipboard-e1548cbb-7f3f-4c52-9dd3-8da90a50b722.png`
+- implementation screenshot: `/private/tmp/aievalindex-model-menu-open-1280-final.png`
+- focused screenshot: `/private/tmp/aievalindex-model-menu-popup-final.png`
+- comparison canvas: `/private/tmp/aievalindex-model-menu-comparison-final.png`
+- source size: 1006 × 486；implementation popup: 1014 × 478；desktop viewport: 1280 × 900
+- mobile viewport: 390 × 844；主导航隐藏，仅保留品牌和语言入口
+- state: `/models/kimi-k3/`，英文，Models 菜单展开
+
+### Full-view comparison evidence
+
+- 桌面菜单保持参考图的三列结构，OpenAI、Anthropic、Moonshot 位于首行，Google 位于 OpenAI 下方；菜单完整落在视口内，页面无横向溢出。
+- 10 个模型的名称、顺序和分数严格匹配参考；Kimi K3 使用当前项金色状态并可访问，其余 9 项可见但不可访问。
+- 菜单使用现有 Base UI 导航原语，鼠标点击、方向键、Escape、焦点恢复、`aria-current` 与 `aria-disabled` 均有回归覆盖。
+
+### Focused region comparison evidence
+
+- 字体与排版：模型名为 25px Newsreader；厂商标题为 15px JetBrains Mono，分数为 16px JetBrains Mono；三列轨道各约 292px。
+- 间距与节奏：实现弹层比参考宽 8px、高度少 8px；发丝线、17px 行内纵向留白和 44px 列间距保持同一视觉密度。
+- 颜色：正向、普通与当前状态分别复用 `--model-positive`、`--model-neutral`、`--model-current`；弹层背景、边框和阴影继续使用全站语义 token。
+- 图像与图标：厂商图标使用 `public/model-logos/` 中的 OpenAI、Claude、Moonshot、Gemini 官方资产；下拉箭头使用 Phosphor Icons。
+- 文案：四个厂商和十个模型完全匹配参考；没有为未上线模型创建虚假链接或详情页。
+- 响应式：390px 下 Models、Leaderboard 和 Methodology 整组隐藏，品牌与语言入口稳定保留，页面横向溢出为 0。
+
+### Findings
+
+- 无 P0 / P1 / P2 偏差。
+- 可接受 P3：参考使用纯色方块概括厂商，实现遵循需求使用真实厂商 logo；弹层宽高与参考相差不超过 8px。
+- 内置 Browser 验证英文菜单、中文跳转、根占位页和移动端隐藏策略；控制台无 error，仅保留既存视频封面的 LCP eager 提示。
+
+### Comparison history
+
+- Pass 1（P2）：初版弹层约 960 × 404，模型字号和行距偏紧；将宽度、模型字号、行内留白与厂商间距调至当前尺度。
+- Pass 2：将参考与实现弹层放入同一 2044 × 486 对照画布复核，结构、内容密度和整体尺寸通过。
+
+### Implementation checklist
+
+- [x] 四厂商三列桌面布局与 Google 次行位置
+- [x] 十个模型名称、分数、状态与真实 Kimi K3 链接
+- [x] 公共厂商 logo 与新 Moonshot Hero 资产
+- [x] 键盘、焦点与 ARIA 语义
+- [x] 六语言同模型跳转和 slug 保持
+- [x] 1280px 桌面与 390px 移动端无溢出
+
+final result: passed
+
+---
+
 ## Hero 指标卡
 
 - source visual truth: `/var/folders/rk/_1dby6rx6yn5w9_nxbvg42kr0000gn/T/codex-clipboard-5cab768e-79e9-4a34-9e0c-be975ea9fe2d.png`
@@ -8,7 +57,7 @@
 - comparison canvas: `/private/tmp/aievalindex-hero-cards-comparison.png`
 - desktop viewport: 1024 × 700；来源图按 2× 密度归一化，并与 984px 实现卡片区同宽比较
 - mobile viewport: 390 × 844；两列状态
-- state: `/en/`，默认浅色主题，页面顶部
+- state: `/models/kimi-k3/`，默认浅色主题，页面顶部
 
 ### Full-view comparison evidence
 
@@ -55,7 +104,7 @@ final result: passed
 - comparison canvas: `/private/tmp/aievalindex-benchmark-filter-comparison-final.png`
 - desktop viewport: 1024 × 700；来源图按 144dpi / @2x 密度归一化为 1024px，并与实现区块同宽比较
 - mobile viewport: 390 × 844；三项比较全部选中，表格横向滚动位于起点
-- state: `/en/`，默认浅色主题，页面滚动至 `#leaderboard`
+- state: `/models/kimi-k3/`，默认浅色主题，页面滚动至 `#leaderboard`
 
 ## Full-view comparison evidence
 
@@ -159,7 +208,7 @@ final result: passed
 - comparison input: Codex 同一视觉输入并列查看参考图与内置 Browser 实现截图；不向仓库保存 QA 截图
 - desktop viewport: 1280 × 720；页面滚动至底部
 - mobile viewport: 390 × 844；页面滚动至底部
-- state: `/en/`，默认浅色主题
+- state: `/models/kimi-k3/`，默认浅色主题
 
 ### Full-view comparison evidence
 

@@ -1,6 +1,6 @@
 /**
- * [INPUT]: 依赖 Locale/LOCALES、语言元数据、localePath、Phosphor GlobeIcon 与 shadcn Base UI DropdownMenu
- * [OUTPUT]: 对外提供无底色地球触发、原生语言单选菜单、本地记忆与静态路由切换的 LanguageSelect
+ * [INPUT]: 依赖 Locale/LOCALES、ModelSlug、语言元数据、modelPath、Phosphor GlobeIcon 与 Base UI DropdownMenu
+ * [OUTPUT]: 对外提供无底色地球触发、原生语言单选菜单、本地记忆与同模型语言路由切换
  * [POS]: src/components 的语言交互叶子，只组合 UI primitive 与路由行为，不持有页面业务状态
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -16,18 +16,20 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LOCALES, type Locale } from "@/lib/contracts";
 import { isLocale } from "@/lib/locale";
-import { localePath, LOCALE_METADATA } from "@/lib/site";
+import type { ModelSlug } from "@/lib/model";
+import { modelPath, LOCALE_METADATA } from "@/lib/site";
 
 interface LanguageSelectProps {
   ariaLabel: string;
   locale: Locale;
+  modelSlug: ModelSlug;
 }
 
-export function LanguageSelect({ ariaLabel, locale }: LanguageSelectProps) {
+export function LanguageSelect({ ariaLabel, locale, modelSlug }: LanguageSelectProps) {
   const changeLocale = (nextLocale: string) => {
     if (!isLocale(nextLocale) || nextLocale === locale) return;
     localStorage.setItem("lang", nextLocale);
-    window.location.assign(localePath(nextLocale));
+    window.location.assign(modelPath(nextLocale, modelSlug));
   };
 
   const current = LOCALE_METADATA[locale];

@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Tailwind CSS 4 与 docs/archive/07-17-design-system.md 的设计基线
- * [OUTPUT]: 对外提供全站 reset、design tokens、主题映射与共享组件类，含可筛选跑分表样式及社区结论/原声流的正负情绪色
+ * [OUTPUT]: 对外提供全站 reset、design tokens、主题映射与共享组件类，含模型菜单状态、跑分表及社区评价语义色
  * [POS]: src/app 的全局样式真相源，被两套根布局共同加载
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -46,6 +46,9 @@
   --review-mixed: #C7C0AE;
   --review-critical: #C85A47;
   --review-negative-soft: #F8E1DA;
+  --model-positive: #2F8666;
+  --model-neutral: #B8B09F;
+  --model-current: #C99A32;
 
   --serif: "Newsreader", Georgia, serif;
   --sans:  "Inter", -apple-system, sans-serif;
