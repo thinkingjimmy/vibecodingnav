@@ -60,7 +60,7 @@ export function BenchmarkTable({ dictionary, evaluation }: BenchmarkTableProps) 
             id="benchmark-title"
           >
             {evaluation.model.name} {dictionary.bench.versus}{" "}
-            <span className="italic">{dictionary.bench.anchors}</span>
+            <span className="italic text-ink-soft">{dictionary.bench.anchors}</span>
           </h2>
           <p className="pb-1 font-mono text-[9px] font-medium uppercase tracking-[.12em] text-ink-faint sm:text-[10px]">
             {subtitleLead}

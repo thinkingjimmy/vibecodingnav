@@ -36,11 +36,11 @@ function ModelRow({
 }) {
   const content = (
     <>
-      <span aria-hidden="true" className={`size-2.5 shrink-0 rounded-full ${dotClasses[model.tone]}`} />
-      <span className="min-w-0 flex-1 truncate font-serif text-[23px] leading-none text-ink sm:text-[25px]">
+      <span aria-hidden="true" className={`size-2 shrink-0 rounded-full ${dotClasses[model.tone]}`} />
+      <span className="min-w-0 flex-1 truncate font-serif text-base leading-none text-ink">
         {model.name}
       </span>
-      <span className="font-mono text-[16px] leading-none text-ink-faint [font-feature-settings:'tnum']">
+      <span className="font-mono text-xs leading-none text-ink-faint [font-feature-settings:'tnum']">
         {model.score}
       </span>
     </>
@@ -50,7 +50,7 @@ function ModelRow({
     return (
       <DropdownMenuItem
         aria-disabled="true"
-        className="gap-3 rounded-sm px-0 py-[17px] data-disabled:opacity-100"
+        className="gap-2.5 rounded-sm px-0 py-2 data-disabled:opacity-100"
         disabled
       >
         {content}
@@ -60,7 +60,7 @@ function ModelRow({
 
   return (
     <DropdownMenuItem
-      className="gap-3 rounded-sm px-0 py-[17px] focus:bg-subtle"
+      className="gap-2.5 rounded-sm px-0 py-2 focus:bg-subtle"
       render={
         <a
           aria-current={model.slug === currentModelSlug ? "page" : undefined}
@@ -103,20 +103,20 @@ export function ModelMenu({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="center"
-        className="w-[min(1014px,calc(100vw-32px))] rounded-sm border-hairline bg-elevated p-5 shadow-[0_12px_36px_rgba(56,48,35,.12)] sm:p-6"
+        className="w-[min(760px,calc(100vw-32px))] rounded-sm border-hairline bg-elevated p-4 shadow-[0_12px_36px_rgba(56,48,35,.12)]"
         sideOffset={14}
       >
-        <div className="grid grid-cols-3 gap-x-11 gap-y-7">
+        <div className="grid grid-cols-3 gap-x-6 gap-y-4">
           {MODEL_CATALOG.map((group) => {
             const headingId = `model-vendor-${group.vendor.toLowerCase()}`;
             return (
               <div aria-labelledby={headingId} key={group.vendor} role="group">
-                <div className="flex items-center gap-3 border-b border-hairline pb-3">
-                  <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-subtle">
+                <div className="flex items-center gap-2.5 border-b border-hairline pb-2">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-subtle">
                     <Image
                       alt=""
                       aria-hidden="true"
-                      className="size-[18px] object-contain"
+                      className="size-4 object-contain"
                       height={20}
                       src={group.logo}
                       unoptimized
@@ -124,13 +124,13 @@ export function ModelMenu({
                     />
                   </span>
                   <h2
-                    className="font-mono text-[15px] font-medium uppercase tracking-[.14em] text-ink"
+                    className="font-mono text-xs font-medium uppercase tracking-[.14em] text-ink"
                     id={headingId}
                   >
                     {group.vendor}
                   </h2>
                 </div>
-                <div className="pt-3">
+                <div className="pt-2">
                   {group.models.map((model) => (
                     <ModelRow
                       currentModelSlug={currentModelSlug}

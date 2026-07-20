@@ -140,12 +140,16 @@ test("Header 与浏览器标签共享品牌图标", async ({ page }) => {
   await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/aievalindex-mark.png");
 });
 
-test("Hero 标题使用 Moonshot 模型厂商标记", async ({ page }) => {
+test("Hero 使用 Moonshot 厂商标记并链接官网", async ({ page }) => {
   await page.goto(modelRoutes.en);
   const hero = page.locator("#models");
+  const vendorLink = hero.getByRole("link", { name: "Moonshot AI" });
 
   await expect(hero.locator('img[src="/model-logos/moonshot.svg"]')).toHaveCount(1);
   await expect(hero.getByRole("heading", { level: 1 })).toHaveText("Kimi K3");
+  await expect(vendorLink).toHaveAttribute("href", "https://www.moonshot.ai/");
+  await expect(vendorLink).toHaveAttribute("target", "_blank");
+  await expect(vendorLink).toHaveAttribute("rel", "noopener");
   await expect(hero.locator(".hero-model-lockup")).toHaveCSS("align-items", "baseline");
   await expect(hero.locator("dl")).toHaveCSS("text-align", "right");
   await expect(hero.locator("dl")).toHaveCSS("justify-items", "end");
@@ -200,8 +204,13 @@ test("Header 桌面端主导航指向真实页内区块", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(modelRoutes.en);
   const navigation = page.getByRole("navigation", { name: "Primary" });
+  const modelsTrigger = navigation.getByRole("button", { name: "Models: Kimi K3" });
+  const languageTrigger = page.getByRole("button", { name: "Language: English" });
 
-  await expect(navigation.getByRole("button", { name: "Models: Kimi K3" })).toBeVisible();
+  await expect(modelsTrigger).toBeVisible();
+  expect(await languageTrigger.evaluate((element) => getComputedStyle(element).color)).toBe(
+    await modelsTrigger.evaluate((element) => getComputedStyle(element).color),
+  );
   await expect(navigation.getByRole("link", { name: "Leaderboard" })).toHaveAttribute("href", "#leaderboard");
   await expect(navigation.getByRole("link", { name: "Methodology" })).toHaveAttribute("href", "#methodology");
   await expect(page.locator("#models, #leaderboard, #methodology")).toHaveCount(3);
@@ -225,6 +234,9 @@ test("Header 模型菜单按厂商分组并只链接已收录模型", async ({ p
   await expect(menu.getByText("GPT-5.6", { exact: true })).toBeVisible();
   await expect(menu.getByText("Claude Opus 4.8", { exact: true })).toBeVisible();
   await expect(menu.getByText("Gemini 3.5 Flash", { exact: true })).toBeVisible();
+  await expect(menu.getByRole("heading", { name: "OpenAI" })).toHaveCSS("font-size", "12px");
+  await expect(menu.getByText("GPT-5.6", { exact: true })).toHaveCSS("font-size", "16px");
+  await expect(menu.getByText("58", { exact: true })).toHaveCSS("font-size", "12px");
   for (const logo of ["openai.svg", "claude-color.svg", "moonshot.svg", "gemini-color.svg"]) {
     await expect(menu.locator(`img[src="/model-logos/${logo}"]`)).toHaveCount(1);
   }
@@ -233,6 +245,8 @@ test("Header 模型菜单按厂商分组并只链接已收录模型", async ({ p
   expect(box).not.toBeNull();
   expect(box!.x).toBeGreaterThanOrEqual(0);
   expect(box!.x + box!.width).toBeLessThanOrEqual(1280);
+  expect(box!.width).toBeLessThanOrEqual(760);
+  expect(box!.height).toBeLessThanOrEqual(320);
   await expect(menu.locator(".grid").first()).toHaveCSS("grid-template-columns", /\S+ \S+ \S+/);
 
   await page.keyboard.press("Escape");
@@ -313,8 +327,10 @@ test("跑分表以图标承载注释和来源", async ({ page }) => {
 test("跑分区使用比较标题并解释加粗规则", async ({ page }) => {
   await page.goto(modelRoutes.en);
   const leaderboard = page.locator("#leaderboard");
+  const title = leaderboard.getByRole("heading", { level: 2 });
 
-  await expect(leaderboard.getByRole("heading", { level: 2 })).toHaveText("Kimi K3 vs. frontier anchors");
+  await expect(title).toHaveText("Kimi K3 vs. frontier anchors");
+  await expect(title.locator("span")).toHaveCSS("color", "rgb(90, 85, 76)");
   await expect(leaderboard.getByText("Higher is better · best in row bold", { exact: true })).toBeVisible();
   await expect(leaderboard.locator("strong")).toHaveText("best in row bold");
   await expect(leaderboard.locator("strong")).toHaveCSS("font-weight", "700");
@@ -364,9 +380,22 @@ test("跑分比较筛选同步更新可见列、最佳成绩与胜出项", async
 
 test("社区结论使用紧凑圆角评分分布与带分隔线双栏", async ({ page }) => {
   await page.goto(modelRoutes.en);
+  const leaderboard = page.locator("#leaderboard");
   const verdict = page.locator("#community-verdict");
+  const benchmarkLabel = leaderboard.getByText("Benchmarks", { exact: true });
+  const verdictLabel = verdict.getByText("Community Verdict", { exact: true });
 
-  await expect(verdict.getByText("Community Verdict", { exact: true })).toBeVisible();
+  await expect(verdictLabel).toBeVisible();
+  expect(await verdictLabel.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return [style.color, style.fontFamily, style.fontSize, style.fontWeight, style.letterSpacing];
+  })).toEqual(
+    await benchmarkLabel.evaluate((element) => {
+      const style = getComputedStyle(element);
+      return [style.color, style.fontFamily, style.fontSize, style.fontWeight, style.letterSpacing];
+    }),
+  );
+  await expect(verdict.getByRole("heading", { level: 2 })).toHaveCSS("margin-top", "8px");
   await expect(verdict.getByRole("heading", { level: 2 })).toHaveText("Admired, with caveats");
   await expect(verdict.getByRole("img", { name: "3.8 / 5 · 1 rave, 5 mixed, 0 critical" })).toBeVisible();
   await expect(verdict.getByText("Frontier-tier, and open", { exact: true })).toBeVisible();

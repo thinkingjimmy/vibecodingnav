@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 next/image、public/model-logos/moonshot.svg、ModelEvaluation 与 Dictionary 的模型信息、性能指标和本地化文案
- * [OUTPUT]: 对外提供 Models 页内导航目标、与标题基线对齐的 Moonshot 标记 + 超大标题、右对齐发布元信息、规格条与紧凑两列到四列指标卡
+ * [OUTPUT]: 对外提供 Models 页内导航目标、与标题基线对齐的 Moonshot 标记 + 超大标题、可新页访问官网的厂商署名、右对齐发布元信息、规格条与紧凑两列到四列指标卡
  * [POS]: src/components 的详情页 Hero Server Component
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -63,7 +63,16 @@ export function Hero({ dictionary, evaluation }: HeroProps) {
         </h1>
       </div>
       <p className="mt-3 font-serif text-[19px] italic text-ink-soft">
-        {dictionary.hero.by} {model.vendor} · {model.params} {model.architecture} · {model.license}
+        {dictionary.hero.by}{" "}
+        <a
+          className="rounded-sm transition-colors hover:text-accent-text focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          href="https://www.moonshot.ai/"
+          rel="noopener"
+          target="_blank"
+        >
+          {model.vendor}
+        </a>{" "}
+        · {model.params} {model.architecture} · {model.license}
       </p>
       <div className="mt-6 flex flex-wrap gap-x-9 gap-y-2">
         {specs.map(([label, value]) => (

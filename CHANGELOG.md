@@ -19,6 +19,7 @@
 
 ### 新增
 
+- Kimi K3 Hero 的 Moonshot AI 厂商署名新增官网外链，并在新页面安全打开。
 - Community Verdict 后新增 Community Reviews 原声流：以 blog / X / YouTube 三类平台化卡片呈现四条真实评价来源，关键短语按情绪色与当前语言高亮，并接入真实视频封面与来源外链。
 - Header 新增截图同构的 Models 厂商分组菜单：使用 OpenAI、Anthropic、Moonshot、Google 官方 logo 展示十个模型及分数，当前 Kimi K3 可访问，未收录模型保持明确不可用。
 - 根路径新增 noindex 临时占位与 Kimi K3 直接入口，为后续正式 Home 保留独立信息架构。

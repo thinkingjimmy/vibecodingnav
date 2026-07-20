@@ -40,7 +40,7 @@ export function LanguageSelect({ ariaLabel, locale, modelSlug }: LanguageSelectP
         render={
           <button
             aria-label={`${ariaLabel}: ${current.name}`}
-            className="inline-flex size-8 shrink-0 cursor-pointer items-center justify-center text-ink-soft transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            className="inline-flex size-8 shrink-0 cursor-pointer items-center justify-center text-ink-faint transition-colors hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             type="button"
           />
         }

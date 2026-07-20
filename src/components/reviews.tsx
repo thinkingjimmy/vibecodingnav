@@ -98,8 +98,8 @@ export function Reviews({ dictionary, evaluation, locale }: ReviewsProps) {
   const { verdict } = evaluation;
   return (
     <section aria-labelledby="community-verdict-title" className="mt-14" id="community-verdict">
-      <p className="font-mono text-[10px] font-medium uppercase tracking-[.2em] text-ink-faint">{dictionary.reviews.title}</p>
-      <h2 className="mt-1 font-serif text-[30px] font-medium leading-none tracking-[-.02em] text-ink" id="community-verdict-title">
+      <p className="font-sans text-[11px] font-medium uppercase tracking-[.2em] text-accent-text">{dictionary.reviews.title}</p>
+      <h2 className="mt-2 font-serif text-[30px] font-medium leading-none tracking-[-.02em] text-ink" id="community-verdict-title">
         {localize(verdict.headline.lead, locale)}{" "}
         <span className="italic text-ink-soft">{localize(verdict.headline.qualifier, locale)}</span>
       </h2>
