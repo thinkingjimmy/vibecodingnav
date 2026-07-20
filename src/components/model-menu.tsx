@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖模型目录、Locale/ModelSlug、modelPath、next/image、Phosphor CaretDown 与 Base UI DropdownMenu
- * [OUTPUT]: 对外提供截图同构的桌面 Models 厂商分组菜单、当前模型链接与不可用模型状态
+ * [OUTPUT]: 对外提供截图同构的桌面 Models 厂商分组菜单、由 slug 推导的当前模型无障碍名称、当前模型链接与不可用模型状态
  * [POS]: src/components 的 Header 客户端交互叶子，只持有菜单开合与无障碍导航行为
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -82,12 +82,16 @@ export function ModelMenu({
   label: string;
   locale: Locale;
 }) {
+  const currentModelName = MODEL_CATALOG
+    .flatMap((group) => group.models)
+    .find((model) => model.slug === currentModelSlug)?.name ?? currentModelSlug;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
           <button
-            aria-label={`${label}: Kimi K3`}
+            aria-label={`${label}: ${currentModelName}`}
             className="header-nav-link group inline-flex cursor-pointer items-center gap-1.5"
             type="button"
           />

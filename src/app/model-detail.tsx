@@ -1,5 +1,5 @@
 /**
- * [INPUT]: 依赖模型注册表、六语言字典/路径、站点 SEO 常量与模型详情区块组件
+ * [INPUT]: 依赖模型注册表（含可选模型级 SEO）、六语言字典/路径、站点 SEO 常量与模型详情区块组件
  * [OUTPUT]: 对外提供共享模型详情页面组装器与 canonical/hreflang metadata 生成器
  * [POS]: src/app 的模型详情路由内核，被默认英文与本地化动态 slug 页面共同消费
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
@@ -14,18 +14,19 @@ import { ReviewFeed } from "@/components/review-feed";
 import { Reviews } from "@/components/reviews";
 import { LOCALES, type Locale } from "@/lib/contracts";
 import { getDictionary } from "@/lib/i18n";
-import { getModelEvaluation, type ModelSlug } from "@/lib/model";
+import { getModelEvaluation, localize, type ModelSlug } from "@/lib/model";
 import { modelPath, SITE_ICON, SITE_URL } from "@/lib/site";
 
 export function createModelMetadata(locale: Locale, slug: ModelSlug): Metadata {
   const dictionary = getDictionary(locale);
+  const evaluation = getModelEvaluation(slug);
   const languages = Object.fromEntries(
     LOCALES.map((item) => [item, `${SITE_URL}${modelPath(item, slug)}`]),
   );
 
   return {
-    title: dictionary.meta.title,
-    description: dictionary.meta.description,
+    title: evaluation?.meta ? localize(evaluation.meta.title, locale) : dictionary.meta.title,
+    description: evaluation?.meta ? localize(evaluation.meta.description, locale) : dictionary.meta.description,
     icons: {
       icon: SITE_ICON,
       shortcut: SITE_ICON,
@@ -50,7 +51,7 @@ export function ModelDetail({ locale, slug }: { locale: Locale; slug: ModelSlug 
     <>
       <Header dictionary={dictionary} locale={locale} modelSlug={slug} />
       <main className="mx-auto max-w-5xl px-5">
-        <Hero dictionary={dictionary} evaluation={evaluation} />
+        <Hero dictionary={dictionary} evaluation={evaluation} locale={locale} />
         <BenchmarkTable dictionary={dictionary} evaluation={evaluation} />
         <Reviews dictionary={dictionary} evaluation={evaluation} locale={locale} />
         <ReviewFeed dictionary={dictionary} evaluation={evaluation} locale={locale} />

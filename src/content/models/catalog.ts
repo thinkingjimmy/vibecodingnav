@@ -17,12 +17,12 @@ export interface ModelCatalogGroup {
   }>;
 }
 
-export const MODEL_CATALOG = [
+export const MODEL_CATALOG: ModelCatalogGroup[] = [
   {
     vendor: "OpenAI",
     logo: "/model-logos/openai.svg",
     models: [
-      { name: "GPT-5.6", score: 58, tone: "positive" },
+      { name: "GPT-5.6", score: 59, tone: "positive", slug: "gpt-5-6-sol" },
       { name: "GPT-5.5", score: 55, tone: "positive" },
       { name: "GPT-5.1 mini", score: 44, tone: "neutral" },
     ],
@@ -52,4 +52,4 @@ export const MODEL_CATALOG = [
       { name: "Gemini 3.5 Flash", score: 46, tone: "neutral" },
     ],
   },
-] satisfies ModelCatalogGroup[];
+];

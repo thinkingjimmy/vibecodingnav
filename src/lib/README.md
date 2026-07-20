@@ -3,10 +3,10 @@
 > L2 | 父级: ../README.md
 
 成员清单
-contracts.ts: Locale、Dictionary（含 Benchmark Compare 控件、Community Reviews 情绪图例与编辑式 Footer 文案）、ModelEvaluation（含指标单位/色调、社区结论、情绪分布与评价原声流正负关键短语）及共享类型契约
+contracts.ts: Locale、Dictionary（含 Benchmark Compare 控件、Community Reviews 情绪图例与编辑式 Footer 文案）、ModelEvaluation（含模型级 SEO、厂商身份、指标说明、社区结论、情绪分布与评价原声流正负关键短语）及共享类型契约
 i18n.ts: 六语言字典合并与英文兜底入口
 locale.ts: 受支持语言合法性判定纯函数
-model.ts: 模型 slug 注册表、内容查询与 LocalizedText 英文兜底
+model.ts: Kimi K3 与 GPT-5.6 Sol (max) 的 canonical slug 注册表、GPT-5.5 误命名路由兼容解析、内容查询与 LocalizedText 英文兜底
 site.ts: canonical 域名、共享品牌图标、语言元数据与默认语言无前缀的模型路径
 utils.ts: shadcn UI primitives 共用的 Tailwind 类名合并工具
 

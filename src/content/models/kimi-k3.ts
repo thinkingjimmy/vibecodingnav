@@ -13,6 +13,8 @@ const evaluation = {
     "name": "Kimi K3",
     "kicker": "Reasoning · Multimodal",
     "vendor": "Moonshot AI",
+    "vendorLogo": "/model-logos/moonshot.svg",
+    "vendorUrl": "https://www.moonshot.ai/",
     "params": "2.8T",
     "architecture": "MoE",
     "context": "1M",

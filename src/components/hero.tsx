@@ -1,15 +1,17 @@
 /**
- * [INPUT]: 依赖 next/image、public/model-logos/moonshot.svg、ModelEvaluation 与 Dictionary 的模型信息、性能指标和本地化文案
- * [OUTPUT]: 对外提供 Models 页内导航目标、与标题基线对齐的 Moonshot 标记 + 超大标题、可新页访问官网的厂商署名、右对齐发布元信息、规格条与紧凑两列到四列指标卡
+ * [INPUT]: 依赖 next/image、ModelEvaluation 的厂商身份/性能指标、Locale、Dictionary 与 localize
+ * [OUTPUT]: 对外提供 Models 页内导航目标、数据驱动的厂商标记 + 超大标题、可新页访问官网的厂商署名、发布/权重元信息、规格条与紧凑指标卡
  * [POS]: src/components 的详情页 Hero Server Component
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 import Image from "next/image";
-import type { Dictionary, ModelEvaluation } from "@/lib/contracts";
+import type { Dictionary, Locale, ModelEvaluation } from "@/lib/contracts";
+import { localize } from "@/lib/model";
 
 interface HeroProps {
   dictionary: Dictionary;
   evaluation: ModelEvaluation;
+  locale: Locale;
 }
 
 /* Newsreader 的 $ 是断笔画编辑字形，大字号下突兀；货币符号统一回落 Georgia 单笔画 */
@@ -26,7 +28,7 @@ function StatValue({ value }: { value: string }) {
     );
 }
 
-export function Hero({ dictionary, evaluation }: HeroProps) {
+export function Hero({ dictionary, evaluation, locale }: HeroProps) {
   const { model, performance } = evaluation;
   const specs = [
     [dictionary.hero.firstToken, performance.ttft],
@@ -45,7 +47,11 @@ export function Hero({ dictionary, evaluation }: HeroProps) {
           <dt className="text-right uppercase tracking-[.08em] text-ink-faint">{dictionary.hero.released}</dt>
           <dd className="font-medium text-ink">{model.released}</dd>
           <dt className="text-right uppercase tracking-[.08em] text-ink-faint">{dictionary.hero.weights}</dt>
-          <dd className="font-medium text-ink">{dictionary.hero.weightsDue} {model.openWeights.slice(5)}</dd>
+          <dd className="font-medium text-ink">
+            {/^\d{4}-/.test(model.openWeights)
+              ? `${dictionary.hero.weightsDue} ${model.openWeights.slice(5)}`
+              : model.openWeights}
+          </dd>
         </dl>
       </div>
       <div className="hero-model-lockup mt-2 flex items-baseline gap-3 md:gap-4">
@@ -54,7 +60,7 @@ export function Hero({ dictionary, evaluation }: HeroProps) {
           aria-hidden="true"
           className="size-11 shrink-0 md:size-14"
           height={56}
-          src="/model-logos/moonshot.svg"
+          src={model.vendorLogo ?? "/model-logos/moonshot.svg"}
           unoptimized
           width={56}
         />
@@ -66,7 +72,7 @@ export function Hero({ dictionary, evaluation }: HeroProps) {
         {dictionary.hero.by}{" "}
         <a
           className="rounded-sm transition-colors hover:text-accent-text focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
-          href="https://www.moonshot.ai/"
+          href={model.vendorUrl ?? "https://www.moonshot.ai/"}
           rel="noopener"
           target="_blank"
         >
@@ -98,8 +104,8 @@ export function Hero({ dictionary, evaluation }: HeroProps) {
             <div aria-hidden="true" className="stat-bar mt-1.5">
               <i className={stat.tone === "neutral" ? "stat-bar-neutral" : ""} style={{ width: `${stat.bar}%` }} />
             </div>
-            <div className="mt-2 truncate font-mono text-[10px] leading-[1.4] text-ink-faint [font-feature-settings:'tnum']" title={dictionary.stats[stat.subKey]}>
-              {dictionary.stats[stat.subKey]}
+            <div className="mt-2 truncate font-mono text-[10px] leading-[1.4] text-ink-faint [font-feature-settings:'tnum']" title={stat.sub ? localize(stat.sub, locale) : dictionary.stats[stat.subKey]}>
+              {stat.sub ? localize(stat.sub, locale) : dictionary.stats[stat.subKey]}
             </div>
           </div>
         ))}

@@ -12,6 +12,11 @@ const modelRoutes = {
   fr: "/fr/models/kimi-k3/",
 } as const;
 
+const gptRoutes = {
+  en: "/models/gpt-5-6-sol/",
+  "zh-CN": "/zh-CN/models/gpt-5-6-sol/",
+} as const;
+
 const cases = [
   { name: "en-desktop", locale: "en", viewport: { width: 1280, height: 900 } },
   { name: "zh-desktop", locale: "zh-CN", viewport: { width: 1280, height: 900 } },
@@ -155,6 +160,22 @@ test("Hero 使用 Moonshot 厂商标记并链接官网", async ({ page }) => {
   await expect(hero.locator("dl")).toHaveCSS("justify-items", "end");
 });
 
+test("GPT-5.6 Sol (max) 使用 OpenAI 身份、模型级 SEO 与专有权重状态", async ({ page }) => {
+  await page.goto(gptRoutes.en);
+  const hero = page.locator("#models");
+
+  await expect(page).toHaveTitle(/GPT-5\.6 Sol \(max\).*Intelligence, Speed & Price/);
+  await expect(hero.locator('img[src="/model-logos/openai.svg"]')).toHaveCount(1);
+  await expect(hero.getByRole("heading", { level: 1 })).toHaveText("GPT-5.6 Sol (max)");
+  await expect(hero.getByRole("link", { name: "OpenAI" })).toHaveAttribute("href", "https://openai.com/");
+  await expect(hero.getByText("Not available", { exact: true })).toBeVisible();
+  await expect(page.locator("#leaderboard tbody tr")).toHaveCount(3);
+
+  await page.goto(gptRoutes["zh-CN"]);
+  await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("GPT-5.6 Sol (max)");
+});
+
 test("指标卡在中等宽度保持两列，宽屏展开四列且标题区对齐", async ({ page }) => {
   await page.setViewportSize({ width: 876, height: 844 });
   await page.goto(modelRoutes.en);
@@ -229,8 +250,9 @@ test("Header 模型菜单按厂商分组并只链接已收录模型", async ({ p
   await expect(menu).toBeVisible();
   await expect(menu.getByRole("group")).toHaveCount(4);
   await expect(menu.getByRole("menuitem")).toHaveCount(10);
-  await expect(menu.locator('[role="menuitem"][aria-disabled="true"]')).toHaveCount(9);
+  await expect(menu.locator('[role="menuitem"][aria-disabled="true"]')).toHaveCount(8);
   await expect(menu.locator(`a[href="${modelRoutes.en}"][aria-current="page"]`)).toContainText("Kimi K3");
+  await expect(menu.locator(`a[href="${gptRoutes.en}"]`)).toContainText("GPT-5.6");
   await expect(menu.getByText("GPT-5.6", { exact: true })).toBeVisible();
   await expect(menu.getByText("Claude Opus 4.8", { exact: true })).toBeVisible();
   await expect(menu.getByText("Gemini 3.5 Flash", { exact: true })).toBeVisible();

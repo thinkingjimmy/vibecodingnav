@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 无运行时依赖，承接内容层与页面层共享的数据约束
- * [OUTPUT]: 对外提供 Locale、Dictionary（含跑分 Compare 与原声流情绪图例文案）、LocalizedText、带指标单位/色调和正负关键短语的 ModelEvaluation、DeepPartial 类型与 LOCALES 常量
+ * [OUTPUT]: 对外提供 Locale、Dictionary（含跑分 Compare 与原声流情绪图例文案）、LocalizedText、带厂商身份/指标说明/SEO 和正负关键短语的 ModelEvaluation、DeepPartial 类型与 LOCALES 常量
  * [POS]: src/lib 的领域契约中心，是内容模块与渲染组件之间的单一类型边界
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -88,10 +88,13 @@ export interface Dictionary {
 
 export interface ModelEvaluation {
   updated: string;
+  meta?: { title: LocalizedText; description: LocalizedText };
   model: {
     name: string;
     kicker: string;
     vendor: string;
+    vendorLogo?: string;
+    vendorUrl?: string;
     params: string;
     architecture: string;
     context: string;
@@ -111,6 +114,7 @@ export interface ModelEvaluation {
     tone: "accent" | "neutral";
     labelKey: keyof Dictionary["stats"];
     subKey: keyof Dictionary["stats"];
+    sub?: LocalizedText;
   }>;
   benchmarks: Array<{
     name: string;
