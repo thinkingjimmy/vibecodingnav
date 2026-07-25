@@ -1,15 +1,18 @@
 /**
- * [INPUT]: 依赖 src/lib/contracts 的 ModelEvaluation 类型，核心指标来自 2026-07-20 Artificial Analysis 指定页面快照
- * [OUTPUT]: 对外提供 GPT-5.6 Sol (max) 的厂商身份、模型级 SEO、顶部指标、对照数据、来源摘要与结论
+ * [INPUT]: 依赖 src/lib/contracts 的 ModelEvaluation 类型与共享 Intelligence Index；核心跑分来自 2026-07-24 OpenAI 发布页，运行指标来自 Artificial Analysis
+ * [OUTPUT]: 对外提供 GPT-5.6 Sol (max) 的厂商身份、模型级 SEO、官方核心跑分、独立运行指标、来源摘要与结论
  * [POS]: src/content/models 的 OpenAI 模型内容模块，被 src/lib/model.ts 注册并供六语言详情路由消费
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 import type { ModelEvaluation } from "@/lib/contracts";
+import { INTELLIGENCE_INDEX } from "./intelligence-index";
 
 const artificialAnalysisUrl = "https://artificialanalysis.ai/models/gpt-5-6-sol";
+const openAiLaunchUrl = "https://openai.com/zh-Hans-CN/index/gpt-5-6/";
+const intelligenceScore = String(INTELLIGENCE_INDEX["gpt-5-6-sol"]);
 
 const evaluation = {
-  updated: "2026-07-20",
+  updated: "2026-07-24",
 
   meta: {
     title: {
@@ -56,20 +59,20 @@ const evaluation = {
 
   anchors: [
     { name: "Claude Fable 5", label: "Fable 5" },
-    { name: "Kimi K3", label: "Kimi K3" },
+    { name: "GPT-5.5", label: "GPT-5.5" },
     { name: "Claude Opus 4.8", label: "Opus 4.8" },
   ],
 
   heroStats: [
     {
-      value: "59",
+      value: intelligenceScore,
       unit: "idx",
-      badge: "#2/187",
+      badge: "max effort",
       bar: 92,
       tone: "accent",
       labelKey: "intelligence",
       subKey: "intelligenceSub",
-      sub: { en: "leading tier · peer median 31", "zh-CN": "领先梯队 · 同类中位数 31" },
+      sub: { en: "OpenAI launch table · Fable 5 59.9", "zh-CN": "OpenAI 发布表 · Fable 5 为 59.9" },
     },
     {
       value: "62",
@@ -105,31 +108,103 @@ const evaluation = {
 
   benchmarks: [
     {
-      name: "Intelligence Index v4.1",
-      sourceLabel: "Artificial Analysis",
-      url: artificialAnalysisUrl,
-      score: "59",
-      detail: "#2 / 187",
-      peers: { "Claude Fable 5": "60", "Kimi K3": "57", "Claude Opus 4.8": "60" },
-      note: "Reasoning profile measured through OpenAI's first-party API",
+      name: "Artificial Analysis Intelligence Index v4.1",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: intelligenceScore,
+      detail: "Professional · Index score",
+      peers: { "Claude Fable 5": "59.9", "GPT-5.5": "54.8", "Claude Opus 4.8": "55.7" },
+      note: "OpenAI launch table · max reasoning",
     },
     {
-      name: "Output Speed",
-      sourceLabel: "Artificial Analysis",
-      url: artificialAnalysisUrl,
-      score: "62",
-      detail: "tokens/s · #92 / 187",
-      peers: { "Kimi K3": "62" },
-      note: "First-party API measurement after the first streamed chunk",
+      name: "Agents' Last Exam",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "52.7",
+      detail: "Professional · %",
+      peers: { "Claude Fable 5": "40.5", "GPT-5.5": "46.9", "Claude Opus 4.8": "45.2" },
+      note: "OpenAI launch comparison table",
     },
     {
-      name: "Context Window",
-      sourceLabel: "Artificial Analysis",
-      url: artificialAnalysisUrl,
-      score: "1M",
-      detail: "tokens",
-      peers: { "Kimi K3": "1M" },
-      note: "Maximum combined input and output context",
+      name: "Artificial Analysis Coding Agent Index v1.1",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "80",
+      detail: "Coding · Index score",
+      peers: { "Claude Fable 5": "77.2", "GPT-5.5": "76.4", "Claude Opus 4.8": "72.5" },
+      note: "OpenAI launch table · max reasoning",
+    },
+    {
+      name: "SWE-Bench Pro",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "64.6",
+      detail: "Coding · %",
+      peers: { "Claude Fable 5": "80", "GPT-5.5": "59.4", "Claude Opus 4.8": "69.2" },
+      note: "OpenAI launch comparison table",
+    },
+    {
+      name: "DeepSWE v1.1",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "72.7",
+      detail: "Coding · %",
+      peers: { "Claude Fable 5": "69.7", "GPT-5.5": "67", "Claude Opus 4.8": "59" },
+      note: "OpenAI launch comparison table",
+    },
+    {
+      name: "Terminal-Bench 2.1",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "88.8",
+      detail: "Coding · %",
+      peers: { "Claude Fable 5": "83.1", "GPT-5.5": "85.6", "Claude Opus 4.8": "78.9" },
+      note: "OpenAI launch comparison table",
+    },
+    {
+      name: "BrowseComp",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "90.4",
+      detail: "Computer use · %",
+      peers: { "GPT-5.5": "84.4", "Claude Opus 4.8": "84.3" },
+      note: "OpenAI launch comparison table · Sol Ultra 92.2 excluded",
+    },
+    {
+      name: "MMMU Pro (with tools)",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "84.6",
+      detail: "Multimodal · %",
+      peers: { "GPT-5.5": "83.2" },
+      note: "OpenAI launch comparison table",
+    },
+    {
+      name: "GPQA Diamond",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "94.6",
+      detail: "Academic · %",
+      peers: { "Claude Fable 5": "92.6", "GPT-5.5": "93.6", "Claude Opus 4.8": "92" },
+      note: "OpenAI launch comparison table",
+    },
+    {
+      name: "FrontierMath Tier 4 (v2)",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "83",
+      detail: "Academic · %",
+      peers: { "Claude Fable 5": "87.8", "GPT-5.5": "72.5", "Claude Opus 4.8": "56.1" },
+      note: "OpenAI launch comparison table",
+    },
+    {
+      name: "AutomationBench",
+      sourceLabel: "OpenAI",
+      url: openAiLaunchUrl,
+      score: "18.1",
+      detail: "Tool use · %",
+      peers: { "Claude Fable 5": "17.4", "GPT-5.5": "12.9", "Claude Opus 4.8": "15.5" },
+      note: "OpenAI launch comparison table",
     },
   ],
 
@@ -198,7 +273,10 @@ const evaluation = {
       },
     },
     pros: [
-      { en: "59 Intelligence Index score · #2 / 187", "zh-CN": "智能指数 59 分 · #2 / 187" },
+      {
+        en: `${intelligenceScore} Intelligence Index v4.1 score at max effort`,
+        "zh-CN": `max 推理强度下 Intelligence Index v4.1 得分 ${intelligenceScore}`,
+      },
       { en: "1M-token multimodal context", "zh-CN": "1M token 多模态上下文" },
     ],
     cons: [
@@ -212,7 +290,10 @@ const evaluation = {
     cons: [{ en: "Premium price and high latency" }],
   },
 
-  sources: [{ name: "Artificial Analysis", url: artificialAnalysisUrl }],
+  sources: [
+    { name: "OpenAI — GPT-5.6 launch evaluations", url: openAiLaunchUrl },
+    { name: "Artificial Analysis — operational metrics", url: artificialAnalysisUrl },
+  ],
 } satisfies ModelEvaluation;
 
 export default evaluation;

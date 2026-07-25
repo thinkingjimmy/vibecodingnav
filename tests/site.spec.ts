@@ -163,13 +163,34 @@ test("Hero 使用 Moonshot 厂商标记并链接官网", async ({ page }) => {
 test("GPT-5.6 Sol (max) 使用 OpenAI 身份、模型级 SEO 与专有权重状态", async ({ page }) => {
   await page.goto(gptRoutes.en);
   const hero = page.locator("#models");
+  const leaderboard = page.locator("#leaderboard");
+  const intelligence = leaderboard.getByRole("row").filter({
+    hasText: "Artificial Analysis Intelligence Index v4.1",
+  });
 
   await expect(page).toHaveTitle(/GPT-5\.6 Sol \(max\).*Intelligence, Speed & Price/);
   await expect(hero.locator('img[src="/model-logos/openai.svg"]')).toHaveCount(1);
   await expect(hero.getByRole("heading", { level: 1 })).toHaveText("GPT-5.6 Sol (max)");
   await expect(hero.getByRole("link", { name: "OpenAI" })).toHaveAttribute("href", "https://openai.com/");
   await expect(hero.getByText("Not available", { exact: true })).toBeVisible();
-  await expect(page.locator("#leaderboard tbody tr")).toHaveCount(3);
+  await expect(hero.locator(".hero-stat-card").first().getByText("58.9", { exact: true })).toBeVisible();
+  await expect(leaderboard.locator("tbody tr")).toHaveCount(11);
+  await expect(leaderboard.getByRole("columnheader", { name: "Fable 5" })).toBeVisible();
+  await expect(leaderboard.getByRole("columnheader", { name: "GPT-5.5" })).toBeVisible();
+  await expect(leaderboard.getByRole("columnheader", { name: "Opus 4.8" })).toBeVisible();
+  await expect(intelligence.getByRole("cell").nth(1)).toHaveText("58.9");
+  await expect(intelligence.getByRole("cell").nth(2)).toHaveText("59.9");
+  await expect(intelligence.getByRole("cell").nth(3)).toHaveText("54.8");
+  await expect(intelligence.getByRole("cell").nth(4)).toHaveText("55.7");
+  await expect(intelligence.getByRole("link")).toHaveAttribute(
+    "href",
+    "https://openai.com/zh-Hans-CN/index/gpt-5-6/",
+  );
+  await expect(leaderboard.getByRole("row", { name: "Wins 8 3 0 0" })).toBeVisible();
+  await expect(page.locator("#data-sources").getByRole("link", { name: "OpenAI" })).toHaveAttribute(
+    "href",
+    "https://openai.com/zh-Hans-CN/index/gpt-5-6/",
+  );
 
   await page.goto(gptRoutes["zh-CN"]);
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
@@ -258,7 +279,7 @@ test("Header 模型菜单按厂商分组并只链接已收录模型", async ({ p
   await expect(menu.getByText("Gemini 3.5 Flash", { exact: true })).toBeVisible();
   await expect(menu.getByRole("heading", { name: "OpenAI" })).toHaveCSS("font-size", "12px");
   await expect(menu.getByText("GPT-5.6", { exact: true })).toHaveCSS("font-size", "16px");
-  await expect(menu.getByText("58", { exact: true })).toHaveCSS("font-size", "12px");
+  await expect(menu.getByText("58.9", { exact: true })).toHaveCSS("font-size", "12px");
   for (const logo of ["openai.svg", "claude-color.svg", "moonshot.svg", "gemini-color.svg"]) {
     await expect(menu.locator(`img[src="/model-logos/${logo}"]`)).toHaveCount(1);
   }
@@ -274,7 +295,7 @@ test("Header 模型菜单按厂商分组并只链接已收录模型", async ({ p
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(menu.locator(`a[href="${modelRoutes.en}"]`)).toBeFocused();
+  await expect(menu.locator(`a[href="${gptRoutes.en}"]`)).toBeFocused();
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
 });

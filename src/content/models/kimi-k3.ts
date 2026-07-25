@@ -1,10 +1,13 @@
 /**
- * [INPUT]: 依赖 src/lib/contracts 的 ModelEvaluation 类型，内容来自 2026-07-17 人工核验快照
+ * [INPUT]: 依赖 src/lib/contracts 的 ModelEvaluation 类型、共享 Intelligence Index，内容来自 2026-07-17 人工核验快照
  * [OUTPUT]: 对外提供 Kimi K3 模型信息、带单位/色调的顶部指标、跑分、含正负关键短语的评价原声流元数据、社区结论、共识与数据源
  * [POS]: src/content/models 的首个类型化模型内容模块，被 src/lib/model.ts 消费
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 import type { ModelEvaluation } from "@/lib/contracts";
+import { INTELLIGENCE_INDEX } from "./intelligence-index";
+
+const intelligenceScore = String(INTELLIGENCE_INDEX["kimi-k3"]);
 
 const evaluation = {
   "updated": "2026-07-17",
@@ -40,7 +43,7 @@ const evaluation = {
   ],
 
   "heroStats": [
-    { "value": "57", "unit": "idx", "badge": "#4/189", "bar": 82, "tone": "accent", "labelKey": "intelligence", "subKey": "intelligenceSub" },
+    { "value": intelligenceScore, "unit": "idx", "badge": "#4/189", "bar": 82, "tone": "accent", "labelKey": "intelligence", "subKey": "intelligenceSub" },
     { "value": "62", "unit": "tokens/s", "badge": "#90/189", "bar": 46, "tone": "neutral", "labelKey": "speed", "subKey": "speedSub" },
     { "value": "$3/$15", "unit": "", "badge": "#127/189", "bar": 33, "tone": "neutral", "labelKey": "price", "subKey": "priceSub" },
     { "value": "1M", "unit": "tokens", "badge": "top 5%", "bar": 95, "tone": "accent", "labelKey": "context", "subKey": "contextSub" }
@@ -51,7 +54,7 @@ const evaluation = {
       "name": "Intelligence Index v4.1",
       "sourceLabel": "Artificial Analysis",
       "url": "https://artificialanalysis.ai/models/kimi-k3",
-      "score": "57",
+      "score": intelligenceScore,
       "detail": "#4/189",
       "peers": { "Claude Fable 5": "60", "GPT-5.6 Sol": "58" },
       "note": "GPT-5.6 Sol = xhigh effort"
