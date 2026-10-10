@@ -45,7 +45,7 @@ export function BoardCard({ card, viewMore }: { card: BoardCardData; viewMore: s
         {card.rows.map((row, index) => (
           <div key={row.name} className={`flex h-9 items-center gap-2.5 text-[13.5px] ${index ? "border-t border-line" : ""}`}>
             <span className="num w-3 text-[11px] text-faint">{row.rank}</span>
-            <Link href={row.href} className="-mx-1 flex h-full min-w-0 cursor-pointer items-center gap-2.5 rounded px-1 no-underline hover:bg-muted">
+            <Link href={row.href} className="flex min-w-0 cursor-pointer items-center gap-2.5 no-underline">
               <VendorMark vendor={row.vendor} />
               <span className={`truncate ${index ? "" : "font-medium"}`}>{row.name}</span>
             </Link>
