@@ -240,8 +240,7 @@ export interface Dictionary {
     heroTitle: string;
     heroBody: string;
     boards: string;
-    viewBoard: string;
-    viewReasons: string;
+    viewMore: string;
     toolbox: string;
     allCategories: string;
     changes: string;

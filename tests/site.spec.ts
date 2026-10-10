@@ -6,13 +6,21 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("按场景，选对模型与框架");
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
   await expect(page.getByText("1813").first()).toBeVisible();
+  await expect(page.getByRole("link", { name: "查看更多" }).first()).toBeVisible();
+  await expect(page.getByText("查看完整榜单")).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Android Bench 1.0" })).toHaveAttribute("href", "/zh/benchmarks/android-bench-1/");
   await expect(page.locator("#sources")).toBeVisible();
+  await page.getByRole("link", { name: "Android Bench 1.0" }).click();
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench-1\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Android Bench 1.0");
 });
 
 test("english home is unprefixed", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Pick the model and the stack for the job");
+  await expect(page.getByRole("link", { name: "View More" }).first()).toBeVisible();
+  await expect(page.getByText("View the full board")).toHaveCount(0);
 });
 
 test("web scenario can filter to open licenses", async ({ page }) => {

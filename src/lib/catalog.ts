@@ -318,7 +318,7 @@ export function getHome(locale: Locale) {
   const dict = getDictionary(locale);
   const cards = scenarios.filter((scenario) => scenario.featured).map((scenario) => {
     const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
-    const source = scenario.sourceLabel ? t(locale, scenario.sourceLabel) : benchmark?.name ?? "";
+    const sourceName = scenario.sourceLabel ? t(locale, scenario.sourceLabel) : benchmark?.name ?? "";
     const editor = Boolean(scenario.editorPicks?.length);
     const rows = editor
       ? scenario.editorPicks!.map((pick, index) => {
@@ -337,10 +337,10 @@ export function getHome(locale: Locale) {
     return {
       href: localePath(locale, `/scenarios/${scenario.slug}`),
       title: t(locale, scenario.title),
-      source: [source, benchmark?.asOf].filter(Boolean).join(" · "),
-      editor,
+      sourceName,
+      sourceHref: benchmark ? localePath(locale, `/benchmarks/${benchmark.slug}`) : undefined,
+      asOf: benchmark?.asOf ?? "",
       rows,
-      action: editor ? dict.home.viewReasons : dict.home.viewBoard,
     };
   });
   return {

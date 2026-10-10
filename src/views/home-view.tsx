@@ -34,13 +34,16 @@ export function HomeView({ locale }: { locale: Locale }) {
         </header>
         <div className="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3">
           {home.cards.map((card) => (
-            <Link key={card.href} href={card.href} className="card group">
+            <article key={card.href} className="card">
               <div className="px-4 pt-4 pb-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-[16px] font-medium tracking-[-0.01em]">{card.title}</span>
-                  <ArrowIcon size={14} className="text-faint transition-colors group-hover:text-fg" />
+                <div className="flex items-start justify-between gap-3">
+                  <Link href={card.href} className="text-[16px] font-medium tracking-[-0.01em] hover:text-fg">{card.title}</Link>
+                  <Link href={card.href} className="num shrink-0 pt-0.5 text-[12px] text-mfg hover:text-fg">{dict.home.viewMore} →</Link>
                 </div>
-                <div className="num mt-1 text-[11px] text-faint">{card.source}</div>
+                <div className="num mt-1 text-[11px] text-faint">
+                  {card.sourceHref ? <Link href={card.sourceHref} className="link-u hover:text-fg">{card.sourceName}</Link> : card.sourceName}
+                  {card.asOf ? ` · ${card.asOf}` : ""}
+                </div>
               </div>
               <div className="flex-1 px-4">
                 {card.rows.map((row, index) => (
@@ -58,10 +61,7 @@ export function HomeView({ locale }: { locale: Locale }) {
                   </div>
                 ))}
               </div>
-              <div className="mt-2 flex h-10 items-center border-t border-line px-4 text-[12.5px] text-mfg group-hover:text-fg">
-                {card.action}<span className="ml-1">→</span>
-              </div>
-            </Link>
+            </article>
           ))}
         </div>
       </section>
