@@ -52,26 +52,27 @@ test("web scenario keeps the full source board", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
   await expect(page.getByText("1813").first()).toBeVisible();
-  await expect(page.getByRole("link", { name: "devstral-medium-2507" })).toHaveCount(0);
+  await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await page.getByRole("button", { name: /显示全部/ }).click();
-  await expect(page.getByRole("link", { name: "devstral-medium-2507" })).toBeVisible();
+  await expect(page.getByText("devstral-medium-2507")).toBeVisible();
   await page.getByRole("button", { name: "开源权重" }).click();
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "devstral-medium-2507" })).toHaveCount(0);
+  await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "mimo-v2.6-flash" })).toBeVisible();
   const mimo = page.getByRole("row").filter({ hasText: "mimo-v2.6-flash" });
   await expect(mimo.getByText("16", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /显示全部/ }).click();
-  await expect(page.getByRole("link", { name: "granite-4.1-8b" })).toBeVisible();
+  await expect(page.getByText("granite-4.1-8b")).toBeVisible();
 });
 
 test("android scenario shows both source tables", async ({ page }) => {
   await page.goto("/zh/scenarios/android-app/");
-  await expect(page.getByRole("link", { name: "Claude Opus 5" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Claude Opus 5", exact: true })).toBeVisible();
   await expect(page.getByText("91.8").first()).toBeVisible();
-  await expect(page.getByText("32.7")).toHaveCount(0);
-  await page.getByRole("button", { name: "2.0 长程" }).click();
-  await expect(page.getByRole("link", { name: "Claude Opus 5.5" })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: "Agent" })).toHaveCount(0);
+  await page.getByRole("tab", { name: "2.0 长程" }).click();
+  await expect(page.getByRole("columnheader", { name: "Agent" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Claude Opus 5.5", exact: true })).toBeVisible();
   await expect(page.getByText("32.7").first()).toBeVisible();
   await expect(page.getByText("claude-code").first()).toBeVisible();
   await expect(page.getByText("84.7").first()).toBeVisible();
@@ -180,6 +181,15 @@ test("scenario, model, build, and benchmark pages match the home width", async (
     expect(await measure()).toBe(home);
     const footer = await page.locator("footer > div").evaluate((el) => getComputedStyle(el).maxWidth);
     expect(footer).toBe(home);
+  }
+});
+
+test("long boards stay inside the phone width", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const path of ["/zh/scenarios/web-frontend/", "/zh/scenarios/android-app/", "/zh/scenarios/cli-devops/", "/zh/scenarios/production-changes/"]) {
+    await page.goto(path);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
   }
 });
 
