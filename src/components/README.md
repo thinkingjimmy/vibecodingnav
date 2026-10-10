@@ -7,7 +7,8 @@ arrow-icon.tsx: 服务端页面使用的 Phosphor 箭头，客户端边界
 site-header.tsx: 置顶导航、语言切换、主题与搜索对话框
 site-footer.tsx: 方法论、数据来源、更新日志与建议链接
 frame.tsx: 页头、版心与页脚
-leaderboard.tsx: 场景完整榜单与许可筛选
+leaderboard.tsx: 按来源列展示的完整榜单，开源权重筛选不改名次
+scenario-boards.tsx: 场景页的一张或多张来源榜，Android 用页签
 category-list.tsx: 工具箱类型筛选
 copy-block.tsx: 复制安装命令与下载 AGENTS.md
 weights.tsx: Phosphor 字重示例

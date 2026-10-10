@@ -158,7 +158,7 @@ Use Jetpack Compose: developer.android.com/jetpack/compose`,
     ),
     notFor: [
       { title: tx("Web 前端", "Web frontend"), body: tx("浏览器里的页面看「做 Web 前端」，榜单是 LMArena WebDev。", "For a page in the browser, open “Build a Web frontend”. That board is LMArena WebDev."), href: "/build/web-frontend" },
-      { title: tx("长程跨模块改造", "Long cross-module work"), body: tx("标准任务的第一名不等于长程榜的第一名。去「大型重构与迁移」。", "First on standard tasks is not first on the long board. Open “Large refactors and migrations”."), href: "/scenarios/refactor" },
+      { title: tx("长程跨模块改造", "Long cross-module work"), body: tx("标准任务的第一名不等于 2.0 长程的第一名。长程表在同一个 Android 场景里。", "First on standard tasks is not first on the 2.0 long-horizon table. That table is on the same Android scenario."), href: "/scenarios/android-app/#long" },
       { title: tx("iOS", "iOS"), body: tx("没有 iOS 专项榜。那边是编辑精选，不放分数。", "There is no iOS board. That page is an editor's list and has no scores."), href: "/scenarios/ios-app" },
     ],
   },

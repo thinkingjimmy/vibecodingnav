@@ -100,24 +100,50 @@ export interface Benchmark {
   trackedCount?: number;
   retired?: boolean;
   kind?: BenchmarkKind;
+  /** 场景榜单按来源页的列来画。框架评测不使用。 */
+  table?: BoardTable;
+  /** 来源页自己的筛选。筛选保留来源名次。 */
+  sourceFilter?: SourceFilter;
   version?: string;
   assistedLabel?: LText;
   webLabel?: LText;
 }
 
+export type BoardTable = "webdev" | "android-1" | "android-long" | "terminal" | "score";
+export type SourceFilter = "license" | "weights";
+export type WeightClass = "open" | "closed";
+
 export interface Result {
   benchmark: string;
-  modelSlug: string;
+  /** 有模型页时才填。来源行没有对应模型时只保留 label。 */
+  modelSlug?: string;
+  /** 来源页上的模型名，榜单按它显示。 */
+  label?: string;
+  vendor?: VendorId;
+  /** 没有厂商标时的字母。 */
+  letter?: string;
+  org?: string;
+  licenseText?: string;
+  weights?: WeightClass;
+  agent?: string;
+  agentOrg?: string;
   effort?: string;
   setting?: string;
   rank?: number;
   rankSpread?: string;
   score: number;
+  /** 来源页上的分数原文，例如 28.0、45、64.8% ± 3.1%。 */
+  scoreText?: string;
   ci?: Ci;
+  ciText?: string;
   votes?: string;
   tokenPrice?: string;
   runCost?: string;
   context?: string;
+  completion?: string;
+  latency?: string;
+  tokens?: string;
+  releaseDate?: string;
   preliminary?: boolean;
   asOf: string;
   arm?: ResultArm;
@@ -128,12 +154,20 @@ export interface EditorPick {
   reason: LText;
 }
 
+export interface ScenarioBoard {
+  id: string;
+  benchmark: string;
+  label: LText;
+}
+
 export interface Scenario {
   slug: string;
   title: LText;
   summary: LText;
+  /** 首页卡片、挑选和组合使用的那一张来源榜。 */
   benchmark?: string;
-  subset: "all" | "permissive-open";
+  /** 同一场景里的多张来源表，例如 Android 1.0 与长程。顺序即页签顺序。 */
+  boards?: ScenarioBoard[];
   valueMetric: ValueMetric;
   lead: "top" | "value";
   featured: boolean;
@@ -259,14 +293,29 @@ export interface Dictionary {
     filterAll: string;
     filterClosed: string;
     filterOpen: string;
-    filterVendor: string;
     colRank: string;
+    colSpread: string;
     colModel: string;
     colScore: string;
+    colPass: string;
+    colCi: string;
     colVotes: string;
     colPrice: string;
     colRunCost: string;
     colContext: string;
+    colAgent: string;
+    colEffort: string;
+    colAccuracy: string;
+    colRelease: string;
+    colOrg: string;
+    colAgentOrg: string;
+    colModelOrg: string;
+    colTokens: string;
+    colCompletion: string;
+    colLatency: string;
+    colCost: string;
+    showAll: string;
+    showLess: string;
     preliminary: string;
     rankNote: string;
     explain: string;

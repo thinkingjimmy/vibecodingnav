@@ -11,10 +11,13 @@ export const isLocale = (value: string): value is Locale => LOCALES.some((locale
 export const t = (locale: Locale, text: { zh: string; en: string }) => text[locale];
 
 export function localePath(locale: Locale, path: string): string {
-  const normalized = path.startsWith("/") ? path : `/${path}`;
+  const hashAt = path.indexOf("#");
+  const hash = hashAt >= 0 ? path.slice(hashAt) : "";
+  const bare = hashAt >= 0 ? path.slice(0, hashAt) : path;
+  const normalized = bare.startsWith("/") ? bare : `/${bare}`;
   const withSlash = normalized === "/" ? "/" : normalized.endsWith("/") ? normalized : `${normalized}/`;
-  if (locale === "en") return withSlash;
-  return withSlash === "/" ? "/zh/" : `/zh${withSlash}`;
+  const localized = locale === "en" ? withSlash : withSlash === "/" ? "/zh/" : `/zh${withSlash}`;
+  return `${localized}${hash}`;
 }
 
 export function swapLocale(pathname: string, target: Locale): string {

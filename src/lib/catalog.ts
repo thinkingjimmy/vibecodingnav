@@ -8,17 +8,19 @@ import { content } from "@/content";
 import { isPermissiveLicense } from "@/content/validate";
 import {
   ITEM_SEGMENT,
+  type BoardTable,
   type BuildPage,
   type Ci,
   type Item,
-  type LicenseKind,
   type Locale,
   type Result,
   type ResultArm,
   type RoleRef,
   type Scenario,
   type ScoreUnit,
+  type SourceFilter,
   type VendorId,
+  type WeightClass,
 } from "./contracts";
 import { getDictionary } from "./i18n";
 import { localePath, t } from "./locale";
@@ -39,11 +41,16 @@ export interface BoardRow {
   rank: number;
   rankSpread?: string;
   name: string;
-  vendor: VendorId;
-  href: string;
+  cardName: string;
+  vendor?: VendorId;
+  letter?: string;
+  href?: string;
   effort?: string;
+  agent?: string;
+  agentOrg?: string;
+  org?: string;
   license?: string;
-  licenseKind: LicenseKind;
+  weights?: WeightClass;
   preliminary?: boolean;
   score: string;
   scoreNumber: number;
@@ -53,6 +60,10 @@ export interface BoardRow {
   votes?: string;
   price?: string;
   context?: string;
+  completion?: string;
+  latency?: string;
+  tokens?: string;
+  releaseDate?: string;
 }
 
 export interface SearchEntry {
@@ -100,18 +111,23 @@ function runCostUsd(label?: string) {
   return amount ? Number(amount[1]) : null;
 }
 
-function scenarioRows(scenario: Scenario) {
-  if (!scenario.benchmark) return [];
-  const rows = results.filter((result) => result.benchmark === scenario.benchmark);
-  if (scenario.subset === "permissive-open") {
-    return rows
-      .filter((result) => isPermissiveLicense(modelBy.get(result.modelSlug)!.license))
-      .sort((a, b) => b.score - a.score || (a.rank ?? 999) - (b.rank ?? 999));
-  }
-  return rows.filter((result) => result.rank != null).sort((a, b) => a.rank! - b.rank! || b.score - a.score);
+function rowsFor(benchmark: string) {
+  return results
+    .filter((result) => result.benchmark === benchmark && (result.arm ?? "baseline") === "baseline" && result.rank != null)
+    .sort((a, b) => a.rank! - b.rank!);
 }
 
-function bestRow(rows: Result[]) {
+function scenarioRows(scenario: Scenario) {
+  return scenario.benchmark ? rowsFor(scenario.benchmark) : [];
+}
+
+type LinkedResult = Result & { modelSlug: string };
+
+function hasModel(row: Result): row is LinkedResult {
+  return Boolean(row.modelSlug);
+}
+
+function bestRow<T extends Result>(rows: T[]) {
   return [...rows].sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999) || b.score - a.score)[0];
 }
 
@@ -121,10 +137,10 @@ export function resolvePicks(scenarioSlug: string, clock = CLOCK) {
   const benchmark = benchmarkBy.get(scenario.benchmark)!;
   const stale = Boolean(benchmark.retired || isStale(benchmark.asOf, clock));
   if (stale) return { top: undefined, value: undefined, open: undefined, stale: true };
-  const rows = scenarioRows(scenario).filter((row) => scenario.subset === "permissive-open" || row.rank != null);
+  const rows = scenarioRows(scenario).filter(hasModel);
   const top = bestRow(rows);
   const open = bestRow(rows.filter((row) => isPermissiveLicense(modelBy.get(row.modelSlug)!.license)));
-  const costOf = (row: Result) => (scenario.valueMetric === "token" ? outputTokenPrice(row.tokenPrice) : runCostUsd(row.runCost));
+  const costOf = (row: LinkedResult) => (scenario.valueMetric === "token" ? outputTokenPrice(row.tokenPrice) : runCostUsd(row.runCost));
   const topCost = top ? costOf(top) : null;
   const value = topCost == null
     ? undefined
@@ -135,32 +151,42 @@ export function resolvePicks(scenarioSlug: string, clock = CLOCK) {
   return { top, value, open, stale: false };
 }
 
-function toBoardRows(locale: Locale, scenario: Scenario): BoardRow[] {
-  const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
+function toBoardRows(locale: Locale, benchmarkSlug: string): BoardRow[] {
+  const benchmark = benchmarkBy.get(benchmarkSlug);
   const unit = benchmark?.scoreUnit ?? "";
-  return scenarioRows(scenario).map((result, index) => {
-    const model = modelBy.get(result.modelSlug)!;
+  return rowsFor(benchmarkSlug).map((result, index) => {
+    const model = result.modelSlug ? modelBy.get(result.modelSlug) : undefined;
     const ciLow = result.ci?.kind === "pm" ? result.score - result.ci.value : result.ci?.low;
     const ciHigh = result.ci?.kind === "pm" ? result.score + result.ci.value : result.ci?.high;
+    const name = result.label ?? model?.name ?? result.modelSlug ?? "";
     return {
-      key: `${result.modelSlug}-${result.effort ?? index}`,
-      rank: scenario.subset === "all" ? result.rank! : index + 1,
-      rankSpread: scenario.subset === "all" ? result.rankSpread : undefined,
-      name: model.name,
-      vendor: model.vendor,
-      href: localePath(locale, `/models/${model.slug}`),
+      key: `${benchmarkSlug}-${result.rank ?? index}-${name}-${result.effort ?? ""}-${result.agent ?? ""}`,
+      rank: result.rank!,
+      rankSpread: result.rankSpread,
+      name,
+      cardName: model?.name ?? name,
+      vendor: model?.vendor ?? result.vendor,
+      letter: result.letter,
+      href: model ? localePath(locale, `/models/${model.slug}`) : undefined,
       effort: result.effort,
-      license: model.license === "proprietary" ? undefined : t(locale, model.licenseLabel),
-      licenseKind: model.license,
+      agent: result.agent,
+      agentOrg: result.agentOrg,
+      org: result.org,
+      license: result.licenseText,
+      weights: result.weights,
       preliminary: result.preliminary,
-      score: formatScore(result.score, unit),
+      score: result.scoreText ?? formatScore(result.score, unit),
       scoreNumber: result.score,
-      ci: formatCi(result.ci),
+      ci: result.ciText ?? formatCi(result.ci),
       ciLow,
       ciHigh,
       votes: result.votes,
       price: result.tokenPrice ?? result.runCost,
       context: result.context,
+      completion: result.completion,
+      latency: result.latency,
+      tokens: result.tokens,
+      releaseDate: result.releaseDate,
     };
   });
 }
@@ -202,7 +228,7 @@ function resolveRef(locale: Locale, scenario: Scenario, ref: RoleRef, clock: str
   if (!result || !scenario.benchmark) return undefined;
   const model = modelBy.get(result.modelSlug)!;
   const benchmark = benchmarkBy.get(scenario.benchmark)!;
-  const rank = scenario.subset === "all" ? result.rank : scenarioRows(scenario).findIndex((row) => row === result) + 1;
+  const rank = result.rank;
   return {
     href: localePath(locale, `/models/${model.slug}`),
     name: model.name,
@@ -224,7 +250,7 @@ function alternativeText(locale: Locale, scenario: Scenario, alt: BuildPage["rol
   const rank = pick?.rank ?? "";
   const score = pick && benchmark ? formatScore(pick.score, benchmark.scoreUnit) : "";
   if (alt.tone === "value") return `${dict.build.value}：${resolved.name}（#${rank} · ${score}，${t(locale, alt.when)}）`;
-  const license = pick ? t(locale, modelBy.get(pick.modelSlug)!.licenseLabel) : "";
+  const license = pick?.modelSlug ? t(locale, modelBy.get(pick.modelSlug)!.licenseLabel) : "";
   return `${dict.build.open}：${resolved.name}（#${rank} · ${license}）`;
 }
 
@@ -325,14 +351,13 @@ function scenarioCard(locale: Locale, scenario: (typeof scenarios)[number]) {
         const model = modelBy.get(pick.modelSlug)!;
         return { rank: index + 1, name: model.name, vendor: model.vendor, href: localePath(locale, `/models/${model.slug}`), reason: t(locale, pick.reason) };
       })
-    : toBoardRows(locale, scenario).slice(0, 5).map((row) => ({
+    : toBoardRows(locale, scenario.benchmark!).slice(0, 5).map((row) => ({
         rank: row.rank,
-        name: row.name,
-        vendor: row.vendor,
-        href: row.href,
-        score: row.score,
+        name: row.cardName,
+        vendor: row.vendor!,
+        href: row.href!,
+        score: row.score.includes("%") || row.score.includes("±") ? formatScore(row.scoreNumber, benchmark?.scoreUnit ?? "") : row.score,
         unit: benchmark?.scoreUnit ?? "",
-        license: scenario.subset === "permissive-open" ? row.license : undefined,
       }));
   return {
     href: localePath(locale, `/scenarios/${scenario.slug}`),
@@ -378,39 +403,49 @@ export function getScenario(locale: Locale, slug: string) {
   const dict = getDictionary(locale);
   const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
   const stale = Boolean(benchmark && (benchmark.retired || isStale(benchmark.asOf, CLOCK)));
-  const rows = toBoardRows(locale, scenario);
-  const ranked = results.filter((result) => result.benchmark === scenario.benchmark && result.rank != null);
+  const specs = scenario.boards?.length
+    ? scenario.boards
+    : scenario.benchmark
+      ? [{ id: scenario.benchmark, benchmark: scenario.benchmark, label: { zh: "", en: "" } }]
+      : [];
+  const boards = specs.map((spec) => {
+    const source = benchmarkBy.get(spec.benchmark)!;
+    return {
+      id: spec.id,
+      label: spec.label.zh ? t(locale, spec.label) : source.shortName,
+      name: source.name,
+      asOf: source.asOf,
+      table: (source.table ?? "score") as BoardTable,
+      filter: (source.sourceFilter ?? "none") as SourceFilter | "none",
+      rows: toBoardRows(locale, spec.benchmark),
+      explain: [
+        [dict.benchmark.measures, t(locale, source.measures)],
+        [dict.benchmark.method, t(locale, source.method)],
+        [dict.benchmark.meaning, t(locale, source.scoreMeaning)],
+        [dict.benchmark.caveats, t(locale, source.caveats)],
+        [dict.benchmark.cadence, t(locale, source.updateCadence)],
+      ] as [string, string][],
+      links: source.links,
+    };
+  });
+  const rows = scenario.benchmark ? toBoardRows(locale, scenario.benchmark) : [];
   const build = scenario.build ? getBuild(locale, scenario.build) : undefined;
   return {
     slug,
     title: t(locale, scenario.title),
     summary: t(locale, scenario.summary),
     meta: [
-      scenario.sourceLabel ? t(locale, scenario.sourceLabel) : benchmark?.name,
-      benchmark ? `${locale === "zh" ? "榜单日期" : "Board"} ${benchmark.asOf}` : locale === "zh" ? `编辑更新 ${SITE_SYNC}` : `Edited ${SITE_SYNC}`,
+      scenario.sourceLabel ? t(locale, scenario.sourceLabel) : boards.map((panel) => panel.name).join(" · ") || benchmark?.name,
+      boards.length === 1 && benchmark ? `${locale === "zh" ? "榜单日期" : "Board"} ${benchmark.asOf}` : "",
       benchmark?.votes ? `${benchmark.votes} ${locale === "zh" ? "票" : "votes"}` : "",
-      benchmark?.trackedCount ? `${benchmark.trackedCount} ${locale === "zh" ? "个模型" : "models"}` : "",
+      boards.length === 1 && benchmark?.trackedCount ? `${benchmark.trackedCount} ${locale === "zh" ? "个模型" : "models"}` : "",
       `${locale === "zh" ? "本页同步" : "Synced"} ${SITE_SYNC}`,
     ].filter(Boolean).join(" · "),
     note: scenario.note ? t(locale, scenario.note) : scenario.lead === "value" ? dict.scenario.leadNote : "",
     stale,
     combo: build ? { href: build.href, label: build.combo } : undefined,
     rows,
-    showFilters: scenario.subset === "all" && rows.length > 0,
-    priceLabel: rows.some((row) => row.votes) ? "token" : rows.some((row) => results.some((result) => result.runCost && result.modelSlug && row.name.includes(result.modelSlug))) ? "run" : rows.some((row) => row.price?.includes("/")) ? "token" : "run",
-    partial: scenario.subset === "all" && benchmark?.trackedCount && ranked.length < benchmark.trackedCount
-      ? dict.scenario.partial.replace("{count}", String(benchmark.trackedCount)).replace("{shown}", String(ranked.length))
-      : "",
-    explain: benchmark
-      ? [
-          [dict.benchmark.measures, t(locale, benchmark.measures)],
-          [dict.benchmark.method, t(locale, benchmark.method)],
-          [dict.benchmark.meaning, t(locale, benchmark.scoreMeaning)],
-          [dict.benchmark.caveats, t(locale, benchmark.caveats)],
-          [dict.benchmark.cadence, t(locale, benchmark.updateCadence)],
-        ]
-      : [],
-    links: benchmark?.links ?? [],
+    boards,
     why: scenario.whyItMatters.map((item) => ({ title: t(locale, item.title), body: t(locale, item.body) })),
     picks: (scenario.editorPicks ?? []).map((pick) => {
       const model = modelBy.get(pick.modelSlug)!;
@@ -474,20 +509,20 @@ export function getModel(locale: Locale, slug: string) {
   ];
   const appearances = scenarios.flatMap((scenario) => {
     const pick = scenario.editorPicks?.find((item) => item.modelSlug === slug);
-    const rows = scenarioRows(scenario).filter((row) => row.modelSlug === slug);
+    const boardIds = scenario.boards?.map((board) => board.benchmark) ?? (scenario.benchmark ? [scenario.benchmark] : []);
+    const rows = boardIds.flatMap((id) => rowsFor(id).filter((row) => row.modelSlug === slug));
     if (!pick && rows.length === 0) return [];
     const result = rows.length ? bestRow(rows) : undefined;
-    const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
-    const rank = result ? (scenario.subset === "all" ? result.rank : scenarioRows(scenario).findIndex((row) => row.modelSlug === slug && row.score === result.score) + 1) : undefined;
+    const source = result ? benchmarkBy.get(result.benchmark) : undefined;
     return [{
       href: localePath(locale, `/scenarios/${scenario.slug}`),
       title: t(locale, scenario.title),
-      role: pick ? t(locale, pick.reason) : rank ? `#${rank}` : dict.model.asPick,
-      detail: result && benchmark ? `${benchmark.shortName} ${formatScore(result.score, benchmark.scoreUnit)}${benchmark.scoreUnit}` : "",
+      role: pick ? t(locale, pick.reason) : result?.rank ? `#${result.rank}` : dict.model.asPick,
+      detail: result && source ? `${source.shortName} ${formatScore(result.score, source.scoreUnit)}${source.scoreUnit}` : "",
     }];
   });
   const peerBenchmarks = model.peerTable?.benchmarks ?? ordered.slice(0, 1).map((row) => row.benchmark.slug);
-  const peerSlugs = model.peerTable ? [slug, ...model.peerTable.slugs] : [slug, ...ordered.slice(0, 1).flatMap(({ benchmark, result }) => scenarioRows({ ...scenarios[0], benchmark: benchmark.slug, subset: "all" }).filter((row) => row.rank && result?.rank && Math.abs(row.rank - result.rank) <= 2 && row.modelSlug !== slug).map((row) => row.modelSlug))];
+  const peerSlugs = model.peerTable ? [slug, ...model.peerTable.slugs] : [slug, ...ordered.slice(0, 1).flatMap(({ benchmark, result }) => rowsFor(benchmark.slug).filter((row) => row.modelSlug && row.rank && result?.rank && Math.abs(row.rank - result.rank) <= 2 && row.modelSlug !== slug).map((row) => row.modelSlug!))];
   const uniquePeers = peerSlugs.filter((peer, index) => peerSlugs.indexOf(peer) === index);
   return {
     slug,
@@ -592,7 +627,7 @@ function armRows(benchmarkSlug: string, arm: ResultArm) {
 }
 
 function resultKey(result: Result) {
-  return `${result.modelSlug}|${result.effort ?? ""}`;
+  return `${result.modelSlug ?? result.label}|${result.effort ?? ""}`;
 }
 
 function frameworkEval(locale: Locale, benchmarkSlug: string, mode: "board" | "uplift" | "unverified", note = "") {
@@ -602,7 +637,7 @@ function frameworkEval(locale: Locale, benchmarkSlug: string, mode: "board" | "u
   const assisted = new Map(armRows(benchmarkSlug, "assisted").map((result) => [resultKey(result), result]));
   const web = new Map(armRows(benchmarkSlug, "web").map((result) => [resultKey(result), result]));
   const rows = baseline.flatMap((result) => {
-    const model = modelBy.get(result.modelSlug)!;
+    const model = modelBy.get(result.modelSlug ?? "")!;
     const pair = assisted.get(resultKey(result));
     const webRow = web.get(resultKey(result));
     if (mode === "uplift" && !pair) return [];
@@ -654,7 +689,7 @@ export function getBenchmark(locale: Locale, slug: string) {
     version: benchmark.version,
     kind: benchmark.kind,
     board: benchmark.kind ? frameworkEval(locale, slug, "board") : undefined,
-    scenarios: scenarios.filter((scenario) => scenario.benchmark === slug).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
+    scenarios: scenarios.filter((scenario) => scenario.benchmark === slug || scenario.boards?.some((board) => board.benchmark === slug)).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
   };
 }
 

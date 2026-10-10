@@ -53,8 +53,8 @@ export const models: Model[] = [
       slugs: ["claude-sonnet-5-5", "gpt-6-astra", "gpt-6-1-sol", "glm-5-3"],
     },
     summary: tx(
-      "Terminal-Bench、WebDev 和 Android 长程仍排第一。sudo L7 与 Sonnet 5.5 同分 45%，榜单把 Sonnet 排在前面。对成本敏感的批量任务，有便宜得多的选择。",
-      "Still first on Terminal-Bench, WebDev, and the Android long board. On sudo L7 it ties Sonnet 5.5 at 45%, and the board lists Sonnet first. Cheaper models fit batch jobs.",
+      "Terminal-Bench、WebDev 和 Android 长程仍排第一。sudo L7 与 Sonnet 5.5 同分 45%，页面先列 Opus。对成本敏感的批量任务，有便宜得多的选择。",
+      "Still first on Terminal-Bench, WebDev, and the Android long board. On sudo L7 it ties Sonnet 5.5 at 45%, and the page lists Opus first. Cheaper models fit batch jobs.",
     ),
     why: [
       tx(
@@ -68,8 +68,8 @@ export const models: Model[] = [
     ],
     whyNot: [
       tx(
-        "批量或 CI 任务：GPT-6.1 Sol 在 Terminal-Bench 拿到 58.2%，成本 $0.6k，约为它的八分之一。",
-        "For batch or CI work, GPT-6.1 Sol scores 58.2% on Terminal-Bench at $0.6k, about an eighth of the cost.",
+        "批量或 CI 任务：GPT-6.1 Sol 在 Terminal-Bench 并列第 3，58.2%，成本 $634.24。",
+        "For batch or CI work, GPT-6.1 Sol ties for 3rd on Terminal-Bench at 58.2% and $634.24.",
       ),
       tx(
         "只做前端：Claude Sonnet 5.5 WebDev 1774 分，价格只有一半（$2 / $10）。",
@@ -105,8 +105,8 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$2 / $10",
     summary: tx(
-      "WebDev 第三，1774 分。sudo L7 榜单第一，与 Opus 5.5 同分 45%；博客单任务约 $14，高于 Opus 的约 $10。",
-      "Third on WebDev at 1774. First on the sudo L7 board, tied with Opus 5.5 at 45%. The blog puts a task at about $14, above Opus at about $10.",
+      "WebDev 第三，1774 分。sudo L7 与 Opus 5.5 同分 45%，排在 Opus 后面。博客单任务约 $14，高于 Opus 的约 $10。",
+      "Third on WebDev at 1774. Tied with Opus 5.5 at 45% on sudo L7, listed after Opus. The blog puts a task at about $14, above Opus at about $10.",
     ),
     why: [tx("做前端时，少 39 分换一半价格。", "For frontend work, 39 fewer points for half the price.")],
     whyNot: [tx("Terminal-Bench 单次跑分 $7.3k，比第一名的 $4.7k 还贵。", "A Terminal-Bench run costs $7.3k, more than the leader's $4.7k.")],
@@ -121,8 +121,8 @@ export const models: Model[] = [
     context: "1.1M",
     priceLabel: "$2 / $10",
     summary: tx(
-      "Terminal-Bench 58.2%，跑分成本 $0.6k。sudo L7 第四，31.7%，博客写单任务略高于 $1。",
-      "58.2% on Terminal-Bench at a $0.6k run. Fourth on sudo L7 at 31.7%. The blog puts a task at just over $1.",
+      "Terminal-Bench 并列第 3，58.2%，跑分成本 $634.24。sudo L7 第四，31.7%，博客写单任务略高于 $1。",
+      "Ties for 3rd on Terminal-Bench at 58.2% and $634.24 a run. Fourth on sudo L7 at 31.7%. The blog puts a task at just over $1.",
     ),
     why: [tx("全栈和脚本更看成本时，它是 Terminal-Bench 上更划算的一档。", "When a full-stack or scripting job cares about cost, this is the cheaper Terminal-Bench tier.")],
     whyNot: [tx("不是任何一张活跃榜的第一名。纯前端 Opus 与 Sonnet 仍然更高。", "It is not first on an active board. Opus and Sonnet still score higher for frontend.")],
@@ -208,7 +208,7 @@ export const models: Model[] = [
     priceLabel: "$2 / $6",
     summary: tx("WebDev 有两行，1674 与 1672，都标了初步。Android Bench 1.0 第六，87.0%。", "Two preliminary WebDev rows, 1674 and 1672. Sixth on Android Bench 1.0 at 87.0%."),
     why: [tx("Android 标准任务仍在前十，价格低于榜首。", "Still in the Android top ten, cheaper than the leader.")],
-    whyNot: [tx("闭源，不能放进开源前端切片。WebDev 行仍是初步。", "Proprietary, so it is outside the open-frontend slice. The WebDev rows are still preliminary.")],
+    whyNot: [tx("WebDev 两行都标 Proprietary，也仍是初步。", "Both WebDev rows are marked Proprietary, and both are still preliminary.")],
   }),
   model({
     slug: "muse-spark-1-3",
@@ -291,7 +291,7 @@ export const models: Model[] = [
     licenseLabel: apache,
     context: "1M",
     priceLabel: "$0.83 / $2.50",
-    summary: tx("开源许可切片第二，WebDev 1632，Apache 2.0，标记为初步。", "Second in the open-license slice at 1632 on WebDev. Apache 2.0, marked preliminary."),
+    summary: tx("WebDev 第 18，1632，Apache 2.0，标记为初步。", "18th on WebDev at 1632. Apache 2.0, marked preliminary."),
     why: [tx("Apache 2.0，分只比 MiMo Flash 低 5 分。", "Apache 2.0, five points behind MiMo Flash.")],
     whyNot: [tx("仍是初步结果，名次可能变动。", "Still preliminary, so the rank can move.")],
   }),
@@ -304,7 +304,7 @@ export const models: Model[] = [
     licenseLabel: mit,
     context: "1.1M",
     priceLabel: "$0.43 / $0.87",
-    summary: tx("WebDev 1629，MIT。开源切片里排在 Flash 和 HY4 后面。", "1629 on WebDev, MIT. Behind Flash and HY4 in the open slice."),
+    summary: tx("WebDev 第 19，1629，MIT。排在 MiMo V2.6 Flash 和 HY4 Preview 后面。", "19th on WebDev at 1629, MIT. Behind MiMo V2.6 Flash and HY4 Preview."),
     why: [tx("与 Flash 同一许可，分数接近。", "Same license as Flash, with a close score.")],
     whyNot: [tx("更贵，分数还更低。开源首选仍是 Flash。", "It costs more and scores lower. Flash remains the open primary.")],
   }),
@@ -317,10 +317,10 @@ export const models: Model[] = [
     licenseLabel: mit,
     priceLabel: "$1.40 / $4.40",
     summary: tx(
-      "WebDev 1622，MIT，位于开源切片第四。Terminal-Bench 公布分数 41.8%。可以自托管。",
-      "1622 on WebDev, MIT, fourth in the open slice. Published Terminal-Bench score 41.8%. Weights can be self-hosted.",
+      "WebDev 第 22，1622，MIT。Terminal-Bench 第 20，41.8% ± 3.2%，成本 $2.7k。可以自托管。",
+      "22nd on WebDev at 1622, MIT. 20th on Terminal-Bench at 41.8% ± 3.2%, cost $2.7k. Weights can be self-hosted.",
     ),
-    why: [tx("MIT，WebDev 仍在开源前五。iOS 没有专项榜时，编辑把它列为可自托管的一档。", "MIT, and still in the open WebDev top five. Editors list it as the self-hosted option where no iOS board exists.")],
+    why: [tx("MIT。iOS 没有专项榜时，编辑把它列为可自托管的一档。", "MIT. Editors list it as the self-hosted option where no iOS board exists.")],
     whyNot: [tx("Terminal-Bench 41.8%，明显低于前排闭源模型。", "41.8% on Terminal-Bench, well behind the proprietary front.")],
   }),
   model({
@@ -330,9 +330,9 @@ export const models: Model[] = [
     vendorName: "DeepSeek",
     license: "mit",
     licenseLabel: mit,
-    summary: tx("WebDev 1619，MIT，开源切片第五。", "1619 on WebDev, MIT, fifth in the open slice."),
+    summary: tx("WebDev 第 23，1619，MIT。", "23rd on WebDev at 1619, MIT."),
     why: [tx("MIT，价格档需要时可以和 MiMo 一起看。", "MIT. Worth comparing with MiMo when price is the constraint.")],
-    whyNot: [tx("开源切片里分数最低的一档，没有终端或 Android 的前排成绩。", "Lowest of the open slice, with no front-of-board Terminal or Android score.")],
+    whyNot: [tx("WebDev 第 23，没有终端或 Android 的前排成绩。", "23rd on WebDev, with no front-of-board Terminal or Android score.")],
   }),
   model({
     slug: "claude-fable-5",

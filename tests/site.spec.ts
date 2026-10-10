@@ -35,7 +35,7 @@ test("view more opens every scenario as a board card", async ({ page }) => {
   await section.locator("header").getByRole("link", { name: /查看更多/ }).click();
   await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
   const cards = page.locator("article");
-  await expect(cards).toHaveCount(8);
+  await expect(cards).toHaveCount(6);
   await expect(page.getByRole("link", { name: "做全栈 SaaS" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Android Bench 1.0", exact: true })).toBeVisible();
 });
@@ -48,12 +48,46 @@ test("english home is unprefixed", async ({ page }) => {
   await expect(page.getByText("View the full board")).toHaveCount(0);
 });
 
-test("web scenario can filter to open licenses", async ({ page }) => {
+test("web scenario keeps the full source board", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
-  await expect(page.getByRole("link", { name: /1813/ }).first()).toBeVisible();
-  await page.getByRole("button", { name: "开源许可" }).click();
-  await expect(page.getByRole("link", { name: /1813/ })).toHaveCount(0);
-  await expect(page.getByRole("link", { name: /MiMo V2.6 Flash/ }).first()).toBeVisible();
+  await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
+  await expect(page.getByText("1813").first()).toBeVisible();
+  await expect(page.getByRole("link", { name: "devstral-medium-2507" })).toHaveCount(0);
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  await expect(page.getByRole("link", { name: "devstral-medium-2507" })).toBeVisible();
+  await page.getByRole("button", { name: "开源权重" }).click();
+  await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "devstral-medium-2507" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "mimo-v2.6-flash" })).toBeVisible();
+  const mimo = page.getByRole("row").filter({ hasText: "mimo-v2.6-flash" });
+  await expect(mimo.getByText("16", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  await expect(page.getByRole("link", { name: "granite-4.1-8b" })).toBeVisible();
+});
+
+test("android scenario shows both source tables", async ({ page }) => {
+  await page.goto("/zh/scenarios/android-app/");
+  await expect(page.getByRole("link", { name: "Claude Opus 5" })).toBeVisible();
+  await expect(page.getByText("91.8").first()).toBeVisible();
+  await expect(page.getByText("32.7")).toHaveCount(0);
+  await page.getByRole("button", { name: "2.0 长程" }).click();
+  await expect(page.getByRole("link", { name: "Claude Opus 5.5" })).toBeVisible();
+  await expect(page.getByText("32.7").first()).toBeVisible();
+  await expect(page.getByText("claude-code").first()).toBeVisible();
+  await expect(page.getByText("84.7").first()).toBeVisible();
+  await expect(page.getByText("18.7–47.3").first()).toBeVisible();
+  await page.goto("/zh/scenarios/android-app/#long");
+  await expect(page.getByText("32.7").first()).toBeVisible();
+  await expect(page.getByText("Gemini 3.8 Flash").first()).toBeVisible();
+});
+
+test("removed scenario urls land on the source board", async ({ page }) => {
+  await page.goto("/zh/scenarios/open-frontend/");
+  await expect(page).toHaveURL(/\/zh\/scenarios\/web-frontend\/$/);
+  await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
+  await page.goto("/scenarios/refactor/");
+  await expect(page).toHaveURL(/\/scenarios\/android-app\/#long$/);
+  await expect(page.getByText("32.7").first()).toBeVisible();
 });
 
 test("model, skill, library, category, and build pages render", async ({ page }) => {

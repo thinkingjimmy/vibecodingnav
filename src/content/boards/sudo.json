@@ -1,0 +1,109 @@
+[
+  {
+    "rank": 1,
+    "label": "Claude Opus 5.5",
+    "effort": "Adaptive/Max",
+    "score": 45.0,
+    "scoreText": "45",
+    "modelSlug": "claude-opus-5-5",
+    "vendor": "anthropic"
+  },
+  {
+    "rank": 2,
+    "label": "Claude Sonnet 5.5",
+    "effort": "Adaptive/Max",
+    "score": 45.0,
+    "scoreText": "45",
+    "modelSlug": "claude-sonnet-5-5",
+    "vendor": "anthropic"
+  },
+  {
+    "rank": 3,
+    "label": "GPT 6 Astra",
+    "effort": "Max reasoning",
+    "score": 32.2,
+    "scoreText": "32.2",
+    "modelSlug": "gpt-6-astra",
+    "vendor": "openai"
+  },
+  {
+    "rank": 4,
+    "label": "GPT 6.1 Sol",
+    "effort": "Max reasoning",
+    "score": 31.7,
+    "scoreText": "31.7",
+    "modelSlug": "gpt-6-1-sol",
+    "vendor": "openai"
+  },
+  {
+    "rank": 5,
+    "label": "Claude Fable 5.1",
+    "effort": "Adaptive/Max",
+    "score": 27.2,
+    "scoreText": "27.2",
+    "modelSlug": "claude-fable-5-1",
+    "vendor": "anthropic"
+  },
+  {
+    "rank": 6,
+    "label": "Qwen 3.8 Max",
+    "effort": "xHigh reasoning",
+    "score": 15.6,
+    "scoreText": "15.6",
+    "modelSlug": "qwen3-8-max",
+    "vendor": "qwen"
+  },
+  {
+    "rank": 7,
+    "label": "GLM 5.3",
+    "effort": "Max reasoning",
+    "score": 15.0,
+    "scoreText": "15",
+    "modelSlug": "glm-5-3",
+    "vendor": "zhipu"
+  },
+  {
+    "rank": 8,
+    "label": "Kimi K3",
+    "effort": "Max reasoning",
+    "score": 13.9,
+    "scoreText": "13.9",
+    "modelSlug": "kimi-k3",
+    "vendor": "kimi"
+  },
+  {
+    "rank": 9,
+    "label": "Muse Spark 1.3",
+    "effort": "Max reasoning",
+    "score": 12.2,
+    "scoreText": "12.2",
+    "modelSlug": "muse-spark-1-3",
+    "vendor": "meta"
+  },
+  {
+    "rank": 10,
+    "label": "Hy4 Preview",
+    "effort": "High reasoning",
+    "score": 11.1,
+    "scoreText": "11.1",
+    "modelSlug": "hy4-preview"
+  },
+  {
+    "rank": 11,
+    "label": "Grok 4.7",
+    "effort": "xHigh reasoning",
+    "score": 10.6,
+    "scoreText": "10.6",
+    "modelSlug": "grok-4-7",
+    "vendor": "xai"
+  },
+  {
+    "rank": 12,
+    "label": "Gemini 3.8 Flash",
+    "effort": "High reasoning",
+    "score": 10.6,
+    "scoreText": "10.6",
+    "modelSlug": "gemini-3-8-flash",
+    "vendor": "google"
+  }
+]

@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Scenario 契约
- * [OUTPUT]: 对外提供场景榜单：首页六张卡片，其余在场景列表
+ * [OUTPUT]: 对外提供场景榜单：首页六张卡片，场景列表同一套卡片
  * [POS]: src/content 的场景实体，只引用基准与模型，不复制分数
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -21,7 +21,6 @@ export const scenarios: Scenario[] = [
       "Landing pages, interactive components, and React / Next.js screens. Ranked by LMArena WebDev blind votes: two anonymous models build the same brief, and a person picks the better one.",
     ),
     benchmark: "lmarena-webdev",
-    subset: "all",
     valueMetric: "token",
     lead: "top",
     featured: true,
@@ -46,17 +45,20 @@ export const scenarios: Scenario[] = [
         "Third place, Claude Sonnet 5.5, is 39 points behind first at half the price. Open-weight MiMo V2.6 Flash is 16th at $0.14 / $0.28.",
       ),
     ],
-    related: ["android-app", "cli-devops", "refactor", "open-frontend", "ios-app", "saas"],
+    related: ["android-app", "cli-devops", "production-changes", "ios-app", "saas"],
   },
   {
     slug: "android-app",
     title: tx("做一个 Android App", "Build an Android app"),
     summary: tx(
-      "Kotlin + Compose，新功能与库迁移。按 Android Bench 1.0 的标准任务通过率排名。",
-      "Kotlin and Compose, new features and library migrations. Ranked by the Android Bench 1.0 pass rate on standard tasks.",
+      "Kotlin + Compose。同一页收录 Android Bench 1.0 和 2.0 长程，两张表都按来源页的完整行、列和顺序。首页卡片用 1.0。",
+      "Kotlin and Compose. Android Bench 1.0 and the 2.0 long-horizon table are both here, each with the source rows, columns, and order. The home card uses 1.0.",
     ),
     benchmark: "android-bench-1",
-    subset: "all",
+    boards: [
+      { id: "1-0", benchmark: "android-bench-1", label: tx("1.0", "1.0") },
+      { id: "long", benchmark: "android-bench-2-long", label: tx("2.0 长程", "2.0 long-horizon") },
+    ],
     valueMetric: "run",
     lead: "top",
     featured: true,
@@ -75,13 +77,13 @@ export const scenarios: Scenario[] = [
         "GPT 5.6 Luna scores 87.6% at $7.2 a run, about a twenty-fourth of the leader's $175.4.",
       ),
       point(
-        "长程是另一张榜",
-        "Long work is another board",
-        "跨模块改造看 Android Bench 长程，排名会变。",
-        "Cross-module work belongs on the Android long-horizon board, and the order changes.",
+        "长程在本页另一栏",
+        "Long work is the other tab",
+        "跨模块改造看 2.0 长程。第一名是 Claude Opus 5.5，32.7%，不是 1.0 的第一名。",
+        "Cross-module work is the 2.0 long-horizon tab. First there is Claude Opus 5.5 at 32.7%, not the 1.0 leader.",
       ),
     ],
-    related: ["refactor", "web-frontend", "cli-devops", "ios-app", "open-frontend", "saas"],
+    related: ["web-frontend", "cli-devops", "production-changes", "ios-app", "saas"],
   },
   {
     slug: "cli-devops",
@@ -91,7 +93,6 @@ export const scenarios: Scenario[] = [
       "Agent tasks and automation in a terminal. Ranked by the Terminal-Bench 4.0 pass rate, with the cost of one run beside the score.",
     ),
     benchmark: "terminal-bench-4",
-    subset: "all",
     valueMetric: "run",
     lead: "top",
     featured: true,
@@ -100,8 +101,8 @@ export const scenarios: Scenario[] = [
       point(
         "第一名不是最便宜",
         "First is not the cheapest",
-        "Opus 5.5 通过率 64.8%，跑分成本 $4.7k。GPT-6.1 Sol 同为 58.2% 档里成本 $0.6k。",
-        "Opus 5.5 passes 64.8% at $4.7k a run. GPT-6.1 Sol is in the 58.2% band at $0.6k.",
+        "Opus 5.5 通过率 64.8%，跑分成本 $4.7k。GPT-6.1 Sol 并列第 3，58.2%，成本 $634.24。",
+        "Opus 5.5 passes 64.8% at $4.7k a run. GPT-6.1 Sol ties for 3rd at 58.2% and $634.24.",
       ),
       point(
         "第二名更贵",
@@ -116,7 +117,7 @@ export const scenarios: Scenario[] = [
         "Whether a screen looks right is LMArena WebDev. This board only asks if the terminal task gets finished.",
       ),
     ],
-    related: ["web-frontend", "saas", "refactor", "production-changes", "android-app", "open-frontend"],
+    related: ["web-frontend", "saas", "production-changes", "android-app", "ios-app"],
   },
   {
     slug: "production-changes",
@@ -126,7 +127,6 @@ export const scenarios: Scenario[] = [
       "On production code, passing tests is not enough: spot the risk, push back, verify the dangerous cases, and explain the decision. Ranked by the Surge AI sudo L7 completion rate.",
     ),
     benchmark: "sudo-l7",
-    subset: "all",
     valueMetric: "run",
     lead: "top",
     featured: true,
@@ -154,76 +154,7 @@ export const scenarios: Scenario[] = [
         "Functional correctness for the top four sits between 79.6% and 82.4%. Thought partnership is 76.1% for Opus and 74.8% for Sonnet, against 53.0% for Sol and 51.6% for Astra. Communication is 72.4% for Sonnet and 44.1% for Sol.",
       ),
     ],
-    related: ["refactor", "cli-devops", "saas", "web-frontend", "android-app", "ios-app"],
-  },
-  {
-    slug: "refactor",
-    title: tx("大型重构与迁移", "Large refactors and migrations"),
-    summary: tx(
-      "跨模块改造、框架与依赖升级。按 Android Bench 长程任务的通过率来看哪一档模型撑得住。",
-      "Cross-module changes, framework upgrades, and dependency moves. The Android Bench long-horizon pass rate shows which tier can hold a long task.",
-    ),
-    benchmark: "android-bench-2-long",
-    subset: "all",
-    valueMetric: "run",
-    lead: "top",
-    featured: true,
-    whyItMatters: [
-      point(
-        "通过率整体不高",
-        "Pass rates stay low",
-        "第一名 32.7%，区间 18.7–47.3，和后面几名重叠。",
-        "First place is 32.7%, interval 18.7–47.3, overlapping the rows behind it.",
-      ),
-      point(
-        "时间和钱都要看",
-        "Time and money both count",
-        "Opus 5.5 平均耗时 15.2 小时，跑分成本 $215.4。",
-        "Opus 5.5 averages 15.2 hours, and a run costs $215.4.",
-      ),
-      point(
-        "不要用标准榜代替",
-        "Do not reuse the standard board",
-        "Android Bench 1.0 的前几名到了长程榜会换位置。",
-        "The Android Bench 1.0 leaders change places on the long board.",
-      ),
-    ],
-    related: ["android-app", "cli-devops", "production-changes", "web-frontend", "saas", "open-frontend"],
-  },
-  {
-    slug: "open-frontend",
-    title: tx("用开源模型做前端", "Build a frontend with open models"),
-    summary: tx(
-      "同一张 LMArena WebDev，只留 MIT、Apache 等可再分发的许可。适合要自托管、不能把请求送到闭源 API 的时候。",
-      "The same LMArena WebDev board, kept to redistributable licenses such as MIT and Apache. Use it when the model has to be self-hosted.",
-    ),
-    benchmark: "lmarena-webdev",
-    subset: "permissive-open",
-    valueMetric: "token",
-    lead: "top",
-    featured: true,
-    sourceLabel: tx("LMArena WebDev · 开源许可", "LMArena WebDev · open license"),
-    whyItMatters: [
-      point(
-        "许可看得懂",
-        "The license is readable",
-        "这一档是 MIT 或 Apache 2.0，可以自托管。qwen-community 与专有许可不在这里。",
-        "This slice is MIT or Apache 2.0 and can be self-hosted. qwen-community and proprietary licenses stay out.",
-      ),
-      point(
-        "和闭源第一名的分差",
-        "The gap to the proprietary leader",
-        "MiMo V2.6 Flash 1637，Opus 5.5 是 1813，差 176 分。",
-        "MiMo V2.6 Flash scores 1637. Opus 5.5 scores 1813. The gap is 176.",
-      ),
-      point(
-        "价格",
-        "Price",
-        "MiMo V2.6 Flash 的标价是 $0.14 / $0.28。",
-        "MiMo V2.6 Flash is priced at $0.14 / $0.28.",
-      ),
-    ],
-    related: ["web-frontend", "cli-devops", "android-app", "refactor", "ios-app", "saas"],
+    related: ["cli-devops", "saas", "web-frontend", "android-app", "ios-app"],
   },
   {
     slug: "ios-app",
@@ -232,7 +163,6 @@ export const scenarios: Scenario[] = [
       "SwiftUI 与原生能力。还没有公开的 iOS 专项基准，所以这里不放分数，只放编辑对照三张活跃榜之后的选择。",
       "SwiftUI and native APIs. There is no public iOS benchmark yet, so this page has no scores. The picks are an editor's cross-check of the three active boards.",
     ),
-    subset: "all",
     valueMetric: "token",
     lead: "top",
     featured: true,
@@ -253,7 +183,7 @@ export const scenarios: Scenario[] = [
       ),
       point("有专项榜再换", "Replace it when a board exists", "出现 iOS 专项基准之后，这里应改成榜单，不再保留精选。", "Once an iOS benchmark exists, this page should become a board and drop the picks."),
     ],
-    related: ["android-app", "web-frontend", "cli-devops", "open-frontend", "refactor", "saas"],
+    related: ["android-app", "web-frontend", "cli-devops", "production-changes", "saas"],
   },
   {
     slug: "saas",
@@ -263,14 +193,13 @@ export const scenarios: Scenario[] = [
       "Next.js, a database, auth, and deploy. The interface is a thin layer. Most of the time is in the terminal. Read Terminal-Bench cost, not only the top pass rate.",
     ),
     benchmark: "terminal-bench-4",
-    subset: "all",
     valueMetric: "run",
     lead: "value",
-    featured: false,
+    featured: true,
     build: "saas",
     note: tx(
-      "2026-09-29 起，这个场景的首选改为 GPT-6.1 Sol：通过率 58.2%，跑分成本 $0.6k。",
-      "Since 2026-09-29 the pick for this scenario is GPT-6.1 Sol: 58.2% pass rate, $0.6k a run.",
+      "2026-09-29 起，这个场景的首选改为 GPT-6.1 Sol：通过率 58.2%，跑分成本 $634.24。榜单本身仍按来源名次排列。",
+      "Since 2026-09-29 the pick for this scenario is GPT-6.1 Sol: 58.2% pass rate, $634.24 a run. The board itself stays in source order.",
     ),
     whyItMatters: [
       point(
@@ -282,10 +211,10 @@ export const scenarios: Scenario[] = [
       point(
         "推荐看成本",
         "The recommendation is the cost",
-        "GPT-6.1 Sol 58.2%，跑分成本 $0.6k，不到榜首跑分成本的八分之一。",
-        "GPT-6.1 Sol scores 58.2% at $0.6k a run, under an eighth of the leader's run cost.",
+        "GPT-6.1 Sol 并列第 3，58.2%，跑分成本 $634.24，约为榜首 $4.7k 的七分之一。",
+        "GPT-6.1 Sol ties for 3rd at 58.2% and $634.24 a run, about a seventh of the leader's $4.7k.",
       ),
     ],
-    related: ["cli-devops", "production-changes", "web-frontend", "refactor", "android-app", "open-frontend"],
+    related: ["cli-devops", "production-changes", "web-frontend", "android-app", "ios-app"],
   },
 ];

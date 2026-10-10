@@ -4,38 +4,88 @@
  * [POS]: src/content 的成绩表，场景页与模型页都从这里读
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
-import type { Result } from "@/lib/contracts";
+import type { Ci, Result, VendorId, WeightClass } from "@/lib/contracts";
+import android1 from "./boards/android-1.json";
+import androidLong from "./boards/android-long.json";
+import sudoRows from "./boards/sudo.json";
+import terminalRows from "./boards/terminal.json";
+import webdevRows from "./boards/webdev.json";
 
-const web = "lmarena-webdev";
-const webDate = "2026-10-08";
+interface BoardJson {
+  rank: number;
+  label: string;
+  modelSlug?: string;
+  effort?: string;
+  vendor?: VendorId;
+  letter?: string;
+  org?: string;
+  licenseText?: string;
+  weights?: WeightClass;
+  agent?: string;
+  agentOrg?: string;
+  score: number;
+  scoreText: string;
+  ciText?: string;
+  ciPm?: number;
+  ciLow?: number;
+  ciHigh?: number;
+  rankSpread?: string;
+  votes?: string;
+  tokenPrice?: string;
+  runCost?: string;
+  context?: string;
+  completion?: string;
+  latency?: string;
+  tokens?: string;
+  releaseDate?: string;
+  preliminary?: boolean;
+}
 
-function elo(
-  rank: number,
-  spread: string,
-  modelSlug: string,
-  effort: string | undefined,
-  score: number,
-  ci: number,
-  votes: string,
-  tokenPrice: string,
-  context?: string,
-  preliminary?: boolean,
-): Result {
-  return {
-    benchmark: web,
-    asOf: webDate,
-    rank,
-    rankSpread: spread,
-    modelSlug,
-    effort: effort || undefined,
-    setting: effort || undefined,
-    score,
-    ci: { kind: "pm", value: ci },
-    votes,
-    tokenPrice,
-    context,
-    preliminary,
-  };
+function displayedScore(row: BoardJson) {
+  if (row.scoreText.includes("%")) {
+    const match = row.scoreText.match(/[\d.]+/);
+    if (match) return Number(match[0]);
+  }
+  return row.score;
+}
+
+function boardCi(row: BoardJson): Ci | undefined {
+  if (row.ciPm != null) return { kind: "pm", value: row.ciPm };
+  if (row.ciLow != null && row.ciHigh != null) return { kind: "range", low: row.ciLow, high: row.ciHigh };
+  return undefined;
+}
+
+function board(benchmark: string, asOf: string, rows: BoardJson[]): Result[] {
+  return rows.map((row) => ({
+    benchmark,
+    asOf,
+    rank: row.rank,
+    rankSpread: row.rankSpread,
+    modelSlug: row.modelSlug,
+    label: row.label,
+    vendor: row.vendor,
+    letter: row.letter,
+    org: row.org,
+    licenseText: row.licenseText,
+    weights: row.weights,
+    agent: row.agent,
+    agentOrg: row.agentOrg,
+    effort: row.effort,
+    setting: [row.effort, row.agent].filter(Boolean).join(" · ") || undefined,
+    score: displayedScore(row),
+    scoreText: row.scoreText,
+    ci: boardCi(row),
+    ciText: row.ciText,
+    votes: row.votes,
+    tokenPrice: row.tokenPrice,
+    runCost: row.runCost,
+    context: row.context,
+    completion: row.completion,
+    latency: row.latency,
+    tokens: row.tokens,
+    releaseDate: row.releaseDate,
+    preliminary: row.preliminary || undefined,
+  }));
 }
 
 function fw(
@@ -107,251 +157,12 @@ function reactBench(): Result[] {
   }));
 }
 
-function sudo(rank: number, modelSlug: string, score: number, effort?: string, runCost?: string): Result {
-  return {
-    benchmark: "sudo-l7",
-    asOf: "2026-10-09",
-    rank,
-    modelSlug,
-    effort,
-    setting: effort,
-    score,
-    runCost,
-  };
-}
-
 export const results: Result[] = [
-  elo(1, "1–1", "claude-opus-5-5", "max", 1813, 15, "2,294", "$4 / $20", "1M"),
-  elo(2, "2–3", "gpt-6-astra", "max", 1786, 11, "5,189", "$10 / $50", "1.1M"),
-  elo(3, "2–4", "claude-sonnet-5-5", "xhigh", 1774, 15, "2,323", "$2 / $10", "1M"),
-  elo(4, "3–5", "gpt-6-1-sol", "max", 1755, 15, "2,102", "$2 / $10", "1.1M"),
-  elo(5, "4–5", "claude-fable-5-1", "max", 1744, 9, "6,663", "$10 / $50", "1M"),
-  elo(6, "6–6", "claude-sonnet-5-5", "high", 1715, 11, "3,984", "$2 / $10", "1M"),
-  elo(7, "7–9", "claude-opus-5", "max", 1691, 6, "17,320", "$5 / $25", "1M"),
-  elo(8, "7–11", "gpt-6-sol", "max", 1688, 12, "3,407", "$2 / $10", "1.1M"),
-  elo(9, "7–13", "gemini-4-argon", "high", 1678, 15, "1,771", "$2 / $10", "1M", true),
-  elo(10, "8–11", "qwen3-8-max", "0902", 1674, 8, "11,182", "$2 / $6", undefined, true),
-  elo(11, "8–14", "qwen3-8-max", undefined, 1672, 12, "3,446", "$2 / $6", "1M", true),
-  elo(12, "10–14", "claude-opus-5", "high", 1657, 6, "22,340", "$5 / $25", "1M"),
-  elo(13, "10–15", "muse-spark-1-3", "max", 1657, 8, "7,886", "$1.25 / $4.25", "1M"),
-  elo(14, "11–15", "kimi-k3", "max", 1654, 6, "17,412", "$3 / $15", "1M"),
-  elo(15, "13–23", "grok-4-7", "xhigh", 1639, 11, "3,936", "$2 / $6", "500K"),
-  elo(16, "15–23", "mimo-v2-6-flash", undefined, 1637, 10, "4,058", "$0.14 / $0.28", "1.1M"),
-  elo(17, "15–25", "qwen3-8-flash-next", undefined, 1633, 8, "6,932", "$0.16 / $0.47", "1M", true),
-  elo(18, "15–25", "hy4-preview", undefined, 1632, 10, "4,792", "$0.83 / $2.50", "1M", true),
-  elo(19, "15–25", "mimo-v2-6-pro", undefined, 1629, 11, "3,649", "$0.43 / $0.87", "1.1M"),
-  elo(20, "15–25", "muse-spark-1-3", "xhigh", 1626, 8, "7,123", "$1.25 / $4.25", "1M"),
-  {
-    benchmark: web,
-    asOf: webDate,
-    modelSlug: "glm-5-3",
-    score: 1622,
-    tokenPrice: "$1.40 / $4.40",
-  },
-  {
-    benchmark: web,
-    asOf: webDate,
-    modelSlug: "deepseek-v4-1-flash",
-    score: 1619,
-  },
-  {
-    benchmark: "terminal-bench-4",
-    asOf: "2026-10-10",
-    rank: 1,
-    modelSlug: "claude-opus-5-5",
-    effort: "max",
-    setting: "max · Claude Code",
-    score: 64.8,
-    ci: { kind: "pm", value: 3.1 },
-    runCost: "$4.7k",
-  },
-  {
-    benchmark: "terminal-bench-4",
-    asOf: "2026-10-10",
-    rank: 2,
-    modelSlug: "claude-sonnet-5-5",
-    effort: "max",
-    setting: "max · Claude Code",
-    score: 61.8,
-    runCost: "$7.3k",
-  },
-  {
-    benchmark: "terminal-bench-4",
-    asOf: "2026-10-10",
-    rank: 3,
-    modelSlug: "gpt-6-astra",
-    effort: "max",
-    setting: "max",
-    score: 58.2,
-  },
-  {
-    benchmark: "terminal-bench-4",
-    asOf: "2026-10-10",
-    rank: 4,
-    modelSlug: "gpt-6-1-sol",
-    effort: "max",
-    setting: "max",
-    score: 58.2,
-    runCost: "$0.6k",
-  },
-  {
-    benchmark: "terminal-bench-4",
-    asOf: "2026-10-10",
-    rank: 5,
-    modelSlug: "claude-fable-5-1",
-    effort: "max",
-    setting: "max",
-    score: 57.9,
-  },
-  {
-    benchmark: "terminal-bench-4",
-    asOf: "2026-10-10",
-    modelSlug: "glm-5-3",
-    score: 41.8,
-    setting: "max",
-  },
-  sudo(1, "claude-sonnet-5-5", 45, undefined, "$14"),
-  sudo(2, "claude-opus-5-5", 45, "Adaptive/Max", "$10"),
-  sudo(3, "gpt-6-astra", 32.2, "Max"),
-  sudo(4, "gpt-6-1-sol", 31.7, "Max", "$1"),
-  sudo(5, "claude-fable-5-1", 27.2, "Adaptive/Max"),
-  sudo(6, "qwen3-8-max", 15.6),
-  sudo(7, "glm-5-3", 15, "Max"),
-  sudo(8, "kimi-k3", 13.9, "Max"),
-  sudo(9, "muse-spark-1-3", 12.2, "Max"),
-  sudo(10, "hy4-preview", 11.1),
-  sudo(11, "gemini-3-8-flash", 10.6, "High"),
-  sudo(12, "grok-4-7", 10.6, "xHigh"),
-  {
-    benchmark: "android-bench-1",
-    asOf: "2026-08-11",
-    rank: 1,
-    modelSlug: "claude-opus-5",
-    score: 91.8,
-    ci: { kind: "range", low: 87.4, high: 95.7 },
-    runCost: "$175.4",
-    setting: "1.0",
-  },
-  {
-    benchmark: "android-bench-1",
-    asOf: "2026-08-11",
-    rank: 2,
-    modelSlug: "claude-fable-5",
-    score: 90.9,
-    runCost: "$144.3",
-    setting: "1.0",
-  },
-  {
-    benchmark: "android-bench-1",
-    asOf: "2026-08-11",
-    rank: 3,
-    modelSlug: "gpt-5-6-sol",
-    score: 90.8,
-    runCost: "$150.0",
-    setting: "1.0",
-  },
-  {
-    benchmark: "android-bench-1",
-    asOf: "2026-08-11",
-    rank: 4,
-    modelSlug: "kimi-k3",
-    score: 90.2,
-    ci: { kind: "range", low: 85, high: 94.6 },
-    runCost: "$112.9",
-    setting: "1.0",
-  },
-  {
-    benchmark: "android-bench-1",
-    asOf: "2026-08-11",
-    rank: 5,
-    modelSlug: "gpt-5-6-luna",
-    score: 87.6,
-    ci: { kind: "range", low: 81.8, high: 92.3 },
-    runCost: "$7.2",
-    setting: "1.0",
-  },
-  {
-    benchmark: "android-bench-1",
-    asOf: "2026-08-11",
-    rank: 6,
-    modelSlug: "qwen3-8-max",
-    score: 87,
-    runCost: "$196.7",
-    setting: "1.0",
-  },
-  {
-    benchmark: "android-bench-1",
-    asOf: "2026-08-11",
-    rank: 7,
-    modelSlug: "gpt-5-6-terra",
-    score: 86.8,
-    runCost: "$48.0",
-    setting: "1.0",
-  },
-  {
-    benchmark: "android-bench-2-long",
-    asOf: "2026-10-10",
-    rank: 1,
-    modelSlug: "claude-opus-5-5",
-    score: 32.7,
-    ci: { kind: "range", low: 18.7, high: 47.3 },
-    runCost: "$215.4",
-    setting: "长程 · claude-code",
-  },
-  {
-    benchmark: "android-bench-2-long",
-    asOf: "2026-10-10",
-    rank: 2,
-    modelSlug: "gpt-6-astra",
-    score: 28,
-    runCost: "$375.7",
-    setting: "长程",
-  },
-  {
-    benchmark: "android-bench-2-long",
-    asOf: "2026-10-10",
-    rank: 3,
-    modelSlug: "claude-fable-5-1",
-    score: 22.7,
-    runCost: "$492.6",
-    setting: "长程",
-  },
-  {
-    benchmark: "android-bench-2-long",
-    asOf: "2026-10-10",
-    rank: 4,
-    modelSlug: "gpt-6-sol",
-    score: 18,
-    runCost: "$93.4",
-    setting: "长程",
-  },
-  {
-    benchmark: "android-bench-2-long",
-    asOf: "2026-10-10",
-    rank: 5,
-    modelSlug: "qwen3-8-max",
-    score: 14,
-    runCost: "$260.2",
-    setting: "长程",
-  },
-  {
-    benchmark: "android-bench-2-long",
-    asOf: "2026-10-10",
-    rank: 6,
-    modelSlug: "kimi-k3",
-    score: 12,
-    runCost: "$418.3",
-    setting: "长程",
-  },
-  {
-    benchmark: "android-bench-2-long",
-    asOf: "2026-10-10",
-    rank: 7,
-    modelSlug: "gpt-6-luna",
-    score: 10.7,
-    runCost: "$5.3",
-    setting: "长程",
-  },
+  ...board("lmarena-webdev", "2026-10-08", webdevRows as BoardJson[]),
+  ...board("terminal-bench-4", "2026-10-06", terminalRows as BoardJson[]),
+  ...board("sudo-l7", "2026-10-09", sudoRows as BoardJson[]),
+  ...board("android-bench-1", "2026-10-06", android1 as BoardJson[]),
+  ...board("android-bench-2-long", "2026-10-06", androidLong as BoardJson[]),
   fw("supabase-evals", "2026-10-10", "claude-opus-5-5", 91.3, { rank: 1, effort: "high", setting: "high · Claude Code" }),
   fw("supabase-evals", "2026-10-10", "kimi-k3", 84.1, { rank: 2, setting: "OpenCode" }),
   fw("supabase-evals", "2026-10-10", "grok-4-7", 78.3, { rank: 3, effort: "high", setting: "high · Grok" }),

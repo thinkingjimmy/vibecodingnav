@@ -55,12 +55,13 @@ const letters: Record<VendorId, string> = {
 
 export const LOBE_VENDORS = Object.keys(marks) as VendorId[];
 
-export function VendorMark({ vendor, className }: { vendor: VendorId; className?: string }) {
-  const Icon = marks[vendor];
+export function VendorMark({ vendor, letter, className }: { vendor?: VendorId; letter?: string; className?: string }) {
+  const Icon = vendor ? marks[vendor] : undefined;
   if (!Icon) {
+    const text = letter ?? (vendor ? letters[vendor] : "?");
     return (
-      <span className={cn("num inline-grid size-3.5 shrink-0 place-items-center rounded-[3px] border border-current text-[9px] font-semibold leading-none text-fg", letters[vendor] === "mi" && "text-[7.5px]", className)}>
-        {letters[vendor]}
+      <span className={cn("num inline-grid size-3.5 shrink-0 place-items-center rounded-[3px] border border-current text-[9px] font-semibold leading-none text-fg", text === "mi" && "text-[7.5px]", className)}>
+        {text}
       </span>
     );
   }

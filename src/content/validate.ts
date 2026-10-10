@@ -90,11 +90,13 @@ export function validateContent(input: ContentBundle): string[] {
   }
 
   for (const result of input.results) {
-    const key = `${result.benchmark}|${result.modelSlug}|${result.effort ?? ""}|${result.arm ?? "baseline"}`;
+    const key = `${result.benchmark}|${result.label ?? result.modelSlug ?? ""}|${result.effort ?? ""}|${result.agent ?? ""}|${result.arm ?? "baseline"}|${result.rank ?? ""}`;
     if (resultKeys.has(key)) errors.push(`result 重复: ${key}`);
     resultKeys.add(key);
     if (!benchmarks.has(result.benchmark)) errors.push(`result 基准不存在: ${result.benchmark}`);
-    if (!models.has(result.modelSlug)) errors.push(`result 模型不存在: ${result.modelSlug}`);
+    if (!result.modelSlug && !result.label) errors.push(`result 缺少模型: ${key}`);
+    if (result.modelSlug && !models.has(result.modelSlug)) errors.push(`result 模型不存在: ${result.modelSlug}`);
+    if (result.vendor && !VENDOR_IDS.includes(result.vendor)) errors.push(`result 厂商未知: ${key}`);
     if (result.rank != null && result.rank < 1) errors.push(`result 名次不合法: ${key}`);
     if (!Number.isFinite(result.score)) errors.push(`result 分数不合法: ${key}`);
     date(result.asOf, `result.${key}.asOf`, errors);
@@ -104,6 +106,10 @@ export function validateContent(input: ContentBundle): string[] {
     text(scenario.title, `scenario.${scenario.slug}.title`, errors);
     text(scenario.summary, `scenario.${scenario.slug}.summary`, errors);
     if (scenario.benchmark && !benchmarks.has(scenario.benchmark)) errors.push(`scenario.${scenario.slug} 基准不存在`);
+    for (const board of scenario.boards ?? []) {
+      if (!benchmarks.has(board.benchmark)) errors.push(`scenario.${scenario.slug} 分表基准不存在: ${board.benchmark}`);
+      text(board.label, `scenario.${scenario.slug}.board.${board.id}`, errors);
+    }
     if (!scenario.benchmark && !scenario.editorPicks?.length) errors.push(`scenario.${scenario.slug} 既没有基准也没有精选`);
     if (scenario.build && !builds.has(scenario.build)) errors.push(`scenario.${scenario.slug} 组合不存在`);
     for (const related of scenario.related) {

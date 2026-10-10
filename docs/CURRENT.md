@@ -15,6 +15,7 @@
 
 ```text
 src/content/{models,benchmarks,results,scenarios,categories,items,builds,changes}.ts
+src/content/boards/*.json   公开榜的逐行副本
                                       │
                                       ▼
                               validateContent
@@ -37,9 +38,11 @@ pnpm check
 
 ## 有意留在内容里的边界
 
-- WebDev 页列出已收录的前 20 名，来源榜单跟踪 142 个模型。
+- 一个基准榜对应一个场景。WebDev、Terminal-Bench 4.0、sudo L7 和 Android Bench 都按来源页全行收录。WebDev 142 行，Terminal-Bench 35 行，sudo L7 12 行。Android 场景用页签放 1.0（32 行）和 2.0 长程（10 行）。
+- 开源权重是榜上的筛选，不另开场景，也不重排名次。超过 20 行可展开全部。
+- 「用开源模型做前端」和「大型重构与迁移」已移除。静态页把旧地址转到 Web 前端榜和 Android 长程页签。`output: export` 不支持配置里的 redirect。
 - iOS 场景是编辑精选，没有分数。
-- 全栈 SaaS 有场景页，没有单独的组合页。
-- sudo L7 收录公开榜全部 12 行。成本列是博客里的单任务约数，榜单页本身没有成本。
+- 全栈 SaaS 与首页共用 Terminal-Bench 全表，没有单独的组合页。挑选里的性价比不改表的顺序。
+- sudo L7 没有成本列。博客里的单任务约数只出现在基准说明。Android 1.0 表本身没有单独日期，asOf 用来源页最新更新 2026-10-06。
 - 框架评测挂在库和规则条目上。默认名次是无 Skills、无指南、无 AGENTS.md。ReactBench v1.2 标成生态评测。Convex With Guidelines 未核实，不列入变化量。
 - 变更日志是编辑条目，不会在分数变化时自动生成。
