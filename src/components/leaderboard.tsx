@@ -24,7 +24,7 @@ function matches(row: BoardRow, filter: Filter, mode: SourceFilter | "none") {
 function ModelCell({ row, table, dict }: { row: BoardRow; table: BoardTable; dict: Dictionary }) {
   const meta = table === "webdev" ? [row.org, row.license].filter(Boolean).join(" · ") : "";
   const body = (
-    <span className="flex min-w-0 items-center gap-2.5">
+    <span className="flex w-full min-w-0 items-center gap-2.5">
       <VendorMark vendor={row.vendor} letter={row.letter} />
       <span className="min-w-0">
         <span className={`block truncate ${row.rank <= 5 ? "font-medium" : ""}`}>{row.name}</span>
@@ -34,8 +34,9 @@ function ModelCell({ row, table, dict }: { row: BoardRow; table: BoardTable; dic
       {row.preliminary ? <span className="shrink-0 text-[11px] text-faint">{dict.scenario.preliminary}</span> : null}
     </span>
   );
-  if (!row.href) return body;
-  return <Link href={row.href} className="no-underline">{body}</Link>;
+  const className = "block min-w-0 max-w-full no-underline";
+  if (!row.href) return <span className={className}>{body}</span>;
+  return <Link href={row.href} className={className}>{body}</Link>;
 }
 
 export function Leaderboard({ rows, dict, table, filter: mode }: { rows: BoardRow[]; dict: Dictionary; table: BoardTable; filter: SourceFilter | "none" }) {
@@ -61,10 +62,15 @@ export function Leaderboard({ rows, dict, table, filter: mode }: { rows: BoardRo
         </div>
       ) : null}
       <div className="overflow-x-auto px-4">
-        <table className="w-full min-w-[720px] border-collapse text-left text-[14px]">
+        <table className="w-full table-fixed border-collapse text-left text-[14px]" style={{ minWidth: tableMin(table) }}>
+          <colgroup>
+            {headers.map((header) => <col key={header.key} style={header.width ? { width: header.width } : undefined} />)}
+          </colgroup>
           <thead>
             <tr className="num h-9 border-b border-line text-[12px] text-faint">
-              {headers.map((header) => <th key={header.key} className={`px-2 font-normal ${header.align === "right" ? "text-right" : "text-left"}`}>{header.label}</th>)}
+              {headers.map((header) => (
+                <th key={header.key} className={`overflow-hidden px-2 font-normal whitespace-nowrap ${header.align === "right" ? "text-right" : "text-left"}`}>{header.label}</th>
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -73,7 +79,7 @@ export function Leaderboard({ rows, dict, table, filter: mode }: { rows: BoardRo
             ) : shown.map((row) => (
               <tr key={row.key} className="rowh border-b border-line">
                 {headers.map((header) => (
-                  <td key={header.key} className={`px-2 py-2.5 align-middle ${header.align === "right" ? "num text-right text-mfg" : "text-left"}`}>{header.cell(row)}</td>
+                  <td key={header.key} className={`overflow-hidden px-2 py-2.5 align-middle ${header.align === "right" ? `num text-right text-mfg ${header.wrap ? "whitespace-normal" : "whitespace-nowrap"}` : `max-w-0 text-left ${header.width ? "whitespace-nowrap" : ""}`}`}>{header.cell(row)}</td>
                 ))}
               </tr>
             ))}
@@ -94,67 +100,78 @@ export function Leaderboard({ rows, dict, table, filter: mode }: { rows: BoardRo
 interface Column {
   key: string;
   label: string;
+  /** 空着的那一列吃掉剩余宽度，筛选换行时其他列不动。 */
+  width?: string;
   align?: "right";
+  wrap?: boolean;
   cell: (row: BoardRow) => ReactNode;
+}
+
+function tableMin(table: BoardTable) {
+  if (table === "terminal") return "72rem";
+  if (table === "android-long") return "56rem";
+  if (table === "webdev") return "48rem";
+  if (table === "android-1") return "40rem";
+  return "24rem";
 }
 
 function columns(table: BoardTable, dict: Dictionary): Column[] {
   const text = dict.scenario;
   const rank = (row: BoardRow) => <span className={row.rank <= 3 ? "text-fg" : ""}>{row.rank}</span>;
   const model = (row: BoardRow) => <ModelCell row={row} table={table} dict={dict} />;
-  const right = (key: string, label: string, cell: (row: BoardRow) => ReactNode): Column => ({ key, label, align: "right", cell });
-  const left = (key: string, label: string, cell: (row: BoardRow) => ReactNode): Column => ({ key, label, cell });
+  const right = (key: string, label: string, width: string, cell: (row: BoardRow) => ReactNode, wrap = false): Column => ({ key, label, width, align: "right", wrap, cell });
+  const left = (key: string, label: string, width: string | undefined, cell: (row: BoardRow) => ReactNode): Column => ({ key, label, width, cell });
   if (table === "webdev") {
     return [
-      left("rank", text.colRank, rank),
-      right("spread", text.colSpread, (row) => row.rankSpread),
-      left("model", text.colModel, model),
-      right("score", text.colScore, (row) => row.score),
-      right("ci", text.colCi, (row) => row.ci),
-      right("votes", text.colVotes, (row) => row.votes),
-      right("price", text.colPrice, (row) => row.price),
-      right("context", text.colContext, (row) => row.context ?? "—"),
+      left("rank", text.colRank, "3rem", rank),
+      right("spread", text.colSpread, "5.5rem", (row) => row.rankSpread),
+      left("model", text.colModel, undefined, model),
+      right("score", text.colScore, "3.75rem", (row) => row.score),
+      right("ci", text.colCi, "5.5rem", (row) => row.ci),
+      right("votes", text.colVotes, "5rem", (row) => row.votes),
+      right("price", text.colPrice, "8.75rem", (row) => row.price),
+      right("context", text.colContext, "4.75rem", (row) => row.context ?? "—"),
     ];
   }
   if (table === "android-long") {
     return [
-      left("rank", text.colRank, rank),
-      left("model", text.colModel, model),
-      left("agent", text.colAgent, (row) => row.agent),
-      right("pass", text.colPass, (row) => row.score),
-      right("ci", text.colCi, (row) => row.ci),
-      right("completion", text.colCompletion, (row) => row.completion),
-      right("latency", text.colLatency, (row) => row.latency),
-      right("cost", text.colCost, (row) => row.price),
+      left("rank", text.colRank, "3rem", rank),
+      left("model", text.colModel, undefined, model),
+      left("agent", text.colAgent, "9.5rem", (row) => row.agent),
+      right("pass", text.colPass, "5.75rem", (row) => row.score),
+      right("ci", text.colCi, "6.75rem", (row) => row.ci),
+      right("completion", text.colCompletion, "5.75rem", (row) => row.completion),
+      right("latency", text.colLatency, "6.75rem", (row) => row.latency),
+      right("cost", text.colCost, "6.75rem", (row) => row.price),
     ];
   }
   if (table === "android-1") {
     return [
-      left("rank", text.colRank, rank),
-      left("model", text.colModel, model),
-      right("pass", text.colPass, (row) => row.score),
-      right("ci", text.colCi, (row) => row.ci),
-      right("latency", text.colLatency, (row) => row.latency),
-      right("cost", text.colCost, (row) => row.price),
+      left("rank", text.colRank, "3rem", rank),
+      left("model", text.colModel, undefined, model),
+      right("pass", text.colPass, "5.75rem", (row) => row.score),
+      right("ci", text.colCi, "6.75rem", (row) => row.ci),
+      right("latency", text.colLatency, "6.75rem", (row) => row.latency),
+      right("cost", text.colCost, "6.75rem", (row) => row.price),
     ];
   }
   if (table === "terminal") {
     return [
-      left("rank", text.colRank, rank),
-      left("agent", text.colAgent, (row) => row.agent),
-      left("model", text.colModel, model),
-      left("effort", text.colEffort, (row) => row.effort),
-      right("accuracy", text.colAccuracy, (row) => row.score),
-      right("date", text.colRelease, (row) => row.releaseDate),
-      left("agentOrg", text.colAgentOrg, (row) => row.agentOrg),
-      left("org", text.colModelOrg, (row) => row.org),
-      right("tokens", text.colTokens, (row) => row.tokens),
-      right("cost", text.colRunCost, (row) => row.price),
+      left("rank", text.colRank, "3rem", rank),
+      left("agent", text.colAgent, "9.5rem", (row) => row.agent),
+      left("model", text.colModel, undefined, model),
+      left("effort", text.colEffort, "4.5rem", (row) => row.effort),
+      right("accuracy", text.colAccuracy, "8.5rem", (row) => row.score),
+      right("date", text.colRelease, "8rem", (row) => row.releaseDate),
+      left("agentOrg", text.colAgentOrg, "6.5rem", (row) => row.agentOrg),
+      left("org", text.colModelOrg, "6.5rem", (row) => row.org),
+      right("tokens", text.colTokens, "5.5rem", (row) => row.tokens),
+      right("cost", text.colRunCost, "9rem", (row) => row.price, true),
     ];
   }
   return [
-    left("rank", text.colRank, rank),
-    left("model", text.colModel, model),
-    right("score", text.colScore, (row) => row.score),
+    left("rank", text.colRank, "3rem", rank),
+    left("model", text.colModel, undefined, model),
+    right("score", text.colScore, "4.5rem", (row) => row.score),
   ];
 }

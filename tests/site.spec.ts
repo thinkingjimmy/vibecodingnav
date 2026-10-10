@@ -1,4 +1,10 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
+
+function clippedNow(page: Page) {
+  return page.locator("table th, table td").evaluateAll((cells) => cells
+    .filter((cell) => !cell.querySelector(".truncate") && cell.scrollWidth > cell.clientWidth + 1)
+    .map((cell) => (cell.textContent ?? "").trim()));
+}
 
 test("chinese home shows the scenario boards", async ({ page }) => {
   await page.goto("/zh/");
@@ -63,6 +69,44 @@ test("web scenario keeps the full source board", async ({ page }) => {
   await expect(mimo.getByText("16", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("granite-4.1-8b")).toBeVisible();
+});
+
+test("switching a board keeps the table width", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/zh/scenarios/web-frontend/");
+  const measure = () => page.locator("table").evaluate((table) => {
+    const box = table.getBoundingClientRect();
+    const heads = [...table.querySelectorAll("th")].map((cell) => {
+      const rect = cell.getBoundingClientRect();
+      return `${cell.textContent}:${Math.round(rect.x)}:${Math.round(rect.width)}`;
+    });
+    return { width: Math.round(box.width), x: Math.round(box.x), heads };
+  });
+  const all = await measure();
+  await page.getByRole("button", { name: "开源权重" }).click();
+  await expect(page.getByRole("link", { name: "mimo-v2.6-flash" })).toBeVisible();
+  expect(await measure()).toEqual(all);
+  await page.getByRole("button", { name: "专有" }).click();
+  expect(await measure()).toEqual(all);
+  await page.getByRole("button", { name: "全部", exact: true }).click();
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  expect(await clippedNow(page)).toEqual([]);
+
+  await page.goto("/zh/scenarios/android-app/");
+  const first = await measure();
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  expect(await clippedNow(page)).toEqual([]);
+  await page.getByRole("tab", { name: "2.0 长程" }).click();
+  await expect(page.getByRole("columnheader", { name: "Agent" })).toBeVisible();
+  const second = await measure();
+  expect(second.width).toBe(first.width);
+  expect(second.x).toBe(first.x);
+  expect(await clippedNow(page)).toEqual([]);
+
+  await page.goto("/zh/scenarios/cli-devops/");
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  await expect(page.getByText("$3.68k (partial: 324/330)")).toBeVisible();
+  expect(await clippedNow(page)).toEqual([]);
 });
 
 test("android scenario shows both source tables", async ({ page }) => {
