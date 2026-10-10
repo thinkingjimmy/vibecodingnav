@@ -5,6 +5,7 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("按场景，选对模型与框架");
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(6);
   await expect(page.getByText("1813").first()).toBeVisible();
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
@@ -14,6 +15,17 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await bench.click();
   await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench-1\/$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Android Bench 1.0");
+});
+
+test("view more opens every scenario as a board card", async ({ page }) => {
+  await page.goto("/zh/");
+  const section = page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) });
+  await section.locator("header").getByRole("link", { name: /查看更多/ }).click();
+  await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
+  const cards = page.locator("article");
+  await expect(cards).toHaveCount(8);
+  await expect(page.getByRole("link", { name: "做全栈 SaaS" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Android Bench 1.0", exact: true })).toBeVisible();
 });
 
 test("english home is unprefixed", async ({ page }) => {

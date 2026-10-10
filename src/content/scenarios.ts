@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Scenario 契约
- * [OUTPUT]: 对外提供场景榜单：七张首页卡片、开源切片，以及全栈 SaaS
+ * [OUTPUT]: 对外提供场景榜单：首页六张卡片，其余在场景列表
  * [POS]: src/content 的场景实体，只引用基准与模型，不复制分数
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */

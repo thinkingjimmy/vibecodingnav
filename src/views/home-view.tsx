@@ -6,12 +6,13 @@
  */
 import Link from "next/link";
 import { ArrowIcon } from "@/components/arrow-icon";
+import { BoardCard } from "@/components/board-card";
 import { Frame } from "@/components/frame";
 import { RichText } from "@/components/rich-text";
-import { VendorMark } from "@/components/vendor-mark";
 import { getHome } from "@/lib/catalog";
 import type { Locale } from "@/lib/contracts";
 import { getDictionary } from "@/lib/i18n";
+import { localePath } from "@/lib/locale";
 import { pageMetadata } from "@/lib/site";
 
 export function homeMetadata(locale: Locale) {
@@ -29,40 +30,12 @@ export function HomeView({ locale }: { locale: Locale }) {
         <p className="mt-5 max-w-[680px] text-[17px] leading-relaxed text-mfg">{dict.home.heroBody}</p>
       </section>
       <section className="pt-16">
-        <header className="px-4 pb-6">
+        <header className="flex items-end justify-between gap-4 px-4 pb-6">
           <h2 className="pt">{dict.home.boards}</h2>
+          <Link href={localePath(locale, "/scenarios")} className="num shrink-0 pb-1 text-[12px] text-mfg hover:text-fg">{dict.home.viewMore} →</Link>
         </header>
         <div className="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3">
-          {home.cards.map((card) => (
-            <article key={card.href} className="card">
-              <div className="px-4 pt-4 pb-3">
-                <div className="flex items-start justify-between gap-3">
-                  <Link href={card.href} className="text-[16px] font-medium tracking-[-0.01em] hover:text-fg">{card.title}</Link>
-                  <Link href={card.href} className="num shrink-0 pt-0.5 text-[12px] text-mfg hover:text-fg">{dict.home.viewMore} →</Link>
-                </div>
-                <div className="num mt-1 text-[11px] text-faint">
-                  {card.sourceHref ? <Link href={card.sourceHref} className="link-u hover:text-fg">{card.sourceName}</Link> : card.sourceName}
-                  {card.asOf ? ` · ${card.asOf}` : ""}
-                </div>
-              </div>
-              <div className="flex-1 px-4 pb-4">
-                {card.rows.map((row, index) => (
-                  <div key={row.name} className={`flex h-9 items-center gap-2.5 text-[13.5px] ${index ? "border-t border-line" : ""}`}>
-                    <span className="num w-3 text-[11px] text-faint">{row.rank}</span>
-                    <VendorMark vendor={row.vendor} />
-                    <span className={`truncate ${index ? "" : "font-medium"}`}>{row.name}</span>
-                    {"license" in row && row.license ? <span className="num text-[10.5px] text-faint">{row.license}</span> : null}
-                    {"reason" in row ? <span className="ml-auto text-[12px] whitespace-nowrap text-mfg">{row.reason}</span> : (
-                      <span className={`num ml-auto ${index ? "text-mfg" : ""}`}>
-                        {"score" in row ? row.score : ""}
-                        {"unit" in row && row.unit ? <span className="text-[11px] text-faint">{row.unit}</span> : null}
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </article>
-          ))}
+          {home.cards.map((card) => <BoardCard key={card.href} card={card} viewMore={dict.home.viewMore} />)}
         </div>
       </section>
       <section className="pt-20">

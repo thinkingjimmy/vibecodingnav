@@ -314,35 +314,43 @@ function buildsForModel(slug: string) {
   });
 }
 
+const HOME_BOARD_COUNT = 6;
+
+function scenarioCard(locale: Locale, scenario: (typeof scenarios)[number]) {
+  const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
+  const sourceName = scenario.sourceLabel ? t(locale, scenario.sourceLabel) : benchmark?.name ?? "";
+  const editor = Boolean(scenario.editorPicks?.length);
+  const rows = editor
+    ? scenario.editorPicks!.map((pick, index) => {
+        const model = modelBy.get(pick.modelSlug)!;
+        return { rank: index + 1, name: model.name, vendor: model.vendor, href: localePath(locale, `/models/${model.slug}`), reason: t(locale, pick.reason) };
+      })
+    : toBoardRows(locale, scenario).slice(0, 5).map((row) => ({
+        rank: row.rank,
+        name: row.name,
+        vendor: row.vendor,
+        href: row.href,
+        score: row.score,
+        unit: benchmark?.scoreUnit ?? "",
+        license: scenario.subset === "permissive-open" ? row.license : undefined,
+      }));
+  return {
+    href: localePath(locale, `/scenarios/${scenario.slug}`),
+    title: t(locale, scenario.title),
+    sourceName,
+    sourceHref: benchmark ? localePath(locale, `/benchmarks/${benchmark.slug}`) : undefined,
+    asOf: benchmark?.asOf ?? "",
+    rows,
+  };
+}
+
+export function listScenarioCards(locale: Locale) {
+  return scenarios.map((scenario) => scenarioCard(locale, scenario));
+}
+
 export function getHome(locale: Locale) {
   const dict = getDictionary(locale);
-  const cards = scenarios.filter((scenario) => scenario.featured).map((scenario) => {
-    const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
-    const sourceName = scenario.sourceLabel ? t(locale, scenario.sourceLabel) : benchmark?.name ?? "";
-    const editor = Boolean(scenario.editorPicks?.length);
-    const rows = editor
-      ? scenario.editorPicks!.map((pick, index) => {
-          const model = modelBy.get(pick.modelSlug)!;
-          return { rank: index + 1, name: model.name, vendor: model.vendor, href: localePath(locale, `/models/${model.slug}`), reason: t(locale, pick.reason) };
-        })
-      : toBoardRows(locale, scenario).slice(0, 5).map((row) => ({
-          rank: row.rank,
-          name: row.name,
-          vendor: row.vendor,
-          href: row.href,
-          score: row.score,
-          unit: benchmark?.scoreUnit ?? "",
-          license: scenario.subset === "permissive-open" ? row.license : undefined,
-        }));
-    return {
-      href: localePath(locale, `/scenarios/${scenario.slug}`),
-      title: t(locale, scenario.title),
-      sourceName,
-      sourceHref: benchmark ? localePath(locale, `/benchmarks/${benchmark.slug}`) : undefined,
-      asOf: benchmark?.asOf ?? "",
-      rows,
-    };
-  });
+  const cards = scenarios.filter((scenario) => scenario.featured).slice(0, HOME_BOARD_COUNT).map((scenario) => scenarioCard(locale, scenario));
   return {
     cards,
     categories: categories.map((category) => ({
@@ -648,10 +656,6 @@ export function getBenchmark(locale: Locale, slug: string) {
     board: benchmark.kind ? frameworkEval(locale, slug, "board") : undefined,
     scenarios: scenarios.filter((scenario) => scenario.benchmark === slug).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
   };
-}
-
-export function listScenarios(locale: Locale) {
-  return scenarios.map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title), summary: t(locale, scenario.summary) }));
 }
 
 export function listModels(locale: Locale) {

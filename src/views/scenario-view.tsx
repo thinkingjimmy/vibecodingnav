@@ -6,10 +6,11 @@
  */
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BoardCard } from "@/components/board-card";
 import { Frame } from "@/components/frame";
 import { Leaderboard } from "@/components/leaderboard";
 import { VendorMark } from "@/components/vendor-mark";
-import { getScenario, listScenarios, slugs } from "@/lib/catalog";
+import { getScenario, listScenarioCards, slugs } from "@/lib/catalog";
 import type { Locale } from "@/lib/contracts";
 import { getDictionary } from "@/lib/i18n";
 import { localePath } from "@/lib/locale";
@@ -29,20 +30,15 @@ export async function scenarioMetadata(locale: Locale, params: Promise<{ slug: s
 
 export function ScenarioIndex({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
-  const rows = listScenarios(locale);
+  const cards = listScenarioCards(locale);
   return (
     <Frame locale={locale} width="home">
       <section className="px-4 pt-16">
         <h1 className="display-page">{dict.lists.scenariosTitle}</h1>
         <p className="mt-5 max-w-[700px] text-[17px] leading-relaxed text-mfg">{dict.lists.scenariosBody}</p>
       </section>
-      <div className="mx-4 mt-10 border-t border-line">
-        {rows.map((row) => (
-          <Link key={row.href} href={row.href} className="rowh block border-b border-line py-4">
-            <span className="text-[16px] font-medium">{row.title}</span>
-            <span className="mt-1 block text-[14px] leading-relaxed text-mfg">{row.summary}</span>
-          </Link>
-        ))}
+      <div className="mt-10 grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3">
+        {cards.map((card) => <BoardCard key={card.href} card={card} viewMore={dict.home.viewMore} />)}
       </div>
     </Frame>
   );

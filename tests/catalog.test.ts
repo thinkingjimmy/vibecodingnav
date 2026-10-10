@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { LOBE_VENDORS } from "@/components/vendor-mark";
 import { content } from "@/content";
 import { validateContent } from "@/content/validate";
-import { getBenchmark, getBuild, getItem, getModel, getScenario, resolvePicks } from "@/lib/catalog";
+import { getBenchmark, getBuild, getHome, getItem, getModel, getScenario, listScenarioCards, resolvePicks } from "@/lib/catalog";
 import { daysBetween, isStale } from "@/lib/site";
 import { localePath, swapLocale } from "@/lib/locale";
 
@@ -85,6 +85,15 @@ describe("picks", () => {
     ]);
     expect(getModel("en", "claude-sonnet-5-5")?.appearances.some((row) => row.href === "/scenarios/production-changes/")).toBe(true);
     expect(getModel("zh", "gemini-3-8-flash")?.scoreRows.some((row) => row.name === "sudo L7" && row.score === "10.6")).toBe(true);
+  });
+
+  it("keeps six boards on the home page and the full set on the scenario list", () => {
+    const home = getHome("zh").cards.map((card) => card.title);
+    const all = listScenarioCards("zh").map((card) => card.title);
+    expect(home).toHaveLength(6);
+    expect(all.length).toBeGreaterThan(home.length);
+    expect(home).not.toContain("做 iOS App");
+    expect(all).toEqual(expect.arrayContaining(["做 iOS App", "做全栈 SaaS"]));
   });
 
   it("keeps framework eval arms as separate scores", () => {
