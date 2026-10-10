@@ -1,55 +1,43 @@
 # 当前开发基线
 
-> 更新日期：2026-07-19
-> 状态：Kimi K3 已迁入可扩展模型 slug 路由，Header 模型目录与六语言静态 URL 已完成。
+> 更新日期：2026-10-10
+> 状态：站点已重建为 VibeCodingNav。英文在 `/`，中文在 `/zh/`。未部署，也未改 Vercel 配置。
 
 ## 当前能力
 
-- Next.js App Router 生成 `/` noindex 占位、英文 `/models/kimi-k3/` 与五个 `/{locale}/models/kimi-k3/` 静态详情页。
-- 模型注册表以 slug 统一内容查询、静态参数和导航路径；默认英文 URL 无前缀，其他语言使用独立 locale 子路径。
-- 模型、Header 目录与字典均为类型化 TypeScript 内容模块，`satisfies` 在构建期验证数据契约。
-- 页面默认使用 Server Components；客户端代码只负责跑分筛选、Header 模型菜单和语言菜单。
-- Header Models 菜单按 OpenAI / Anthropic / Moonshot / Google 分组展示官方 logo、分数与可用状态；当前只开放 Kimi K3。
-- Metadata API 输出本地化 title、description、canonical、hreflang 与 x-default。
-- Tailwind CSS 4 保持原有暖纸底、三字体、发丝线和低饱和蓝设计系统。
-- `output: export` 输出 `out/`，Vercel 按 Next.js 项目零配置部署。
+- 首页、场景榜单、模型、工具箱分类、库 / Skill / 插件 / Prompt / 工具详情、组合页、基准页和更新日志。
+- 内容是类型化 TypeScript 模块。`validateContent` 在导入时检查 slug、引用和双语字段。
+- 榜单挑选（榜首、价格减半、开源许可）和「出现在」反向链接在 `src/lib/catalog.ts` 构建期计算。
+- 基准日期超过 90 天，或基准已停更，页面标为过期，不作为主要证据。
+- 静态导出仍是 `output: export` 与 `trailingSlash: true`。
 
 ## 数据流
 
 ```text
-src/content/models/{catalog,kimi-k3}.ts + src/content/i18n/*.ts
-                                  │
-                                  ▼
-                  src/lib 模型注册表/路径/兜底层
-                                  │
-                                  ▼
-                      src/app/model-detail.tsx
-                         ┌────────┴────────┐
-                         ▼                 ▼
-       out/models/kimi-k3/    out/{locale}/models/kimi-k3/
+src/content/{models,benchmarks,results,scenarios,categories,items,builds,changes}.ts
+                                      │
+                                      ▼
+                              validateContent
+                                      │
+                                      ▼
+                               src/lib/catalog.ts
+                                      │
+                                      ▼
+                         src/views → src/app/(en) 与 (zh)/zh
 ```
 
 ## 本地验证
 
 ```bash
-pnpm dev          # Next.js + Turbopack · http://localhost:3000
-pnpm build        # 生成 out/
-pnpm preview      # 静态预览 · http://localhost:8080
-pnpm check        # lint + typecheck + unit + build + e2e/visual
+pnpm dev
+pnpm build
+pnpm preview
+pnpm check
 ```
 
-自动化验收包含 5 项语言/模型/兜底单测、36 项 Chromium E2E，以及英文/中文桌面、移动端、语言菜单和模型菜单七张视觉金本。
+## 有意留在内容里的边界
 
-## 当前边界
-
-- 只有 Kimi K3 模型详情页；Header 已展示后续模型目录，但未收录模型保持不可用且不生成路由。
-- 数据是 2026-07-17 人工快照；没有后端、数据库、ISR 或自动采集。
-- 根路径只是临时 noindex 占位，不是正式 Home，也不提供本地化版本。
-- ja、ko、es、fr 仍以 AI 翻译为主，英文是最终兜底。
-- canonical 域名固定为 `https://aievalindex.vercel.app`，生产部署尚未验收。
-
-## 下一步
-
-1. 连接 Vercel 并验证根占位、六个模型 URL、静态资源、canonical 与 hreflang。
-2. 完成 zh-CN 内容终校并抽查其他语言术语。
-3. 新增模型时先注册 slug 与详情数据，再开放 Header 对应项，不在共享详情页堆模型分支。
+- WebDev 页列出已收录的前 20 名，来源榜单跟踪 142 个模型。
+- iOS 场景是编辑精选，没有分数。
+- 全栈 SaaS 有场景页，没有单独的组合页。
+- 变更日志是编辑条目，不会在分数变化时自动生成。

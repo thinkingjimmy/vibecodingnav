@@ -3,15 +3,9 @@
 > L2 | 父级: ../README.md
 
 成员清单
-en.ts: 完整英文母本与最终兜底
-es.ts: 西班牙语覆盖字典
-fr.ts: 法语覆盖字典
-ja.ts: 日语覆盖字典
-ko.ts: 韩语覆盖字典
-zh-CN.ts: 简体中文覆盖字典
+zh.ts: 中文 UI 文案，完整字典
+en.ts: 英文 UI 文案，完整字典
 
-所有覆盖字典满足 `DeepPartial<Dictionary>`；合并发生在 `src/lib/i18n.ts`。
-
-Footer 品牌说明/导航标签、Benchmark 比较标题/规则说明/Compare 控件、Community Verdict 情绪标签与 Community Reviews 正负图例/动作标签以英文语义为基准做母语化转译，不逐字直译。
+两种语言都满足 Dictionary，不使用英文兜底覆盖。
 
 [PROTOCOL]: 变更时更新此头部，然后检查 README.md

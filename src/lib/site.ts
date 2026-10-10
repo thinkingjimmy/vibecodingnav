@@ -1,28 +1,48 @@
 /**
- * [INPUT]: 依赖 Locale 与模型注册表的 ModelSlug
- * [OUTPUT]: 对外提供站点 URL、共享品牌图标、语言元数据与默认语言无前缀的模型路径生成器
- * [POS]: src/lib 的站点级常量模块，集中消除模型路由、语言路由与 SEO 硬编码
+ * [INPUT]: 依赖 Locale 与页面标题文案
+ * [OUTPUT]: 对外提供 vibecodingnav.com 站点常量、90 天过期判断与 hreflang metadata
+ * [POS]: src/lib 的站点级常量，页面不得散落域名或过期阈值
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
+import type { Metadata } from "next";
 import type { Locale } from "./contracts";
-import type { ModelSlug } from "./model";
+import { localePath } from "./locale";
 
-export const SITE_URL = "https://aievalindex.vercel.app";
+export const SITE_URL = "https://vibecodingnav.com";
+export const SITE_NAME = "vibecodingnav";
+export const CONTENT_CLOCK = "2026-10-10";
+export const SITE_SYNC = "2026-10-10";
+export const STALE_DAYS = 90;
+export const SUGGEST_URL = "https://github.com/thinkingjimmy/AIEvalIndex/issues";
 
-export const SITE_ICON = {
-  url: "/aievalindex-mark.png",
-  type: "image/png",
-  sizes: "192x192",
-} as const;
+export function siteClock(now = new Date()): string {
+  const iso = now.toISOString().slice(0, 10);
+  return iso > CONTENT_CLOCK ? iso : CONTENT_CLOCK;
+}
 
-export const LOCALE_METADATA: Record<Locale, { flag: string; name: string }> = {
-  en: { flag: "🇺🇸", name: "English" },
-  "zh-CN": { flag: "🇨🇳", name: "中文" },
-  ja: { flag: "🇯🇵", name: "日本語" },
-  ko: { flag: "🇰🇷", name: "한국어" },
-  es: { flag: "🇪🇸", name: "Español" },
-  fr: { flag: "🇫🇷", name: "Français" },
-};
+export function daysBetween(asOf: string, clock: string): number {
+  const start = Date.parse(`${asOf}T00:00:00Z`);
+  const end = Date.parse(`${clock}T00:00:00Z`);
+  return Math.round((end - start) / 86_400_000);
+}
 
-export const modelPath = (locale: Locale, slug: ModelSlug) =>
-  locale === "en" ? `/models/${slug}/` : `/${locale}/models/${slug}/`;
+export function isStale(asOf: string, clock = siteClock()): boolean {
+  return daysBetween(asOf, clock) > STALE_DAYS;
+}
+
+export function pageMetadata(locale: Locale, path: string, title: string, description: string): Metadata {
+  const canonical = `${SITE_URL}${localePath(locale, path)}`;
+  return {
+    title,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        en: `${SITE_URL}${localePath("en", path)}`,
+        zh: `${SITE_URL}${localePath("zh", path)}`,
+        "x-default": `${SITE_URL}${localePath("en", path)}`,
+      },
+    },
+    openGraph: { title, description, url: canonical, siteName: SITE_NAME, locale: locale === "zh" ? "zh_CN" : "en_US" },
+  };
+}

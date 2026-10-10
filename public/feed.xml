@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>vibecodingnav</title>
+    <link>https://vibecodingnav.com/changes/</link>
+    <description>榜单、推荐和方法论的变更。</description>
+    <language>zh-CN</language>
+    <item>
+      <title>LMArena WebDev: Claude Opus 5.5 leads at 1813</title>
+      <link>https://vibecodingnav.com/zh/changes/</link>
+      <pubDate>Thu, 08 Oct 2026 00:00:00 GMT</pubDate>
+      <description>Claude Opus 5.5 (max) leads LMArena WebDev at 1813, 27 points ahead of GPT-6 Astra.</description>
+    </item>
+    <item>
+      <title>Terminal-Bench 4.0: GPT-6.1 Sol ties for 3rd</title>
+      <link>https://vibecodingnav.com/zh/changes/</link>
+      <pubDate>Tue, 29 Sep 2026 00:00:00 GMT</pubDate>
+      <description>GPT-6.1 Sol ties for 3rd at 58.2%, at $0.6k.</description>
+    </item>
+    <item>
+      <title>Full-stack SaaS pick moves to GPT-6.1 Sol</title>
+      <link>https://vibecodingnav.com/zh/changes/</link>
+      <pubDate>Tue, 29 Sep 2026 00:00:00 GMT</pubDate>
+      <description>The full-stack SaaS pick moves to GPT-6.1 Sol once cost is included.</description>
+    </item>
+  </channel>
+</rss>

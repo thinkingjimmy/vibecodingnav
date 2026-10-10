@@ -3,13 +3,12 @@
 > L2 | 父级: ../README.md
 
 成员清单
-(root)/: `/` noindex 占位页、默认英文模型路由及英文文档布局
-[locale]/: 五种非默认语言模型路由与对应 lang 文档布局
-model-detail.tsx: 默认英文/本地化动态路由共享的模型详情组装与支持模型级覆盖的 SEO metadata 内核
-shell.tsx: DocumentShell 文档外壳单一真相源，统一字体声明与 body 基础样式
-globals.css: Tailwind CSS 4 入口、design tokens、主题映射和共享组件类（含紧凑指标卡语义、跑分表吸顶底线、Kimi 数据带与社区评价绿/米灰/红情绪色）
+(en)/: 英文根布局、首页、场景、模型、工具箱、条目、组合、基准、更新日志、sitemap 与 robots
+(zh)/: 中文根布局；页面在 zh/ 下，URL 为 `/zh/...`
+shell.tsx: DocumentShell，Geist 字体、主题启动脚本与 html/body
+globals.css: Tailwind CSS 4 入口、zinc 语义色与共享排版类
 
 路由约束
-根路径只承载 noindex 占位；英文模型使用 `/models/{slug}/`，其他语言使用 `/{locale}/models/{slug}/`。两套根布局共同复用 shell.tsx 加载同一 globals.css。
+英文不带语言前缀。中文全部在 `/zh/`。两套根布局共用 shell.tsx。动态路由 `dynamicParams = false`，只生成内容里存在的 slug。
 
 [PROTOCOL]: 变更时更新此头部，然后检查 README.md
