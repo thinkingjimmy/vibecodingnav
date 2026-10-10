@@ -1,9 +1,17 @@
 import { describe, expect, it } from "vitest";
+import { LOBE_VENDORS } from "@/components/vendor-mark";
 import { content } from "@/content";
 import { validateContent } from "@/content/validate";
 import { getBenchmark, getBuild, getItem, getModel, resolvePicks } from "@/lib/catalog";
 import { daysBetween, isStale } from "@/lib/site";
 import { localePath, swapLocale } from "@/lib/locale";
+
+describe("vendor marks", () => {
+  it("gives every seeded vendor a LobeHub mono mark", () => {
+    const used = [...new Set(content.models.map((model) => model.vendor))];
+    expect(used.filter((vendor) => !LOBE_VENDORS.includes(vendor))).toEqual([]);
+  });
+});
 
 describe("content", () => {
   it("accepts the seed bundle", () => {

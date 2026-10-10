@@ -1,6 +1,6 @@
 # VibeCodingNav
 
-按场景选模型和框架。Next.js 16.2.10 + React 19.2.7 + TypeScript 6 + Tailwind CSS 4 + Base UI + Phosphor Icons + Vitest + Playwright，静态导出到 `out/`。站点域名 `vibecodingnav.com`。
+按场景选模型和框架。Next.js 16.2.10 + React 19.2.7 + TypeScript 6 + Tailwind CSS 4 + Base UI + Phosphor Icons + LobeHub Icons + Vitest + Playwright，静态导出到 `out/`。站点域名 `vibecodingnav.com`。
 
 <directory>
 docs/ - 开发状态（CURRENT.md）与历史归档（archive/）

@@ -33,3 +33,4 @@
 - 新增或修改 UI icon 时必须使用 Phosphor Icons；React 组件统一从 `@phosphor-icons/react` 引入。
 - 禁止为新增或修改的功能图标引入其他图标库、手写 SVG 或使用 Emoji 代替。
 - 修改历史遗留的非 Phosphor icon 时，应将本次触及的 icon 一并迁移到 Phosphor Icons。
+- AI 厂商品牌标可以使用 `@lobehub/icons` 的单色（`currentColor`）变体，并按图标路径单独引入。没有对应图标的厂商用字母标。品牌标不是功能图标，不替代 Phosphor。
