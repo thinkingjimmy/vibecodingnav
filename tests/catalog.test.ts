@@ -81,6 +81,35 @@ describe("backlinks", () => {
   });
 });
 
+describe("stale picks", () => {
+  it("withholds the android model once the board is past 90 days", () => {
+    expect(resolvePicks("android-app", "2026-11-09").top?.modelSlug).toBe("claude-opus-5");
+    expect(resolvePicks("android-app", "2026-11-10").top).toBeUndefined();
+    expect(resolvePicks("android-app", "2026-11-10").stale).toBe(true);
+
+    const build = getBuild("zh", "android-app", "2026-11-10");
+    expect(build?.stale).toBe(true);
+    expect(build?.roles[0]?.primary.stale).toBe(true);
+    expect(build?.roles[0]?.primary.name).toBe("模型推荐已撤下");
+    expect(build?.roles[0]?.primary.href).toBe("/zh/scenarios/android-app/");
+    expect(build?.roles[0]?.alternative).toBe("");
+    expect(build?.combo).not.toContain("Claude");
+    expect(build?.roles.some((role) => role.primary.name === "Jetpack Compose")).toBe(true);
+  });
+});
+
+describe("dates", () => {
+  it("rejects dates that overflow the calendar", () => {
+    const withDate = (asOf: string) => ({
+      ...content,
+      benchmarks: content.benchmarks.map((benchmark, index) => index === 0 ? { ...benchmark, asOf } : benchmark),
+    });
+    expect(validateContent(withDate("2026-02-30")).some((error) => error.includes("2026-02-30"))).toBe(true);
+    expect(validateContent(withDate("2026-02-29")).some((error) => error.includes("2026-02-29"))).toBe(true);
+    expect(validateContent(withDate("2024-02-29")).some((error) => error.includes("2024-02-29"))).toBe(false);
+  });
+});
+
 describe("locale paths", () => {
   it("keeps English at the root and Chinese under /zh", () => {
     expect(localePath("en", "/scenarios/web-frontend")).toBe("/scenarios/web-frontend/");

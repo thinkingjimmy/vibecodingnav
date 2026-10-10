@@ -74,7 +74,7 @@ export async function ModelView({ locale, params }: { locale: Locale; params: Pr
       </section>
       <section className="px-4 pt-6">
         <div className="flex items-center gap-4">
-          <span className="grid size-11 place-items-center rounded-full border border-bd"><VendorMark vendor={model.vendor} className="size-6" /></span>
+          <span className="grid size-11 place-items-center rounded-full border border-bd"><VendorMark vendor={model.vendor} className="size-6 text-[13px]" /></span>
           <h1 className="display-page">{model.name}</h1>
         </div>
         <p className="mt-5 max-w-[720px] text-[17px] leading-relaxed text-mfg">{model.summary}</p>

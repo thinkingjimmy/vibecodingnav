@@ -141,6 +141,7 @@ const zh = {
     modelBasis: "模型依据",
     scenario: "场景榜单",
     category: "工具箱",
+    withheld: "模型推荐已撤下",
   },
   benchmark: {
     indexTitle: "基准",

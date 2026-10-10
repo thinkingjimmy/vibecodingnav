@@ -347,6 +347,7 @@ export interface Dictionary {
     modelBasis: string;
     scenario: string;
     category: string;
+    withheld: string;
   };
   benchmark: {
     indexTitle: string;

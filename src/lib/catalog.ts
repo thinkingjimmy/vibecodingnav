@@ -104,11 +104,12 @@ function bestRow(rows: Result[]) {
   return [...rows].sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999) || b.score - a.score)[0];
 }
 
-export function resolvePicks(scenarioSlug: string) {
+export function resolvePicks(scenarioSlug: string, clock = CLOCK) {
   const scenario = scenarioBy.get(scenarioSlug);
-  if (!scenario?.benchmark) return { top: undefined, value: undefined, open: undefined };
+  if (!scenario?.benchmark) return { top: undefined, value: undefined, open: undefined, stale: false };
   const benchmark = benchmarkBy.get(scenario.benchmark)!;
-  if (benchmark.retired || isStale(benchmark.asOf, CLOCK)) return { top: undefined, value: undefined, open: undefined };
+  const stale = Boolean(benchmark.retired || isStale(benchmark.asOf, clock));
+  if (stale) return { top: undefined, value: undefined, open: undefined, stale: true };
   const rows = scenarioRows(scenario).filter((row) => scenario.subset === "permissive-open" || row.rank != null);
   const top = bestRow(rows);
   const open = bestRow(rows.filter((row) => isPermissiveLicense(modelBy.get(row.modelSlug)!.license)));
@@ -120,7 +121,7 @@ export function resolvePicks(scenarioSlug: string) {
         const cost = costOf(row);
         return cost != null && cost <= topCost / 2 + 1e-9;
       }));
-  return { top, value, open };
+  return { top, value, open, stale: false };
 }
 
 function toBoardRows(locale: Locale, scenario: Scenario): BoardRow[] {
@@ -174,7 +175,7 @@ interface ResolvedRef {
   kind: "model" | "item";
 }
 
-function resolveRef(locale: Locale, scenario: Scenario, ref: RoleRef): ResolvedRef | undefined {
+function resolveRef(locale: Locale, scenario: Scenario, ref: RoleRef, clock: string): ResolvedRef | undefined {
   if (ref.kind === "item") {
     const item = itemBy.get(ref.slug);
     if (!item) return undefined;
@@ -185,7 +186,7 @@ function resolveRef(locale: Locale, scenario: Scenario, ref: RoleRef): ResolvedR
     if (!model) return undefined;
     return { href: localePath(locale, `/models/${model.slug}`), name: model.name, vendor: model.vendor, meta: t(locale, model.licenseLabel), slug: model.slug, kind: "model" };
   }
-  const picks = resolvePicks(scenario.slug);
+  const picks = resolvePicks(scenario.slug, clock);
   const result = picks[ref.pick];
   if (!result || !scenario.benchmark) return undefined;
   const model = modelBy.get(result.modelSlug)!;
@@ -201,12 +202,12 @@ function resolveRef(locale: Locale, scenario: Scenario, ref: RoleRef): ResolvedR
   };
 }
 
-function alternativeText(locale: Locale, scenario: Scenario, alt: BuildPage["roles"][number]["alternatives"][number]) {
+function alternativeText(locale: Locale, scenario: Scenario, alt: BuildPage["roles"][number]["alternatives"][number], clock: string) {
   const dict = getDictionary(locale);
-  const resolved = resolveRef(locale, scenario, alt.ref);
+  const resolved = resolveRef(locale, scenario, alt.ref, clock);
   if (!resolved) return "";
   if (alt.tone === "note") return t(locale, alt.when);
-  const picks = resolvePicks(scenario.slug);
+  const picks = resolvePicks(scenario.slug, clock);
   const pick = alt.ref.kind === "pick" ? picks[alt.ref.pick] : undefined;
   const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
   const rank = pick?.rank ?? "";
@@ -216,21 +217,40 @@ function alternativeText(locale: Locale, scenario: Scenario, alt: BuildPage["rol
   return `${dict.build.open}：${resolved.name}（#${rank} · ${license}）`;
 }
 
-export function getBuild(locale: Locale, slug: string) {
+export function getBuild(locale: Locale, slug: string, clock = CLOCK) {
   const build = buildBy.get(slug);
   if (!build) return undefined;
   const scenario = scenarioBy.get(build.scenario)!;
   const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
+  const stale = Boolean(benchmark && (benchmark.retired || isStale(benchmark.asOf, clock)));
   const dict = getDictionary(locale);
   const roles = build.roles.map((role) => {
-    const primary = resolveRef(locale, scenario, role.primary);
-    if (!primary) throw new Error(`组合 ${slug} 的首选无法从榜单解析`);
-    const extras = (role.extras ?? []).map((ref) => resolveRef(locale, scenario, ref)).filter((ref): ref is ResolvedRef => Boolean(ref));
+    const primary = resolveRef(locale, scenario, role.primary, clock);
+    const extras = (role.extras ?? []).map((ref) => resolveRef(locale, scenario, ref, clock)).filter((ref): ref is ResolvedRef => Boolean(ref));
+    if (!primary) {
+      if (role.primary.kind === "pick" && stale) {
+        return {
+          role: t(locale, role.role),
+          primary: {
+            href: localePath(locale, `/scenarios/${scenario.slug}`),
+            name: dict.build.withheld,
+            meta: dict.benchmark.stale,
+            slug: "",
+            kind: "model" as const,
+            vendor: undefined,
+            stale: true,
+          },
+          extras: extras.map((extra) => ({ href: extra.href, name: extra.name })),
+          alternative: "",
+        };
+      }
+      throw new Error(`组合 ${slug} 的首选无法从榜单解析`);
+    }
     return {
       role: t(locale, role.role),
-      primary: { ...primary, meta: itemBy.has(primary.slug) && role.meta ? itemMeta(locale, itemBy.get(primary.slug)!, role.meta) : role.meta && primary.kind === "item" ? t(locale, role.meta) : primary.meta },
+      primary: { ...primary, stale: false, meta: itemBy.has(primary.slug) && role.meta ? itemMeta(locale, itemBy.get(primary.slug)!, role.meta) : role.meta && primary.kind === "item" ? t(locale, role.meta) : primary.meta },
       extras: extras.map((extra) => ({ href: extra.href, name: extra.name })),
-      alternative: role.alternatives.map((alt) => alternativeText(locale, scenario, alt)).filter(Boolean).join(" · "),
+      alternative: role.alternatives.map((alt) => alternativeText(locale, scenario, alt, clock)).filter(Boolean).join(" · "),
     };
   });
   const evidence = [
@@ -256,7 +276,8 @@ export function getBuild(locale: Locale, slug: string) {
       href: row.href ? localePath(locale, row.href) : undefined,
     })),
     evidence,
-    combo: roles.map((role) => role.primary.name).join(" + "),
+    stale,
+    combo: roles.filter((role) => !role.primary.stale).map((role) => role.primary.name).join(" + "),
     href: localePath(locale, `/build/${build.slug}`),
   };
 }

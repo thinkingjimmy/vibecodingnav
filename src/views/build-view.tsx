@@ -67,6 +67,7 @@ export async function BuildView({ locale, params }: { locale: Locale; params: Pr
         <h1 className="display-page">{build.title}</h1>
         <p className="mt-5 max-w-[720px] text-[17px] leading-relaxed text-mfg">{build.summary}</p>
         <p className="num mt-6 text-[12px] text-faint">{dict.build.edited} {build.updatedAt}{build.basis ? ` · ${dict.build.modelBasis} ${build.basis}` : ""}</p>
+        {build.stale ? <p className="mt-4 max-w-[720px] text-[14px] text-mfg" data-stale="true">{dict.scenario.staleBanner}</p> : null}
       </section>
       <section className="pt-14">
         <div className="num mx-4 grid h-9 grid-cols-[110px_260px_1fr] items-center gap-6 border-b border-line text-[12px] text-faint">
@@ -75,10 +76,10 @@ export async function BuildView({ locale, params }: { locale: Locale; params: Pr
         <div className="mx-4 overflow-x-auto">
           <div className="min-w-[680px]">
             {build.roles.map((role, index) => (
-              <Link key={role.role} href={role.primary.href} className={`rowh grid grid-cols-[110px_260px_1fr] items-center gap-6 py-4 ${index < build.roles.length - 1 ? "border-b border-line" : ""}`}>
+              <Link key={role.role} href={role.primary.href} data-stale={role.primary.stale ? "true" : undefined} className={`rowh grid grid-cols-[110px_260px_1fr] items-center gap-6 py-4 ${role.primary.stale ? "text-faint" : ""} ${index < build.roles.length - 1 ? "border-b border-line" : ""}`}>
                 <span className="text-[14px] text-mfg">{role.role}</span>
                 <span>
-                  <span className="flex items-center gap-2 text-[16px] font-medium">
+                  <span className={`flex items-center gap-2 text-[16px] ${role.primary.stale ? "font-normal" : "font-medium"}`}>
                     {role.primary.vendor ? <VendorMark vendor={role.primary.vendor} /> : null}
                     {role.primary.name}{role.extras.length ? ` + ${role.extras.map((extra) => extra.name).join(" + ")}` : ""}
                   </span>

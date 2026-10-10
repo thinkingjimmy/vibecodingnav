@@ -126,7 +126,7 @@ export async function ItemView({ locale, type, params }: { locale: Locale; type:
       <section className="px-4 pt-6">
         <div className="flex flex-wrap items-center gap-4">
           <span className="grid size-11 place-items-center rounded-full border border-bd">
-            {item.mark ? <VendorMark vendor={item.mark} className="size-6" /> : <span className="num text-[12px]">{item.name.slice(0, 1)}</span>}
+            {item.mark ? <VendorMark vendor={item.mark} className="size-6 text-[13px]" /> : <span className="num text-[12px]">{item.name.slice(0, 1)}</span>}
           </span>
           <h1 className="display-page">{item.name}</h1>
           <span className="tag">{item.typeLabel}</span>

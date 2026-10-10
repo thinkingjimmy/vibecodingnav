@@ -35,7 +35,16 @@ function text(value: LText, path: string, errors: string[]) {
 }
 
 function date(value: string, path: string, errors: string[]) {
-  if (!DATE.test(value) || Number.isNaN(Date.parse(`${value}T00:00:00Z`))) errors.push(`${path} 日期不合法: ${value}`);
+  if (!DATE.test(value)) {
+    errors.push(`${path} 日期不合法: ${value}`);
+    return;
+  }
+  const year = Number(value.slice(0, 4));
+  const month = Number(value.slice(5, 7));
+  const day = Number(value.slice(8, 10));
+  const parsed = new Date(Date.UTC(year, month - 1, day));
+  const roundTrip = parsed.getUTCFullYear() === year && parsed.getUTCMonth() === month - 1 && parsed.getUTCDate() === day;
+  if (!roundTrip) errors.push(`${path} 日期不合法: ${value}`);
 }
 
 export function validateContent(input: ContentBundle): string[] {

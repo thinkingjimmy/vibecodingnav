@@ -7,7 +7,7 @@
 "use client";
 
 import { Dialog } from "@base-ui/react/dialog";
-import { ArrowRight, CircleHalf, MagnifyingGlass } from "@phosphor-icons/react";
+import { ArrowRight, CircleHalf, MagnifyingGlass, TerminalWindow } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -69,7 +69,7 @@ export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Di
     <header className="sticky top-0 z-50 border-b border-line bg-bg">
       <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center gap-3 px-4">
         <Link href={localePath(locale, "/")} className="flex items-center gap-2.5 text-[15px] font-medium tracking-tight">
-          <Mark />
+          <TerminalWindow size={22} aria-hidden="true" />
           vibecodingnav
         </Link>
         <div className="hidden flex-1 lg:block" />
@@ -136,14 +136,5 @@ export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Di
       </div>
       <div className="mx-auto w-full max-w-[1200px] overflow-x-auto px-4 pb-3 lg:hidden">{nav}</div>
     </header>
-  );
-}
-
-function Mark() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
-      <rect x=".5" y=".5" width="21" height="21" rx="5" fill="none" stroke="currentColor" />
-      <path d="M6.5 7.5l3.5 3.5-3.5 3.5M11.5 15h4" stroke="currentColor" strokeWidth="1.6" fill="none" strokeLinecap="square" />
-    </svg>
   );
 }

@@ -141,6 +141,7 @@ const en = {
     modelBasis: "Model basis",
     scenario: "Scenario board",
     category: "Toolbox",
+    withheld: "Model pick withheld",
   },
   benchmark: {
     indexTitle: "Benchmarks",
