@@ -35,7 +35,7 @@ export function ModelIndex({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   const rows = listModels(locale);
   return (
-    <Frame locale={locale}>
+    <Frame locale={locale} width="home">
       <section className="px-4 pt-16">
         <h1 className="display-page">{dict.lists.modelsTitle}</h1>
         <p className="mt-5 max-w-[700px] text-[17px] leading-relaxed text-mfg">{dict.lists.modelsBody}</p>
@@ -66,7 +66,7 @@ export async function ModelView({ locale, params }: { locale: Locale; params: Pr
   if (!model) notFound();
   const dict = getDictionary(locale);
   return (
-    <Frame locale={locale}>
+    <Frame locale={locale} width="home">
       <section className="px-4 pt-10 text-[12px] text-mfg">
         <Link href={localePath(locale, "/models")} className="num hover:text-fg">{dict.nav.models}</Link>
         <span className="num mx-2 text-faint">/</span>

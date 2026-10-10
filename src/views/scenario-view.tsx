@@ -31,7 +31,7 @@ export function ScenarioIndex({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   const rows = listScenarios(locale);
   return (
-    <Frame locale={locale}>
+    <Frame locale={locale} width="home">
       <section className="px-4 pt-16">
         <h1 className="display-page">{dict.lists.scenariosTitle}</h1>
         <p className="mt-5 max-w-[700px] text-[17px] leading-relaxed text-mfg">{dict.lists.scenariosBody}</p>
@@ -55,7 +55,7 @@ export async function ScenarioView({ locale, params }: { locale: Locale; params:
   const dict = getDictionary(locale);
   const priceKind = scenario.rows.some((row) => row.price?.includes("/")) ? "token" : "run";
   return (
-    <Frame locale={locale}>
+    <Frame locale={locale} width="home">
       <section className="px-4 pt-10 text-[12px] text-mfg">
         <Link href={localePath(locale, "/scenarios")} className="num hover:text-fg">{dict.nav.scenarios}</Link>
         <span className="num mx-2 text-faint">/</span>

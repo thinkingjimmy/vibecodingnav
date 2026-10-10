@@ -39,7 +39,7 @@ export function changesMetadata(locale: Locale) {
 export function BenchmarkIndex({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   return (
-    <Frame locale={locale}>
+    <Frame locale={locale} width="home">
       <section className="px-4 pt-16">
         <h1 className="display-page">{dict.benchmark.indexTitle}</h1>
         <p className="mt-5 max-w-[700px] text-[17px] leading-relaxed text-mfg">{dict.benchmark.indexBody}</p>
@@ -70,7 +70,7 @@ export async function BenchmarkView({ locale, params }: { locale: Locale; params
     [dict.benchmark.cadence, benchmark.updateCadence],
   ];
   return (
-    <Frame locale={locale}>
+    <Frame locale={locale} width="home">
       <section className="px-4 pt-10 text-[12px] text-mfg">
         <Link href={localePath(locale, "/benchmarks")} className="num hover:text-fg">{dict.nav.benchmarks}</Link>
         <span className="num mx-2 text-faint">/</span>

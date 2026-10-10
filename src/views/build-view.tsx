@@ -34,7 +34,7 @@ export async function buildMetadata(locale: Locale, params: Promise<{ slug: stri
 export function BuildIndex({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   return (
-    <Frame locale={locale}>
+    <Frame locale={locale} width="home">
       <section className="px-4 pt-16">
         <h1 className="display-page">{dict.build.indexTitle}</h1>
         <p className="mt-5 max-w-[720px] text-[17px] leading-relaxed text-mfg">{dict.build.indexBody}</p>
@@ -57,7 +57,7 @@ export async function BuildView({ locale, params }: { locale: Locale; params: Pr
   if (!build) notFound();
   const dict = getDictionary(locale);
   return (
-    <Frame locale={locale}>
+    <Frame locale={locale} width="home">
       <section className="px-4 pt-10 text-[12px] text-mfg">
         <Link href={localePath(locale, "/build")} className="num hover:text-fg">{dict.nav.builds}</Link>
         <span className="num mx-2 text-faint">/</span>

@@ -94,6 +94,28 @@ test("framework evals stay on separate boards", async ({ page }) => {
   await expect(page.getByText("不把 Next.js、Supabase、Convex、ReactBench 的通过率加在一起")).toBeVisible();
 });
 
+test("scenario, model, build, and benchmark pages match the home width", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const measure = () => page.locator("main").evaluate((el) => getComputedStyle(el).maxWidth);
+  await page.goto("/zh/");
+  const home = await measure();
+  for (const path of [
+    "/zh/scenarios/",
+    "/zh/scenarios/web-frontend/",
+    "/zh/models/",
+    "/zh/models/claude-opus-5-5/",
+    "/zh/build/",
+    "/zh/build/saas/",
+    "/zh/benchmarks/",
+    "/zh/benchmarks/supabase-evals/",
+  ]) {
+    await page.goto(path);
+    expect(await measure()).toBe(home);
+    const footer = await page.locator("footer > div").evaluate((el) => getComputedStyle(el).maxWidth);
+    expect(footer).toBe(home);
+  }
+});
+
 test("home does not scroll sideways on a phone", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/zh/");
