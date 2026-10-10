@@ -215,7 +215,6 @@ export interface BuildPage {
   installCmds: LText;
   notFor: { title: LText; body: LText; href?: string }[];
   updatedAt: string;
-  homeStart: boolean;
 }
 
 export interface ChangeEntry {
@@ -240,16 +239,10 @@ export interface Dictionary {
   home: {
     heroTitle: string;
     heroBody: string;
-    start: string;
-    startNote: string;
     boards: string;
-    boardsNote: string;
     viewBoard: string;
     viewReasons: string;
-    allScenarios: string;
-    also: string;
     toolbox: string;
-    toolboxNote: string;
     allCategories: string;
     changes: string;
     allChanges: string;

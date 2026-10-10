@@ -27,18 +27,10 @@ export function HomeView({ locale }: { locale: Locale }) {
       <section className="px-4 pt-16 pb-4 sm:pt-24">
         <h1 className="display">{dict.home.heroTitle}</h1>
         <p className="mt-5 max-w-[680px] text-[17px] leading-relaxed text-mfg">{dict.home.heroBody}</p>
-        <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]">
-          <span className="text-faint">{dict.home.start}</span>
-          {home.starts.map((link, index) => (
-            <Link key={link.href} href={link.href} className={index === 0 ? "link-u font-medium" : "link-u text-mfg"}>{link.title}</Link>
-          ))}
-          <span className="num text-[12px] text-faint">{dict.home.startNote}</span>
-        </div>
       </section>
       <section className="pt-16">
-        <header className="flex items-end justify-between px-4 pb-6">
+        <header className="px-4 pb-6">
           <h2 className="pt">{dict.home.boards}</h2>
-          <span className="num pb-1 text-[12px] text-faint">{dict.home.boardsNote}</span>
         </header>
         <div className="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3">
           {home.cards.map((card) => (
@@ -72,15 +64,10 @@ export function HomeView({ locale }: { locale: Locale }) {
             </Link>
           ))}
         </div>
-        <div className="flex flex-wrap items-center gap-6 px-4 pt-6 text-[14px] text-mfg">
-          <Link href={locale === "zh" ? "/zh/scenarios/" : "/scenarios/"} className="link-u text-fg">{dict.home.allScenarios}</Link>
-          {home.also.length ? <span>{dict.home.also}：{home.also.map((link) => <Link key={link.href} href={link.href} className="link-u">{link.title}</Link>)}</span> : null}
-        </div>
       </section>
       <section className="pt-20">
-        <header className="flex items-end justify-between px-4 pb-8">
+        <header className="px-4 pb-8">
           <h2 className="pt">{dict.home.toolbox}</h2>
-          <span className="num pb-1 text-[12px] text-faint">{dict.home.toolboxNote}</span>
         </header>
         <div className="grid grid-cols-1 gap-x-10 gap-y-10 px-4 sm:grid-cols-2 lg:grid-cols-4">
           {home.categories.map((category) => (

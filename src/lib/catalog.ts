@@ -344,9 +344,7 @@ export function getHome(locale: Locale) {
     };
   });
   return {
-    starts: builds.filter((build) => build.homeStart).map((build) => ({ href: localePath(locale, `/build/${build.slug}`), title: t(locale, scenarioBy.get(build.scenario)!.title) })),
     cards,
-    also: scenarios.filter((scenario) => !scenario.featured).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
     categories: categories.map((category) => ({
       href: localePath(locale, `/tools/${category.slug}`),
       title: t(locale, category.title),

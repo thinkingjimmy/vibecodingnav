@@ -22,6 +22,7 @@
 
 ### 变更
 
+- 首页去掉开工提示、榜单与工具箱的说明句，以及「全部场景」「还有」这一行。
 - 包名与站点元数据改为 vibecodingnav / vibecodingnav.com。视觉改为 Geist、Geist Mono 与 zinc 单色，亮色和暗色由 CSS 变量切换。
 - 静态导出配置保持 `output: export` 与目录式尾斜杠，未改部署设置。
 - 页头标记改为 Phosphor 的终端图标。有 LobeHub 单色标的 AI 厂商改用该标，其余厂商仍用字母标。

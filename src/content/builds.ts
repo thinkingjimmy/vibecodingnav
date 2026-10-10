@@ -17,7 +17,6 @@ export const builds: BuildPage[] = [
   {
     slug: "web-frontend",
     scenario: "web-frontend",
-    homeStart: true,
     updatedAt: "2026-10-10",
     title: tx("做 Web 前端，用这一套", "Build a Web frontend with this set"),
     summary: tx(
@@ -112,7 +111,6 @@ npm i @phosphor-icons/react motion geist`,
   {
     slug: "android-app",
     scenario: "android-app",
-    homeStart: true,
     updatedAt: "2026-10-10",
     title: tx("做一个 Android App，用这一套", "Build an Android app with this set"),
     summary: tx(
@@ -167,7 +165,6 @@ Use Jetpack Compose: developer.android.com/jetpack/compose`,
   {
     slug: "cli-devops",
     scenario: "cli-devops",
-    homeStart: true,
     updatedAt: "2026-10-10",
     title: tx("写 CLI 与脚本，用这一套", "Write CLI and scripts with this set"),
     summary: tx(
@@ -211,7 +208,6 @@ Put this page's AGENTS.md at the repo root`,
   {
     slug: "saas",
     scenario: "saas",
-    homeStart: false,
     updatedAt: "2026-10-10",
     title: tx("做全栈 SaaS，用这一套", "Build a full-stack SaaS with this set"),
     summary: tx(
