@@ -45,7 +45,7 @@ export function HomeView({ locale }: { locale: Locale }) {
                   {card.asOf ? ` · ${card.asOf}` : ""}
                 </div>
               </div>
-              <div className="flex-1 px-4">
+              <div className="flex-1 px-4 pb-4">
                 {card.rows.map((row, index) => (
                   <div key={row.name} className={`flex h-9 items-center gap-2.5 text-[13.5px] ${index ? "border-t border-line" : ""}`}>
                     <span className="num w-3 text-[11px] text-faint">{row.rank}</span>
