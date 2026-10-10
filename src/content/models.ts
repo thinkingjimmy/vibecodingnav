@@ -53,8 +53,8 @@ export const models: Model[] = [
       slugs: ["claude-sonnet-5-5", "gpt-6-astra", "gpt-6-1-sol", "glm-5-3"],
     },
     summary: tx(
-      "目前我们追踪的三个活跃编程基准上都排第一。适合高难度、跨模块的 Agent 任务；对成本敏感的批量任务，有便宜得多、差距不大的选择。",
-      "First on the three active coding boards we track. Use it for hard, cross-module agent work. Cheaper models are close enough for batch jobs.",
+      "Terminal-Bench、WebDev 和 Android 长程仍排第一。sudo L7 与 Sonnet 5.5 同分 45%，榜单把 Sonnet 排在前面。对成本敏感的批量任务，有便宜得多的选择。",
+      "Still first on Terminal-Bench, WebDev, and the Android long board. On sudo L7 it ties Sonnet 5.5 at 45%, and the board lists Sonnet first. Cheaper models fit batch jobs.",
     ),
     why: [
       tx(
@@ -76,6 +76,7 @@ export const models: Model[] = [
         "For frontend only, Claude Sonnet 5.5 scores 1774 on WebDev at half the token price ($2 / $10).",
       ),
       tx("对延迟敏感：Android Bench 长程任务平均耗时 15.2 小时。", "Latency: the Android Bench long run averages 15.2 hours."),
+      tx("生产级判断：sudo L7 上与 Sonnet 同分，博客单任务约 $10，Sonnet 约 $14。", "Production judgment: tied with Sonnet on sudo L7. The blog puts a task at about $10, and Sonnet at about $14."),
     ],
   }),
   model({
@@ -88,8 +89,8 @@ export const models: Model[] = [
     context: "1.1M",
     priceLabel: "$10 / $50",
     summary: tx(
-      "WebDev 第二，1786 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%，但 token 价格是这张榜上最贵的一档。",
-      "Second on WebDev at 1786. Tied at 58.2% on Terminal-Bench, at the highest token price on that board.",
+      "WebDev 第二，1786 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第三，32.2%；博客没有给出它的美元成本。",
+      "Second on WebDev at 1786. Tied at 58.2% on Terminal-Bench. Third on sudo L7 at 32.2%. The blog does not give a dollar cost.",
     ),
     why: [tx("WebDev 只比第一名低 27 分。", "27 points behind first on WebDev.")],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
@@ -104,8 +105,8 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$2 / $10",
     summary: tx(
-      "WebDev 第三，1774 分，token 价格是 Opus 5.5 的一半。Terminal-Bench 第二，61.8%，但单次跑分成本更高。",
-      "Third on WebDev at 1774, half the token price of Opus 5.5. Second on Terminal-Bench at 61.8%, with a higher run cost.",
+      "WebDev 第三，1774 分。sudo L7 榜单第一，与 Opus 5.5 同分 45%；博客单任务约 $14，高于 Opus 的约 $10。",
+      "Third on WebDev at 1774. First on the sudo L7 board, tied with Opus 5.5 at 45%. The blog puts a task at about $14, above Opus at about $10.",
     ),
     why: [tx("做前端时，少 39 分换一半价格。", "For frontend work, 39 fewer points for half the price.")],
     whyNot: [tx("Terminal-Bench 单次跑分 $7.3k，比第一名的 $4.7k 还贵。", "A Terminal-Bench run costs $7.3k, more than the leader's $4.7k.")],
@@ -120,8 +121,8 @@ export const models: Model[] = [
     context: "1.1M",
     priceLabel: "$2 / $10",
     summary: tx(
-      "Terminal-Bench 58.2%，与 Astra 并列，跑分成本 $0.6k。WebDev 第四，1755 分，token 价格 $2 / $10。",
-      "58.2% on Terminal-Bench, tied with Astra, at a $0.6k run. Fourth on WebDev at 1755, priced $2 / $10.",
+      "Terminal-Bench 58.2%，跑分成本 $0.6k。sudo L7 第四，31.7%，博客写单任务略高于 $1。",
+      "58.2% on Terminal-Bench at a $0.6k run. Fourth on sudo L7 at 31.7%. The blog puts a task at just over $1.",
     ),
     why: [tx("全栈和脚本更看成本时，它是 Terminal-Bench 上更划算的一档。", "When a full-stack or scripting job cares about cost, this is the cheaper Terminal-Bench tier.")],
     whyNot: [tx("不是任何一张活跃榜的第一名。纯前端 Opus 与 Sonnet 仍然更高。", "It is not first on an active board. Opus and Sonnet still score higher for frontend.")],
@@ -181,6 +182,20 @@ export const models: Model[] = [
     summary: tx("WebDev high 档 1678 分，标记为初步，名次区间 7–13。", "1678 on WebDev at high effort, marked preliminary, rank band 7–13."),
     why: [tx("价格与 Sonnet 同档，样本还在增加。", "Same token price band as Sonnet, with the sample still growing.")],
     whyNot: [tx("初步标记表示票数少，名次可能变动。", "Preliminary means few votes, so the rank can move.")],
+  }),
+  model({
+    slug: "gemini-3-8-flash",
+    name: "Gemini 3.8 Flash",
+    vendor: "google",
+    vendorName: "Google",
+    license: "proprietary",
+    licenseLabel: prop,
+    summary: tx(
+      "sudo L7 第 11，10.6%（High）。与 Grok 4.7 同分，排在公开榜末段。",
+      "11th on sudo L7 at 10.6% (High). Same score as Grok 4.7, at the back of the public board.",
+    ),
+    why: [tx("官方 sudo L7 榜收录了这一档。", "The official sudo L7 board includes this tier.")],
+    whyNot: [tx("10.6% 离榜首的 45% 很远，不适合当作生产级判断的默认模型。", "10.6% is far from the 45% leaders. A poor default for production judgment.")],
   }),
   model({
     slug: "qwen3-8-max",

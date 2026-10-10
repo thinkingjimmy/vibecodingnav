@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-09",
+    kind: "board",
+    source: "surgehq.ai",
+    text: tx(
+      "**sudo L7**：Claude Sonnet 5.5 与 Claude Opus 5.5 均为 `45%`，榜单把 Sonnet 排在前面。GPT-6 Astra `32.2%`。",
+      "**sudo L7**: Claude Sonnet 5.5 and Claude Opus 5.5 both score `45%`, with Sonnet listed first. GPT-6 Astra scores `32.2%`.",
+    ),
+  },
+  {
     date: "10-08",
     kind: "board",
     source: "lmarena.ai",

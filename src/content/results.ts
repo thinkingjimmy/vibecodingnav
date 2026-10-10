@@ -38,6 +38,19 @@ function elo(
   };
 }
 
+function sudo(rank: number, modelSlug: string, score: number, effort?: string, runCost?: string): Result {
+  return {
+    benchmark: "sudo-l7",
+    asOf: "2026-10-09",
+    rank,
+    modelSlug,
+    effort,
+    setting: effort,
+    score,
+    runCost,
+  };
+}
+
 export const results: Result[] = [
   elo(1, "1–1", "claude-opus-5-5", "max", 1813, 15, "2,294", "$4 / $20", "1M"),
   elo(2, "2–3", "gpt-6-astra", "max", 1786, 11, "5,189", "$10 / $50", "1.1M"),
@@ -128,6 +141,18 @@ export const results: Result[] = [
     score: 41.8,
     setting: "max",
   },
+  sudo(1, "claude-sonnet-5-5", 45, undefined, "$14"),
+  sudo(2, "claude-opus-5-5", 45, "Adaptive/Max", "$10"),
+  sudo(3, "gpt-6-astra", 32.2, "Max"),
+  sudo(4, "gpt-6-1-sol", 31.7, "Max", "$1"),
+  sudo(5, "claude-fable-5-1", 27.2, "Adaptive/Max"),
+  sudo(6, "qwen3-8-max", 15.6),
+  sudo(7, "glm-5-3", 15, "Max"),
+  sudo(8, "kimi-k3", 13.9, "Max"),
+  sudo(9, "muse-spark-1-3", 12.2, "Max"),
+  sudo(10, "hy4-preview", 11.1),
+  sudo(11, "gemini-3-8-flash", 10.6, "High"),
+  sudo(12, "grok-4-7", 10.6, "xHigh"),
   {
     benchmark: "android-bench-1",
     asOf: "2026-08-11",

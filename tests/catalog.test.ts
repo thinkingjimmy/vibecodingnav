@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { LOBE_VENDORS } from "@/components/vendor-mark";
 import { content } from "@/content";
 import { validateContent } from "@/content/validate";
-import { getBenchmark, getBuild, getItem, getModel, resolvePicks } from "@/lib/catalog";
+import { getBenchmark, getBuild, getItem, getModel, getScenario, resolvePicks } from "@/lib/catalog";
 import { daysBetween, isStale } from "@/lib/site";
 import { localePath, swapLocale } from "@/lib/locale";
 
@@ -54,6 +54,37 @@ describe("picks", () => {
     expect(resolvePicks("cli-devops").open).toBeUndefined();
     expect(resolvePicks("android-app").value?.modelSlug).toBe("gpt-5-6-luna");
     expect(resolvePicks("saas").value?.modelSlug).toBe("gpt-6-1-sol");
+  });
+
+  it("follows the sudo L7 leaderboard order", () => {
+    const picks = resolvePicks("production-changes");
+    expect(picks.stale).toBe(false);
+    expect(picks.top?.modelSlug).toBe("claude-sonnet-5-5");
+    expect(picks.top?.score).toBe(45);
+    expect(picks.value?.modelSlug).toBe("gpt-6-1-sol");
+    expect(picks.open?.modelSlug).toBe("glm-5-3");
+
+    const scenario = getScenario("zh", "production-changes");
+    expect(scenario?.rows.map((row) => [row.name, row.scoreNumber])).toEqual([
+      ["Claude Sonnet 5.5", 45],
+      ["Claude Opus 5.5", 45],
+      ["GPT-6 Astra", 32.2],
+      ["GPT-6.1 Sol", 31.7],
+      ["Claude Fable 5.1", 27.2],
+      ["Qwen3.8 Max", 15.6],
+      ["GLM-5.3", 15],
+      ["Kimi K3", 13.9],
+      ["Muse Spark 1.3", 12.2],
+      ["HY4 Preview", 11.1],
+      ["Gemini 3.8 Flash", 10.6],
+      ["Grok 4.7", 10.6],
+    ]);
+    expect(getBenchmark("en", "sudo-l7")?.links.map((link) => link.href)).toEqual([
+      "https://surgehq.ai/benchmarks/sudo-l7",
+      "https://surgehq.ai/blog/sudo-l7",
+    ]);
+    expect(getModel("en", "claude-sonnet-5-5")?.appearances.some((row) => row.href === "/scenarios/production-changes/")).toBe(true);
+    expect(getModel("zh", "gemini-3-8-flash")?.scoreRows.some((row) => row.name === "sudo L7" && row.score === "10.6")).toBe(true);
   });
 });
 

@@ -97,6 +97,39 @@ export const benchmarks: Benchmark[] = [
     links: [{ label: "developer.android.com/bench", href: "https://developer.android.com/bench" }],
   },
   {
+    slug: "sudo-l7",
+    name: "sudo L7",
+    shortName: "sudo L7",
+    scoreUnit: "%",
+    asOf: "2026-10-09",
+    trackedCount: 12,
+    domain: tx("工程判断", "Engineering judgment"),
+    measures: tx(
+      "生产仓库里的改动与架构决策：发现风险、该不该做、怎么验证、怎么把决定说清楚。60 道题由 staff 及以上工程师编写，多数来自私有生产仓库，也有开源项目。",
+      "Production changes and architecture decisions: spotting risk, pushing back, verifying, and explaining the call. 60 tasks written by staff-level engineers, mostly from private production repositories, plus open source.",
+    ),
+    method: tx(
+      "Surge AI 的 sudo L7。专家为每道题写评分细则，模型对照细则打分，并用单元测试、静态分析等可执行检查作证据。博客称共八个维度，点名的有功能正确性、实践判断、思路协作（Thought Partnership）、验证、工程工艺（Engineering Craft）、如实报告（Truthful Reporting）和沟通。",
+      "Surge AI's sudo L7. Experts write a rubric for each task. Models grade against it, with unit tests, static analysis, and other executable checks as evidence. The blog describes eight dimensions and names functional correctness, practical judgment, thought partnership, verification, engineering craft, truthful reporting, and communication.",
+    ),
+    scoreMeaning: tx(
+      "百分比是没有漏掉必要要求的任务比例。榜单页只公布这一列。功能正确性上前四名接近：Sol 82.4%，Opus 5.5 82.1%，Astra 81.5%，Sonnet 5.5 79.6%。思路协作上 Opus 76.1%、Sonnet 74.8%，Sol 53.0%、Astra 51.6%。沟通上 Sonnet 72.4%，Sol 44.1%。",
+      "The percent is the share of assignments completed without missing essential requirements. The leaderboard page publishes only that column. Functional correctness for the top four is close: Sol 82.4%, Opus 5.5 82.1%, Astra 81.5%, Sonnet 5.5 79.6%. Thought partnership is 76.1% for Opus and 74.8% for Sonnet, against 53.0% for Sol and 51.6% for Astra. Communication is 72.4% for Sonnet and 44.1% for Sol.",
+    ),
+    caveats: tx(
+      "榜很新，只有 60 题，任务集不公开。评分由模型对照专家细则完成。Surge 是 AI 数据供应商。博客里的单任务成本是约数，榜单页没有成本列。",
+      "The board is new, the set is 60 tasks, and the tasks stay private. Models grade against expert rubrics. Surge is an AI data vendor. Per-task costs in the blog are approximate; the leaderboard page has no cost column.",
+    ),
+    updateCadence: tx(
+      "博客发布于 2026-10-08，榜单页最后发布于 2026-10-09。本页于 2026-10-10 同步公开榜上的 12 行。",
+      "The blog was published on 2026-10-08. The leaderboard page was last published on 2026-10-09. This page synced the 12 public rows on 2026-10-10.",
+    ),
+    links: [
+      { label: "surgehq.ai/benchmarks/sudo-l7", href: "https://surgehq.ai/benchmarks/sudo-l7" },
+      { label: "surgehq.ai/blog/sudo-l7", href: "https://surgehq.ai/blog/sudo-l7" },
+    ],
+  },
+  {
     slug: "swe-bench-verified",
     name: "SWE-bench Verified",
     shortName: "SWE-bench",

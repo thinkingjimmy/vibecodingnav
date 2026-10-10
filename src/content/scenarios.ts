@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Scenario 契约
- * [OUTPUT]: 对外提供场景榜单：六张首页卡片、开源切片，以及全栈 SaaS
+ * [OUTPUT]: 对外提供场景榜单：七张首页卡片、开源切片，以及全栈 SaaS
  * [POS]: src/content 的场景实体，只引用基准与模型，不复制分数
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -116,7 +116,45 @@ export const scenarios: Scenario[] = [
         "Whether a screen looks right is LMArena WebDev. This board only asks if the terminal task gets finished.",
       ),
     ],
-    related: ["web-frontend", "saas", "refactor", "android-app", "open-frontend", "ios-app"],
+    related: ["web-frontend", "saas", "refactor", "production-changes", "android-app", "open-frontend"],
+  },
+  {
+    slug: "production-changes",
+    title: tx("生产级改动与架构决策", "Production changes & architecture decisions"),
+    summary: tx(
+      "改生产代码时，测试通过还不够：要发现风险、顶回去、验证危险情况，并把决定说清楚。按 Surge AI sudo L7 的任务完成率排名。",
+      "On production code, passing tests is not enough: spot the risk, push back, verify the dangerous cases, and explain the decision. Ranked by the Surge AI sudo L7 completion rate.",
+    ),
+    benchmark: "sudo-l7",
+    subset: "all",
+    valueMetric: "run",
+    lead: "top",
+    featured: true,
+    note: tx(
+      "成本列不是榜单原列。博客写 Sonnet 5.5 单任务约 $14，Opus 5.5 约 $10，GPT-6.1 Sol 略高于 $1，并接近 Astra 的 32%、大约五分之一的花费。Astra 没有公布美元数。",
+      "The cost column is not on the leaderboard. The blog puts Sonnet 5.5 at about $14 a task, Opus 5.5 at about $10, and GPT-6.1 Sol at just over $1, close to Astra's 32% at roughly a fifth of the spend. Astra has no published dollar figure.",
+    ),
+    whyItMatters: [
+      point(
+        "补 SWE-bench 停更后的空档",
+        "Fills in after SWE-bench stopped",
+        "SWE-bench Verified 的榜单日期停在 2026-02-26，问的是补丁能不能过测试。sudo L7 问的是代码能跑之后，还该不该这么改。",
+        "SWE-bench Verified's board date stops at 2026-02-26 and asks whether a patch passes. sudo L7 asks whether the change is the right one after the code runs.",
+      ),
+      point(
+        "和 Terminal-Bench 不是同一件事",
+        "Not the same question as Terminal-Bench",
+        "Terminal-Bench 给的是终端里写明的任务。sudo L7 把做法留开：该不该做、风险在哪、怎么验证。",
+        "Terminal-Bench specifies a concrete terminal task. sudo L7 leaves the approach open: whether to build it, where the risk is, and how to verify it.",
+      ),
+      point(
+        "正确性和判断会分开",
+        "Correctness and judgment split",
+        "前四名的功能正确性挤在 79.6–82.4%。思路协作上 Opus 76.1%、Sonnet 74.8%，Sol 53.0%、Astra 51.6%。沟通上 Sonnet 72.4%，Sol 44.1%。",
+        "Functional correctness for the top four sits between 79.6% and 82.4%. Thought partnership is 76.1% for Opus and 74.8% for Sonnet, against 53.0% for Sol and 51.6% for Astra. Communication is 72.4% for Sonnet and 44.1% for Sol.",
+      ),
+    ],
+    related: ["refactor", "cli-devops", "saas", "web-frontend", "android-app", "ios-app"],
   },
   {
     slug: "refactor",
@@ -150,7 +188,7 @@ export const scenarios: Scenario[] = [
         "The Android Bench 1.0 leaders change places on the long board.",
       ),
     ],
-    related: ["android-app", "cli-devops", "web-frontend", "saas", "open-frontend", "ios-app"],
+    related: ["android-app", "cli-devops", "production-changes", "web-frontend", "saas", "open-frontend"],
   },
   {
     slug: "open-frontend",
@@ -247,6 +285,6 @@ export const scenarios: Scenario[] = [
         "GPT-6.1 Sol scores 58.2% at $0.6k a run, under an eighth of the leader's run cost.",
       ),
     ],
-    related: ["cli-devops", "web-frontend", "refactor", "android-app", "open-frontend", "ios-app"],
+    related: ["cli-devops", "production-changes", "web-frontend", "refactor", "android-app", "open-frontend"],
   },
 ];
