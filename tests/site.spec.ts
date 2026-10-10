@@ -59,6 +59,41 @@ test("theme toggle persists the dark class", async ({ page }) => {
   await expect(page.locator("html")).toHaveClass(/dark/);
 });
 
+test("framework evals stay on separate boards", async ({ page }) => {
+  await page.goto("/zh/libraries/supabase/");
+  await expect(page.getByRole("heading", { name: "框架评测" })).toBeVisible();
+  await expect(page.getByText("91.3").first()).toBeVisible();
+
+  await page.goto("/zh/skills/supabase-skills/");
+  await expect(page.getByRole("heading", { name: "有材料相对基线的变化" })).toBeVisible();
+  await expect(page.getByText("−1.4")).toBeVisible();
+  await expect(page.getByText("0", { exact: true }).first()).toBeVisible();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/zh/libraries/convex/");
+  await expect(page.getByText("90.18").first()).toBeVisible();
+  await expect(page.getByText("无指南 + 网页")).toBeVisible();
+  await expect(page.getByText("With Guidelines 没有收录")).toBeVisible();
+  const convexOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(convexOverflow).toBeLessThanOrEqual(1);
+  await page.setViewportSize({ width: 1280, height: 800 });
+
+  await page.goto("/zh/prompts/convex-ai-rules/");
+  await expect(page.getByRole("heading", { name: "对照臂未核实" })).toBeVisible();
+  await expect(page.locator("table")).toHaveCount(0);
+
+  await page.goto("/zh/prompts/nextjs-agents-md/");
+  await expect(page.getByText("+13.0").first()).toBeVisible();
+
+  await page.goto("/zh/libraries/react/");
+  await expect(page.getByRole("heading", { name: "生态评测" })).toBeVisible();
+  await expect(page.getByText("不是 React 或 Meta 的官方榜")).toBeVisible();
+
+  await page.goto("/zh/build/saas/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("全栈");
+  await expect(page.getByText("不把 Next.js、Supabase、Convex、ReactBench 的通过率加在一起")).toBeVisible();
+});
+
 test("home does not scroll sideways on a phone", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/zh/");

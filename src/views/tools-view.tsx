@@ -138,7 +138,7 @@ export async function ItemView({ locale, type, params }: { locale: Locale; type:
       {item.evalView ? (
         <section className="pt-14">
           <header className="px-4 pb-4">
-            <h2 className="pt">{item.evalView.mode === "uplift" ? dict.item.evalUplift : item.evalView.mode === "unverified" ? dict.item.evalUnverified : dict.item.evalBoard}</h2>
+            <h2 className="pt">{item.evalView.mode === "uplift" ? dict.item.evalUplift : item.evalView.mode === "unverified" ? dict.item.evalUnverified : item.evalView.kind === "ecosystem" ? item.evalView.kindLabel : dict.item.evalBoard}</h2>
             <p className="num mt-3 break-all text-[12px] text-faint">
               <Link href={item.evalView.href} className="link-u">{item.evalView.name}</Link>
               {" · "}{item.evalView.kindLabel}{" · "}{item.evalView.asOf}
