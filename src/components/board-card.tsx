@@ -10,20 +10,25 @@ import { VendorMark } from "./vendor-mark";
 
 export interface BoardCardRow {
   rank: number;
+  rankLabel?: string;
   name: string;
-  vendor: VendorId;
-  href: string;
+  vendor?: VendorId;
+  letter?: string;
+  href?: string;
   reason?: string;
   score?: string;
   unit?: string;
+  boards?: string;
+  boardsTitle?: string;
   license?: string;
 }
 
 export interface BoardCardData {
   href: string;
   title: string;
-  sourceName: string;
+  sourceName?: string;
   sourceHref?: string;
+  sources?: { name: string; href: string }[];
   asOf: string;
   rows: BoardCardRow[];
 }
@@ -37,20 +42,26 @@ export function BoardCard({ card, viewMore }: { card: BoardCardData; viewMore: s
           <Link href={card.href} className="num shrink-0 pt-0.5 text-[12px] text-mfg hover:text-fg">{viewMore} →</Link>
         </div>
         <div className="num mt-1 text-[11px] text-faint">
-          {card.sourceHref ? <Link href={card.sourceHref} className="link-u hover:text-fg">{card.sourceName}</Link> : card.sourceName}
+          {card.sources?.length ? card.sources.map((source, index) => (
+            <span key={source.href}>{index ? " · " : ""}<Link href={source.href} className="link-u hover:text-fg">{source.name}</Link></span>
+          )) : card.sourceHref ? <Link href={card.sourceHref} className="link-u hover:text-fg">{card.sourceName}</Link> : card.sourceName}
           {card.asOf ? ` · ${card.asOf}` : ""}
         </div>
       </div>
       <div className="flex-1 px-4 pb-4">
         {card.rows.map((row, index) => (
           <div key={row.name} className={`flex h-9 items-center gap-2.5 text-[13.5px] ${index ? "border-t border-line" : ""}`}>
-            <span className="num w-3 text-[11px] text-faint">{row.rank}</span>
-            <Link href={row.href} className="flex min-w-0 cursor-pointer items-center gap-2.5 no-underline">
-              <VendorMark vendor={row.vendor} />
-              <span className={`truncate ${index ? "" : "font-medium"}`}>{row.name}</span>
-            </Link>
+            <span className="num w-7 shrink-0 text-[11px] text-faint">{row.rankLabel ?? row.rank}</span>
+            {row.href ? (
+              <Link href={row.href} className="flex min-w-0 cursor-pointer items-center gap-2.5 no-underline">
+                <VendorMark vendor={row.vendor} letter={row.letter} />
+                <span className={`truncate ${index ? "" : "font-medium"}`}>{row.name}</span>
+              </Link>
+            ) : <span className="flex min-w-0 items-center gap-2.5"><VendorMark vendor={row.vendor} letter={row.letter} /><span className="truncate">{row.name}</span></span>}
             {row.license ? <span className="num text-[10.5px] text-faint">{row.license}</span> : null}
-            {row.reason ? <span className="ml-auto text-[12px] whitespace-nowrap text-mfg">{row.reason}</span> : (
+            {row.reason ? <span className="ml-auto text-[12px] whitespace-nowrap text-mfg">{row.reason}</span> : row.boards ? (
+              <span className="num ml-auto whitespace-nowrap text-[12px] text-mfg" title={row.boardsTitle}>{row.boards}</span>
+            ) : (
               <span className={`num ml-auto ${index ? "text-mfg" : ""}`}>
                 {row.score ?? ""}
                 {row.unit ? <span className="text-[11px] text-faint">{row.unit}</span> : null}

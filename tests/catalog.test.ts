@@ -148,8 +148,50 @@ describe("picks", () => {
     expect(terminal).toHaveLength(35);
     expect(terminal[3]).toMatchObject({ name: "GPT-6.1 Sol", rank: 3, score: "58.2% ± 3.1%", price: "$634.24" });
     expect(terminal[20]).toMatchObject({ name: "Grok 4.7", rank: 21, price: "$3.68k (partial: 324/330)" });
-    expect(getHome("zh").cards[0]?.rows).toHaveLength(5);
-    expect(getHome("zh").cards[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5", score: "91.8" });
+    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(142);
+    expect(getBenchmark("zh", "android-bench-2-long")?.leaderboard?.[0]).toMatchObject({ name: "Claude Opus 5.5", agent: "claude-code", score: "32.7" });
+  });
+
+  it("fuses scenario boards by model and average rank", () => {
+    const web = getScenario("zh", "web-frontend");
+    expect(web?.fusion.columns.map((column) => column.id)).toEqual(["lmarena-webdev", "nextjs-evals", "reactbench"]);
+    const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
+    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, null]);
+    expect(opus).toMatchObject({ avg: 1, count: 2, total: 3 });
+    expect(opus?.cells[0]?.tip).toContain("1813");
+    expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
+    expect(opus?.cells[0]?.tip).toContain("max");
+    const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 3, 1]);
+    expect(fable).toMatchObject({ avg: 3, count: 3 });
+    expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
+    expect(web?.fusion.rows.findIndex((row) => row.slug === "claude-fable-5-1")).toBeGreaterThan(0);
+
+    const android = getScenario("zh", "android-app");
+    expect(android?.fusion.columns.map((column) => column.id)).toEqual(["android-bench-1", "android-bench-2-long"]);
+    const opus5 = android?.fusion.rows.find((row) => row.slug === "claude-opus-5");
+    const opus55 = android?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
+    expect(opus5?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, null]);
+    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([null, 1]);
+    expect(opus55?.cells[1]?.tip).toContain("claude-code");
+    expect(android?.fusion.rows[0]?.slug).toBe("claude-opus-5");
+    expect(android?.fusion.rows[1]?.slug).toBe("claude-opus-5-5");
+
+    expect(getBenchmark("zh", "supabase-evals")?.scenarios).toEqual([]);
+    expect(getBenchmark("zh", "convex-evals")?.scenarios).toEqual([]);
+    expect(getBenchmark("zh", "nextjs-evals")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
+    expect(getBenchmark("zh", "reactbench")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
+    expect(getBenchmark("zh", "android-bench-1")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/android-app/"]);
+    expect(getBenchmark("zh", "android-bench-2-long")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/android-app/"]);
+
+    const home = getHome("zh").cards;
+    expect(home[0]?.sources?.map((source) => source.name)).toEqual(["LMArena WebDev", "Next.js Agent Evals", "ReactBench"]);
+    expect(home[0]?.rows).toHaveLength(5);
+    expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", boards: "#1 · #1 · —" });
+    expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench 1.0", "Android Bench 2.0 长程"]);
+    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5", rankLabel: "1", boards: "#1 · —" });
+    expect(home[2]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "64.8", unit: "%" });
+    expect(home[3]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "45", unit: "%" });
   });
 
   it("keeps framework eval arms as separate scores", () => {

@@ -8,7 +8,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BoardCard } from "@/components/board-card";
 import { Frame } from "@/components/frame";
-import { ScenarioBoards } from "@/components/scenario-boards";
+import { FusedTable } from "@/components/fused-table";
 import { VendorMark } from "@/components/vendor-mark";
 import { getScenario, listScenarioCards, slugs } from "@/lib/catalog";
 import type { Locale } from "@/lib/contracts";
@@ -70,7 +70,12 @@ export async function ScenarioView({ locale, params }: { locale: Locale; params:
           <span className="ml-auto text-faint group-hover:text-fg">{dict.scenario.viewCombo} →</span>
         </Link>
       ) : null}
-      {scenario.boards.length ? <ScenarioBoards boards={scenario.boards} dict={dict} /> : null}
+      {scenario.fusion.rows.length ? (
+        <section className="pt-16">
+          <header className="px-4 pb-5"><h2 className="pt">{dict.scenario.board}</h2></header>
+          <FusedTable fusion={scenario.fusion} dict={dict} />
+        </section>
+      ) : null}
       {scenario.picks.length ? (
         <section className="px-4 pt-16">
           <header className="pb-6"><h2 className="pt">{dict.scenario.picks}</h2></header>
@@ -85,25 +90,6 @@ export async function ScenarioView({ locale, params }: { locale: Locale; params:
           </div>
         </section>
       ) : null}
-      {scenario.boards.map((board) => (
-        <section key={board.id} className="px-4 pt-20">
-          <header className="pb-8"><h2 className="pt">{scenario.boards.length > 1 ? board.name : dict.scenario.explain}</h2></header>
-          <dl className="max-w-[820px]">
-            {board.explain.map(([label, body], index) => (
-              <div key={label} className={`grid gap-3 py-4 md:grid-cols-[120px_1fr] md:gap-6 ${index ? "border-t border-line" : ""}`}>
-                <dt className="text-[15px] font-medium">{label}</dt>
-                <dd className="text-[15px] leading-relaxed text-mfg">{body}</dd>
-              </div>
-            ))}
-            <div className="grid gap-3 border-t border-line py-4 md:grid-cols-[120px_1fr] md:gap-6">
-              <dt className="text-[15px] font-medium">{dict.benchmark.source}</dt>
-              <dd className="flex flex-col gap-1 text-[13px] text-mfg">
-                {board.links.map((link) => <a key={link.href} href={link.href} className="num link-u">{link.label}</a>)}
-              </dd>
-            </div>
-          </dl>
-        </section>
-      ))}
       <section className="px-4 pt-20">
         <header className="pb-8"><h2 className="pt">{dict.scenario.why}</h2></header>
         <div className="grid gap-10 md:grid-cols-3">

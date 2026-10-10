@@ -17,10 +17,15 @@ export const scenarios: Scenario[] = [
     slug: "web-frontend",
     title: tx("做 Web 前端", "Build a Web frontend"),
     summary: tx(
-      "落地页、交互组件、React / Next.js 页面。按 LMArena WebDev 社区盲评排名：两个匿名模型同时做同一个需求，由真人投票选出更好的那个。",
-      "Landing pages, interactive components, and React / Next.js screens. Ranked by LMArena WebDev blind votes: two anonymous models build the same brief, and a person picks the better one.",
+      "落地页、交互组件、React / Next.js 页面。这一页把 LMArena WebDev、Next.js Agent Evals 和生态评测 ReactBench 按模型对齐，格子里是名次。完整原榜在各基准页。",
+      "Landing pages, interactive components, and React / Next.js screens. This page lines up LMArena WebDev, Next.js Agent Evals, and the ReactBench ecosystem eval by model. Cells are ranks. The full source boards live on the benchmark pages.",
     ),
     benchmark: "lmarena-webdev",
+    boards: [
+      { id: "webdev", benchmark: "lmarena-webdev", label: tx("WebDev", "WebDev") },
+      { id: "nextjs", benchmark: "nextjs-evals", label: tx("Next.js", "Next.js") },
+      { id: "reactbench", benchmark: "reactbench", label: tx("ReactBench", "ReactBench") },
+    ],
     valueMetric: "token",
     lead: "top",
     featured: true,
@@ -51,8 +56,8 @@ export const scenarios: Scenario[] = [
     slug: "android-app",
     title: tx("做一个 Android App", "Build an Android app"),
     summary: tx(
-      "Kotlin + Compose。同一页收录 Android Bench 1.0 和 2.0 长程，两张表都按来源页的完整行、列和顺序。首页卡片用 1.0。",
-      "Kotlin and Compose. Android Bench 1.0 and the 2.0 long-horizon table are both here, each with the source rows, columns, and order. The home card uses 1.0.",
+      "Kotlin + Compose。这一页把 Android Bench 1.0 和 2.0 长程按模型对齐，格子里是名次。完整原榜在两张基准页。",
+      "Kotlin and Compose. This page lines up Android Bench 1.0 and the 2.0 long-horizon table by model. Cells are ranks. The full source boards live on the two benchmark pages.",
     ),
     benchmark: "android-bench-1",
     boards: [
@@ -77,10 +82,10 @@ export const scenarios: Scenario[] = [
         "GPT 5.6 Luna scores 87.6% at $7.2 a run, about a twenty-fourth of the leader's $175.4.",
       ),
       point(
-        "长程在本页另一栏",
-        "Long work is the other tab",
-        "跨模块改造看 2.0 长程。第一名是 Claude Opus 5.5，32.7%，不是 1.0 的第一名。",
-        "Cross-module work is the 2.0 long-horizon tab. First there is Claude Opus 5.5 at 32.7%, not the 1.0 leader.",
+        "长程是单独一列",
+        "Long work is its own column",
+        "跨模块改造看 2.0 长程那一列。第一名是 Claude Opus 5.5，32.7%，不是 1.0 的第一名。整张原榜在基准页。",
+        "Cross-module work is the 2.0 long-horizon column. First there is Claude Opus 5.5 at 32.7%, not the 1.0 leader. The full source table is on the benchmark page.",
       ),
     ],
     related: ["web-frontend", "cli-devops", "production-changes"],

@@ -10,10 +10,10 @@ export default function Page() {
   return (
     <MovedView
       locale="zh"
-      href="/zh/scenarios/web-frontend/"
+      href="/zh/benchmarks/lmarena-webdev/"
       title="开源权重在 WebDev 榜单里"
-      body="「用开源模型做前端」不再单独成场景。打开 Web 前端榜，用「开源权重」筛选，名次保持来源名次。"
-      label="做 Web 前端"
+      body="「用开源模型做前端」不再单独成场景。完整的 LMArena WebDev 在基准页，用「开源权重」筛选，名次保持来源名次。"
+      label="LMArena WebDev"
     />
   );
 }

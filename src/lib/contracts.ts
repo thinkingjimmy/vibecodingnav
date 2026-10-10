@@ -320,6 +320,10 @@ export interface Dictionary {
     showLess: string;
     preliminary: string;
     rankNote: string;
+    fusedNote: string;
+    colAvg: string;
+    colAppears: string;
+    sortBy: string;
     explain: string;
     why: string;
     others: string;

@@ -346,29 +346,121 @@ function buildsForModel(slug: string) {
 
 const HOME_BOARD_COUNT = 4;
 
+function scenarioBoardSpecs(scenario: Scenario) {
+  if (scenario.boards?.length) return scenario.boards;
+  if (scenario.benchmark) return [{ id: scenario.benchmark, benchmark: scenario.benchmark, label: { zh: "", en: "" } }];
+  return [];
+}
+
+function modelIdentity(result: Result) {
+  return result.modelSlug ? `model:${result.modelSlug}` : `label:${result.label ?? ""}`;
+}
+
+/** 融合表的对齐规则写在 src/content/boards/README.md。 */
+export function fuseScenario(locale: Locale, scenario: Scenario) {
+  const specs = scenarioBoardSpecs(scenario);
+  const columns = specs.map((spec) => {
+    const benchmark = benchmarkBy.get(spec.benchmark)!;
+    return {
+      id: spec.benchmark,
+      label: spec.label.zh ? t(locale, spec.label) : benchmark.shortName,
+      name: benchmark.name,
+      href: localePath(locale, `/benchmarks/${benchmark.slug}`),
+      tag: benchmark.kind === "ecosystem" ? t(locale, benchmark.domain) : "",
+    };
+  });
+  const primaryIndex = Math.max(0, specs.findIndex((spec) => spec.benchmark === scenario.benchmark));
+  const best = specs.map((spec) => {
+    const rows = results.filter((result) => result.benchmark === spec.benchmark && (result.arm ?? "baseline") === "baseline" && result.rank != null);
+    const map = new Map<string, Result>();
+    for (const row of rows) {
+      const key = modelIdentity(row);
+      const prev = map.get(key);
+      if (!prev || row.rank! < prev.rank! || (row.rank === prev.rank && row.score > prev.score)) map.set(key, row);
+    }
+    return map;
+  });
+  const keys = [...new Set(best.flatMap((map) => [...map.keys()]))];
+  const rows = keys.map((key) => {
+    const cells = best.map((map, index) => {
+      const result = map.get(key);
+      if (!result) return null;
+      const benchmark = benchmarkBy.get(specs[index]!.benchmark)!;
+      const model = result.modelSlug ? modelBy.get(result.modelSlug) : undefined;
+      const name = model?.name ?? result.label ?? result.modelSlug ?? "";
+      const score = result.scoreText ?? formatScore(result.score, benchmark.scoreUnit);
+      const unit = benchmark.scoreUnit && !score.includes("%") ? benchmark.scoreUnit : "";
+      const variant = [result.label && result.label !== name ? result.label : "", result.effort ?? "", result.agent ?? ""].filter(Boolean).join(" · ");
+      const metric = benchmark.scoreUnit === "%" ? (locale === "zh" ? "通过率" : "pass rate") : (locale === "zh" ? "分数" : "score");
+      return {
+        rank: result.rank!,
+        score,
+        unit,
+        scoreNumber: result.score,
+        scoreUnit: benchmark.scoreUnit,
+        tip: [metric, `${score}${unit}`, variant].filter(Boolean).join(" · "),
+      };
+    });
+    const sample = cells.find((cell) => cell)?.rank != null ? best.find((map) => map.has(key))!.get(key)! : undefined;
+    const model = sample?.modelSlug ? modelBy.get(sample.modelSlug) : undefined;
+    const ranks = cells.flatMap((cell) => cell ? [cell.rank] : []);
+    const avg = ranks.reduce((sum, rank) => sum + rank, 0) / ranks.length;
+    const primary = cells[primaryIndex];
+    return {
+      key,
+      slug: sample?.modelSlug,
+      name: model?.name ?? sample?.label ?? sample?.modelSlug ?? key,
+      href: model ? localePath(locale, `/models/${model.slug}`) : undefined,
+      vendor: model?.vendor ?? sample?.vendor,
+      letter: sample?.letter,
+      avg,
+      avgLabel: Number.isInteger(avg) ? String(avg) : avg.toFixed(1),
+      count: ranks.length,
+      total: columns.length,
+      primaryRank: primary ? primary.rank : null,
+      cells,
+    };
+  }).sort((a, b) => a.avg - b.avg || b.count - a.count || (a.primaryRank ?? 9999) - (b.primaryRank ?? 9999) || a.name.localeCompare(b.name, locale === "zh" ? "zh-CN" : "en"));
+  return { columns, rows };
+}
+
 function scenarioCard(locale: Locale, scenario: (typeof scenarios)[number]) {
-  const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
-  const sourceName = scenario.sourceLabel ? t(locale, scenario.sourceLabel) : benchmark?.name ?? "";
-  const editor = Boolean(scenario.editorPicks?.length);
-  const rows = editor
-    ? scenario.editorPicks!.map((pick, index) => {
+  if (scenario.editorPicks?.length) {
+    const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
+    return {
+      href: localePath(locale, `/scenarios/${scenario.slug}`),
+      title: t(locale, scenario.title),
+      sources: benchmark ? [{ name: benchmark.name, href: localePath(locale, `/benchmarks/${benchmark.slug}`) }] : [],
+      asOf: benchmark?.asOf ?? "",
+      rows: scenario.editorPicks.map((pick, index) => {
         const model = modelBy.get(pick.modelSlug)!;
         return { rank: index + 1, name: model.name, vendor: model.vendor, href: localePath(locale, `/models/${model.slug}`), reason: t(locale, pick.reason) };
-      })
-    : toBoardRows(locale, scenario.benchmark!).slice(0, 5).map((row) => ({
-        rank: row.rank,
-        name: row.cardName,
-        vendor: row.vendor!,
-        href: row.href!,
-        score: row.score.includes("%") || row.score.includes("±") ? formatScore(row.scoreNumber, benchmark?.scoreUnit ?? "") : row.score,
-        unit: benchmark?.scoreUnit ?? "",
-      }));
+      }),
+    };
+  }
+  const fusion = fuseScenario(locale, scenario);
+  const multi = fusion.columns.length > 1;
+  const rows = fusion.rows.slice(0, 5).map((row, index) => {
+    const cell = row.cells.find((item) => item);
+    const noisy = Boolean(cell && (cell.score.includes("%") || cell.score.includes("±")));
+    return {
+      rank: index + 1,
+      rankLabel: multi ? row.avgLabel : String(row.primaryRank ?? row.cells[0]?.rank ?? row.avgLabel),
+      name: row.name,
+      vendor: row.vendor,
+      letter: row.letter,
+      href: row.href,
+      boards: multi ? row.cells.map((item) => item ? `#${item.rank}` : "—").join(" · ") : undefined,
+      boardsTitle: multi ? fusion.columns.map((column, columnIndex) => `${column.label} ${row.cells[columnIndex] ? `#${row.cells[columnIndex]!.rank}` : "—"}`).join(" · ") : undefined,
+      score: multi || !cell ? undefined : noisy ? formatScore(cell.scoreNumber, cell.scoreUnit) : cell.score,
+      unit: multi || !cell ? undefined : cell.scoreUnit,
+    };
+  });
   return {
     href: localePath(locale, `/scenarios/${scenario.slug}`),
     title: t(locale, scenario.title),
-    sourceName,
-    sourceHref: benchmark ? localePath(locale, `/benchmarks/${benchmark.slug}`) : undefined,
-    asOf: benchmark?.asOf ?? "",
+    sources: fusion.columns.map((column) => ({ name: column.name, href: column.href })),
+    asOf: multi || !scenario.benchmark ? "" : benchmarkBy.get(scenario.benchmark)?.asOf ?? "",
     rows,
   };
 }
@@ -407,11 +499,8 @@ export function getScenario(locale: Locale, slug: string) {
   const dict = getDictionary(locale);
   const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
   const stale = Boolean(benchmark && (benchmark.retired || isStale(benchmark.asOf, CLOCK)));
-  const specs = scenario.boards?.length
-    ? scenario.boards
-    : scenario.benchmark
-      ? [{ id: scenario.benchmark, benchmark: scenario.benchmark, label: { zh: "", en: "" } }]
-      : [];
+  const specs = scenarioBoardSpecs(scenario);
+  const fusion = fuseScenario(locale, scenario);
   const boards = specs.map((spec) => {
     const source = benchmarkBy.get(spec.benchmark)!;
     return {
@@ -450,6 +539,7 @@ export function getScenario(locale: Locale, slug: string) {
     combo: build ? { href: build.href, label: build.combo } : undefined,
     rows,
     boards,
+    fusion,
     why: scenario.whyItMatters.map((item) => ({ title: t(locale, item.title), body: t(locale, item.body) })),
     picks: (scenario.editorPicks ?? []).map((pick) => {
       const model = modelBy.get(pick.modelSlug)!;
@@ -696,6 +786,9 @@ export function getBenchmark(locale: Locale, slug: string) {
     links: benchmark.links,
     version: benchmark.version,
     kind: benchmark.kind,
+    table: benchmark.table,
+    filter: (benchmark.sourceFilter ?? "none") as SourceFilter | "none",
+    leaderboard: benchmark.table ? toBoardRows(locale, slug) : undefined,
     board: benchmark.kind ? frameworkEval(locale, slug, "board") : undefined,
     scenarios: scenarios.filter((scenario) => scenario.benchmark === slug || scenario.boards?.some((board) => board.benchmark === slug)).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
   };

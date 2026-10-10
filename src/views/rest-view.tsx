@@ -8,6 +8,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EvalTable } from "@/components/eval-table";
 import { Frame } from "@/components/frame";
+import { Leaderboard } from "@/components/leaderboard";
 import { RichText } from "@/components/rich-text";
 import { getBenchmark, getChanges, listBenchmarks, slugs } from "@/lib/catalog";
 import type { Locale } from "@/lib/contracts";
@@ -93,6 +94,15 @@ export async function BenchmarkView({ locale, params }: { locale: Locale; params
           <dd className="space-y-1">{benchmark.links.map((link) => <a key={link.href} href={link.href} className="num block text-[13px] link-u">{link.label}</a>)}</dd>
         </div>
       </dl>
+      {benchmark.leaderboard ? (
+        <section className="pt-16">
+          <header className="px-4 pb-4">
+            <h2 className="pt">{dict.scenario.board}</h2>
+            <p className="num mt-2 text-[12px] text-faint">{benchmark.leaderboard.length}</p>
+          </header>
+          <Leaderboard rows={benchmark.leaderboard} dict={dict} table={benchmark.table!} filter={benchmark.filter} />
+        </section>
+      ) : null}
       {benchmark.board ? (
         <section className="pt-16">
           <header className="px-4 pb-4"><h2 className="pt">{dict.benchmark.board}</h2></header>

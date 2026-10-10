@@ -10,10 +10,10 @@ export default function Page() {
   return (
     <MovedView
       locale="en"
-      href="/scenarios/web-frontend/"
+      href="/benchmarks/lmarena-webdev/"
       title="This scenario moved"
-      body="Open weights are a filter on the LMArena WebDev board. The filter keeps the source ranks."
-      label="Build a Web frontend"
+      body="Open weights are a filter on the LMArena WebDev board. The full source board is on the benchmark page, and the filter keeps the source ranks."
+      label="LMArena WebDev"
     />
   );
 }
