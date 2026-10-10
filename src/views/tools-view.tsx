@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { CategoryList } from "@/components/category-list";
 import { Frame } from "@/components/frame";
 import { PhosphorWeights } from "@/components/weights";
+import { EvalTable } from "@/components/eval-table";
 import { VendorMark } from "@/components/vendor-mark";
 import { getCategory, getItem, itemSlugs, listCategories, slugs } from "@/lib/catalog";
 import { ITEM_SEGMENT, type ItemType, type Locale } from "@/lib/contracts";
@@ -134,6 +135,20 @@ export async function ItemView({ locale, type, params }: { locale: Locale; type:
         <p className="mt-5 max-w-[720px] text-[17px] leading-relaxed text-mfg">{item.oneLiner}</p>
         <p className="num mt-6 text-[12px] text-faint">{item.meta}</p>
       </section>
+      {item.evalView ? (
+        <section className="pt-14">
+          <header className="px-4 pb-4">
+            <h2 className="pt">{item.evalView.mode === "uplift" ? dict.item.evalUplift : item.evalView.mode === "unverified" ? dict.item.evalUnverified : dict.item.evalBoard}</h2>
+            <p className="num mt-3 break-all text-[12px] text-faint">
+              <Link href={item.evalView.href} className="link-u">{item.evalView.name}</Link>
+              {" · "}{item.evalView.kindLabel}{" · "}{item.evalView.asOf}
+              {item.evalView.version ? ` · ${item.evalView.version}` : ""}
+            </p>
+            <p className="mt-3 max-w-[760px] text-[14px] leading-relaxed text-mfg">{item.evalView.note}</p>
+          </header>
+          <EvalTable rows={item.evalView.rows} dict={dict} mode={item.evalView.mode} assistedLabel={item.evalView.assistedLabel} webLabel={item.evalView.webLabel} showWeb={item.evalView.showWeb} />
+        </section>
+      ) : null}
       {item.visual === "phosphor-weights" ? <section className="px-4 pt-14"><PhosphorWeights /></section> : null}
       {item.does.length ? (
         <section className="px-4 pt-20">

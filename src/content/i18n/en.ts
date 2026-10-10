@@ -122,6 +122,12 @@ const en = {
     asRole: "Referenced by a build",
     related: "Paired entry",
     categories: "Appears in these categories",
+    evalBoard: "Framework eval",
+    evalUplift: "Change from the baseline",
+    evalBaseline: "Baseline",
+    evalDelta: "Change",
+    evalCost: "Cost per run",
+    evalUnverified: "Comparison arm unverified",
   },
   build: {
     indexTitle: "Builds",
@@ -154,6 +160,8 @@ const en = {
     source: "Source",
     usedBy: "Used by",
     stale: "Older than 90 days, not primary evidence",
+    version: "Version",
+    board: "Baseline board",
   },
   changes: {
     title: "Latest changes",

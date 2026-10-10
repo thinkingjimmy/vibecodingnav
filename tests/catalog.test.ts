@@ -86,6 +86,35 @@ describe("picks", () => {
     expect(getModel("en", "claude-sonnet-5-5")?.appearances.some((row) => row.href === "/scenarios/production-changes/")).toBe(true);
     expect(getModel("zh", "gemini-3-8-flash")?.scoreRows.some((row) => row.name === "sudo L7" && row.score === "10.6")).toBe(true);
   });
+
+  it("keeps framework eval arms as separate scores", () => {
+    const board = getItem("zh", "library", "supabase")?.evalView;
+    expect(board?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", baseline: "91.3", rank: 1 });
+    const uplift = getItem("zh", "skill", "supabase-skills")?.evalView?.rows ?? [];
+    expect(uplift.find((row) => row.name === "Claude Opus 5.5")?.delta).toBe("−1.4");
+    expect(uplift.find((row) => row.name === "GPT 6 Sol")?.delta).toBe("0");
+    expect(uplift.find((row) => row.name === "Grok 4.7")?.delta).toBe("+11.6");
+
+    const convex = getItem("en", "library", "convex")?.evalView;
+    expect(convex?.rows[0]).toMatchObject({ baseline: "90.18", web: "96.43" });
+    expect(convex?.rows.find((row) => row.name === "Gemini 3.1 Pro Preview")?.web).toBeUndefined();
+    expect(getItem("zh", "prompt", "convex-ai-rules")?.evalView?.rows).toEqual([]);
+    expect(getItem("zh", "prompt", "convex-ai-rules")?.evalView?.mode).toBe("unverified");
+
+    const next = getItem("en", "prompt", "nextjs-agents-md")?.evalView?.rows ?? [];
+    expect(next.find((row) => row.name === "Claude Opus 5.5")?.delta).toBe("0");
+    expect(next.find((row) => row.name === "Kimi K3")?.delta).toBe("+13.0");
+
+    const react = getItem("zh", "library", "react")?.evalView;
+    expect(react?.kindLabel).toBe("生态评测");
+    expect(react?.rows[0]).toMatchObject({ name: "Claude Fable 5.1", rank: 1, baseline: "49.2" });
+    expect(react?.rows.some((row) => row.rank === 17)).toBe(false);
+
+    const scores = getModel("zh", "claude-opus-5-5")?.scoreRows.filter((row) => row.name === "Supabase Evals" || row.name === "Convex Evals") ?? [];
+    expect(scores.map((row) => row.score)).toEqual(["91.3", "90.18"]);
+    expect(getBenchmark("en", "convex-evals")?.version).toBe("92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb");
+    expect(getBenchmark("en", "reactbench")?.domain).toBe("Ecosystem eval");
+  });
 });
 
 describe("backlinks", () => {

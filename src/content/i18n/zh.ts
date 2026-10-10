@@ -122,6 +122,12 @@ const zh = {
     asRole: "被组合引用",
     related: "对应条目",
     categories: "出现在这些分类",
+    evalBoard: "框架评测",
+    evalUplift: "有材料相对基线的变化",
+    evalBaseline: "基线",
+    evalDelta: "变化",
+    evalCost: "单次成本",
+    evalUnverified: "对照臂未核实",
   },
   build: {
     indexTitle: "组合",
@@ -154,6 +160,8 @@ const zh = {
     source: "来源",
     usedBy: "用在这些场景",
     stale: "已超过 90 天，不作为主要证据",
+    version: "版本",
+    board: "基线榜",
   },
   changes: {
     title: "最新变化",

@@ -267,6 +267,7 @@ export const scenarios: Scenario[] = [
     valueMetric: "run",
     lead: "value",
     featured: false,
+    build: "saas",
     note: tx(
       "2026-09-29 起，这个场景的首选改为 GPT-6.1 Sol：通过率 58.2%，跑分成本 $0.6k。",
       "Since 2026-09-29 the pick for this scenario is GPT-6.1 Sol: 58.2% pass rate, $0.6k a run.",

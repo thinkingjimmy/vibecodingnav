@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 BuildPage 契约；模型行用 pick，工具行用条目 slug
- * [OUTPUT]: 对外提供三套「做 X」组合
+ * [OUTPUT]: 对外提供四套「做 X」组合
  * [POS]: src/content 的组合页，只引用、不复制榜单分数
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -206,6 +206,58 @@ Put this page's AGENTS.md at the repo root`,
       { title: tx("界面才是主体", "The interface is the product"), body: tx("页面质量看 LMArena WebDev，不看终端通过率。", "Page quality is LMArena WebDev, not a terminal pass rate."), href: "/build/web-frontend" },
       { title: tx("Android", "Android"), body: tx("Kotlin / Compose 用 Android Bench，不用这张终端榜。", "Kotlin / Compose uses Android Bench, not this terminal board."), href: "/build/android-app" },
       { title: tx("只看通过率第一", "Only the top pass rate"), body: tx("批量脚本看成本。这个场景的省钱档在模型行的备选里。", "Batch scripts should read cost. The value tier is the alternative on the model row.") },
+    ],
+  },
+  {
+    slug: "saas",
+    scenario: "saas",
+    homeStart: false,
+    updatedAt: "2026-10-10",
+    title: tx("做全栈 SaaS，用这一套", "Build a full-stack SaaS with this set"),
+    summary: tx(
+      "模型仍按 Terminal-Bench 的成本来选。Next.js、Supabase、Convex 和 React 的评测各自独立，不合成一个分数。",
+      "The model still comes from Terminal-Bench cost. The Next.js, Supabase, Convex, and React evals stay separate and are not merged into one score.",
+    ),
+    roles: [
+      {
+        role: tx("模型", "Model"),
+        primary: { kind: "pick", pick: "value" },
+        alternatives: [{ ref: { kind: "pick", pick: "top" }, tone: "note", when: tx("不看成本、只看通过率时", "when you ignore cost and read only the pass rate") }],
+      },
+      {
+        role: tx("应用框架", "App framework"),
+        primary: { kind: "item", slug: "nextjs" },
+        extras: [{ kind: "item", slug: "nextjs-agents-md" }],
+        meta: tx("库 + AGENTS.md", "Library + AGENTS.md"),
+        alternatives: [note("react", "界面层是 React。ReactBench 是生态评测，不是官方榜", "The UI layer is React. ReactBench is an ecosystem eval, not an official board")],
+      },
+      {
+        role: tx("数据", "Data"),
+        primary: { kind: "item", slug: "supabase" },
+        extras: [{ kind: "item", slug: "supabase-skills" }],
+        alternatives: [note("convex", "换 Convex 时看它自己的无指南榜，不要和 Supabase 的通过率相加", "If you switch to Convex, read its own no-guidelines board. Do not add it to the Supabase pass rate")],
+      },
+    ],
+    agentsMd: tx(
+      `# 全栈约定
+- 应用框架：Next.js。Agent 读仓库里的 Next.js AGENTS.md，不凭记忆写 App Router
+- 数据：Supabase。需要时加载官方 skills；基线能力以无 Skills 的评测为准
+- 不把 Next.js、Supabase、Convex、ReactBench 的通过率加在一起`,
+      `# Full stack
+- App framework: Next.js. The agent reads the repo's Next.js AGENTS.md and does not write the App Router from memory.
+- Data: Supabase. Load the official skills when needed. Baseline ability is the no-skills eval.
+- Do not add Next.js, Supabase, Convex, and ReactBench pass rates together.`,
+    ),
+    installCmds: tx(
+      `npx create-next-app@latest
+npm i @supabase/supabase-js`,
+      `npx create-next-app@latest
+npm i @supabase/supabase-js`,
+    ),
+    notFor: [
+      { title: tx("只做界面", "Interface only"), body: tx("页面质量看 Web 前端那一套。", "Page quality belongs on the web frontend set."), href: "/build/web-frontend" },
+      { title: tx("把评测加总", "Adding the evals"), body: tx("每张框架评测测的是模型加上这一套框架。样本不大，前排又接近满分，不能合成一个排名。", "Each framework eval measures a model together with that framework. The samples are small and the front is near the ceiling, so they do not become one ranking.") },
+      { title: tx("用未核实的指南分", "An unverified guidelines score"), body: tx("Convex With Guidelines 的公开查询没有返回分数。规则可以装，变化量不要写。", "The public Convex With Guidelines query did not return scores. The rules can still be installed. Do not write a change figure.") },
     ],
   },
 ];

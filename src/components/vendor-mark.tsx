@@ -5,11 +5,13 @@
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 import Claude from "@lobehub/icons/es/Claude/components/Mono";
+import Cursor from "@lobehub/icons/es/Cursor/components/Mono";
 import DeepSeek from "@lobehub/icons/es/DeepSeek/components/Mono";
 import Gemini from "@lobehub/icons/es/Gemini/components/Mono";
 import Grok from "@lobehub/icons/es/Grok/components/Mono";
 import Kimi from "@lobehub/icons/es/Kimi/components/Mono";
 import Meta from "@lobehub/icons/es/Meta/components/Mono";
+import Minimax from "@lobehub/icons/es/Minimax/components/Mono";
 import OpenAI from "@lobehub/icons/es/OpenAI/components/Mono";
 import Qwen from "@lobehub/icons/es/Qwen/components/Mono";
 import Tencent from "@lobehub/icons/es/Tencent/components/Mono";
@@ -31,6 +33,8 @@ const marks: Partial<Record<VendorId, IconType>> = {
   xiaomi: XiaomiMiMo,
   tencent: Tencent,
   deepseek: DeepSeek,
+  cursor: Cursor,
+  minimax: Minimax,
 };
 
 const letters: Record<VendorId, string> = {
@@ -45,6 +49,8 @@ const letters: Record<VendorId, string> = {
   xiaomi: "mi",
   tencent: "T",
   deepseek: "D",
+  cursor: "Cu",
+  minimax: "Mm",
 };
 
 export const LOBE_VENDORS = Object.keys(marks) as VendorId[];

@@ -6,6 +6,7 @@
  */
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { EvalTable } from "@/components/eval-table";
 import { Frame } from "@/components/frame";
 import { RichText } from "@/components/rich-text";
 import { getBenchmark, getChanges, listBenchmarks, slugs } from "@/lib/catalog";
@@ -77,7 +78,7 @@ export async function BenchmarkView({ locale, params }: { locale: Locale; params
       </section>
       <section className="px-4 pt-6">
         <h1 className="display-page">{benchmark.name}</h1>
-        <p className="num mt-6 text-[12px] text-faint">{benchmark.asOf} · {benchmark.domain}</p>
+        <p className="num mt-6 break-all text-[12px] text-faint">{benchmark.asOf} · {benchmark.domain}{benchmark.version ? ` · ${benchmark.version}` : ""}</p>
         {benchmark.stale ? <p className="mt-4 text-[14px] text-mfg" data-stale="true">{dict.benchmark.stale}</p> : null}
       </section>
       <dl className="mx-4 mt-12 max-w-[820px]">
@@ -92,6 +93,12 @@ export async function BenchmarkView({ locale, params }: { locale: Locale; params
           <dd className="space-y-1">{benchmark.links.map((link) => <a key={link.href} href={link.href} className="num block text-[13px] link-u">{link.label}</a>)}</dd>
         </div>
       </dl>
+      {benchmark.board ? (
+        <section className="pt-16">
+          <header className="px-4 pb-4"><h2 className="pt">{dict.benchmark.board}</h2></header>
+          <EvalTable rows={benchmark.board.rows} dict={dict} mode="board" assistedLabel={benchmark.board.assistedLabel} webLabel={benchmark.board.webLabel} showWeb={benchmark.board.showWeb} />
+        </section>
+      ) : null}
       {benchmark.scenarios.length ? (
         <section className="px-4 pt-16">
           <h2 className="pt">{dict.benchmark.usedBy}</h2>

@@ -90,7 +90,7 @@ export function validateContent(input: ContentBundle): string[] {
   }
 
   for (const result of input.results) {
-    const key = `${result.benchmark}|${result.modelSlug}|${result.effort ?? ""}`;
+    const key = `${result.benchmark}|${result.modelSlug}|${result.effort ?? ""}|${result.arm ?? "baseline"}`;
     if (resultKeys.has(key)) errors.push(`result 重复: ${key}`);
     resultKeys.add(key);
     if (!benchmarks.has(result.benchmark)) errors.push(`result 基准不存在: ${result.benchmark}`);
@@ -140,6 +140,8 @@ export function validateContent(input: ContentBundle): string[] {
     if (entry.updatedAt) date(entry.updatedAt, `item.${entry.slug}.updatedAt`, errors);
     if (entry.mark && !VENDOR_IDS.includes(entry.mark)) errors.push(`item.${entry.slug} 标记未知`);
     if (entry.relatedItem && !items.has(entry.relatedItem)) errors.push(`item.${entry.slug} 对应条目不存在`);
+    if (entry.eval && !benchmarks.has(entry.eval.benchmark)) errors.push(`item.${entry.slug} 评测不存在`);
+    if (entry.eval?.note) text(entry.eval.note, `item.${entry.slug}.eval.note`, errors);
     for (const peer of entry.peers) {
       if (peer === entry.slug || !items.has(peer)) errors.push(`item.${entry.slug} 同类不存在: ${peer}`);
     }

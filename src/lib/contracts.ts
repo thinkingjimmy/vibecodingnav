@@ -33,6 +33,8 @@ export const VENDOR_IDS = [
   "xiaomi",
   "tencent",
   "deepseek",
+  "cursor",
+  "minimax",
 ] as const;
 export type VendorId = (typeof VENDOR_IDS)[number];
 
@@ -51,6 +53,8 @@ export type LicenseKind = (typeof LICENSE_KINDS)[number];
 export const PERMISSIVE_LICENSES: readonly LicenseKind[] = ["mit", "apache-2.0", "isc", "ofl-1.1", "gpl-3.0"];
 
 export type ScoreUnit = "" | "%";
+export type BenchmarkKind = "framework" | "ecosystem";
+export type ResultArm = "baseline" | "assisted" | "web";
 export type Ci = { kind: "pm"; value: number } | { kind: "range"; low: number; high: number };
 export type ChangeKind = "board" | "pick" | "method";
 export type ValueMetric = "token" | "run";
@@ -95,6 +99,10 @@ export interface Benchmark {
   votes?: string;
   trackedCount?: number;
   retired?: boolean;
+  kind?: BenchmarkKind;
+  version?: string;
+  assistedLabel?: LText;
+  webLabel?: LText;
 }
 
 export interface Result {
@@ -112,6 +120,7 @@ export interface Result {
   context?: string;
   preliminary?: boolean;
   asOf: string;
+  arm?: ResultArm;
 }
 
 export interface EditorPick {
@@ -180,6 +189,7 @@ export interface Item {
   visual?: "phosphor-weights";
   relatedItem?: string;
   mark?: VendorId;
+  eval?: { benchmark: string; mode: "board" | "uplift" | "unverified"; note?: LText };
 }
 
 export type RoleRef =
@@ -328,6 +338,12 @@ export interface Dictionary {
     asRole: string;
     related: string;
     categories: string;
+    evalBoard: string;
+    evalUplift: string;
+    evalBaseline: string;
+    evalDelta: string;
+    evalCost: string;
+    evalUnverified: string;
   };
   build: {
     indexTitle: string;
@@ -360,6 +376,8 @@ export interface Dictionary {
     source: string;
     usedBy: string;
     stale: string;
+    version: string;
+    board: string;
   };
   changes: {
     title: string;

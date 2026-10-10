@@ -14,6 +14,7 @@ import {
   type LicenseKind,
   type Locale,
   type Result,
+  type ResultArm,
   type RoleRef,
   type Scenario,
   type ScoreUnit,
@@ -62,7 +63,17 @@ export interface SearchEntry {
 }
 
 function formatScore(score: number, unit: ScoreUnit) {
-  return unit === "%" ? score.toFixed(1) : Number.isInteger(score) ? String(score) : score.toFixed(1);
+  if (unit !== "%" && Number.isInteger(score)) return String(score);
+  const hundredths = Math.round(score * 100) / 100;
+  const tenths = Math.round(score * 10) / 10;
+  if (Math.abs(hundredths - tenths) > 1e-9) return hundredths.toFixed(2);
+  return tenths.toFixed(1);
+}
+
+function formatDelta(delta: number) {
+  if (Math.abs(delta) < 0.001) return "0";
+  const text = formatScore(Math.abs(delta), "%");
+  return delta > 0 ? `+${text}` : `−${text}`;
 }
 
 function formatBound(value: number, decimal: boolean) {
@@ -566,6 +577,55 @@ export function getItem(locale: Locale, type: Item["type"], slug: string) {
     categories: categoriesForItem(slug).map((category) => ({ href: localePath(locale, `/tools/${category.slug}`), title: t(locale, category.title) })),
     builds: buildsForItem(slug).map((build) => ({ href: localePath(locale, `/build/${build.slug}`), title: t(locale, scenarioBy.get(build.scenario)!.title) })),
     scenarios: buildsForItem(slug).map((build) => scenarioBy.get(build.scenario)!).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
+    evalView: item.eval ? frameworkEval(locale, item.eval.benchmark, item.eval.mode, item.caveats ? t(locale, item.caveats) : "") : undefined,
+  };
+}
+
+function armRows(benchmarkSlug: string, arm: ResultArm) {
+  return results.filter((result) => result.benchmark === benchmarkSlug && (result.arm ?? "baseline") === arm);
+}
+
+function resultKey(result: Result) {
+  return `${result.modelSlug}|${result.effort ?? ""}`;
+}
+
+function frameworkEval(locale: Locale, benchmarkSlug: string, mode: "board" | "uplift" | "unverified", note = "") {
+  const benchmark = benchmarkBy.get(benchmarkSlug)!;
+  const dict = getDictionary(locale);
+  const baseline = armRows(benchmarkSlug, "baseline").sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
+  const assisted = new Map(armRows(benchmarkSlug, "assisted").map((result) => [resultKey(result), result]));
+  const web = new Map(armRows(benchmarkSlug, "web").map((result) => [resultKey(result), result]));
+  const rows = baseline.flatMap((result) => {
+    const model = modelBy.get(result.modelSlug)!;
+    const pair = assisted.get(resultKey(result));
+    const webRow = web.get(resultKey(result));
+    if (mode === "uplift" && !pair) return [];
+    return [{
+      rank: result.rank,
+      name: model.name,
+      vendor: model.vendor,
+      href: localePath(locale, `/models/${model.slug}`),
+      setting: result.setting ?? result.effort,
+      baseline: formatScore(result.score, benchmark.scoreUnit),
+      assisted: pair ? formatScore(pair.score, benchmark.scoreUnit) : undefined,
+      web: webRow ? formatScore(webRow.score, benchmark.scoreUnit) : undefined,
+      delta: pair ? formatDelta(pair.score - result.score) : undefined,
+      cost: result.runCost,
+    }];
+  });
+  return {
+    href: localePath(locale, `/benchmarks/${benchmark.slug}`),
+    name: benchmark.name,
+    kind: benchmark.kind,
+    kindLabel: t(locale, benchmark.domain),
+    asOf: benchmark.asOf,
+    version: benchmark.version,
+    mode,
+    rows: mode === "unverified" ? [] : rows,
+    showWeb: mode === "board" && web.size > 0,
+    assistedLabel: benchmark.assistedLabel ? t(locale, benchmark.assistedLabel) : dict.item.evalUplift,
+    webLabel: benchmark.webLabel ? t(locale, benchmark.webLabel) : "",
+    note: note || t(locale, benchmark.caveats),
   };
 }
 
@@ -585,6 +645,9 @@ export function getBenchmark(locale: Locale, slug: string) {
     caveats: t(locale, benchmark.caveats),
     updateCadence: t(locale, benchmark.updateCadence),
     links: benchmark.links,
+    version: benchmark.version,
+    kind: benchmark.kind,
+    board: benchmark.kind ? frameworkEval(locale, slug, "board") : undefined,
     scenarios: scenarios.filter((scenario) => scenario.benchmark === slug).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
   };
 }
@@ -596,7 +659,11 @@ export function listScenarios(locale: Locale) {
 export function listModels(locale: Locale) {
   return models
     .map((model) => {
-      const best = results.filter((result) => result.modelSlug === model.slug && result.rank && !isStale(benchmarkBy.get(result.benchmark)!.asOf, CLOCK)).sort((a, b) => a.rank! - b.rank!)[0];
+      const best = results.filter((result) => {
+        if (result.modelSlug !== model.slug || !result.rank || (result.arm ?? "baseline") !== "baseline") return false;
+        const board = benchmarkBy.get(result.benchmark)!;
+        return !board.kind && !board.retired && !isStale(board.asOf, CLOCK);
+      }).sort((a, b) => a.rank! - b.rank!)[0];
       const benchmark = best ? benchmarkBy.get(best.benchmark) : undefined;
       return {
         href: localePath(locale, `/models/${model.slug}`),

@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 ToolCategory 契约，条目 slug 指向 items
- * [OUTPUT]: 对外提供八个工具分类及编辑排序
+ * [OUTPUT]: 对外提供九个工具分类及编辑排序
  * [POS]: src/content 的工具箱目录
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -104,11 +104,24 @@ export const categories: ToolCategory[] = [
     title: tx("项目规则", "Project rules"),
     summary: tx("仓库级说明、别人的系统提示，以及用来写新技能的技能。", "Repo-level instructions, other people's system prompts, and a skill for writing a new skill."),
     updatedAt: "2026-10-10",
-    items: ["agents-md", "system-prompts", "skill-creator", "android-agents"],
+    items: ["agents-md", "system-prompts", "skill-creator", "android-agents", "nextjs-agents-md", "convex-ai-rules"],
     howToPick: [
       tip("给当前仓库", "For this repo", "写 AGENTS.md，人和 Agent 读同一份。", "Write AGENTS.md. People and agents read the same file."),
       tip("动手前", "Before you write rules", "翻 system-prompts 合集，避免和工具默认提示打架。", "Read the system-prompts collection so you do not fight the tool's default prompt."),
       tip("反复出现的做法", "A practice that keeps coming back", "用 skill-creator 收成 SKILL.md。", "Turn it into a SKILL.md with skill-creator."),
+    ],
+  },
+  {
+    slug: "frameworks",
+    title: tx("框架与后端", "Frameworks and backends"),
+    summary: tx("框架官方评测和一份生态评测。每张榜单独看，基线是不加载技能、指南或 AGENTS.md 的那一列。", "Official framework evals, plus one ecosystem eval. Read each board on its own. The baseline is the column without skills, guidelines, or AGENTS.md."),
+    updatedAt: "2026-10-10",
+    items: ["nextjs", "nextjs-agents-md", "react", "supabase", "supabase-skills", "convex", "convex-ai-rules"],
+    homeItems: ["nextjs", "supabase", "convex", "react"],
+    howToPick: [
+      tip("先看基线", "Read the baseline first", "名次用没有 Skills、没有指南、没有 AGENTS.md 的那一列。", "Rank uses the column without skills, guidelines, or AGENTS.md."),
+      tip("再看变化量", "Then read the change", "技能和规则页列出每个模型的升降，包括 0 和下降。", "Skill and rules pages list each model's change, including zeros and drops."),
+      tip("不要加总", "Do not add them", "Supabase、Next.js、Convex 和 ReactBench 的分数不能合成一个数。", "Supabase, Next.js, Convex, and ReactBench scores do not combine into one number."),
     ],
   },
 ];

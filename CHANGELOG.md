@@ -13,6 +13,7 @@
 
 ### 新增
 
+- 新增框架官方评测 Supabase Evals、Next.js Agent Evals、Convex Evals，以及生态评测 ReactBench（Million，不是 React / Meta 官方）。基线与有材料、网页臂分列，不合成一个分数。Convex 的 With Guidelines 因公开查询报错未收录。
 - 新增场景「生产级改动与架构决策」和基准 sudo L7。分数与名次来自 Surge 公开榜 12 行，单任务成本与分项分数来自同日博客。
 - 站点重建为 VibeCodingNav：按场景挑选模型与工具。英文在 `/`，中文在 `/zh/`。
 - 内容模型包含场景榜单、模型、基准、工具分类、库 / Skill / 插件 / Prompt / 工具，以及「做 X」组合页。构建期校验引用，并生成反向链接。
