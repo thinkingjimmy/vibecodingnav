@@ -248,6 +248,8 @@ export interface BuildPage {
   agentsMd: LText;
   installCmds: LText;
   notFor: { title: LText; body: LText; href?: string }[];
+  /** 组合页额外列出的基准。场景榜本身不重复挂。 */
+  citations?: { kind: "benchmark"; slug: string }[];
   updatedAt: string;
 }
 

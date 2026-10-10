@@ -22,6 +22,13 @@ describe("content", () => {
     const broken = { ...content, models: [content.models[0], ...content.models] };
     expect(validateContent(broken).some((error) => error.includes("重复"))).toBe(true);
   });
+
+  it("rejects a benchmark used by two scenarios", () => {
+    const donor = content.scenarios[0]!;
+    const extra = { ...donor, slug: "duplicate-board", related: [], build: undefined, boards: undefined };
+    const errors = validateContent({ ...content, scenarios: [...content.scenarios, extra] });
+    expect(errors.some((error) => error.includes(donor.benchmark!) && error.includes("duplicate-board"))).toBe(true);
+  });
 });
 
 describe("stale clock", () => {
@@ -53,7 +60,6 @@ describe("picks", () => {
     expect(resolvePicks("cli-devops").value?.modelSlug).toBe("gpt-6-1-sol");
     expect(resolvePicks("cli-devops").open?.modelSlug).toBe("glm-5-3");
     expect(resolvePicks("android-app").value?.modelSlug).toBe("gpt-5-6-luna");
-    expect(resolvePicks("saas").value?.modelSlug).toBe("gpt-6-1-sol");
   });
 
   it("follows the sudo L7 leaderboard order", () => {
@@ -87,7 +93,7 @@ describe("picks", () => {
     expect(getModel("zh", "gemini-3-8-flash")?.scoreRows.some((row) => row.name === "sudo L7" && row.score === "10.6")).toBe(true);
   });
 
-  it("keeps six boards on the home page and the same six on the scenario list", () => {
+  it("keeps one board per scenario on the home page and the scenario list", () => {
     const home = getHome("zh").cards.map((card) => card.title);
     const all = listScenarioCards("zh").map((card) => card.title);
     expect(home).toEqual([
@@ -95,12 +101,22 @@ describe("picks", () => {
       "做一个 Android App",
       "写 CLI、脚本与 DevOps",
       "生产级改动与架构决策",
-      "做 iOS App",
-      "做全栈 SaaS",
     ]);
     expect(all).toEqual(home);
     expect(getScenario("zh", "refactor")).toBeUndefined();
     expect(getScenario("zh", "open-frontend")).toBeUndefined();
+    expect(getScenario("zh", "saas")).toBeUndefined();
+    expect(getScenario("zh", "ios-app")).toBeUndefined();
+    expect(getBenchmark("zh", "terminal-bench-4")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/cli-devops/"]);
+    const saas = getBuild("zh", "saas");
+    expect(saas?.roles[0]?.primary.name).toBe("GPT-6.1 Sol");
+    expect(saas?.evidence.map((link) => link.href)).toEqual(expect.arrayContaining([
+      "/zh/scenarios/cli-devops/",
+      "/zh/benchmarks/nextjs-evals/",
+      "/zh/benchmarks/supabase-evals/",
+      "/zh/benchmarks/convex-evals/",
+      "/zh/benchmarks/reactbench/",
+    ]));
   });
 
   it("keeps each public board complete and in source order", () => {

@@ -297,6 +297,10 @@ export function getBuild(locale: Locale, slug: string, clock = CLOCK) {
       .map((ref) => itemBy.get(ref.slug)!)
       .filter((item, index, list) => list.findIndex((other) => other.slug === item.slug) === index)
       .map((item) => ({ href: itemHref(locale, item), label: `${dict.type[item.type]} · ${item.name}` })),
+    ...(build.citations ?? []).map((cite) => {
+      const source = benchmarkBy.get(cite.slug)!;
+      return { href: localePath(locale, `/benchmarks/${source.slug}`), label: `${dict.nav.benchmarks} · ${source.name}` };
+    }),
   ];
   return {
     slug: build.slug,
@@ -340,7 +344,7 @@ function buildsForModel(slug: string) {
   });
 }
 
-const HOME_BOARD_COUNT = 6;
+const HOME_BOARD_COUNT = 4;
 
 function scenarioCard(locale: Locale, scenario: (typeof scenarios)[number]) {
   const benchmark = scenario.benchmark ? benchmarkBy.get(scenario.benchmark) : undefined;
@@ -537,7 +541,7 @@ export function getModel(locale: Locale, slug: string) {
     appearances,
     builds: buildsForModel(slug).map((build) => {
       const view = getBuild(locale, build.slug)!;
-      return { href: view.href, title: t(locale, scenarioBy.get(build.scenario)!.title), detail: view.combo };
+      return { href: view.href, title: view.title, detail: view.combo };
     }),
     peers: {
       columns: peerBenchmarks.map((id) => benchmarkBy.get(id)!.shortName),
@@ -586,7 +590,7 @@ export function getCategory(locale: Locale, slug: string) {
     meta: [...counts.map((row) => `${row.label} ${row.count}`), `${dict.tools.updated} ${category.updatedAt}`].join(" · "),
     rows,
     how: category.howToPick.map((tip) => ({ title: t(locale, tip.title), body: t(locale, tip.body) })),
-    builds: builds.filter((build) => category.items.some((item) => buildsForItem(item).includes(build))).map((build) => ({ href: localePath(locale, `/build/${build.slug}`), title: t(locale, scenarioBy.get(build.scenario)!.title) })),
+    builds: builds.filter((build) => category.items.some((item) => buildsForItem(item).includes(build))).map((build) => ({ href: localePath(locale, `/build/${build.slug}`), title: t(locale, build.title) })),
     others: categories.filter((other) => other.slug !== slug).map((other) => ({ href: localePath(locale, `/tools/${other.slug}`), title: t(locale, other.title) })),
   };
 }
@@ -616,8 +620,12 @@ export function getItem(locale: Locale, type: Item["type"], slug: string) {
     }),
     related: related ? { href: itemHref(locale, related), name: related.name, type: dict.type[related.type] } : undefined,
     categories: categoriesForItem(slug).map((category) => ({ href: localePath(locale, `/tools/${category.slug}`), title: t(locale, category.title) })),
-    builds: buildsForItem(slug).map((build) => ({ href: localePath(locale, `/build/${build.slug}`), title: t(locale, scenarioBy.get(build.scenario)!.title) })),
-    scenarios: buildsForItem(slug).map((build) => scenarioBy.get(build.scenario)!).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
+    builds: buildsForItem(slug).map((build) => ({ href: localePath(locale, `/build/${build.slug}`), title: t(locale, build.title) })),
+    scenarios: buildsForItem(slug).flatMap((build) => {
+      const scenario = scenarioBy.get(build.scenario);
+      if (!scenario || scenario.build !== build.slug) return [];
+      return [{ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) }];
+    }),
     evalView: item.eval ? frameworkEval(locale, item.eval.benchmark, item.eval.mode, item.caveats ? t(locale, item.caveats) : "") : undefined,
   };
 }

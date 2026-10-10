@@ -159,7 +159,7 @@ Use Jetpack Compose: developer.android.com/jetpack/compose`,
     notFor: [
       { title: tx("Web 前端", "Web frontend"), body: tx("浏览器里的页面看「做 Web 前端」，榜单是 LMArena WebDev。", "For a page in the browser, open “Build a Web frontend”. That board is LMArena WebDev."), href: "/build/web-frontend" },
       { title: tx("长程跨模块改造", "Long cross-module work"), body: tx("标准任务的第一名不等于 2.0 长程的第一名。长程表在同一个 Android 场景里。", "First on standard tasks is not first on the 2.0 long-horizon table. That table is on the same Android scenario."), href: "/scenarios/android-app/#long" },
-      { title: tx("iOS", "iOS"), body: tx("没有 iOS 专项榜。那边是编辑精选，不放分数。", "There is no iOS board. That page is an editor's list and has no scores."), href: "/scenarios/ios-app" },
+      { title: tx("iOS", "iOS"), body: tx("没有公开的 iOS 专项榜，这里不单开场景。", "There is no public iOS board, so this site does not invent a scenario for it.") },
     ],
   },
   {
@@ -207,13 +207,19 @@ Put this page's AGENTS.md at the repo root`,
   },
   {
     slug: "saas",
-    scenario: "saas",
+    scenario: "cli-devops",
     updatedAt: "2026-10-10",
     title: tx("做全栈 SaaS，用这一套", "Build a full-stack SaaS with this set"),
     summary: tx(
-      "模型仍按 Terminal-Bench 的成本来选。Next.js、Supabase、Convex 和 React 的评测各自独立，不合成一个分数。",
-      "The model still comes from Terminal-Bench cost. The Next.js, Supabase, Convex, and React evals stay separate and are not merged into one score.",
+      "模型取自「写 CLI、脚本与 DevOps」的 Terminal-Bench，按跑分成本选，不另开一张场景榜。Next.js、Supabase、Convex 和 ReactBench 各自独立，不合成一个分数。",
+      "The model comes from Terminal-Bench on the CLI scenario, chosen by run cost. It is not a second scenario board. The Next.js, Supabase, Convex, and ReactBench evals stay separate and are not merged into one score.",
     ),
+    citations: [
+      { kind: "benchmark", slug: "nextjs-evals" },
+      { kind: "benchmark", slug: "supabase-evals" },
+      { kind: "benchmark", slug: "convex-evals" },
+      { kind: "benchmark", slug: "reactbench" },
+    ],
     roles: [
       {
         role: tx("模型", "Model"),

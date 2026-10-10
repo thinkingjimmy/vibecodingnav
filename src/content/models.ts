@@ -320,7 +320,7 @@ export const models: Model[] = [
       "WebDev 第 22，1622，MIT。Terminal-Bench 第 20，41.8% ± 3.2%，成本 $2.7k。可以自托管。",
       "22nd on WebDev at 1622, MIT. 20th on Terminal-Bench at 41.8% ± 3.2%, cost $2.7k. Weights can be self-hosted.",
     ),
-    why: [tx("MIT。iOS 没有专项榜时，编辑把它列为可自托管的一档。", "MIT. Editors list it as the self-hosted option where no iOS board exists.")],
+    why: [tx("MIT。Terminal-Bench 上的开源一档。", "MIT. The open-weight pick on Terminal-Bench.")],
     whyNot: [tx("Terminal-Bench 41.8%，明显低于前排闭源模型。", "41.8% on Terminal-Bench, well behind the proprietary front.")],
   }),
   model({

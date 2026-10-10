@@ -41,8 +41,8 @@ export const changes: ChangeEntry[] = [
     kind: "pick",
     source: "编辑",
     text: tx(
-      "「做全栈 SaaS」首选调整为 **GPT-6.1 Sol**：综合成本后性价比最高。",
-      "The full-stack SaaS pick moves to **GPT-6.1 Sol**: best once cost is included.",
+      "全栈组合的模型改为 Terminal-Bench 上的 **GPT-6.1 Sol**：综合成本后性价比最高。",
+      "The full-stack set uses **GPT-6.1 Sol** from Terminal-Bench: best once cost is included.",
     ),
   },
   {

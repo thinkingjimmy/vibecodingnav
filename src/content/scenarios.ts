@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Scenario 契约
- * [OUTPUT]: 对外提供场景榜单：首页六张卡片，场景列表同一套卡片
+ * [OUTPUT]: 对外提供场景榜单：一张基准只属于一个场景，首页与列表同一套四张卡片
  * [POS]: src/content 的场景实体，只引用基准与模型，不复制分数
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -45,7 +45,7 @@ export const scenarios: Scenario[] = [
         "Third place, Claude Sonnet 5.5, is 39 points behind first at half the price. Open-weight MiMo V2.6 Flash is 16th at $0.14 / $0.28.",
       ),
     ],
-    related: ["android-app", "cli-devops", "production-changes", "ios-app", "saas"],
+    related: ["android-app", "cli-devops", "production-changes"],
   },
   {
     slug: "android-app",
@@ -83,7 +83,7 @@ export const scenarios: Scenario[] = [
         "Cross-module work is the 2.0 long-horizon tab. First there is Claude Opus 5.5 at 32.7%, not the 1.0 leader.",
       ),
     ],
-    related: ["web-frontend", "cli-devops", "production-changes", "ios-app", "saas"],
+    related: ["web-frontend", "cli-devops", "production-changes"],
   },
   {
     slug: "cli-devops",
@@ -117,7 +117,7 @@ export const scenarios: Scenario[] = [
         "Whether a screen looks right is LMArena WebDev. This board only asks if the terminal task gets finished.",
       ),
     ],
-    related: ["web-frontend", "saas", "production-changes", "android-app", "ios-app"],
+    related: ["web-frontend", "android-app", "production-changes"],
   },
   {
     slug: "production-changes",
@@ -154,67 +154,6 @@ export const scenarios: Scenario[] = [
         "Functional correctness for the top four sits between 79.6% and 82.4%. Thought partnership is 76.1% for Opus and 74.8% for Sonnet, against 53.0% for Sol and 51.6% for Astra. Communication is 72.4% for Sonnet and 44.1% for Sol.",
       ),
     ],
-    related: ["cli-devops", "saas", "web-frontend", "android-app", "ios-app"],
-  },
-  {
-    slug: "ios-app",
-    title: tx("做 iOS App", "Build an iOS app"),
-    summary: tx(
-      "SwiftUI 与原生能力。还没有公开的 iOS 专项基准，所以这里不放分数，只放编辑对照三张活跃榜之后的选择。",
-      "SwiftUI and native APIs. There is no public iOS benchmark yet, so this page has no scores. The picks are an editor's cross-check of the three active boards.",
-    ),
-    valueMetric: "token",
-    lead: "top",
-    featured: true,
-    sourceLabel: tx("暂无专项基准 · 编辑精选", "No dedicated benchmark · editor picks"),
-    editorPicks: [
-      { modelSlug: "claude-opus-5-5", reason: tx("三项活跃基准第一", "First on the three active boards") },
-      { modelSlug: "claude-sonnet-5-5", reason: tx("前端分高，价格减半", "High frontend score, half the price") },
-      { modelSlug: "gpt-6-1-sol", reason: tx("Agent 任务性价比", "Better cost on agent tasks") },
-      { modelSlug: "glm-5-3", reason: tx("开源，可自托管", "Open license, can be self-hosted") },
-    ],
-    whyItMatters: [
-      point("没有分数", "No score", "没有公开的 iOS 专项榜，这份名单不伪装成基准。", "With no public iOS board, this list does not pretend to be one."),
-      point(
-        "对照三张活跃榜",
-        "Cross-checked with three live boards",
-        "编辑只从 Terminal-Bench、WebDev、Android 长程里已经出现的模型里选。",
-        "Editors only pick models that already appear on Terminal-Bench, WebDev, or the Android long board.",
-      ),
-      point("有专项榜再换", "Replace it when a board exists", "出现 iOS 专项基准之后，这里应改成榜单，不再保留精选。", "Once an iOS benchmark exists, this page should become a board and drop the picks."),
-    ],
-    related: ["android-app", "web-frontend", "cli-devops", "production-changes", "saas"],
-  },
-  {
-    slug: "saas",
-    title: tx("做全栈 SaaS", "Build a full-stack SaaS"),
-    summary: tx(
-      "Next.js、数据库、鉴权与部署。界面只是一层，更多时间在终端里。推荐看 Terminal-Bench 的成本，而不是只看通过率第一。",
-      "Next.js, a database, auth, and deploy. The interface is a thin layer. Most of the time is in the terminal. Read Terminal-Bench cost, not only the top pass rate.",
-    ),
-    benchmark: "terminal-bench-4",
-    valueMetric: "run",
-    lead: "value",
-    featured: true,
-    build: "saas",
-    note: tx(
-      "2026-09-29 起，这个场景的首选改为 GPT-6.1 Sol：通过率 58.2%，跑分成本 $634.24。榜单本身仍按来源名次排列。",
-      "Since 2026-09-29 the pick for this scenario is GPT-6.1 Sol: 58.2% pass rate, $634.24 a run. The board itself stays in source order.",
-    ),
-    whyItMatters: [
-      point(
-        "更接近终端而不是页面",
-        "Closer to the terminal than to the page",
-        "鉴权、迁移和部署用 Terminal-Bench 更合适。纯界面仍看 WebDev。",
-        "Auth, migrations, and deploys fit Terminal-Bench. A pure interface still belongs on WebDev.",
-      ),
-      point(
-        "推荐看成本",
-        "The recommendation is the cost",
-        "GPT-6.1 Sol 并列第 3，58.2%，跑分成本 $634.24，约为榜首 $4.7k 的七分之一。",
-        "GPT-6.1 Sol ties for 3rd at 58.2% and $634.24 a run, about a seventh of the leader's $4.7k.",
-      ),
-    ],
-    related: ["cli-devops", "production-changes", "web-frontend", "android-app", "ios-app"],
+    related: ["web-frontend", "android-app", "cli-devops"],
   },
 ];

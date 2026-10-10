@@ -102,6 +102,7 @@ export function validateContent(input: ContentBundle): string[] {
     date(result.asOf, `result.${key}.asOf`, errors);
   }
 
+  const benchmarkOwner = new Map<string, string>();
   for (const scenario of input.scenarios) {
     text(scenario.title, `scenario.${scenario.slug}.title`, errors);
     text(scenario.summary, `scenario.${scenario.slug}.summary`, errors);
@@ -110,7 +111,15 @@ export function validateContent(input: ContentBundle): string[] {
       if (!benchmarks.has(board.benchmark)) errors.push(`scenario.${scenario.slug} 分表基准不存在: ${board.benchmark}`);
       text(board.label, `scenario.${scenario.slug}.board.${board.id}`, errors);
     }
-    if (!scenario.benchmark && !scenario.editorPicks?.length) errors.push(`scenario.${scenario.slug} 既没有基准也没有精选`);
+    if (!scenario.benchmark && !scenario.editorPicks?.length && !scenario.boards?.length) errors.push(`scenario.${scenario.slug} 既没有基准也没有精选`);
+    const claimed = new Set<string>();
+    if (scenario.benchmark) claimed.add(scenario.benchmark);
+    for (const board of scenario.boards ?? []) claimed.add(board.benchmark);
+    for (const benchmark of claimed) {
+      const owner = benchmarkOwner.get(benchmark);
+      if (owner) errors.push(`基准 ${benchmark} 同时属于场景 ${owner} 和 ${scenario.slug}`);
+      else benchmarkOwner.set(benchmark, scenario.slug);
+    }
     if (scenario.build && !builds.has(scenario.build)) errors.push(`scenario.${scenario.slug} 组合不存在`);
     for (const related of scenario.related) {
       if (related === scenario.slug || !scenarios.has(related)) errors.push(`scenario.${scenario.slug} 相关场景不存在: ${related}`);
@@ -160,6 +169,9 @@ export function validateContent(input: ContentBundle): string[] {
     text(build.installCmds, `build.${build.slug}.installCmds`, errors);
     date(build.updatedAt, `build.${build.slug}.updatedAt`, errors);
     if (!scenarios.has(build.scenario)) errors.push(`build.${build.slug} 场景不存在`);
+    for (const cite of build.citations ?? []) {
+      if (!benchmarks.has(cite.slug)) errors.push(`build.${build.slug} 依据基准不存在: ${cite.slug}`);
+    }
     for (const role of build.roles) {
       for (const ref of [role.primary, ...(role.extras ?? []), ...role.alternatives.map((item) => item.ref)]) {
         if (ref.kind === "model" && !models.has(ref.slug)) errors.push(`build.${build.slug} 模型不存在: ${ref.slug}`);

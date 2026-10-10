@@ -37,7 +37,7 @@ export function ScenarioIndex({ locale }: { locale: Locale }) {
         <h1 className="display-page">{dict.lists.scenariosTitle}</h1>
         <p className="mt-5 max-w-[700px] text-[17px] leading-relaxed text-mfg">{dict.lists.scenariosBody}</p>
       </section>
-      <div className="mt-10 grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-10 grid grid-cols-1 gap-4 px-4 sm:grid-cols-2">
         {cards.map((card) => <BoardCard key={card.href} card={card} viewMore={dict.home.viewMore} />)}
       </div>
     </Frame>

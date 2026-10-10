@@ -11,7 +11,7 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("按场景，选对模型与框架");
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
-  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(6);
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
   await expect(page.getByText("1813").first()).toBeVisible();
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
@@ -41,9 +41,13 @@ test("view more opens every scenario as a board card", async ({ page }) => {
   await section.locator("header").getByRole("link", { name: /查看更多/ }).click();
   await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
   const cards = page.locator("article");
-  await expect(cards).toHaveCount(6);
-  await expect(page.getByRole("link", { name: "做全栈 SaaS" })).toBeVisible();
+  await expect(cards).toHaveCount(4);
+  await expect(page.getByRole("link", { name: "做全栈 SaaS" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "做 iOS App" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Android Bench 1.0", exact: true })).toBeVisible();
+  await page.setViewportSize({ width: 1280, height: 900 });
+  const columns = await page.locator("article").first().locator("xpath=..").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
+  expect(columns).toBe(2);
 });
 
 test("english home is unprefixed", async ({ page }) => {
@@ -124,6 +128,18 @@ test("android scenario shows both source tables", async ({ page }) => {
   await page.goto("/zh/scenarios/android-app/#long");
   await expect(page.getByText("32.7").first()).toBeVisible();
   await expect(page.getByText("Gemini 3.8 Flash").first()).toBeVisible();
+});
+
+test("removed ios and saas scenarios leave the board list", async ({ page }) => {
+  await page.goto("/zh/scenarios/ios-app/");
+  await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
+  await expect(page.locator("article")).toHaveCount(4);
+  await page.goto("/zh/scenarios/saas/");
+  await expect(page).toHaveURL(/\/zh\/build\/saas\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("全栈");
+  await expect(page.getByRole("link", { name: /写 CLI、脚本与 DevOps/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Supabase Evals" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Convex Evals" })).toBeVisible();
 });
 
 test("removed scenario urls land on the source board", async ({ page }) => {

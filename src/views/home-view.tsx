@@ -34,7 +34,7 @@ export function HomeView({ locale }: { locale: Locale }) {
           <h2 className="pt">{dict.home.boards}</h2>
           <Link href={localePath(locale, "/scenarios")} className="num shrink-0 pb-1 text-[12px] text-mfg hover:text-fg">{dict.home.viewMore} →</Link>
         </header>
-        <div className="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 px-4 sm:grid-cols-2">
           {home.cards.map((card) => <BoardCard key={card.href} card={card} viewMore={dict.home.viewMore} />)}
         </div>
       </section>
