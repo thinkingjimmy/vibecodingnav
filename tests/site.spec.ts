@@ -17,6 +17,18 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Android Bench 1.0");
 });
 
+test("a board card model opens its model page", async ({ page }) => {
+  await page.goto("/zh/");
+  const model = page.getByRole("link", { name: "Claude Opus 5.5" }).first();
+  await expect(model).toHaveAttribute("href", "/zh/models/claude-opus-5-5/");
+  await expect(model).toHaveCSS("cursor", "pointer");
+  await expect(model).toHaveCSS("text-decoration-line", "none");
+  await model.hover();
+  await model.click();
+  await expect(page).toHaveURL(/\/zh\/models\/claude-opus-5-5\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Claude Opus 5.5");
+});
+
 test("view more opens every scenario as a board card", async ({ page }) => {
   await page.goto("/zh/");
   const section = page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) });

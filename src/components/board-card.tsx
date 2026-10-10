@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖场景卡片数据与厂商标
- * [OUTPUT]: 对外提供首页和场景列表共用的榜单卡片
+ * [OUTPUT]: 对外提供首页和场景列表共用的榜单卡片，模型名链到模型页
  * [POS]: src/components 的场景榜单卡片
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -45,8 +45,10 @@ export function BoardCard({ card, viewMore }: { card: BoardCardData; viewMore: s
         {card.rows.map((row, index) => (
           <div key={row.name} className={`flex h-9 items-center gap-2.5 text-[13.5px] ${index ? "border-t border-line" : ""}`}>
             <span className="num w-3 text-[11px] text-faint">{row.rank}</span>
-            <VendorMark vendor={row.vendor} />
-            <span className={`truncate ${index ? "" : "font-medium"}`}>{row.name}</span>
+            <Link href={row.href} className="-mx-1 flex h-full min-w-0 cursor-pointer items-center gap-2.5 rounded px-1 no-underline hover:bg-muted">
+              <VendorMark vendor={row.vendor} />
+              <span className={`truncate ${index ? "" : "font-medium"}`}>{row.name}</span>
+            </Link>
             {row.license ? <span className="num text-[10.5px] text-faint">{row.license}</span> : null}
             {row.reason ? <span className="ml-auto text-[12px] whitespace-nowrap text-mfg">{row.reason}</span> : (
               <span className={`num ml-auto ${index ? "text-mfg" : ""}`}>
