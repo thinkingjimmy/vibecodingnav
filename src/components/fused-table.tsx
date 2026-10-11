@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖按模型对齐的名次、综合分、维度列头与排序文案
- * [OUTPUT]: 对外提供场景页的融合表：综合分/上榜列 + 一列一张榜的原始名次；列头为同行图标与白话维度，悬停锚定弹层看基准名（链到基准页）、权重与 1–2 句说明
+ * [OUTPUT]: 对外提供场景页的融合表：综合分/上榜列 + 一列一张榜的原始名次；列头单行（图标+标签+排序箭头），超出时表内横向滚动，模型/综合分/上榜列可 sticky
  * [POS]: src/components 的场景融合表
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -17,11 +17,27 @@ import { ScoreBreakdown, ScoreBreakdownProvider } from "./score-breakdown";
 import { VendorMark } from "./vendor-mark";
 
 const PAGE = 20;
+const MODEL_W = "16rem";
+const COMPOSITE_W = "5.5rem";
+const APPEARS_W = "5.5rem";
+const BOARD_W = "10rem";
+const STICKY_MODEL = "0";
+const STICKY_COMPOSITE = MODEL_W;
+const STICKY_APPEARS = `calc(${MODEL_W} + ${COMPOSITE_W})`;
+
 type Fusion = ReturnType<typeof fuseScenario>;
 type SortKey = "model" | "composite" | "count" | number;
 type FusionColumn = Fusion["columns"][number];
 
-export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary }) {
+export function FusedTable({
+  fusion,
+  dict,
+  syncLabel,
+}: {
+  fusion: Fusion;
+  dict: Dictionary;
+  syncLabel: string;
+}) {
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "composite", dir: "desc" });
   const [expanded, setExpanded] = useState(false);
   const rows = useMemo(() => {
@@ -47,24 +63,48 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
   }, [fusion.rows, sort]);
   const shown = expanded ? rows : rows.slice(0, PAGE);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
+  const headScrollRef = useRef<HTMLDivElement>(null);
   const headRef = useRef<HTMLTableElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
   const toggle = (key: SortKey) => setSort((current) => current.key === key ? { key, dir: current.dir === "asc" ? "desc" : "asc" } : { key, dir: key === "model" ? "asc" : key === "composite" ? "desc" : "asc" });
-  const minWidth = `${28 + fusion.columns.length * 7}rem`;
+  const minWidth = `${27 + fusion.columns.length * 10}rem`;
   const cols = () => (
     <colgroup>
-      <col style={{ width: "16rem" }} />
-      <col style={{ width: "6rem" }} />
-      <col style={{ width: "5rem" }} />
-      {fusion.columns.map((column) => <col key={column.id} />)}
+      <col style={{ width: MODEL_W }} />
+      <col style={{ width: COMPOSITE_W }} />
+      <col style={{ width: APPEARS_W }} />
+      {fusion.columns.map((column) => <col key={column.id} style={{ width: BOARD_W }} />)}
     </colgroup>
   );
   const head = (
     <tr className="text-[12px] text-faint">
-      <SortHeader label={dict.scenario.colModel} active={sort.key === "model"} dir={sort.dir} onClick={() => toggle("model")} sortLabel={dict.scenario.sortBy} />
-      <SortHeader label={dict.scenario.colComposite} active={sort.key === "composite"} dir={sort.dir} onClick={() => toggle("composite")} sortLabel={dict.scenario.sortBy} />
-      <SortHeader label={dict.scenario.colAppears} active={sort.key === "count"} dir={sort.dir} onClick={() => toggle("count")} sortLabel={dict.scenario.sortBy} />
+      <SortHeader
+        label={dict.scenario.colModel}
+        active={sort.key === "model"}
+        dir={sort.dir}
+        onClick={() => toggle("model")}
+        sortLabel={dict.scenario.sortBy}
+        stickyClass="sticky left-0 z-40"
+        stickyLeft={STICKY_MODEL}
+      />
+      <SortHeader
+        label={dict.scenario.colComposite}
+        active={sort.key === "composite"}
+        dir={sort.dir}
+        onClick={() => toggle("composite")}
+        sortLabel={dict.scenario.sortBy}
+        stickyClass="sticky z-40"
+        stickyLeft={STICKY_COMPOSITE}
+      />
+      <SortHeader
+        label={dict.scenario.colAppears}
+        active={sort.key === "count"}
+        dir={sort.dir}
+        onClick={() => toggle("count")}
+        sortLabel={dict.scenario.sortBy}
+        stickyClass="sticky z-40"
+        stickyLeft={STICKY_APPEARS}
+      />
       {fusion.columns.map((column, index) => (
         <DimensionHeader
           key={column.id}
@@ -81,13 +121,13 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
 
   useLayoutEffect(() => {
     const scroll = scrollRef.current;
-    const track = trackRef.current;
+    const headScroll = headScrollRef.current;
     const headTable = headRef.current;
     const body = tableRef.current;
-    if (!scroll || !track || !headTable || !body) return;
+    if (!scroll || !headScroll || !headTable || !body) return;
     const apply = () => {
       headTable.style.width = `${body.offsetWidth}px`;
-      track.style.transform = `translateX(${-scroll.scrollLeft}px)`;
+      headScroll.scrollLeft = scroll.scrollLeft;
     };
     apply();
     const observer = new ResizeObserver(apply);
@@ -102,28 +142,32 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
 
   return (
     <div>
+      <div className="px-4">
+        <div data-fused-toolbar className="flex h-11 items-center justify-between gap-4 text-[13px] text-mfg">
+          <span className="text-fg">{dict.scenario.sortByComposite}</span>
+          <span className="num shrink-0 text-faint">{syncLabel}</span>
+        </div>
+      </div>
       <ScoreBreakdownProvider>
         <div className="sticky z-30 bg-bg" style={{ top: "var(--site-nav, 3.5rem)" }}>
-          <div className="overflow-hidden border-b border-line">
-            <div ref={trackRef} className="px-4">
-              <table ref={headRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
-                {cols()}
-                <thead data-fused-head>{head}</thead>
-              </table>
-            </div>
+          <div ref={headScrollRef} className="overflow-x-hidden border-b border-line px-4">
+            <table ref={headRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
+              {cols()}
+              <thead data-fused-head>{head}</thead>
+            </table>
           </div>
         </div>
-        <div ref={scrollRef} className="overflow-x-auto px-4">
+        <div ref={scrollRef} data-fused-scroll className="overflow-x-auto px-4">
           <table ref={tableRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
             {cols()}
             <tbody>
               {shown.map((row) => (
                 <tr key={row.key} className="rowh border-b border-line">
-                  <td className="max-w-0 overflow-hidden px-2 py-2.5">
+                  <td className="sticky left-0 z-20 max-w-0 overflow-hidden bg-bg px-2 py-2.5" style={{ left: STICKY_MODEL }}>
                     <ModelName name={row.name} href={row.href} vendor={row.vendor} letter={row.letter} />
                   </td>
-                  <td className="num px-2 py-2.5 font-medium">{row.compositeLabel}</td>
-                  <td className="num px-2 py-2.5 text-mfg">{row.count}/{row.total}</td>
+                  <td className="sticky z-20 num bg-bg px-2 py-2.5 font-medium" style={{ left: STICKY_COMPOSITE }}>{row.compositeLabel}</td>
+                  <td className="sticky z-20 num bg-bg px-2 py-2.5 text-mfg" style={{ left: STICKY_APPEARS }}>{row.count}/{row.total}</td>
                   {row.cells.map((cell, index) => {
                     const column = fusion.columns[index]!;
                     if (!cell?.tip) {
@@ -177,7 +221,7 @@ function DimensionHeader({
   dict: Dictionary;
 }) {
   return (
-    <th className="bg-bg px-2 pb-2.5 align-bottom font-normal">
+    <th className="bg-bg px-2 py-2.5 align-middle font-normal whitespace-nowrap">
       <ColumnInfoPopover
         label={sortLabel.replace("{name}", column.label)}
         render={(props) => {
@@ -186,7 +230,7 @@ function DimensionHeader({
             <button
               {...triggerProps}
               type="button"
-              className="group inline-flex w-full items-center gap-1.5 outline-none"
+              className="group inline-flex items-center gap-1.5 whitespace-nowrap outline-none"
               onClick={(event) => {
                 if (typeof triggerClick === "function") triggerClick(event);
                 onClick();
@@ -195,7 +239,7 @@ function DimensionHeader({
               <span className="inline-flex shrink-0 text-fg">
                 <BoardDimensionIcon name={column.icon} size={14} />
               </span>
-              <span className="text-[13px] font-medium text-fg">{column.label}</span>
+              <span className="whitespace-nowrap text-[13px] font-medium text-fg">{column.label}</span>
               <SortMark active={active} dir={dir} />
             </button>
           );
@@ -226,10 +270,34 @@ function ModelName({ name, href, vendor, letter }: { name: string; href?: string
   return <Link href={href} className="block min-w-0 no-underline">{body}</Link>;
 }
 
-function SortHeader({ label, active, dir, onClick, sortLabel }: { label: string; active: boolean; dir: "asc" | "desc"; onClick: () => void; sortLabel: string }) {
+function SortHeader({
+  label,
+  active,
+  dir,
+  onClick,
+  sortLabel,
+  stickyClass,
+  stickyLeft,
+}: {
+  label: string;
+  active: boolean;
+  dir: "asc" | "desc";
+  onClick: () => void;
+  sortLabel: string;
+  stickyClass: string;
+  stickyLeft: string;
+}) {
   return (
-    <th className="px-2 pb-2.5 align-bottom text-left font-normal">
-      <button type="button" className="group inline-flex items-center gap-1 text-[13px] font-medium text-fg" aria-label={sortLabel.replace("{name}", label)} onClick={onClick}>
+    <th
+      className={`${stickyClass} bg-bg px-2 py-2.5 align-middle text-left font-normal whitespace-nowrap`}
+      style={{ left: stickyLeft }}
+    >
+      <button
+        type="button"
+        className="group inline-flex items-center gap-1 whitespace-nowrap text-[13px] font-medium text-fg"
+        aria-label={sortLabel.replace("{name}", label)}
+        onClick={onClick}
+      >
         {label}
         <SortMark active={active} dir={dir} />
       </button>

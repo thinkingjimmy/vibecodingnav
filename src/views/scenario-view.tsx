@@ -68,13 +68,11 @@ export async function ScenarioView({ locale, params }: { locale: Locale; params:
       />
       {scenario.fusion.rows.length ? (
         <section className="pt-10">
-          <div className="flex h-11 items-center justify-between gap-4 px-4 text-[13px] text-mfg">
-            <span className="text-fg">{dict.scenario.sortByComposite}</span>
-            <span className="num shrink-0 text-faint">
-              {dict.scenario.synced.replace("{date}", scenario.syncDate)}
-            </span>
-          </div>
-          <FusedTable fusion={scenario.fusion} dict={dict} />
+          <FusedTable
+            fusion={scenario.fusion}
+            dict={dict}
+            syncLabel={dict.scenario.synced.replace("{date}", scenario.syncDate)}
+          />
         </section>
       ) : null}
       {scenario.comboSection ? (

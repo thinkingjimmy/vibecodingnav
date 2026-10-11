@@ -199,6 +199,7 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "推荐组合" })).toBeVisible();
   await expect(page.getByRole("link", { name: /完整搭配与理由/ })).toBeVisible();
   await expect(page.getByRole("button", { name: /综合分/ })).toBeVisible();
+  await expect(page.locator("[data-fused-head] th")).toHaveCount(9);
   await expect(page.locator("[data-fused-head] th").nth(3)).toContainText("盲测投票");
   await expect(page.locator("[data-fused-head] th").nth(4)).toContainText("还原设计");
   await expect(page.locator("[data-fused-head] th").nth(5)).toContainText("工程判断");
@@ -215,6 +216,68 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(page.getByRole("link", { name: "sudo L7" }).first()).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");
   await page.getByRole("button", { name: "按长程工程排序" }).hover();
   await expect(page.getByRole("link", { name: "DeepSWE v1.1" }).first()).toHaveAttribute("href", "/zh/benchmarks/deepswe-v1-1/");
+});
+
+test("fused table headers stay single-line and scroll at common widths", async ({ page }) => {
+  for (const width of [1280, 1024, 768] as const) {
+    for (const path of ["/zh/scenarios/web-frontend/", "/scenarios/web-frontend/"] as const) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(path);
+      const heads = page.locator("[data-fused-head] th");
+      await expect(heads).toHaveCount(9);
+      const headerMetrics = await heads.evaluateAll((ths) => ths.map((th) => {
+        const button = th.querySelector("button");
+        const svgs = button ? [...button.querySelectorAll("svg")] : [];
+        const labelSpan = button?.querySelector("span.font-medium") ?? null;
+        const iconSvg = svgs.length > 1 ? svgs[0] : null;
+        const thRect = th.getBoundingClientRect();
+        const btnRect = button?.getBoundingClientRect();
+        const iconRect = iconSvg?.getBoundingClientRect();
+        const labelRect = (labelSpan ?? button)?.getBoundingClientRect();
+        return {
+          whiteSpace: getComputedStyle(th).whiteSpace,
+          thHeight: thRect.height,
+          scrollHeight: th.scrollHeight,
+          clientHeight: th.clientHeight,
+          svgCount: svgs.length,
+          iconCy: iconRect ? iconRect.top + iconRect.height / 2 : null,
+          labelCy: labelRect ? labelRect.top + labelRect.height / 2 : null,
+          btnCy: btnRect ? btnRect.top + btnRect.height / 2 : null,
+        };
+      }));
+      for (const metric of headerMetrics) {
+        expect(metric.whiteSpace).toBe("nowrap");
+        expect(metric.scrollHeight).toBeLessThanOrEqual(metric.clientHeight + 1);
+        expect(metric.thHeight).toBeLessThanOrEqual(48);
+        expect(metric.svgCount).toBeGreaterThanOrEqual(1);
+        if (metric.iconCy != null && metric.labelCy != null) {
+          expect(Math.abs(metric.iconCy - metric.labelCy)).toBeLessThanOrEqual(2);
+        }
+        if (metric.labelCy != null && metric.btnCy != null) {
+          expect(Math.abs(metric.labelCy - metric.btnCy)).toBeLessThanOrEqual(3);
+        }
+      }
+
+      const scroll = page.locator("[data-fused-scroll]");
+      await expect(scroll).toBeVisible();
+      const overflow = await scroll.evaluate((el) => el.scrollWidth - el.clientWidth);
+      expect(overflow).toBeGreaterThan(1);
+
+      await scroll.evaluate((el) => { el.scrollLeft = 120; });
+      const modelHead = page.locator("[data-fused-head] th").first();
+      expect(await modelHead.evaluate((th) => getComputedStyle(th).position)).toBe("sticky");
+      const modelX = await modelHead.evaluate((th) => th.getBoundingClientRect().x);
+      const scrollX = await scroll.evaluate((el) => el.getBoundingClientRect().x);
+      expect(Math.abs(modelX - (scrollX + 16))).toBeLessThanOrEqual(2);
+
+      const toolbarSync = page.locator("[data-fused-toolbar] .num").last();
+      const syncBox = await toolbarSync.boundingBox();
+      const scrollBox = await scroll.boundingBox();
+      expect(syncBox).toBeTruthy();
+      expect(scrollBox).toBeTruthy();
+      expect(Math.abs((syncBox!.x + syncBox!.width) - (scrollBox!.x + scrollBox!.width - 16))).toBeLessThanOrEqual(2);
+    }
+  }
 });
 
 
