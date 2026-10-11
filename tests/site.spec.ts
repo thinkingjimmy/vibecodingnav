@@ -13,7 +13,7 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
   await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
   await expect(page.getByRole("link", { name: /写文档和文案/ })).toBeVisible();
-  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("98").first()).toBeVisible();
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("96").first()).toBeVisible();
   await expect(page.getByText("#1 · #1 · #1 · —")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
@@ -190,7 +190,7 @@ test("source board filter and header stay under the nav while scrolling", async 
 
 test("web scenario fuses ranks and links each board", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
-  await expect(page.getByText("按真人盲测、设计还原、框架任务和工程判断，挑出写前端最合适的模型。")).toBeVisible();
+  await expect(page.getByText("按真人盲测、设计还原、框架任务、工程判断和长程工程，挑出写前端最合适的模型。")).toBeVisible();
   await expect(page.getByText(/目前.*Claude Opus 5\.5/)).toBeVisible();
   await expect(page.getByRole("button", { name: "怎么算的？" })).toBeVisible();
   await expect(page.getByText("按综合分排序")).toBeVisible();
@@ -202,8 +202,9 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(page.locator("[data-fused-head] th").nth(3)).toContainText("盲测投票");
   await expect(page.locator("[data-fused-head] th").nth(4)).toContainText("还原设计");
   await expect(page.locator("[data-fused-head] th").nth(5)).toContainText("工程判断");
-  await expect(page.locator("[data-fused-head] th").nth(6)).toContainText("Next.js 任务");
-  await expect(page.locator("[data-fused-head] th").nth(7)).toContainText("React 任务");
+  await expect(page.locator("[data-fused-head] th").nth(6)).toContainText("长程工程");
+  await expect(page.locator("[data-fused-head] th").nth(7)).toContainText("Next.js 任务");
+  await expect(page.locator("[data-fused-head] th").nth(8)).toContainText("React 任务");
   await page.getByRole("button", { name: "按盲测投票排序" }).hover();
   const webdev = page.getByRole("link", { name: "LMArena WebDev" }).first();
   await expect(webdev).toBeVisible();
@@ -212,6 +213,8 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(page.getByRole("link", { name: "LMArena Image-to-WebDev" }).first()).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
   await page.getByRole("button", { name: "按工程判断排序" }).hover();
   await expect(page.getByRole("link", { name: "sudo L7" }).first()).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");
+  await page.getByRole("button", { name: "按长程工程排序" }).hover();
+  await expect(page.getByRole("link", { name: "DeepSWE v1.1" }).first()).toHaveAttribute("href", "/zh/benchmarks/deepswe-v1-1/");
 });
 
 
@@ -245,8 +248,8 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   await expect(scoringDialog.getByText("综合分怎么算")).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "公式" })).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "一个例子" })).toBeVisible();
-  await expect(scoringDialog.getByText(/Claude Fable 5\.1/)).toBeVisible();
-  await expect(scoringDialog.getByText(/拿下 ReactBench 第 1/)).toBeVisible();
+  await expect(scoringDialog.getByText(/GPT-6 Astra 的综合分是 89/)).toBeVisible();
+  await expect(scoringDialog.getByText(/拿下 DeepSWE v1\.1 第 1/)).toBeVisible();
   await expect(scoringDialog.getByText("Esc 关闭")).toHaveCount(0);
   const scoringClose = scoringDialog.getByRole("button", { name: "关闭" });
   await expect(scoringClose).toBeVisible();
@@ -292,7 +295,7 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   await page.setViewportSize({ width: 1280, height: 800 });
   const opus = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
   await expect(opus).toContainText("—");
-  await expect(opus).toContainText("4/5");
+  await expect(opus).toContainText("4/6");
   const firstName = () => page.locator("tbody tr").first().locator("td").first().innerText();
   const before = await firstName();
   await page.getByRole("button", { name: "按模型排序" }).click();
@@ -362,15 +365,18 @@ test("android scenario uses only the current version", async ({ page }) => {
   await page.goto("/zh/scenarios/android-app/");
   await expect(page.getByRole("columnheader", { name: /长程任务/ })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: /工程判断/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /长程工程/ })).toBeVisible();
   await page.getByRole("button", { name: "按长程任务排序" }).hover();
   await expect(page.getByRole("link", { name: "Android Bench" }).first()).toHaveAttribute("href", "/zh/benchmarks/android-bench/");
   await page.getByRole("button", { name: "按工程判断排序" }).hover();
   await expect(page.getByRole("link", { name: "sudo L7" }).first()).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");
+  await page.getByRole("button", { name: "按长程工程排序" }).hover();
+  await expect(page.getByRole("link", { name: "DeepSWE v1.1" }).first()).toHaveAttribute("href", "/zh/benchmarks/deepswe-v1-1/");
   await expect(page.getByRole("columnheader", { name: /^1\.0/ })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Claude Opus 5.5", exact: true })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Claude Opus 5", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Claude Opus 5", exact: true })).toBeVisible();
   const leader = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
-  await expect(leader).toContainText("2/2");
+  await expect(leader).toContainText("2/3");
   await expect(page.getByRole("tab")).toHaveCount(0);
 });
 

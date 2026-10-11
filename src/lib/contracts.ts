@@ -195,6 +195,7 @@ export const SCENARIO_BOARD_ICONS = [
   "file-code",
   "atom",
   "scales",
+  "road-horizon",
   "device-mobile",
   "terminal-window",
   "article",

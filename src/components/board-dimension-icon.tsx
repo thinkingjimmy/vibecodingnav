@@ -4,7 +4,7 @@
  * [POS]: src/components 的场景列头图标映射
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
-import { Article, Atom, DeviceMobile, FileCode, Image, Scales, TerminalWindow, UsersThree } from "@phosphor-icons/react";
+import { Article, Atom, DeviceMobile, FileCode, Image, RoadHorizon, Scales, TerminalWindow, UsersThree } from "@phosphor-icons/react";
 import type { ScenarioBoardIcon } from "@/lib/contracts";
 
 const ICONS = {
@@ -13,6 +13,7 @@ const ICONS = {
   "file-code": FileCode,
   atom: Atom,
   scales: Scales,
+  "road-horizon": RoadHorizon,
   "device-mobile": DeviceMobile,
   "terminal-window": TerminalWindow,
   article: Article,

@@ -12,6 +12,15 @@ export const changes: ChangeEntry[] = [
   {
     date: "10-11",
     kind: "board",
+    source: "deepswe.datacurve.ai",
+    text: tx(
+      "**DeepSWE v1.1**：28 行 Best 配置。GPT 6 Astra `74.1%`，Gemini 3.8 Flash `73.8%`，Claude Opus 5 `73.6%`。通用榜，挂入 Web 前端 / Android / CLI。",
+      "**DeepSWE v1.1**: 28 Best-config rows. GPT 6 Astra `74.1%`, Gemini 3.8 Flash `73.8%`, Claude Opus 5 `73.6%`. General board on Web frontend / Android / CLI.",
+    ),
+  },
+  {
+    date: "10-11",
+    kind: "board",
     source: "theslopindex.com",
     text: tx(
       "**写文档和文案**：新增场景，挂 The Slop Index 39 行。来源最渣为 #1；本站反转后 GPT-5.6 Luna 居首（100 − Slop = `74`）。",

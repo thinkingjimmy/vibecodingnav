@@ -13,6 +13,7 @@
 
 ### 新增
 
+- 新增通用榜 DeepSWE v1.1（Datacurve）：113 道长程工程题，Pass@1，来源更新 2026-09-22。2026-10-11 从 https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json 同步 28 行 Best 配置（每模型最高 Pass@1 推理档）。`scope: general`，挂入 Web 前端 / Android / CLI·DevOps，方法 C 权重 0.6。维度标签「长程工程」，图标 Phosphor RoadHorizon。榜首 GPT 6 Astra 74.1%，Gemini 3.8 Flash 73.8%，Claude Opus 5 73.6%。
 - 新增场景「写文档和文案」（Write docs & copy），挂 The Slop Index 一张榜。2026-10-11 从 https://theslopindex.com/leaderboard 抓取 39 行（当时 1,795 票）；开放数据 https://github.com/hgaddipati1118/slop-index 。来源 Slop Score 越高越差、#1 最渣；本站反转为最少 slop 为 #1，分数存 100 − Slop Score。维度标签「像真人」，图标 Phosphor Article。未另建推荐组合（工具箱无可对应文案栈）。首页 featured 场景增至 4 张。
 - Web 前端增加 LMArena Image-to-WebDev。完整榜 64 行，榜单日期 2026-10-09，177,108 票。基准页在原榜之后画出分数对混合价格，实心点是帕累托页列出的 6 个模型。
 - 场景综合分（方法 C）：每张榜相对榜首归一化（竞技场按对榜首胜率，通过率按比值，榜首 100），按场景权重加权；缺榜按中位水平半权计入，初步行半权。只用于融合表默认排序和首页卡片；融合表格子仍是各榜原始名次。
@@ -22,7 +23,8 @@
 
 ### 变更
 
-- 场景融合表的基准列按 `boards[].weight` 降序排列（同权保持声明顺序）；评分模态权重表与小多图共用同一顺序。Web 前端因此为：盲测投票 → 还原设计 → 工程判断 → Next.js 任务 → React 任务。
+- 场景融合表的基准列按 `boards[].weight` 降序排列（同权保持声明顺序）；评分模态权重表与小多图共用同一顺序。Web 前端因此为：盲测投票 → 还原设计 → 工程判断 → 长程工程 → Next.js 任务 → React 任务。Android：长程任务 → 工程判断 → 长程工程。CLI：终端任务 → 长程工程。
+- `Benchmark.scope: general` 现包括 sudo L7 与 DeepSWE v1.1；DeepSWE 同时出现在三个场景的融合表与综合分中。
 - 场景表上工具栏去掉「格子里是各榜原始名次」提示，右侧只保留「本页同步 {date}」。
 - 「综合分怎么算」模态按「公式 → 一个例子 → 为什么合起来看 → 权重 → 缺榜 → 注意事项」重排：公式用排版分数式对齐方法 C；例子在构建期用 `explainCompositeScore` 拆真实模型（Web 为 Claude Fable 5.1 = 84）；小多图移到「为什么合起来看」，柱下标榜名、柱高为 s_b、斜线为缺榜。无「单榜第 1 但综合更低」样本的场景省略图，仍保留公式与例子。
 - 融合表 WebDev 维度标签「偏好」改为「盲测投票」（英 Blind votes）。可排序列头统一为「图标 + 标签 + 右侧排序箭头」；未激活列悬停/聚焦时箭头淡显，当前排序列实色。综合分、上榜与各榜名次左对齐并对齐列头文字起点（有图标的列对齐图标起点），沿用等宽数字。

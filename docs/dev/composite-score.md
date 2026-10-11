@@ -53,6 +53,7 @@
 | Next.js Evals | 0.4 | Vercel 出题并评分（框架厂商评测），前排接近 97% 天花板 |
 | ReactBench | 0.4 | 第三方生态评测，不是 React / Meta 官方 |
 | sudo L7 | 0.6 | 通用编码能力（通过率榜，`scope: general`）；独立第三方信号，与图生网页同权，按比值相对榜首归一化。站主决定：不单开「生产级改动」场景；Web 前端与 Android 共用 |
+| DeepSWE v1.1 | 0.6 | 通用长程工程（通过率榜，`scope: general`）；113 题真实开源仓库；每模型 Best 推理档；Web / Android / CLI 共用 |
 
 ### 3.3b 榜单权重（做一个 Android App）
 
@@ -60,6 +61,14 @@
 |---|---|---|
 | Android Bench 2.0 长程 | 1.0 | 场景主榜；当前版本 |
 | sudo L7 | 0.6 | 通用编码能力（`scope: general`），与 Web 前端同权复用 |
+| DeepSWE v1.1 | 0.6 | 通用长程工程（`scope: general`），与 Web / CLI 同权复用 |
+
+### 3.3c 榜单权重（写 CLI、脚本与 DevOps）
+
+| 榜 | 权重 | 理由 |
+|---|---|---|
+| Terminal-Bench 4.0 | 1.0 | 场景主榜 |
+| DeepSWE v1.1 | 0.6 | 通用长程工程（`scope: general`），补充真实仓库功能级改动信号 |
 
 规则化写法：主榜 1.0；独立第三方同类评测 0.6；厂商自评 / 生态评测 0.4；单个模型厂商自报的成绩不进综合分。`specific` 基准最多一个场景；`general` 可跨场景。
 
@@ -70,7 +79,7 @@
 
 ### 3.5 上首页的门槛
 - 必须出现在**场景主榜**。
-- 已观测榜单的权重 ≥ 总权重的 50%（Web 前端即 ≥ 1.5 / 3.0；Android 即 ≥ 0.8 / 1.6）。Gemini 4 Argon 只上了 WebDev（33%），留在场景页，不上首页卡片。
+- 已观测榜单的权重 ≥ 总权重的 50%（Web 前端即 ≥ 1.8 / 3.6；Android 即 ≥ 1.1 / 2.2；CLI 即 ≥ 0.8 / 1.6）。Gemini 4 Argon 只上了 WebDev，留在场景页，不上首页卡片。
 - 有模型页（有 `modelSlug`）。
 
 ## 4. 三种候选方法

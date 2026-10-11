@@ -399,6 +399,43 @@ export const benchmarks: Benchmark[] = [
     links: [{ label: "reactbench.com/data", href: "https://www.reactbench.com/data" }],
   },
   {
+    slug: "deepswe-v1-1",
+    name: "DeepSWE v1.1",
+    shortName: "DeepSWE",
+    scoreUnit: "%",
+    compositeKind: "rate",
+    scope: "general",
+    asOf: "2026-09-22",
+    trackedCount: 28,
+    table: "score",
+    domain: tx("通用长程工程", "General long-horizon engineering"),
+    measures: tx(
+      "通用长程工程：在真实开源仓库里完成功能级改动。113 道题，跨 Go、Python、TypeScript、JavaScript、Rust 等，覆盖 91 个活跃仓库。Agent 在隔离环境里提交改动，再在干净容器里评分。在本站作为 general 榜，同时出现在 Web 前端、Android 与 CLI / DevOps 场景。",
+      "General long-horizon engineering: feature-sized changes in real open-source repos. 113 tasks across Go, Python, TypeScript, JavaScript, Rust, and more, spanning 91 active repositories. The agent commits in an isolated environment and is graded in a pristine container. On this site it is a general board and appears in the Web frontend, Android, and CLI / DevOps scenarios.",
+    ),
+    method: tx(
+      "Datacurve 的 DeepSWE v1.1。任务从零编写，不用既有 commit / PR 改编。统一用 Pier 跑 mini-swe-agent。本站按官方 Best 视图：每个模型只取 Pass@1 最高的一档推理配置；同分取更高 effort。",
+      "Datacurve's DeepSWE v1.1. Tasks are written from scratch, not adapted from existing commits or PRs. All public scores use Pier with mini-swe-agent. This site follows the official Best view: one row per model at its highest Pass@1 reasoning tier; ties break toward higher effort.",
+    ),
+    scoreMeaning: tx(
+      "百分比是 Pass@1：已评分 rollout 尝试中的通过率。上下文窗口失败与 agent 超时计为失败；供应商 / 验证器 / 网络错误排除在外。越高越好。",
+      "The percent is Pass@1: attempt pass rate over scored rollout attempts. Context-window failures and agent timeouts count as failures; provider, verifier, and network errors are excluded. Higher is better.",
+    ),
+    caveats: tx(
+      "公开榜默认 Best 视图会隐藏部分旧模型；本站收录全部 28 个模型各自的 Best 配置。所有行共用 mini-swe-agent，不比较 Claude Code / Codex 等原生 CLI。成本列是来源 JSON 的平均单任务成本，站点展示数字可能因计价口径略有出入。",
+      "The public Best chart hides some older models; this page keeps all 28 models at their Best config. Every row uses mini-swe-agent, so native CLIs such as Claude Code or Codex are not compared. The cost column is mean per-task cost from the source JSON; the site UI may round costs differently.",
+    ),
+    updateCadence: tx(
+      "来源榜标注更新于 2026-09-22；artifact generated_at 为 2026-09-22T06:27:15Z。本页于 2026-10-11 从 https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json 同步 28 行 Best 配置。",
+      "The source board is marked updated 2026-09-22; artifact generated_at is 2026-09-22T06:27:15Z. This page synced 28 Best-config rows from https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json on 2026-10-11.",
+    ),
+    links: [
+      { label: "deepswe.datacurve.ai", href: "https://deepswe.datacurve.ai/" },
+      { label: "deepswe.datacurve.ai/blog/deepswe-v1-1", href: "https://deepswe.datacurve.ai/blog/deepswe-v1-1" },
+      { label: "github.com/datacurve-ai/deep-swe", href: "https://github.com/datacurve-ai/deep-swe" },
+    ],
+  },
+  {
     slug: "swe-bench-verified",
     name: "SWE-bench Verified",
     shortName: "SWE-bench",
