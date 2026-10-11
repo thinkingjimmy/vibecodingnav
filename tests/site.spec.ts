@@ -426,10 +426,10 @@ test("switching a source filter keeps the table width", async ({ page }) => {
 
 test("android scenario uses only the current version", async ({ page }) => {
   await page.goto("/zh/scenarios/android-app/");
-  await expect(page.getByRole("columnheader", { name: /长程任务/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /安卓开发/ })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: /工程判断/ })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: /长程工程/ })).toBeVisible();
-  await page.getByRole("button", { name: "按长程任务排序" }).hover();
+  await page.getByRole("button", { name: "按安卓开发排序" }).hover();
   await expect(page.getByRole("link", { name: "Android Bench" }).first()).toHaveAttribute("href", "/zh/benchmarks/android-bench/");
   await page.getByRole("button", { name: "按工程判断排序" }).hover();
   await expect(page.getByRole("link", { name: "sudo L7" }).first()).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");

@@ -159,8 +159,8 @@ export const scenarios: Scenario[] = [
         "current",
         "android-bench",
         tx("Android Bench 2.0", "Android Bench 2.0"),
-        tx("长程任务", "Long-horizon"),
-        "device-mobile",
+        tx("安卓开发", "Android dev"),
+        "android-logo",
         tx(
           "跨模块、耗时很长的 Android 改造：完整功能，而不是单点修改。区间很宽，分差小时不要只看名次。",
           "Long Android changes across modules: a whole feature, not a single edit. Intervals are wide; a small gap is a weak reason to switch.",

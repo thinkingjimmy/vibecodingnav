@@ -277,11 +277,11 @@ describe("picks", () => {
 
     const android = getScenario("zh", "android-app");
     expect(android?.fusion.columns.map((column) => [column.id, column.label, column.weight])).toEqual([
-      ["android-bench", "长程任务", 1],
+      ["android-bench", "安卓开发", 1],
       ["sudo-l7", "工程判断", 0.6],
       ["deepswe-v1-1", "长程工程", 0.6],
     ]);
-    expect(android?.fusion.columns.map((column) => column.icon)).toEqual(["device-mobile", "scales", "road-horizon"]);
+    expect(android?.fusion.columns.map((column) => column.icon)).toEqual(["android-logo", "scales", "road-horizon"]);
     expect(android?.scoring.chart?.caption).toContain("DeepSWE");
     expect(android?.scoring.worked?.composite).toBe(86);
     expect(android?.scoring.worked?.rows).toHaveLength(3);

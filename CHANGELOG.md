@@ -11,6 +11,10 @@
 
 ## 2026-10-12
 
+### 变更
+
+- Android 场景融合表里 Android Bench 的白话维度标签由「长程任务」改为「安卓开发」（英 Android dev），列头图标由 DeviceMobile 改为 Phosphor AndroidLogo，避免与 DeepSWE「长程工程」混淆。列头悬停说明、评分模态权重/例子/小多图与 i18n 均走同一 `dimension` 字段。
+
 ### 修复
 
 - 场景融合表列头改为单行（`whitespace-nowrap`）：图标、白话标签与排序箭头同一行垂直居中；各榜列固定最小宽度 10rem，表宽超出版心时在表内横向滚动，模型 / 综合分 / 上榜三列横向 sticky。表上同步日期与表格内容右缘对齐（工具栏并入融合表同一 `px-4` 盒）。

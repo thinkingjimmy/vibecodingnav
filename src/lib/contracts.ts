@@ -196,7 +196,7 @@ export const SCENARIO_BOARD_ICONS = [
   "atom",
   "scales",
   "road-horizon",
-  "device-mobile",
+  "android-logo",
   "terminal-window",
   "article",
 ] as const;
