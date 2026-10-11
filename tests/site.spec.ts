@@ -78,7 +78,7 @@ test("view more opens every scenario as a board card", async ({ page }) => {
   await expect(page.getByText("Android Bench", { exact: true })).toHaveCount(0);
   await page.setViewportSize({ width: 1280, height: 900 });
   const columns = await page.locator("article").first().locator("xpath=..").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
-  expect(columns).toBe(2);
+  expect(columns).toBe(3);
 });
 
 test("english home is unprefixed", async ({ page }) => {
