@@ -99,17 +99,43 @@ test("source board filter and header stay under the nav while scrolling", async 
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/zh/benchmarks/lmarena-webdev/");
   await page.getByRole("button", { name: /显示全部/ }).click();
-  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
   const box = async (selector: string) => {
     const value = await page.locator(selector).first().boundingBox();
     if (!value) throw new Error(`missing box ${selector}`);
     return value;
   };
+  const boardTop = await page.locator("[data-board-bar]").evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y), boardTop);
   const nav = await box("header.sticky");
   const bar = await box("[data-board-bar]");
   const head = await box("[data-board-head] th");
   expect(Math.abs(bar.y - (nav.y + nav.height))).toBeLessThanOrEqual(1);
   expect(Math.abs(head.y - (bar.y + bar.height))).toBeLessThanOrEqual(1);
+  await page.evaluate(() => window.scrollBy(0, 240));
+  const navMid = await box("header.sticky");
+  const barMid = await box("[data-board-bar]");
+  const headMid = await box("[data-board-head] th");
+  expect(Math.abs(barMid.y - (navMid.y + navMid.height))).toBeLessThanOrEqual(1);
+  expect(Math.abs(headMid.y - (barMid.y + barMid.height))).toBeLessThanOrEqual(1);
+  await expect(page.getByRole("columnheader", { name: "分数", exact: true })).toBeInViewport();
+  await expect(page.getByText("全部", { exact: true })).toBeInViewport();
+
+  await page.setViewportSize({ width: 900, height: 800 });
+  const boardTopNarrow = await page.locator("[data-board-scroll]").evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y - 120), boardTopNarrow);
+  const navNarrow = await box("header.sticky");
+  const barNarrow = await box("[data-board-bar]");
+  expect(navNarrow.height).toBeGreaterThan(70);
+  expect(Math.abs(barNarrow.y - (navNarrow.y + navNarrow.height))).toBeLessThanOrEqual(1);
+  await expect(page.getByRole("columnheader", { name: "分数", exact: true })).toBeVisible();
+
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  const navBottom = await box("header.sticky");
+  const barBottom = await box("[data-board-bar]");
+  const headBottom = await box("[data-board-head] th");
+  expect(Math.abs(barBottom.y - (navBottom.y + navBottom.height))).toBeLessThanOrEqual(1);
+  expect(Math.abs(headBottom.y - (barBottom.y + barBottom.height))).toBeLessThanOrEqual(1);
   await expect(page.getByText("devstral-medium-2507")).toBeVisible();
 
   await page.setViewportSize({ width: 390, height: 700 });
