@@ -11,8 +11,8 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("按场景，选对模型与框架");
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
-  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
-  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("97").first()).toBeVisible();
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(3);
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("98").first()).toBeVisible();
   await expect(page.getByText("#1 · #1 · #1 · —")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
@@ -47,7 +47,7 @@ test("view more opens every scenario as a board card", async ({ page }) => {
   await section.locator("header").getByRole("link", { name: /查看更多/ }).click();
   await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
   const cards = page.locator("article");
-  await expect(cards).toHaveCount(4);
+  await expect(cards).toHaveCount(3);
   await expect(page.getByRole("link", { name: "做全栈 SaaS" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "做 iOS App" })).toHaveCount(0);
   await expect(page.getByText("LMArena WebDev")).toHaveCount(0);
@@ -171,9 +171,10 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(page.getByRole("columnheader", { name: /图生网页/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
   await expect(page.getByRole("columnheader", { name: /Next.js/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/nextjs-evals/");
   await expect(page.getByRole("columnheader", { name: /ReactBench/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/reactbench/");
+  await expect(page.getByRole("columnheader", { name: /sudo L7/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");
   const opus = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
   await expect(opus).toContainText("—");
-  await expect(opus).toContainText("3/4");
+  await expect(opus).toContainText("4/5");
   const firstName = () => page.locator("tbody tr").first().locator("td").first().innerText();
   const before = await firstName();
   await page.getByRole("button", { name: "按模型排序" }).click();
@@ -253,7 +254,7 @@ test("android scenario uses only the current version", async ({ page }) => {
 test("removed ios and saas scenarios leave the board list", async ({ page }) => {
   await page.goto("/zh/scenarios/ios-app/");
   await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
-  await expect(page.locator("article")).toHaveCount(4);
+  await expect(page.locator("article")).toHaveCount(3);
   await page.goto("/zh/scenarios/saas/");
   await expect(page).toHaveURL(/\/zh\/build\/saas\/$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("全栈");
@@ -269,6 +270,11 @@ test("removed scenario urls land on the source board", async ({ page }) => {
   await page.goto("/scenarios/refactor/");
   await expect(page).toHaveURL(/\/benchmarks\/android-bench\/$/);
   await expect(page.getByText("32.7").first()).toBeVisible();
+  await page.goto("/zh/scenarios/production-changes/");
+  await expect(page).toHaveURL(/\/zh\/scenarios\/web-frontend\/$/);
+  await expect(page.getByRole("columnheader", { name: /sudo L7/ })).toBeVisible();
+  await page.goto("/scenarios/production-changes/");
+  await expect(page).toHaveURL(/\/scenarios\/web-frontend\/$/);
 });
 
 test("old android urls open the merged board on the matching version", async ({ page }) => {
@@ -385,7 +391,7 @@ test("scenario, model, build, and benchmark pages match the home width", async (
 
 test("long boards stay inside the phone width", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const path of ["/zh/scenarios/web-frontend/", "/zh/scenarios/android-app/", "/zh/scenarios/cli-devops/", "/zh/scenarios/production-changes/"]) {
+  for (const path of ["/zh/scenarios/web-frontend/", "/zh/scenarios/android-app/", "/zh/scenarios/cli-devops/"]) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);

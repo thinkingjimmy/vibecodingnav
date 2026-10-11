@@ -29,10 +29,9 @@ BOARDS={
 }
 # 推荐方案的权重：主榜 1；同一竞技场的相邻任务 0.6；框架厂商出题 / 第三方生态评测 0.4
 SCEN={
- 'web-frontend':dict(title='做 Web 前端',boards=[('webdev',1.0),('image',0.6),('nextjs',0.4),('react',0.4)]),
+ 'web-frontend':dict(title='做 Web 前端',boards=[('webdev',1.0),('image',0.6),('nextjs',0.4),('react',0.4),('sudo',0.6)]),
  'android-app':dict(title='做一个 Android App',boards=[('android',1.0)]),
  'cli-devops':dict(title='写 CLI、脚本与 DevOps',boards=[('terminal',1.0)]),
- 'production-changes':dict(title='生产级改动与架构决策',boards=[('sudo',1.0)]),
 }
 
 def best_rows(rows):

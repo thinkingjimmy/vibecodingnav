@@ -374,7 +374,7 @@ function buildsForModel(slug: string) {
   });
 }
 
-const HOME_BOARD_COUNT = 4;
+const HOME_BOARD_COUNT = 3;
 
 function scenarioBoardSpecs(scenario: Scenario) {
   if (scenario.boards?.length) return scenario.boards;

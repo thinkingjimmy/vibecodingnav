@@ -47,20 +47,23 @@ describe("composite method C", () => {
   it("matches the doc top-5 for Web frontend", () => {
     const all = computeComposite(scenarioBoards("web-frontend"));
     const rows = all.slice(0, 5);
+    // New Web top-5 after adding sudo L7 (weight 0.6, rate → ratio to leader)
+    console.log("Web top-5 composite:", rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display]));
     expect(rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
-      [1, "claude-opus-5-5", 97],
-      [2, "gpt-6-astra", 91],
-      [3, "claude-fable-5-1", 90],
-      [4, "claude-sonnet-5-5", 89],
-      [5, "gpt-6-1-sol", 83],
+      [1, "claude-opus-5-5", 98],
+      [2, "claude-sonnet-5-5", 92],
+      [3, "gpt-6-astra", 87],
+      [4, "claude-fable-5-1", 84],
+      [5, "gpt-6-1-sol", 80],
     ]);
     expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
       [1, 100],
       [1, 100],
       [1, 100],
       null,
+      [1, 100],
     ]);
-    expect(rows[2]?.coverage).toBe(1);
+    expect(rows[3]?.coverage).toBe(1);
     expect(all.find((row) => row.key === "model:gemini-4-argon")?.homeEligible).toBe(false);
   });
 
@@ -83,14 +86,6 @@ describe("composite method C", () => {
     ]);
     expect(cli[2]?.tie).toBe(true);
     expect(cli[3]?.tie).toBe(true);
-
-    expect(computeComposite(scenarioBoards("production-changes")).slice(0, 5).map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
-      [1, "claude-opus-5-5", 100],
-      [1, "claude-sonnet-5-5", 100],
-      [3, "gpt-6-astra", 72],
-      [4, "gpt-6-1-sol", 70],
-      [5, "claude-fable-5-1", 60],
-    ]);
   });
 
   it("halves weight for preliminary rows and missing boards", () => {
@@ -130,30 +125,29 @@ describe("composite method C", () => {
 
   it("wires composite into fused tables and home cards", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.fusion.rows[0]).toMatchObject({ slug: "claude-opus-5-5", compositeLabel: "97" });
+    expect(web?.fusion.rows[0]).toMatchObject({ slug: "claude-opus-5-5", compositeLabel: "98" });
     expect(web?.fusion.rows.map((row) => row.slug).slice(0, 5)).toEqual([
       "claude-opus-5-5",
+      "claude-sonnet-5-5",
       "gpt-6-astra",
       "claude-fable-5-1",
-      "claude-sonnet-5-5",
       "gpt-6-1-sol",
     ]);
-    expect(web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null]);
+    expect(web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1]);
 
     const home = getHome("zh").cards;
     expect(home[0]?.rows.map((row) => [row.name, row.score])).toEqual([
-      ["Claude Opus 5.5", "97"],
-      ["GPT-6 Astra", "91"],
-      ["Claude Fable 5.1", "90"],
-      ["Claude Sonnet 5.5", "89"],
-      ["GPT-6.1 Sol", "83"],
+      ["Claude Opus 5.5", "98"],
+      ["Claude Sonnet 5.5", "92"],
+      ["GPT-6 Astra", "87"],
+      ["Claude Fable 5.1", "84"],
+      ["GPT-6.1 Sol", "80"],
     ]);
-    expect(home[0]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "#1 · 100", "—"]);
+    expect(home[0]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "#1 · 100", "—", "#1 · 100"]);
     expect(home[0]?.rows.every((row) => !("boards" in row && row.boards))).toBe(true);
     expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "100" });
     expect(home[1]?.rows[0]?.unit).toBeUndefined();
     expect(home[2]?.rows.map((row) => row.score)).toEqual(["100", "95", "90", "90", "89"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "100" });
-    expect(home[3]?.rows[1]).toMatchObject({ name: "Claude Sonnet 5.5", score: "100", rankLabel: "1" });
+    expect(home).toHaveLength(3);
   });
 });

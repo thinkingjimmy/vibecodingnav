@@ -42,7 +42,7 @@
 ### 3.2 缺榜处理
 - **忽略**（现状）：只上强榜的模型占便宜。
 - **按 0 分**：等于惩罚“评测方没测”，对新模型不公平。
-- **贝叶斯收缩（推荐）**：缺的那张榜，按“该榜模型的中位水平”补一个**半权重**的先验观测。上过的榜越多，先验影响越小；完全没上某张次要榜，只会被轻微拉向中等水平。当前各榜先验（中位归一化分）：WebDev 52、图生网页 60、Next.js 87、ReactBench 69。
+- **贝叶斯收缩（推荐）**：缺的那张榜，按“该榜模型的中位水平”补一个**半权重**的先验观测。上过的榜越多，先验影响越小；完全没上某张次要榜，只会被轻微拉向中等水平。当前各榜先验（中位归一化分，四榜时期）：WebDev 52、图生网页 60、Next.js 87、ReactBench 69；sudo L7 为通过率榜，缺榜同样按该榜中位半权收缩。
 
 ### 3.3 榜单权重（Web 前端）
 
@@ -52,6 +52,7 @@
 | LMArena Image-to-WebDev | 0.6 | 同一竞技场的相邻任务，与主榜相关性高，避免重复计票 |
 | Next.js Evals | 0.4 | Vercel 出题并评分（框架厂商评测），前排接近 97% 天花板 |
 | ReactBench | 0.4 | 第三方生态评测，不是 React / Meta 官方 |
+| sudo L7 | 0.6 | 通用编码能力（通过率榜）；独立第三方信号，与图生网页同权，按比值相对榜首归一化。站主决定：不单开「生产级改动」场景，归入 Web 前端 |
 
 规则化写法：主榜 1.0；独立第三方同类评测 0.6；厂商自评 / 生态评测 0.4；单个模型厂商自报的成绩不进综合分。
 
@@ -62,7 +63,7 @@
 
 ### 3.5 上首页的门槛
 - 必须出现在**场景主榜**。
-- 已观测榜单的权重 ≥ 总权重的 50%（Web 前端即 ≥ 1.2 / 2.4）。Gemini 4 Argon 只上了 WebDev（42%），留在场景页，不上首页卡片。
+- 已观测榜单的权重 ≥ 总权重的 50%（Web 前端即 ≥ 1.5 / 3.0）。Gemini 4 Argon 只上了 WebDev（33%），留在场景页，不上首页卡片。
 - 有模型页（有 `modelSlug`）。
 
 ## 4. 三种候选方法
@@ -78,24 +79,26 @@
 s_b = 该模型在榜 b 上相对榜首的水平（0–100），m_b = 榜 b 的中位水平
 ```
 
-单榜场景（Android、CLI、生产级改动）没有缺榜问题，C 就是“通过率 ÷ 榜首通过率”，排序与原榜一致，只改变分数的刻度。
+单榜场景（Android、CLI）没有缺榜问题，C 就是“通过率 ÷ 榜首通过率”，排序与原榜一致，只改变分数的刻度。
 
 ## 5. 真实数据结果（前 10）
 
 ### 做 Web 前端
 
+（下列 **C** 列已按五榜权重重算：WebDev 1.0 · 图生网页 0.6 · Next.js 0.4 · ReactBench 0.4 · sudo L7 0.6。A/B 为四榜时期的对照，仅作方法对比。）
+
 | # | A 名次百分位·忽略缺失 | B z 分数·缺榜补 50 | **C 相对榜首·加权·收缩（推荐）** | C 各榜（名次 / 归一化） |
 |---|---|---|---|---|
-| 1 | Claude Opus 5.5 100 | Claude Fable 5.1 96 | Claude Opus 5.5 97 | WebDev #1/100 · 图生网页 #1/100 · Next.js #1/100 · ReactBench — |
-| 2 | Claude Sonnet 5.5 98 | Claude Opus 5.5 90 | GPT-6 Astra 91 | WebDev #2/92 · 图生网页 #3/95 · Next.js #7/93 · ReactBench — |
-| 3 | GPT-6.1 Sol 96 | GPT 6 Sol 86 | Claude Fable 5.1 90 | WebDev #5/80 · 图生网页 #4/92 · Next.js #3/100 · ReactBench #1/100 |
-| 4 | Claude Fable 5.1 94 (并列) | GPT-6 Astra 85 | Claude Sonnet 5.5 89 | WebDev #3/89 · 图生网页 #2/97 · Next.js — · ReactBench — |
-| 5 | Gemini 4 Argon 94 (并列) | Claude Opus 5 84 | GPT-6.1 Sol 83 | WebDev #4/84 · 图生网页 #5/87 · Next.js — · ReactBench — |
-| 6 | Claude Opus 5 93 (并列) | Claude Sonnet 5.5 82 | GPT 6 Sol 75 | WebDev #8/66 · 图生网页 #6/75 · Next.js #2/100 · ReactBench — |
-| 7 | GPT 6 Sol 93 (并列) | GPT-6.1 Sol 81 | Claude Opus 5 74 | WebDev #7/66 · 图生网页 #7/75 · Next.js — · ReactBench #7/86 |
-| 8 | Muse Spark 1.3 90 | Claude Fable 5 80 (并列) | Qwen3.8 Max 70 | WebDev #10/62 · 图生网页 #9/69 · Next.js — · ReactBench #15/74 |
-| 9 | Qwen3.8 Flash Next 89 (并列) | GPT 5.6 Sol 80 (并列) | Gemini 4 Argon 67 | WebDev #9/63 · 图生网页 — · Next.js — · ReactBench — |
-| 10 | Claude Fable 5 89 (并列) | Qwen3.8 Max 79 | Muse Spark 1.3 66 | WebDev #13/58 · 图生网页 #8/70 · Next.js — · ReactBench — |
+| 1 | Claude Opus 5.5 100 | Claude Fable 5.1 96 | Claude Opus 5.5 98 | WebDev #1/100 · 图生网页 #1/100 · Next.js #1/100 · ReactBench — · sudo #1/100 |
+| 2 | Claude Sonnet 5.5 98 | Claude Opus 5.5 90 | Claude Sonnet 5.5 92 | WebDev #3/89 · 图生网页 #2/97 · Next.js — · ReactBench — · sudo #2/100 |
+| 3 | GPT-6.1 Sol 96 | GPT 6 Sol 86 | GPT-6 Astra 87 | WebDev #2/92 · 图生网页 #3/95 · Next.js #7/93 · ReactBench — · sudo #3/72 |
+| 4 | Claude Fable 5.1 94 (并列) | GPT-6 Astra 85 | Claude Fable 5.1 84 | WebDev #5/80 · 图生网页 #4/92 · Next.js #3/100 · ReactBench #1/100 · sudo #5/60 |
+| 5 | Gemini 4 Argon 94 (并列) | Claude Opus 5 84 | GPT-6.1 Sol 80 | WebDev #4/83 · 图生网页 #5/87 · Next.js — · ReactBench — · sudo #4/70 |
+| 6 | Claude Opus 5 93 (并列) | Claude Sonnet 5.5 82 | GPT 6 Sol 70 | WebDev #8/65 · 图生网页 #6/75 · Next.js #2/100 · ReactBench — · sudo — |
+| 7 | GPT 6 Sol 93 (并列) | GPT-6.1 Sol 81 | Claude Opus 5 69 | WebDev #7/66 · 图生网页 #7/75 · Next.js — · ReactBench #7/86 · sudo — |
+| 8 | Muse Spark 1.3 90 | Claude Fable 5 80 (并列) | Gemini 4 Argon 61 | WebDev #9/63 · 其余 — |
+| 9 | Qwen3.8 Flash Next 89 (并列) | GPT 5.6 Sol 80 (并列) | — | — |
+| 10 | Claude Fable 5 89 (并列) | Qwen3.8 Max 79 | — | — |
 
 ### 做一个 Android App
 
@@ -127,29 +130,10 @@ s_b = 该模型在榜 b 上相对榜首的水平（0–100），m_b = 榜 b 的�
 | 9 | GLM-5.3 | 41.8 | 44 | 65 | **65** |
 | 10= | Grok 4.7 | 37.6 | 41 | 57 | **58** |
 
-### 生产级改动与架构决策
-
-| # | 模型 | 原始分（sudo L7） | A 百分位 | B z 分数 | **C 相对榜首（推荐）** |
-|---|---|---|---|---|---|
-| 1= | Claude Opus 5.5 | 45.0 | 100 | 96 | **100** |
-| 1= | Claude Sonnet 5.5 | 45.0 | 91 | 96 | **100** |
-| 3 | GPT-6 Astra | 32.2 | 82 | 78 | **72** |
-| 4 | GPT-6.1 Sol | 31.7 | 73 | 77 | **70** |
-| 5 | Claude Fable 5.1 | 27.2 | 64 | 64 | **60** |
-| 6 | Qwen3.8 Max | 15.6 | 55 | 29 | **35** |
-| 7 | GLM-5.3 | 15.0 | 45 | 28 | **33** |
-| 8 | Kimi K3 | 13.9 | 36 | 25 | **31** |
-| 9 | Muse Spark 1.3 | 12.2 | 27 | 21 | **27** |
-| 10 | HY4 Preview | 11.1 | 18 | 18 | **25** |
-
-
 ### 读表
 - **A** 把只上了 1–2 张榜的模型排得过高（Gemini 4 Argon 只上 WebDev 就并列第 4），WebDev 的 142 行让前 10 都挤在 89–100 之间，区分度低。
 - **B** 让 Fable 5.1 登顶：它在 ReactBench 拿第 1，而 z 分数把 Opus 5.5 在 Next.js 的 97% 也压到 91（前三同分都被压平）。缺榜补 50 的全权重惩罚过重，Sonnet 5.5 掉到第 6。
-- **C** 的前 5（Opus 5.5 97 · Astra 91 · Fable 5.1 90 · Sonnet 5.5 89 · GPT-6.1 Sol 83）与“主榜为主、其他榜修正”的直觉一致：Astra 三张榜都在前 7，升到第二；Sonnet 5.5 缺两张次要榜，被轻微拉低但仍在前 5；Fable 5.1 主榜第 5，靠 Next.js 和 ReactBench 补到第三。
-
-### 稳健性（`sensitivity.py`）
-图生网页权重取 0.4 / 0.6 / 0.8，框架与生态评测权重取 0.2 / 0.4 / 0.6，收缩强度取 0.25 / 0.5 / 1.0，共 27 组：**前 5 名的成员 27 组全部相同，第 1 名（Opus 5.5）和第 5 名（GPT-6.1 Sol）全部不变**；第 2–4 名在 Astra、Fable 5.1、Sonnet 5.5 之间换位（13 / 9 / 5 组），这三者综合分相差不到 2 分，展示上应标“接近”。
+- **C**（含 sudo L7）的前 5（Opus 5.5 98 · Sonnet 5.5 92 · Astra 87 · Fable 5.1 84 · GPT-6.1 Sol 80）：sudo L7 上 Sonnet 与 Opus 同分榜首，把 Sonnet 抬到第二；Astra 在 sudo 上只有 72，从第二落到第三；Fable 五榜齐全但 sudo 仅 60，综合分被拉到第四。
 
 ## 6. 推荐：方法 C
 
