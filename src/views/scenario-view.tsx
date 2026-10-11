@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { BoardCard } from "@/components/board-card";
 import { Frame } from "@/components/frame";
 import { FusedTable } from "@/components/fused-table";
+import { ScenarioComboGrid } from "@/components/scenario-combo-grid";
 import { ScenarioHero } from "@/components/scenario-hero";
 import { VendorMark } from "@/components/vendor-mark";
 import { getScenario, listScenarioCards, slugs } from "@/lib/catalog";
@@ -60,16 +61,31 @@ export async function ScenarioView({ locale, params }: { locale: Locale; params:
       <ScenarioHero
         title={scenario.title}
         thesis={scenario.thesis}
-        sync={scenario.sync}
-        combo={scenario.combo}
+        takeaway={scenario.takeaway}
         scoring={scenario.scoring}
         dict={dict}
         stale={scenario.stale}
       />
       {scenario.fusion.rows.length ? (
-        <section className="pt-16">
+        <section className="pt-10">
+          <div className="flex h-11 items-center justify-between gap-4 px-4 text-[13px] text-mfg">
+            <span className="text-fg">{dict.scenario.sortByComposite}</span>
+            <span className="num shrink-0 text-faint">
+              {dict.scenario.cellRanksNote}
+              <span className="mx-2 text-faint/50">·</span>
+              {dict.scenario.synced.replace("{date}", scenario.syncDate)}
+            </span>
+          </div>
           <FusedTable fusion={scenario.fusion} dict={dict} />
         </section>
+      ) : null}
+      {scenario.comboSection ? (
+        <ScenarioComboGrid
+          title={dict.scenario.combo}
+          href={scenario.comboSection.href}
+          items={scenario.comboSection.items}
+          dict={dict}
+        />
       ) : null}
       {scenario.picks.length ? (
         <section className="px-4 pt-16">

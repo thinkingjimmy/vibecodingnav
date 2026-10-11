@@ -696,6 +696,98 @@ function scoringWorked(
   };
 }
 
+type FusionView = ReturnType<typeof fuseScenario>;
+
+function boardFirstIsTied(fusion: FusionView, rowKey: string, col: number) {
+  const cell = fusion.rows.find((row) => row.key === rowKey)?.cells[col];
+  if (!cell || cell.rank !== 1) return false;
+  return fusion.rows.some((row) => {
+    if (row.key === rowKey) return false;
+    const other = row.cells[col];
+    if (!other) return false;
+    return other.rank === 1 || other.scoreNumber === cell.scoreNumber;
+  });
+}
+
+/** 构建期从融合表生成页头 takeaway 句；并列按同分或同为第 1 诚实标出。 */
+export function scenarioTakeaway(locale: Locale, fusion: FusionView) {
+  const dict = getDictionary(locale);
+  const top = fusion.rows.find((row) => row.composite != null) ?? fusion.rows[0];
+  if (!top) return undefined;
+  const boards = fusion.columns.length;
+  if (boards === 1) {
+    const tied = boardFirstIsTied(fusion, top.key, 0);
+    const board = fusion.columns[0]!.label;
+    const body = (tied ? dict.scenario.takeawaySingleTied : dict.scenario.takeawaySingle).replace("{board}", board);
+    const sentence = `${dict.scenario.takeawayPrefix} ${top.name} ${body}`.replace(/\s+/g, " ").trim();
+    return { name: top.name, vendor: top.vendor, letter: top.letter, body, sentence };
+  }
+  let firsts = 0;
+  let ties = 0;
+  top.cells.forEach((cell, index) => {
+    if (!cell || cell.rank !== 1) return;
+    firsts += 1;
+    if (boardFirstIsTied(fusion, top.key, index)) ties += 1;
+  });
+  const count = String(top.count);
+  let body: string;
+  if (firsts === top.count && ties === 0) {
+    body = dict.scenario.takeawayAllFirst.replace("{count}", count);
+  } else if (ties > 0) {
+    body = dict.scenario.takeawayFirstsTied
+      .replace("{count}", count)
+      .replace("{firsts}", String(firsts))
+      .replace("{ties}", String(ties));
+  } else {
+    body = dict.scenario.takeawayFirsts.replace("{count}", count).replace("{firsts}", String(firsts));
+  }
+  const sentence = `${dict.scenario.takeawayPrefix} ${top.name} ${body}`.replace(/\s+/g, " ").trim();
+  return { name: top.name, vendor: top.vendor, letter: top.letter, body, sentence, firsts, ties, count: top.count };
+}
+
+function rolePurpose(locale: Locale, role: BuildPage["roles"][number], primary: ResolvedRef) {
+  const dict = getDictionary(locale);
+  if (role.purpose) return t(locale, role.purpose);
+  if (primary.kind === "model") return dict.scenario.comboModelPurpose;
+  const item = itemBy.get(primary.slug);
+  if (!item) return "";
+  const raw = t(locale, item.whyPick || item.oneLiner);
+  const cut = raw.split(/[。.!?]/)[0]?.trim() ?? raw;
+  return cut;
+}
+
+function scenarioCombo(locale: Locale, scenario: Scenario) {
+  if (!scenario.build) return undefined;
+  const buildSource = buildBy.get(scenario.build);
+  const build = getBuild(locale, scenario.build);
+  if (!buildSource || !build) return undefined;
+  return {
+    href: build.href,
+    items: buildSource.roles.map((role, index) => {
+      const view = build.roles[index]!;
+      const kind = role.primary.kind === "item" ? "item" as const : "model" as const;
+      const itemType = role.primary.kind === "item" ? itemBy.get(role.primary.slug)?.type : undefined;
+      const purpose = rolePurpose(locale, role, {
+        href: view.primary.href,
+        name: view.primary.name,
+        vendor: view.primary.vendor,
+        meta: view.primary.meta,
+        slug: view.primary.slug,
+        kind,
+      });
+      return {
+        type: view.role,
+        name: view.primary.name,
+        href: view.primary.href,
+        purpose,
+        vendor: view.primary.vendor,
+        highlight: kind === "model",
+        itemType,
+      };
+    }),
+  };
+}
+
 export function getScenario(locale: Locale, slug: string) {
   const scenario = scenarioBy.get(slug);
   if (!scenario) return undefined;
@@ -726,12 +818,15 @@ export function getScenario(locale: Locale, slug: string) {
   });
   const rows = scenario.benchmark ? toBoardRows(locale, scenario.benchmark) : [];
   const build = scenario.build ? getBuild(locale, scenario.build) : undefined;
+  const takeaway = scenarioTakeaway(locale, fusion);
   return {
     slug,
     title: t(locale, scenario.title),
     summary: t(locale, scenario.summary),
     thesis: t(locale, scenario.thesis),
     sync: dict.scenario.synced.replace("{date}", SITE_SYNC),
+    syncDate: SITE_SYNC,
+    takeaway,
     meta: [
       scenario.sourceLabel ? t(locale, scenario.sourceLabel) : boards.map((panel) => panel.name).join(" · ") || benchmark?.name,
       boards.length === 1 && benchmark ? `${locale === "zh" ? "榜单日期" : "Board"} ${benchmark.asOf}` : "",
@@ -742,6 +837,7 @@ export function getScenario(locale: Locale, slug: string) {
     note: scenario.note ? t(locale, scenario.note) : scenario.lead === "value" ? dict.scenario.leadNote : "",
     stale,
     combo: build ? { href: build.href, label: build.combo } : undefined,
+    comboSection: scenarioCombo(locale, scenario),
     rows,
     boards,
     fusion,

@@ -188,8 +188,13 @@ test("source board filter and header stay under the nav while scrolling", async 
 
 test("web scenario fuses ranks and links each board", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
-  await expect(page.getByText("单看哪一张榜都有盲点，这里把五张合起来排。")).toBeVisible();
-  await expect(page.getByRole("button", { name: "评分方法 →" })).toBeVisible();
+  await expect(page.getByText("按真人盲测、设计还原、框架任务和工程判断，挑出写前端最合适的模型。")).toBeVisible();
+  await expect(page.getByText(/目前.*Claude Opus 5\.5/)).toBeVisible();
+  await expect(page.getByRole("button", { name: "怎么算的？" })).toBeVisible();
+  await expect(page.getByText("按综合分排序")).toBeVisible();
+  await expect(page.getByText(/格子里是各榜原始名次/)).toBeVisible();
+  await expect(page.getByRole("heading", { name: "推荐组合" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /完整搭配与理由/ })).toBeVisible();
   await expect(page.getByRole("button", { name: /综合分/ })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: /盲测投票/ })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: /还原设计/ })).toBeVisible();
@@ -227,7 +232,7 @@ test("fused table column info popover title link opens the benchmark page", asyn
 test("web scenario scoring modal and fused table sticky head", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
   await expect(page.getByRole("columnheader", { name: /盲测投票/ })).toBeVisible();
-  const scoringTrigger = page.getByRole("button", { name: "评分方法 →" });
+  const scoringTrigger = page.getByRole("button", { name: "怎么算的？" });
   await scoringTrigger.click();
   const scoringDialog = page.getByRole("dialog");
   await expect(scoringDialog).toBeVisible();

@@ -177,7 +177,12 @@ describe("picks", () => {
 
   it("fuses scenario boards by model and composite score", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.thesis).toContain("单看哪一张榜都有盲点");
+    expect(web?.thesis).toContain("按真人盲测、设计还原");
+    expect(web?.takeaway?.sentence).toMatch(/Claude Opus 5\.5/);
+    expect(web?.takeaway?.sentence).toContain("4");
+    expect(web?.comboSection?.items[0]).toMatchObject({ highlight: true, purpose: "写代码的主力" });
+    expect(getScenario("zh", "cli-devops")?.takeaway?.sentence).toMatch(/排第一/);
+    expect(getScenario("en", "web-frontend")?.takeaway?.sentence).toMatch(/first on/i);
     expect(web?.fusion.columns.map((column) => column.id)).toEqual(["lmarena-webdev", "lmarena-image-to-webdev", "nextjs-evals", "reactbench", "sudo-l7"]);
     expect(web?.fusion.columns.map((column) => column.label)).toEqual(["盲测投票", "还原设计", "Next.js 任务", "React 任务", "工程判断"]);
     expect(web?.fusion.columns.map((column) => column.icon)).toEqual(["users-three", "image", "file-code", "atom", "scales"]);

@@ -31,8 +31,8 @@ export const scenarios: Scenario[] = [
       "Landing pages, interactive components, and React / Next.js screens. This page lines up LMArena WebDev, Image-to-WebDev, Next.js Agent Evals, the ReactBench ecosystem eval, and the general coding board sudo L7 by model. Cells are ranks. The full source boards live on the benchmark pages.",
     ),
     thesis: tx(
-      "单看哪一张榜都有盲点，这里把五张合起来排。",
-      "Any one board has blind spots; here five are ranked together.",
+      "按真人盲测、设计还原、框架任务和工程判断，挑出写前端最合适的模型。",
+      "Pick the best frontend-writing model from human blind votes, design restore, framework tasks, and engineering judgment.",
     ),
     benchmark: "lmarena-webdev",
     boards: [
@@ -137,8 +137,8 @@ export const scenarios: Scenario[] = [
       "Kotlin and Compose. This page lines up the current Android Bench version, 2.0 long-horizon, with the general coding board sudo L7 by model. Cells are ranks. The full 1.0 board stays on the benchmark page as an archived version.",
     ),
     thesis: tx(
-      "单看哪一张榜都有盲点，这里把两张合起来排。",
-      "Any one board has blind spots; here two are ranked together.",
+      "按长程 Android 改造任务和工程判断，挑出做 App 最合适的模型。",
+      "Pick the best app-building model from long-horizon Android work and engineering judgment.",
     ),
     benchmark: "android-bench",
     boards: [
@@ -206,8 +206,8 @@ export const scenarios: Scenario[] = [
       "Agent tasks and automation in a terminal. Ranked by the Terminal-Bench 4.0 pass rate, with the cost of one run beside the score.",
     ),
     thesis: tx(
-      "终端任务能不能做完，这里按通过率排；也把跑分成本放在旁边看。",
-      "Whether the terminal job finishes is ranked by pass rate here, with run cost beside it.",
+      "按终端 Agent 任务的通过率，挑出写脚本与 DevOps 最合适的模型。",
+      "Pick the best model for scripts and DevOps by terminal agent pass rate.",
     ),
     benchmark: "terminal-bench-4",
     boards: [

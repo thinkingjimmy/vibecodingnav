@@ -219,7 +219,7 @@ export interface Scenario {
   title: LText;
   /** SEO / metadata 用的较长摘要；页头不再展示。 */
   summary: LText;
-  /** 页头唯一一句说明，例如「单看哪一张榜都有盲点，这里把五张合起来排。」 */
+  /** 页头一句介绍，例如「按真人盲测、设计还原…挑出写前端最合适的模型。」 */
   thesis: LText;
   /** 首页卡片、挑选和组合使用的那一张来源榜。 */
   benchmark?: string;
@@ -295,6 +295,8 @@ export interface BuildRole {
   primary: RoleRef;
   extras?: RoleRef[];
   meta?: LText;
+  /** 场景页推荐组合网格的一行用途；省略时从条目说明推导。 */
+  purpose?: LText;
   alternatives: { ref: RoleRef; tone: "value" | "open" | "note"; when: LText }[];
 }
 
@@ -349,6 +351,17 @@ export interface Dictionary {
   scenario: {
     combo: string;
     viewCombo: string;
+    comboFullLink: string;
+    comboModelPurpose: string;
+    sortByComposite: string;
+    cellRanksNote: string;
+    howScored: string;
+    takeawayPrefix: string;
+    takeawayAllFirst: string;
+    takeawayFirsts: string;
+    takeawayFirstsTied: string;
+    takeawaySingle: string;
+    takeawaySingleTied: string;
     board: string;
     picks: string;
     filterAll: string;

@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Base UI Dialog、场景评分说明、逐步拆解与（可选）小多图数据
- * [OUTPUT]: 对外提供「评分方法」居中模态：目录 + 公式 / 例子 / 为什么合起来看 / 权重 / 缺榜 / 注意；右上角仅 X 关闭
+ * [OUTPUT]: 对外提供「怎么算的？」居中模态：目录 + 公式 / 例子 / 为什么合起来看 / 权重 / 缺榜 / 注意；右上角仅 X 关闭；触发器样式可覆盖
  * [POS]: src/components 的场景页评分说明
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -225,9 +225,13 @@ function WorkedExample({
 export function ScenarioScoringModal({
   dict,
   scoring,
+  triggerClassName,
+  triggerLabel,
 }: {
   dict: Dictionary;
   scoring: ScenarioScoring;
+  triggerClassName?: string;
+  triggerLabel?: string;
 }) {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -299,9 +303,12 @@ export function ScenarioScoringModal({
     >
       <Dialog.Trigger
         ref={triggerRef}
-        className="inline-flex h-[30px] shrink-0 items-center gap-1.5 rounded-[7px] bg-muted px-[11px] text-[13px] font-medium text-fg hover:bg-muted/80"
+        className={
+          triggerClassName
+          ?? "inline-flex h-[30px] shrink-0 items-center gap-1.5 rounded-[7px] bg-muted px-[11px] text-[13px] font-medium text-fg hover:bg-muted/80"
+        }
       >
-        {dict.scenario.scoringMethod}
+        {triggerLabel ?? dict.scenario.howScored}
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 z-50 bg-fg/[0.12] dark:bg-fg/[0.28]" />

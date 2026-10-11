@@ -1,0 +1,139 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>场景页头部 · 第三轮</title>
+<script>if(/[?&]theme=dark/.test(location.search))document.documentElement.classList.add('dark')</script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--fg:#09090b;--muted:#f4f4f5;--mfg:#71717a;--faint:#a1a1aa;--border:#e4e4e7;--line:color-mix(in oklab,#e4e4e7 64%,#fff);--surface:#fafafa}
+.dark{--bg:#09090b;--fg:#fafafa;--muted:#27272a;--mfg:#a1a1aa;--faint:#71717a;--border:#27272a;--line:color-mix(in oklab,#27272a 64%,#09090b);--surface:#111113}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 Geist,'Noto Sans CJK SC',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.ph{width:1em;height:1em;display:inline-block;vertical-align:-.125em;flex:none}
+.num{font-family:'Geist Mono','Noto Sans CJK SC',monospace;font-feature-settings:"tnum" 1,"zero" 1}
+.opt{position:relative;border-bottom:8px solid var(--muted);overflow:hidden;padding-bottom:72px}
+.col{max-width:1200px;margin:0 auto;padding:0 16px}
+.tag{position:absolute;left:16px;top:14px;font:500 11px/1 'Geist Mono',monospace;color:var(--faint)}
+.bc{padding-top:56px;font-size:12px;color:var(--mfg)}.bc b{color:var(--fg);font-weight:400}
+h1{font-size:48px;line-height:1.08;font-weight:500;letter-spacing:-.04em;margin-top:22px}
+h2{font-size:22px;font-weight:500;letter-spacing:-.02em}
+.lead{margin-top:16px;font-size:17px;line-height:1.6;color:var(--mfg)}
+.key{margin-top:6px;font-size:17px;line-height:1.6;color:var(--fg)}
+.key .lg{margin:0 4px 0 2px}
+.meta{font-size:12px;color:var(--faint)}
+.u{text-decoration:underline;text-decoration-color:color-mix(in oklab,currentColor 30%,transparent);text-underline-offset:3px}
+.btn{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px;border-radius:7px;background:var(--muted);font-size:13px;font-weight:500}
+.lg{display:inline-grid;place-items:center;width:14px;height:14px;vertical-align:-2px}.lg svg{width:14px;height:14px}
+/* table */
+.g{display:grid;grid-template-columns:1fr 104px 64px repeat(5,124px);align-items:center;column-gap:8px}
+.th{height:40px;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--mfg)}
+.th>span{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.th .cv{color:var(--faint);font-size:11px}
+.th .on{color:var(--fg);font-weight:500}
+.tr{height:48px;border-bottom:1px solid var(--line);font-size:14px}
+.tr .m{display:flex;align-items:center;gap:10px;font-weight:500}
+.tr .sc{font-weight:500}
+.dash{color:var(--faint)}
+.more{height:44px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--mfg);border-bottom:1px solid var(--line)}
+.infob{position:relative;display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:var(--faint)}
+.infob.hot{color:var(--fg);background:var(--muted)}
+.pop{position:absolute;top:30px;left:-14px;width:300px;z-index:5;border:1px solid var(--border);border-radius:10px;background:var(--bg);padding:12px 14px;box-shadow:0 12px 32px -16px rgba(0,0,0,.3);font-size:13px;line-height:1.6;color:var(--mfg);white-space:normal;font-weight:400;text-align:left}
+.pop b{display:block;color:var(--fg);font-weight:500;margin-bottom:4px}
+.pop .ws{display:flex;gap:2px;margin:10px 0 4px}.pop .ws i{height:5px;border-radius:1px;background:var(--fg)}
+.pop .wl{display:flex;gap:2px;font:10.5px 'Geist Mono',monospace;color:var(--faint)}.pop .wl span{white-space:nowrap;overflow:hidden}
+.pop a{display:inline-flex;align-items:center;gap:4px;margin-top:8px;color:var(--fg);font-weight:500}
+.toolbar{display:flex;align-items:center;justify-content:space-between;height:44px;font-size:13px;color:var(--mfg)}
+.toolbar .q{display:inline-flex;align-items:center;gap:5px;color:var(--fg)}
+.sep{color:var(--border);margin:0 8px}
+/* combo */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.chip{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 10px;border:1px solid var(--border);border-radius:8px;font-size:13.5px;background:var(--bg);white-space:nowrap}
+.chip .ph{color:var(--mfg)}
+.chip .t{font:11px 'Geist Mono','Noto Sans CJK SC',monospace;color:var(--faint)}
+.chip.main{border-color:color-mix(in oklab,var(--fg) 35%,var(--border));font-weight:500}
+.plus{align-self:center;color:var(--faint);font-size:13px}
+.stack{display:grid;grid-template-columns:repeat(4,1fr);margin-top:18px;border-top:1px solid var(--line)}
+.stack .c{padding:14px 16px 14px 0;border-bottom:1px solid var(--line)}
+.stack .t{font:11px 'Geist Mono','Noto Sans CJK SC',monospace;color:var(--faint);display:flex;align-items:center;gap:6px}
+.stack .n{margin-top:6px;font-size:14.5px;font-weight:500;display:flex;align-items:center;gap:8px}
+.stack .y{margin-top:2px;font-size:12.5px;color:var(--mfg)}
+/* method section */
+.wbar{display:flex;gap:4px;margin-top:22px;max-width:1200px}
+.wseg .lab{font-size:13px;font-weight:500;white-space:nowrap}.wseg .lab span{font:11px 'Geist Mono',monospace;color:var(--faint);margin-left:4px;font-weight:400}
+.wseg .bar{height:6px;border-radius:2px;background:var(--fg);margin-top:8px;opacity:.85}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:22px;max-width:960px}
+.rules div{font-size:13.5px;line-height:1.6;color:var(--mfg)}.rules b{display:block;color:var(--fg);font-weight:500;font-size:13.5px;margin-bottom:2px}
+/* drawer */
+.drawer{position:absolute;top:0;right:0;bottom:0;width:460px;background:var(--bg);border-left:1px solid var(--border);box-shadow:-24px 0 48px -32px rgba(0,0,0,.3);padding:28px 28px;z-index:10;overflow:hidden}
+.scrim{position:absolute;inset:0;background:color-mix(in oklab,var(--fg) 6%,transparent);z-index:9}
+.drawer h3{font-size:20px;font-weight:500;letter-spacing:-.02em}
+.drawer .sec{margin-top:22px}.drawer .sec h4{font-size:12px;font-weight:500;color:var(--faint);font-family:'Geist Mono',monospace;margin-bottom:8px}
+.drawer p,.drawer li{font-size:13.5px;line-height:1.65;color:var(--mfg)}
+.drawer ul{list-style:none}.drawer li{padding-left:14px;position:relative;margin-top:4px}.drawer li::before{content:"";position:absolute;left:2px;top:.75em;width:4px;height:1px;background:var(--faint)}
+.wt{display:grid;grid-template-columns:1fr 48px;font-size:13.5px}.wt span{padding:6px 0;border-top:1px solid var(--line)}.wt span:nth-child(even){text-align:right;font-family:'Geist Mono',monospace}
+.wt span:nth-child(-n+2){border-top:0}
+.formula{margin-top:8px;padding:10px 12px;border-radius:8px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);font:12px/1.7 'Geist Mono','Noto Sans CJK SC',monospace;color:var(--fg)}
+#v2drawer{min-height:860px}</style></head><body><div id="root"></div><script>
+const IC={"users-three": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z\"/></svg>", "image": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z\"/></svg>", "file-code": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,146.34a8,8,0,0,1,0,11.32l-24,24a8,8,0,0,1-11.32-11.32L164.69,152l-18.35-18.34a8,8,0,0,1,11.32-11.32Zm-72-24a8,8,0,0,0-11.32,0l-24,24a8,8,0,0,0,0,11.32l24,24a8,8,0,0,0,11.32-11.32L91.31,152l18.35-18.34A8,8,0,0,0,109.66,122.34ZM216,88V216a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V40A16,16,0,0,1,56,24h96a8,8,0,0,1,5.66,2.34l56,56A8,8,0,0,1,216,88Zm-56-8h28.69L160,51.31Zm40,136V96H152a8,8,0,0,1-8-8V40H56V216H200Z\"/></svg>", "atom": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M196.12,128c24.65-34.61,37.22-70.38,19.74-87.86S162.61,35.23,128,59.88C93.39,35.23,57.62,22.66,40.14,40.14S35.23,93.39,59.88,128c-24.65,34.61-37.22,70.38-19.74,87.86h0c5.63,5.63,13.15,8.14,21.91,8.14,18.48,0,42.48-11.17,66-27.88C151.47,212.83,175.47,224,194,224c8.76,0,16.29-2.52,21.91-8.14h0C233.34,198.38,220.77,162.61,196.12,128Zm8.43-76.55c7.64,7.64,2.48,32.4-18.52,63.28a300.33,300.33,0,0,0-21.19-23.57A300.33,300.33,0,0,0,141.27,70C172.15,49,196.91,43.8,204.55,51.45ZM176.29,128a289.14,289.14,0,0,1-22.76,25.53A289.14,289.14,0,0,1,128,176.29a289.14,289.14,0,0,1-25.53-22.76A289.14,289.14,0,0,1,79.71,128,298.62,298.62,0,0,1,128,79.71a289.14,289.14,0,0,1,25.53,22.76A289.14,289.14,0,0,1,176.29,128ZM51.45,51.45c2.2-2.21,5.83-3.35,10.62-3.35C73.89,48.1,92.76,55,114.72,70A304,304,0,0,0,91.16,91.16,300.33,300.33,0,0,0,70,114.73C49,83.85,43.81,59.09,51.45,51.45Zm0,153.1C43.81,196.91,49,172.15,70,141.27a300.33,300.33,0,0,0,21.19,23.57A304.18,304.18,0,0,0,114.73,186C83.85,207,59.09,212.2,51.45,204.55Zm153.1,0c-7.64,7.65-32.4,2.48-63.28-18.52a304.18,304.18,0,0,0,23.57-21.19A300.33,300.33,0,0,0,186,141.27C207,172.15,212.19,196.91,204.55,204.55ZM140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Z\"/></svg>", "scales": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M239.43,133l-32-80h0a8,8,0,0,0-9.16-4.84L136,62V40a8,8,0,0,0-16,0V65.58L54.26,80.19A8,8,0,0,0,48.57,85h0v.06L16.57,165a7.92,7.92,0,0,0-.57,3c0,23.31,24.54,32,40,32s40-8.69,40-32a7.92,7.92,0,0,0-.57-3L66.92,93.77,120,82V208H104a8,8,0,0,0,0,16h48a8,8,0,0,0,0-16H136V78.42L187,67.1,160.57,133a7.92,7.92,0,0,0-.57,3c0,23.31,24.54,32,40,32s40-8.69,40-32A7.92,7.92,0,0,0,239.43,133ZM56,184c-7.53,0-22.76-3.61-23.93-14.64L56,109.54l23.93,59.82C78.76,180.39,63.53,184,56,184Zm144-32c-7.53,0-22.76-3.61-23.93-14.64L200,77.54l23.93,59.82C222.76,148.39,207.53,152,200,152Z\"/></svg>", "info": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z\"/></svg>", "caret-right": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z\"/></svg>", "cpu": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M152,96H104a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8h48a8,8,0,0,0,8-8V104A8,8,0,0,0,152,96Zm-8,48H112V112h32Zm88,0H216V112h16a8,8,0,0,0,0-16H216V56a16,16,0,0,0-16-16H160V24a8,8,0,0,0-16,0V40H112V24a8,8,0,0,0-16,0V40H56A16,16,0,0,0,40,56V96H24a8,8,0,0,0,0,16H40v32H24a8,8,0,0,0,0,16H40v40a16,16,0,0,0,16,16H96v16a8,8,0,0,0,16,0V216h32v16a8,8,0,0,0,16,0V216h40a16,16,0,0,0,16-16V160h16a8,8,0,0,0,0-16Zm-32,56H56V56H200v95.87s0,.09,0,.13,0,.09,0,.13V200Z\"/></svg>", "lightning": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M215.79,118.17a8,8,0,0,0-5-5.66L153.18,90.9l14.66-73.33a8,8,0,0,0-13.69-7l-112,120a8,8,0,0,0,3,13l57.63,21.61L88.16,238.43a8,8,0,0,0,13.69,7l112-120A8,8,0,0,0,215.79,118.17ZM109.37,214l10.47-52.38a8,8,0,0,0-5-9.06L62,132.71l84.62-90.66L136.16,94.43a8,8,0,0,0,5,9.06l52.8,19.8Z\"/></svg>", "squares-four": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-96,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48Zm96-64H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,200,136Zm0,64H152V152h48v48Z\"/></svg>", "shapes": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M71.59,61.47a8,8,0,0,0-15.18,0l-40,120A8,8,0,0,0,24,192h80a8,8,0,0,0,7.59-10.53ZM35.1,176,64,89.3,92.9,176ZM208,76a52,52,0,1,0-52,52A52.06,52.06,0,0,0,208,76Zm-88,0a36,36,0,1,1,36,36A36,36,0,0,1,120,76Zm104,68H136a8,8,0,0,0-8,8v56a8,8,0,0,0,8,8h88a8,8,0,0,0,8-8V152A8,8,0,0,0,224,144Zm-8,56H144V160h72Z\"/></svg>", "wave-sine": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M239.24,131.4c-22,46.8-41.4,68.6-61.2,68.6-25.1,0-40.73-33.32-57.28-68.6C107.7,103.56,92.9,72,78,72c-16.4,0-36.31,37.21-46.72,59.4a8,8,0,0,1-14.48-6.8C38.71,77.8,58.16,56,78,56c25.1,0,40.73,33.32,57.28,68.6C148.3,152.44,163.1,184,178,184c16.4,0,36.31-37.21,46.72-59.4a8,8,0,0,1,14.48,6.8Z\"/></svg>", "text-aa": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M87.24,52.59a8,8,0,0,0-14.48,0l-64,136a8,8,0,1,0,14.48,6.81L39.9,160h80.2l16.66,35.4a8,8,0,1,0,14.48-6.81ZM47.43,144,80,74.79,112.57,144ZM200,96c-12.76,0-22.73,3.47-29.63,10.32a8,8,0,0,0,11.26,11.36c3.8-3.77,10-5.68,18.37-5.68,13.23,0,24,9,24,20v3.22A42.76,42.76,0,0,0,200,128c-22.06,0-40,16.15-40,36s17.94,36,40,36a42.73,42.73,0,0,0,24-7.25,8,8,0,0,0,16-.75V132C240,112.15,222.06,96,200,96Zm0,88c-13.23,0-24-9-24-20s10.77-20,24-20,24,9,24,20S213.23,184,200,184Z\"/></svg>", "plugs-connected": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M237.66,18.34a8,8,0,0,0-11.32,0l-52.4,52.41-5.37-5.38a32.05,32.05,0,0,0-45.26,0L100,88.69l-6.34-6.35A8,8,0,0,0,82.34,93.66L88.69,100,65.37,123.31a32,32,0,0,0,0,45.26l5.38,5.37-52.41,52.4a8,8,0,0,0,11.32,11.32l52.4-52.41,5.37,5.38a32,32,0,0,0,45.26,0L156,167.31l6.34,6.35a8,8,0,0,0,11.32-11.32L167.31,156l23.32-23.31a32,32,0,0,0,0-45.26l-5.38-5.37,52.41-52.4A8,8,0,0,0,237.66,18.34Zm-116.29,161a16,16,0,0,1-22.62,0L76.69,157.25a16,16,0,0,1,0-22.62L100,111.31,144.69,156Zm57.94-57.94L156,144.69,111.31,100l23.32-23.31a16,16,0,0,1,22.62,0l22.06,22A16,16,0,0,1,179.31,121.37ZM88.57,35A8,8,0,0,1,103.43,29l8,20A8,8,0,0,1,96.57,55ZM24.57,93A8,8,0,0,1,35,88.57l20,8A8,8,0,0,1,49,111.43l-20-8A8,8,0,0,1,24.57,93ZM231.43,163a8,8,0,0,1-10.4,4.46l-20-8A8,8,0,1,1,207,144.57l20,8A8,8,0,0,1,231.43,163Zm-64,58.06A8,8,0,0,1,152.57,227l-8-20A8,8,0,0,1,159.43,201Z\"/></svg>", "arrow-right": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z\"/></svg>", "x": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z\"/></svg>", "question": "<svg class=\"ph\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M140,180a12,12,0,1,1-12-12A12,12,0,0,1,140,180ZM128,72c-22.06,0-40,16.15-40,36v4a8,8,0,0,0,16,0v-4c0-11,10.77-20,24-20s24,9,24,20-10.77,20-24,20a8,8,0,0,0-8,8v8a8,8,0,0,0,16,0v-.72c18.24-3.35,32-17.9,32-35.28C168,88.15,150.06,72,128,72Zm104,56A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z\"/></svg>"};
+const LOGO={
+ anthropic:'<svg viewBox="0 0 24 24"><path fill="currentColor" d="M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.329h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.14.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z"/></svg>',
+ openai:'<svg viewBox="0 0 24 24"><path fill="currentColor" d="M21.55 10.004a5.416 5.416 0 00-.478-4.501c-1.217-2.09-3.662-3.166-6.05-2.66A5.59 5.59 0 0010.831 1C8.39.995 6.224 2.546 5.473 4.838A5.553 5.553 0 001.76 7.496a5.487 5.487 0 00.691 6.5 5.416 5.416 0 00.477 4.502c1.217 2.09 3.662 3.165 6.05 2.66A5.586 5.586 0 0013.168 23c2.443.006 4.61-1.546 5.361-3.84a5.553 5.553 0 003.715-2.66 5.488 5.488 0 00-.693-6.497v.001zm-8.381 11.558a4.199 4.199 0 01-2.675-.954c.034-.018.093-.05.132-.074l4.44-2.53a.71.71 0 00.364-.623v-6.176l1.877 1.069c.02.01.033.029.036.05v5.115c-.003 2.274-1.87 4.118-4.174 4.123zM4.192 17.78a4.059 4.059 0 01-.498-2.763c.032.02.09.055.131.078l4.44 2.53c.225.13.504.13.73 0l5.42-3.088v2.138a.068.068 0 01-.027.057L9.9 19.288c-1.999 1.136-4.552.46-5.707-1.51h-.001zM3.023 8.216A4.15 4.15 0 015.198 6.41l-.002.151v5.06a.711.711 0 00.364.624l5.42 3.087-1.876 1.07a.067.067 0 01-.063.005l-4.489-2.559c-1.995-1.14-2.679-3.658-1.53-5.63h.001zm15.417 3.54l-5.42-3.088L14.896 7.6a.067.067 0 01.063-.006l4.489 2.557c1.998 1.14 2.683 3.662 1.529 5.633a4.163 4.163 0 01-2.174 1.807V12.38a.71.71 0 00-.363-.623zm1.867-2.773a6.04 6.04 0 00-.132-.078l-4.44-2.53a.731.731 0 00-.729 0l-5.42 3.088V7.325a.068.068 0 01.027-.057L14.1 4.713c2-1.137 4.555-.46 5.707 1.513.487.833.664 1.809.499 2.757h.001zm-11.741 3.81l-1.877-1.068a.065.065 0 01-.036-.051V6.559c.001-2.277 1.873-4.122 4.181-4.12.976 0 1.92.338 2.671.954-.034.018-.092.05-.131.073l-4.44 2.53a.71.71 0 00-.365.623l-.003 6.173v.002zm1.02-2.168L12 9.25l2.414 1.375v2.75L12 14.75l-2.415-1.375v-2.75z"/></svg>',
+ kimi:'<svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.738 5.776c.163-.209.306-.4.457-.585.07-.087.064-.153-.004-.244-.655-.861-.717-1.817-.34-2.787.283-.73.909-1.072 1.674-1.145.477-.045.945.004 1.379.236.57.305.902.77 1.01 1.412.086.512.07 1.012-.075 1.508-.257.878-.888 1.333-1.753 1.448-.718.096-1.446.108-2.17.157-.056.004-.113 0-.178 0z"/><path fill="currentColor" d="M17.962 1.844h-4.326l-3.425 7.81H5.369V1.878H1.5V22h3.87v-8.477h6.824a3.025 3.025 0 002.743-1.75V22h3.87v-8.477a3.87 3.87 0 00-3.588-3.86v-.01h-2.125a3.94 3.94 0 002.323-2.12l2.545-5.689z"/></svg>',
+ zhipu:'<span class="ltr">Z</span>', qwen:'<span class="ltr">Q</span>', google:'<span class="ltr">G</span>', meta:'<span class="ltr">M</span>', xai:'<span class="ltr">x</span>', xiaomi:'<span class="ltr" style="font-size:7.5px">mi</span>', tencent:'<span class="ltr">T</span>', deepseek:'<span class="ltr">D</span>',
+};
+
+const L=k=>`<span class="lg">${LOGO[k]||''}</span>`;
+const B=[
+ {n:'盲测投票',full:'LMArena WebDev',w:'1.0',i:'users-three'},
+ {n:'还原设计',full:'LMArena Image-to-WebDev',w:'0.6',i:'image'},
+ {n:'Next.js 任务',full:'Next.js Agent Evals',w:'0.4',i:'file-code'},
+ {n:'React 任务',full:'ReactBench',w:'0.4',i:'atom'},
+ {n:'工程判断',full:'Surge AI sudo L7',w:'0.6',i:'scales'},
+];
+const ROWS=[['anthropic','Claude Opus 5.5',98,'4/5',[1,1,1,null,1]],['anthropic','Claude Sonnet 5.5',92,'3/5',[3,2,null,null,2]],['openai','GPT-6 Astra',87,'4/5',[2,3,7,null,3]],['anthropic','Claude Fable 5.1',84,'5/5',[5,4,3,1,5]],['openai','GPT-6.1 Sol',80,'3/5',[4,5,null,null,4]]];
+const bc=`<div class="bc num">场景 <span style="color:var(--faint);margin:0 6px">/</span><b>web-frontend</b></div>`;
+const h1=`<h1>做 Web 前端</h1>`;
+const INTRO=`按真人盲测、设计还原、框架任务和工程判断，挑出写前端最合适的模型。`;
+const KEY=`目前 ${L('anthropic')}Claude Opus 5.5 在参加的 4 项里都是第一。`;
+const scoreHead=(x='')=>`<span class="on">综合分 <span class="cv">↓</span>${x}</span>`;
+const thead=(x='')=>`<div class="g th"><span>模型</span>${scoreHead(x)}<span>上榜</span>${B.map(b=>`<span>${IC[b.i]}${b.n}<span class="cv">${IC['caret-right']}</span></span>`).join('')}</div>`;
+const trs=ROWS.map(r=>`<div class="g tr"><span class="m">${L(r[0])}${r[1]}</span><span class="num sc">${r[2]}</span><span class="num" style="color:var(--mfg)">${r[3]}</span>${r[4].map(x=>x?`<span class="num">#${x}</span>`:`<span class="num dash">—</span>`).join('')}</div>`).join('');
+const more=`<div class="more">展开全部模型 <span style="font-size:11px">↓</span></div>`;
+const table=(pre='',x='')=>`<div style="margin-top:40px">${pre}${thead(x)}${trs}${more}</div>`;
+const sec=(id,tag,inner,extra='')=>`<section class="opt" id="${id}"><span class="tag">${tag}</span><div class="col">${inner}</div>${extra}</section>`;
+const meta=`<div class="meta num" style="margin-top:14px">本页同步 2026-10-10 · 格子里是各榜原始名次</div>`;
+/* combo designs */
+const CI=[['cpu','Claude Opus 5.5','模型','写代码的主力',1],['lightning','frontend-design','Skill','让 AI 先定视觉方向再写'],['squares-four','shadcn/ui','组件','可复制改写的组件源码'],['shapes','Phosphor Icons','图标','六种字重的统一图标'],['wave-sine','Motion','动效','React 动画与手势'],['text-aa','Geist','字体','界面与等宽字体'],['plugs-connected','Figma MCP server','MCP','把设计稿上下文喂给 AI']];
+const comboTitle=(sub='')=>`<div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:72px"><div><h2>推荐组合</h2>${sub}</div><a class="u" style="font-size:13.5px;color:var(--mfg)">查看组合页 →</a></div>`;
+const comboChips=()=>`${comboTitle(`<p style="margin-top:6px;font-size:14px;color:var(--mfg)">榜首模型加上一套顺手的前端工具，开箱就能出像样的页面。</p>`)}<div class="chips">${CI.map((c,i)=>`<a class="chip ${c[4]?'main':''}">${c[4]?L('anthropic'):IC[c[0]]}${c[1]}<span class="t">${c[2]}</span></a>`).join('')}</div>`;
+const comboStack=()=>`${comboTitle()}<div class="stack">${CI.map(c=>`<a class="c"><div class="t">${c[2]}</div><div class="n">${c[4]?L('anthropic'):IC[c[0]]}${c[1]}</div><div class="y">${c[3]}</div></a>`).join('')}<a class="c" style="display:flex;align-items:center;color:var(--mfg);font-size:13.5px;gap:6px">完整搭配与理由 ${IC['arrow-right']}</a></div>`;
+const popW=`<div class="ws">${B.map(b=>`<i style="flex:${b.w}"></i>`).join('')}</div><div class="wl">${B.map(b=>`<span style="flex:${b.w}">${b.w}</span>`).join('')}</div>`;
+const drawer=`<div class="scrim"></div><aside class="drawer">
+ <div style="display:flex;justify-content:space-between;align-items:center"><h3>综合分怎么算</h3><span class="num" style="font-size:12px;color:var(--faint)">Esc 关闭 ✕</span></div>
+ <p style="margin-top:10px">综合分（0–100）只用于排序和首页卡片。表格里每一格仍是该榜的原始名次，完整原榜在各基准页。</p>
+ <div class="sec"><h4>1 · 每张榜换算成相对榜首的水平</h4><p>榜首记 100。竞技场榜（WebDev、图生网页）用对榜首的预期胜率换算；通过率榜用「通过率 ÷ 榜首通过率」。</p></div>
+ <div class="sec"><h4>2 · 按权重合并</h4><p style="margin-bottom:8px">主榜 1.0；独立第三方评测 0.6；框架厂商出题或生态评测 0.4。</p><div class="wt">${B.map(b=>`<span>${b.full}</span><span>${b.w}</span>`).join('')}</div></div>
+ <div class="sec"><h4>3 · 没参加的榜</h4><p>按该榜的中位水平、半权重计入：不占便宜，也不一票否决。标「初步」的行权重减半。</p>
+  <div class="formula">综合 = (Σ 已上榜 w·s + Σ 缺榜 ½w·中位) ÷ (Σ 已上榜 w + Σ 缺榜 ½w)</div></div>
+ <div class="sec"><h4>4 · 注意</h4><ul><li>四舍五入后同分算并列，再比 WebDev 名次。</li><li>Next.js 前排接近 97% 天花板，区分度低。</li><li>ReactBench 是第三方生态评测，不是 React 官方。</li><li>sudo L7 任务不公开，按专家评分细则打分。</li></ul></div>
+</aside>`;
+
+/* V1 列头 (i) */
+const pop1=`<span class="infob hot">${IC.info}<div class="pop"><b>综合分 0–100</b>五张榜各自换算成相对榜首的水平，按权重合并；没上的榜按中位水平、半权重计入。${popW}<a>完整评分方法 ${IC['arrow-right']}</a></div></span>`;
+const V1=sec('v1','1 · 综合分列头旁的 ⓘ，悬停出要点，点进抽屉',`${bc}${h1}<p class="lead">${INTRO}</p><p class="key">${KEY}</p>${meta}${table('',pop1)}${comboChips()}`);
+
+/* V2 表格工具栏 */
+const tb=`<div class="toolbar"><span>按综合分排序<span class="sep">·</span><a class="q u">${IC.question}怎么算的？</a></span><span class="num meta">格子里是各榜原始名次 · 本页同步 2026-10-10</span></div>`;
+const V2=sec('v2','2 · 表格上方一行工具栏：「按综合分排序 · 怎么算的？」',`${bc}${h1}<p class="lead">${INTRO}</p><p class="key">${KEY}</p><div style="margin-top:40px"></div>${table(tb).replace('margin-top:40px','margin-top:0')}${comboStack()}`);
+
+/* V3 H1 下元信息行 */
+const meta3=`<div class="meta num" style="margin-top:16px;display:flex;align-items:center;gap:0">本页同步 2026-10-10<span class="sep">·</span>5 张榜 · WebDev 852,934 票<span class="sep">·</span><a class="u" style="color:var(--fg);font-family:Geist,'Noto Sans CJK SC',sans-serif;font-size:12.5px">评分方法</a></div>`;
+const V3=sec('v3','3 · 标题下元信息行里放「评分方法」',`${bc}${h1}<p class="lead">${INTRO}</p><p class="key">${KEY}</p>${meta3}${table()}${comboChips()}`);
+
+/* V4 表格后「怎么排的」 */
+const method=`<div style="margin-top:72px;display:flex;align-items:baseline;justify-content:space-between"><h2>怎么排的</h2><a class="btn">完整评分方法 →</a></div>
+<div class="wbar">${B.map(b=>`<div class="wseg" style="flex:${b.w}"><div class="lab">${b.n}<span>${b.w}</span></div><div class="bar"></div></div>`).join('')}</div>
+<div class="rules"><div><b>各榜先换算</b>榜首记 100，其他模型按相对榜首的水平计分。</div><div><b>按权重合并</b>主榜 1.0，独立评测 0.6，厂商与生态评测 0.4。</div><div><b>缺榜不占便宜</b>没上的榜按中位水平、半权重计入。</div></div>`;
+const V4=sec('v4','4 · 表格后单独一节「怎么排的」，抽屉放完整说明',`${bc}${h1}<p class="lead">${INTRO}</p><p class="key">${KEY}</p>${meta}${table()}${method}${comboStack()}`);
+
+const V2d=sec('v2drawer','2 · 点「怎么算的？」后打开抽屉',`${bc}${h1}<p class="lead">${INTRO}</p><p class="key">${KEY}</p><div style="margin-top:40px"></div>${table(tb).replace('margin-top:40px','margin-top:0')}`,drawer);
+document.getElementById('root').innerHTML=V1+V2+V3+V4+V2d;
+</script></body></html>

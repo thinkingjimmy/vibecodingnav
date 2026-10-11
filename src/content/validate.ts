@@ -228,6 +228,8 @@ export function validateContent(input: ContentBundle): string[] {
       if (!benchmarks.has(cite.slug)) errors.push(`build.${build.slug} 依据基准不存在: ${cite.slug}`);
     }
     for (const role of build.roles) {
+      text(role.role, `build.${build.slug}.role`, errors);
+      if (role.purpose) text(role.purpose, `build.${build.slug}.purpose`, errors);
       for (const ref of [role.primary, ...(role.extras ?? []), ...role.alternatives.map((item) => item.ref)]) {
         if (ref.kind === "model" && !models.has(ref.slug)) errors.push(`build.${build.slug} 模型不存在: ${ref.slug}`);
         if (ref.kind === "item" && !items.has(ref.slug)) errors.push(`build.${build.slug} 条目不存在: ${ref.slug}`);

@@ -1,51 +1,65 @@
 /**
- * [INPUT]: 依赖场景标题、一句论点、同步日期、推荐组合与评分模态数据
- * [OUTPUT]: 对外提供场景页头部：标题 + 一句说明、同步、组合链接、「评分方法」模态
+ * [INPUT]: 依赖场景标题、介绍句、融合表 takeaway 与评分模态数据
+ * [OUTPUT]: 对外提供场景页头部：标题、介绍、数据 takeaway，以及行内「怎么算的？」评分入口
  * [POS]: src/components 的场景页头部
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 "use client";
 
-import Link from "next/link";
-import type { Dictionary } from "@/lib/contracts";
+import type { Dictionary, VendorId } from "@/lib/contracts";
 import { ScenarioScoringModal, type ScenarioScoring } from "./scenario-scoring-modal";
+import { VendorMark } from "./vendor-mark";
 
 export function ScenarioHero({
   title,
   thesis,
-  sync,
-  combo,
+  takeaway,
   scoring,
   dict,
   stale,
 }: {
   title: string;
   thesis: string;
-  sync: string;
-  combo?: { href: string; label: string };
+  takeaway?: {
+    name: string;
+    vendor?: VendorId;
+    letter?: string;
+    body: string;
+    sentence: string;
+  };
   scoring: ScenarioScoring;
   dict: Dictionary;
   stale?: boolean;
 }) {
   return (
     <section className="px-4 pt-6">
-      <div className="flex items-end justify-between gap-8">
-        <div className="min-w-0">
-          <h1 className="display-page">{title}</h1>
-          <p className="mt-3.5 max-w-[680px] text-[17px] leading-relaxed text-mfg">{thesis}</p>
-        </div>
-        <div className="pb-1">
-          <ScenarioScoringModal dict={dict} scoring={scoring} />
-        </div>
-      </div>
-      <p className="num mt-4 text-[12px] text-faint">{sync}</p>
-      {combo ? (
-        <p className="mt-3 text-[14px]">
-          <Link href={combo.href} className="link-u">
-            {dict.scenario.combo}：{combo.label}
-          </Link>
+      <h1 className="display-page">{title}</h1>
+      <p className="mt-4 max-w-[720px] text-[17px] leading-relaxed text-mfg">{thesis}</p>
+      {takeaway ? (
+        <p className="mt-1.5 max-w-[720px] text-[17px] leading-relaxed text-fg">
+          <span>{dict.scenario.takeawayPrefix} </span>
+          <span className="mx-0.5 inline-flex items-center gap-1.5 align-baseline font-medium">
+            <VendorMark vendor={takeaway.vendor} letter={takeaway.letter} className="size-3.5 translate-y-px" />
+            {takeaway.name}
+          </span>{" "}
+          <span>{takeaway.body}</span>
+          <ScenarioScoringModal
+            dict={dict}
+            scoring={scoring}
+            triggerClassName="link-u ml-1.5 text-[17px] font-normal text-mfg hover:text-fg"
+            triggerLabel={dict.scenario.howScored}
+          />
         </p>
-      ) : null}
+      ) : (
+        <div className="mt-1.5">
+          <ScenarioScoringModal
+            dict={dict}
+            scoring={scoring}
+            triggerClassName="link-u text-[17px] font-normal text-mfg hover:text-fg"
+            triggerLabel={dict.scenario.howScored}
+          />
+        </div>
+      )}
       {stale ? <p className="mt-4 text-[14px] text-mfg" data-stale="true">{dict.scenario.staleBanner}</p> : null}
     </section>
   );
