@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Base UI Dialog、场景评分说明与小多图示例数据
- * [OUTPUT]: 对外提供「评分方法」居中模态：左侧目录 + 右侧可滚动内容（小多图、归一化、权重、缺榜公式、注意）
+ * [OUTPUT]: 对外提供「评分方法」居中模态：左侧目录 + 右侧可滚动内容（小多图、归一化、权重、缺榜公式、注意）；右上角仅 X 关闭
  * [POS]: src/components 的场景页评分说明
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -9,6 +9,7 @@
 import { Dialog } from "@base-ui/react/dialog";
 import { useEffect, useId, useRef, useState } from "react";
 import type { Dictionary, VendorId } from "@/lib/contracts";
+import { DialogCloseButton } from "./ui/dialog-close";
 import { VendorMark } from "./vendor-mark";
 
 export interface ScoringExampleModel {
@@ -141,9 +142,7 @@ export function ScenarioScoringModal({
             <Dialog.Title className="text-[18px] font-medium tracking-[-0.02em] sm:text-[20px]">
               {dict.scenario.scoringTitle}
             </Dialog.Title>
-            <Dialog.Close className="num shrink-0 text-[12px] text-faint hover:text-fg">
-              {dict.scenario.scoringClose} ✕
-            </Dialog.Close>
+            <DialogCloseButton label={dict.scenario.scoringClose} />
           </div>
           <Dialog.Description className="sr-only">{dict.scenario.scoringIntro}</Dialog.Description>
           <div className="flex min-h-0 flex-1 flex-col md:flex-row">

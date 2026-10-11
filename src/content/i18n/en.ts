@@ -83,7 +83,7 @@ const en = {
     empty: "Nothing matches this filter.",
     synced: "Synced {date}",
     scoringMethod: "Scoring →",
-    scoringClose: "Esc to close",
+    scoringClose: "Close",
     scoringTitle: "How the composite score works",
     scoringToc: "Contents",
     scoringWhyTitle: "Why combine them",
@@ -98,7 +98,6 @@ const en = {
     scoringCaveatsTitle: "Caveats",
     scoringExampleLegend: "Bar height is level vs the leader; hatch means missing",
     scoringWeight: "Weight ×{weight}",
-    scoringRunBy: "Run by",
   },
   model: {
     scores: "Benchmark scores",

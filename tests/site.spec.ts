@@ -212,6 +212,10 @@ test("fused table column info popover title link opens the benchmark page", asyn
   const popup = page.locator("[data-column-info]");
   await expect(popup).toBeVisible({ timeout: 3000 });
   await expect(popup.getByRole("link", { name: "打开基准页 →" })).toHaveCount(0);
+  await expect(popup.getByText("主办")).toHaveCount(0);
+  await expect(popup.getByText(/票 ·|个模型 ·/)).toHaveCount(0);
+  await expect(popup.getByText("权重 ×1")).toBeVisible();
+  await expect(popup.getByText(/真人盲评两个模型做出的完整网页/)).toBeVisible();
   const titleLink = popup.getByRole("link", { name: "LMArena WebDev" });
   await titleLink.hover();
   await expect(popup).toBeVisible();
@@ -229,6 +233,10 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   await expect(scoringDialog).toBeVisible();
   await expect(scoringDialog.getByText("综合分怎么算")).toBeVisible();
   await expect(scoringDialog.getByText(/拿下 ReactBench 第 1/)).toBeVisible();
+  await expect(scoringDialog.getByText("Esc 关闭")).toHaveCount(0);
+  const scoringClose = scoringDialog.getByRole("button", { name: "关闭" });
+  await expect(scoringClose).toBeVisible();
+  await expect(scoringClose).toHaveText("");
   const dialogBox = await scoringDialog.boundingBox();
   expect(dialogBox?.width ?? 0).toBeLessThanOrEqual(900);
   expect(dialogBox?.x ?? 0).toBeGreaterThan(40);
@@ -244,6 +252,11 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   expect(
     await scoringTrigger.evaluate((el) => el.matches(":focus-visible") || getComputedStyle(el).outlineStyle !== "none"),
   ).toBe(false);
+
+  await scoringTrigger.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.getByRole("dialog").getByRole("button", { name: "关闭" }).click();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
 
   await scoringTrigger.click();
   await expect(page.getByRole("dialog")).toBeVisible();
@@ -536,6 +549,9 @@ test("closing search does not outline the trigger, and tab still shows a ring", 
     const trigger = page.getByRole("button", { name: item.name });
     await page.keyboard.press("Control+k");
     await expect(page.getByRole("dialog")).toBeVisible();
+    const searchClose = page.getByRole("dialog").getByRole("button", { name: item.path.startsWith("/zh") ? "关闭" : "Close" });
+    await expect(searchClose).toBeVisible();
+    await expect(searchClose).toHaveText("");
     await page.keyboard.press("Escape");
     await expect(page.getByRole("dialog")).toHaveCount(0);
     await expect(trigger).toBeFocused();

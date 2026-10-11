@@ -19,10 +19,8 @@ const board = (
   dimension: LText,
   icon: ScenarioBoard["icon"],
   blurb: LText,
-  runBy: LText,
   weight: number,
-  dataNote?: LText,
-): ScenarioBoard => ({ id, benchmark, label, dimension, icon, blurb, runBy, weight, dataNote });
+): ScenarioBoard => ({ id, benchmark, label, dimension, icon, blurb, weight });
 
 export const scenarios: Scenario[] = [
   {
@@ -48,9 +46,7 @@ export const scenarios: Scenario[] = [
           "真人盲评两个模型做出的完整网页：布局、细节、能不能用。衡量的是人类偏好，不是测试通过率。",
           "People blind-vote between two models’ full pages: layout, detail, and whether it runs. This is human preference, not test pass rate.",
         ),
-        tx("LMArena 竞技场", "LMArena arena"),
         1,
-        tx("852,934 票 · 142 个模型 · 2026-10-08", "852,934 votes · 142 models · 2026-10-08"),
       ),
       board(
         "image",
@@ -62,9 +58,7 @@ export const scenarios: Scenario[] = [
           "照一张截图把页面做出来。看模型能不能把设计稿还原成可用页面。",
           "Build a page from a screenshot. Can the model restore a design into something usable?",
         ),
-        tx("LMArena 竞技场", "LMArena arena"),
         0.6,
-        tx("177,108 票 · 64 个模型 · 2026-10-09", "177,108 votes · 64 models · 2026-10-09"),
       ),
       board(
         "nextjs",
@@ -76,9 +70,7 @@ export const scenarios: Scenario[] = [
           "Vercel 出题的真实 Next.js 任务，按 pass@4 计。前排接近天花板，区分度有限。",
           "Real Next.js tasks from Vercel, scored pass@4. The front is near the ceiling, so gaps are small.",
         ),
-        tx("Vercel / Next.js 官方评测", "Official Vercel / Next.js eval"),
         0.4,
-        tx("14 个模型 · 2026-09-25", "14 models · 2026-09-25"),
       ),
       board(
         "reactbench",
@@ -90,9 +82,7 @@ export const scenarios: Scenario[] = [
           "在真实 React 仓库里写功能和修问题。第三方生态评测，不是 React 或 Meta 官方。",
           "Write features and fix issues in real React repos. A third-party ecosystem eval, not official React or Meta.",
         ),
-        tx("Million 出品的生态评测", "Ecosystem eval by Million"),
         0.4,
-        tx("v1.2 · 76 个配置 · 2026-10-10", "v1.2 · 76 configs · 2026-10-10"),
       ),
       board(
         "sudo",
@@ -104,9 +94,7 @@ export const scenarios: Scenario[] = [
           "在生产代码库里做资深工程师级的取舍：改动、验证、把决定说清楚。任务集不公开。",
           "Staff-level tradeoffs in production codebases: change, verify, and explain the call. Tasks stay private.",
         ),
-        tx("Surge AI", "Surge AI"),
         0.6,
-        tx("60 个私有任务 · 12 个模型 · 2026-10-09", "60 private tasks · 12 models · 2026-10-09"),
       ),
     ],
     scoringCaveats: [
@@ -164,9 +152,7 @@ export const scenarios: Scenario[] = [
           "跨模块、耗时很长的 Android 改造：完整功能，而不是单点修改。区间很宽，分差小时不要只看名次。",
           "Long Android changes across modules: a whole feature, not a single edit. Intervals are wide; a small gap is a weak reason to switch.",
         ),
-        tx("Android 官方 Android Bench", "Official Android Bench"),
         1,
-        tx("10 个模型 · 30 题 · 2026-10-06", "10 models · 30 tasks · 2026-10-06"),
       ),
       board(
         "sudo",
@@ -178,9 +164,7 @@ export const scenarios: Scenario[] = [
           "在生产代码库里做资深工程师级的取舍。通用编码能力榜，不专测 Android UI。",
           "Staff-level tradeoffs in production codebases. A general coding board, not an Android UI test.",
         ),
-        tx("Surge AI", "Surge AI"),
         0.6,
-        tx("60 个私有任务 · 12 个模型 · 2026-10-09", "60 private tasks · 12 models · 2026-10-09"),
       ),
     ],
     scoringCaveats: [
@@ -237,9 +221,7 @@ export const scenarios: Scenario[] = [
           "终端里的 Agent 任务：装环境、改配置、跑命令、把自动化做完。不衡量界面好不好看。",
           "Agent tasks in a terminal: install a toolchain, edit config, run commands, finish the automation. It ignores whether a UI looks right.",
         ),
-        tx("Terminal-Bench（tbench.ai）", "Terminal-Bench (tbench.ai)"),
         1,
-        tx("35 个模型 · 2026-10-06", "35 models · 2026-10-06"),
       ),
     ],
     scoringCaveats: [

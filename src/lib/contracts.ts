@@ -210,10 +210,6 @@ export interface ScenarioBoard {
   icon: ScenarioBoardIcon;
   /** 悬停浮层里 1–2 句：这张榜测什么。 */
   blurb: LText;
-  /** 谁在跑这张榜，例如「Million 出品的生态评测」。 */
-  runBy: LText;
-  /** 浮层里的样本量/日期说明；省略时由基准的票数、模型数、版本、asOf 拼。 */
-  dataNote?: LText;
   /** 综合分权重。省略时按 1。主榜通常 1，相邻竞技场任务 0.6，厂商 / 生态评测 0.4。 */
   weight?: number;
 }
@@ -412,7 +408,6 @@ export interface Dictionary {
     scoringCaveatsTitle: string;
     scoringExampleLegend: string;
     scoringWeight: string;
-    scoringRunBy: string;
   };
   model: {
     scores: string;

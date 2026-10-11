@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖按模型对齐的名次、综合分、维度列头与排序文案
- * [OUTPUT]: 对外提供场景页的融合表：综合分/上榜列 + 一列一张榜的原始名次；列头为同行图标与白话维度，悬停锚定弹层看基准详情（标题链到基准页）
+ * [OUTPUT]: 对外提供场景页的融合表：综合分/上榜列 + 一列一张榜的原始名次；列头为同行图标与白话维度，悬停锚定弹层看基准名（链到基准页）、权重与 1–2 句说明
  * [POS]: src/components 的场景融合表
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -209,12 +209,6 @@ function DimensionHeader({
             <span className="num text-[11.5px] text-faint">{dict.scenario.scoringWeight.replace("{weight}", column.weightLabel)}</span>
           </div>
           <p className="text-[12.5px] leading-snug text-mfg">{column.blurb}</p>
-          {column.runBy ? (
-            <p className="text-[12px] text-mfg">
-              <span className="text-faint">{dict.scenario.scoringRunBy}</span> {column.runBy}
-            </p>
-          ) : null}
-          {column.dataMeta ? <p className="num text-[11.5px] text-faint">{column.dataMeta}</p> : null}
         </div>
       </ColumnInfoPopover>
     </th>

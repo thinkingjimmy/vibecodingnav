@@ -83,7 +83,7 @@ const zh = {
     empty: "当前筛选下没有模型。",
     synced: "本页同步 {date}",
     scoringMethod: "评分方法 →",
-    scoringClose: "Esc 关闭",
+    scoringClose: "关闭",
     scoringTitle: "综合分怎么算",
     scoringToc: "目录",
     scoringWhyTitle: "为什么合起来看",
@@ -98,7 +98,6 @@ const zh = {
     scoringCaveatsTitle: "注意事项",
     scoringExampleLegend: "柱高为相对榜首水平，斜线为未参加",
     scoringWeight: "权重 ×{weight}",
-    scoringRunBy: "主办",
   },
   model: {
     scores: "基准成绩",

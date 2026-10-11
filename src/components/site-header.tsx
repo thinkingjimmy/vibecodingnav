@@ -15,6 +15,7 @@ import type { Dictionary, Locale } from "@/lib/contracts";
 import type { SearchEntry } from "@/lib/catalog";
 import { localePath, swapLocale } from "@/lib/locale";
 import { activeNav } from "@/lib/nav";
+import { DialogCloseButton } from "./ui/dialog-close";
 
 const links = [
   ["scenarios", "/scenarios"],
@@ -105,21 +106,24 @@ export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Di
               }}
               className="fixed top-[12vh] left-1/2 z-50 w-[min(560px,calc(100vw-2rem))] -translate-x-1/2 rounded-[12px] border border-bd bg-bg shadow-none"
             >
-              <Dialog.Title className="sr-only">{dict.search.title}</Dialog.Title>
-              <Dialog.Description className="sr-only">{dict.search.placeholder}</Dialog.Description>
-              <input
-                autoFocus
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder={dict.search.placeholder}
-                className="h-12 w-full bg-transparent px-4 text-[15px] placeholder:text-faint"
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" && results[0]) {
-                    setOpen(false);
-                    router.push(results[0].href);
-                  }
-                }}
-              />
+              <div className="flex items-center gap-1 pr-1.5">
+                <Dialog.Title className="sr-only">{dict.search.title}</Dialog.Title>
+                <Dialog.Description className="sr-only">{dict.search.placeholder}</Dialog.Description>
+                <input
+                  autoFocus
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder={dict.search.placeholder}
+                  className="h-12 min-w-0 flex-1 bg-transparent px-4 text-[15px] placeholder:text-faint"
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" && results[0]) {
+                      setOpen(false);
+                      router.push(results[0].href);
+                    }
+                  }}
+                />
+                <DialogCloseButton label={dict.search.close} />
+              </div>
               <div className="max-h-80 overflow-auto border-t border-line">
                 {results.length === 0 ? <p className="px-4 py-6 text-[14px] text-mfg">{dict.search.empty}</p> : null}
                 {results.map((entry) => (
@@ -130,7 +134,6 @@ export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Di
                   </Link>
                 ))}
               </div>
-              <Dialog.Close className="sr-only">{dict.search.close}</Dialog.Close>
             </Dialog.Popup>
           </Dialog.Portal>
         </Dialog.Root>

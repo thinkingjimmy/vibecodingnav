@@ -23,7 +23,7 @@ eval-table.tsx: 框架评测的基线榜与逐模型变化量，超过 20 行可
 board-card.tsx: 首页与场景列表共用的榜单卡片；综合分，悬停/聚焦看各榜
 score-breakdown.tsx: 指针跟随的只读明细浮层（卡片行、融合表格子）
 rich-text.tsx: 变更日志里的强调与等宽片段
-ui/: 预留给无业务语义的 primitive；当前对话框直接使用 Base UI
+ui/: 无业务语义 primitive（含 DialogCloseButton）；对话框壳层仍直接使用 Base UI
 
 法则: Server Component 默认。浏览器状态只在页头、场景头部、来源榜、融合表、榜单卡片悬停提示、评测表、分类筛选、版本切换和复制块里。
 

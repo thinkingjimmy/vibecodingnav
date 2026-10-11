@@ -159,8 +159,6 @@ export function validateContent(input: ContentBundle): string[] {
       text(board.label, `scenario.${scenario.slug}.board.${board.id}.label`, errors);
       text(board.dimension, `scenario.${scenario.slug}.board.${board.id}.dimension`, errors);
       text(board.blurb, `scenario.${scenario.slug}.board.${board.id}.blurb`, errors);
-      text(board.runBy, `scenario.${scenario.slug}.board.${board.id}.runBy`, errors);
-      if (board.dataNote) text(board.dataNote, `scenario.${scenario.slug}.board.${board.id}.dataNote`, errors);
       if (!boardIcons.has(board.icon)) errors.push(`scenario.${scenario.slug} 分表图标不合法: ${board.icon}`);
     }
     for (const [index, caveat] of (scenario.scoringCaveats ?? []).entries()) {

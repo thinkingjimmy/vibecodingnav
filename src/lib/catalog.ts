@@ -387,20 +387,9 @@ function scenarioBoardSpecs(scenario: Scenario) {
       dimension: { zh: "", en: "" },
       icon: "scales" as ScenarioBoardIcon,
       blurb: { zh: "", en: "" },
-      runBy: { zh: "", en: "" },
     }];
   }
   return [];
-}
-
-function boardDataMeta(locale: Locale, spec: ReturnType<typeof scenarioBoardSpecs>[number], benchmark: (typeof benchmarks)[number]) {
-  if (spec.dataNote?.zh) return t(locale, spec.dataNote);
-  const parts: string[] = [];
-  if (benchmark.votes) parts.push(`${benchmark.votes} ${locale === "zh" ? "票" : "votes"}`);
-  if (benchmark.version) parts.push(benchmark.version);
-  if (benchmark.trackedCount) parts.push(`${benchmark.trackedCount} ${locale === "zh" ? "个模型" : "models"}`);
-  if (benchmark.asOf) parts.push(benchmark.asOf);
-  return parts.join(" · ");
 }
 
 function modelIdentity(result: Result) {
@@ -422,10 +411,8 @@ export function fuseScenario(locale: Locale, scenario: Scenario) {
       tag: benchmark.kind === "ecosystem" ? t(locale, benchmark.domain) : "",
       icon: spec.icon,
       blurb: spec.blurb.zh ? t(locale, spec.blurb) : t(locale, benchmark.measures),
-      runBy: spec.runBy.zh ? t(locale, spec.runBy) : "",
       weight,
       weightLabel: weight % 1 === 0 ? String(weight) : weight.toFixed(1),
-      dataMeta: boardDataMeta(locale, spec, benchmark),
     };
   });
   const primaryIndex = Math.max(0, specs.findIndex((spec) => spec.benchmark === scenario.benchmark));
