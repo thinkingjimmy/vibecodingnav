@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { content } from "@/content";
 import { getHome, getScenario } from "@/lib/catalog";
-import { computeComposite, normalizeToLeader, type CompositeBoardSpec } from "@/lib/composite";
+import { computeComposite, explainCompositeScore, normalizeToLeader, type CompositeBoardSpec } from "@/lib/composite";
 
 function bestRows(benchmark: string): CompositeBoardSpec["rows"] {
   const current = content.benchmarks.find((item) => item.slug === benchmark)?.versions?.find((version) => version.current)?.id;
@@ -129,6 +129,27 @@ describe("composite method C", () => {
     // c appears on both boards at 50; without preliminary it stays 50
     expect(c.display).toBe(50);
     expect(b.homeEligible).toBe(true);
+  });
+
+  it("worked example contributions sum to the displayed composite", () => {
+    for (const slug of ["web-frontend", "android-app", "cli-devops"] as const) {
+      for (const locale of ["zh", "en"] as const) {
+        const worked = getScenario(locale, slug)?.scoring.worked;
+        expect(worked, `${slug}/${locale}`).toBeDefined();
+        const numerator = worked!.rows.reduce((sum, row) => sum + row.contribution, 0);
+        const denominator = worked!.rows.reduce((sum, row) => sum + row.weight, 0);
+        expect(numerator).toBeCloseTo(worked!.numerator, 8);
+        expect(denominator).toBeCloseTo(worked!.denominator, 8);
+        expect(numerator / denominator).toBeCloseTo(worked!.score, 8);
+        expect(Math.round(numerator / denominator)).toBe(worked!.composite);
+        const explained = explainCompositeScore(scenarioBoards(slug), worked!.key);
+        expect(explained?.display).toBe(worked!.composite);
+        expect(explained?.score).toBeCloseTo(worked!.score, 8);
+      }
+    }
+    const web = getScenario("zh", "web-frontend")!.scoring.worked!;
+    expect(web).toMatchObject({ key: "model:claude-fable-5-1", composite: 84 });
+    expect(Math.round(web.numerator / web.denominator)).toBe(84);
   });
 
   it("wires composite into fused tables and home cards", () => {

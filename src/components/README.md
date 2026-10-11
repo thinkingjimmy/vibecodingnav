@@ -12,7 +12,7 @@ benchmark-versions.tsx: 基准页的版本切换，默认当前版本，历史�
 price-chart.tsx: Image-to-WebDev 的分数对混合价格散点
 fused-table.tsx: 场景页的融合表，综合分列 + 同行维度图标列头与原始名次
 scenario-hero.tsx: 场景页头部：一句论点、同步、组合链接与评分方法入口
-scenario-scoring-modal.tsx: 「评分方法」居中模态（目录 + 小多图、归一化、权重、缺榜公式）
+scenario-scoring-modal.tsx: 「评分方法」居中模态（目录 + 公式 / 例子 / 小多图 / 权重 / 缺榜 / 注意）
 board-dimension-icon.tsx: 融合表列头的 Phosphor 维度图标
 column-info-popover.tsx: 锚定列头的可交互说明弹层（悬停桥接、焦点与链接触达）
 category-list.tsx: 工具箱类型筛选

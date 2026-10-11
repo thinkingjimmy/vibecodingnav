@@ -181,8 +181,14 @@ describe("picks", () => {
     expect(web?.fusion.columns.map((column) => column.id)).toEqual(["lmarena-webdev", "lmarena-image-to-webdev", "nextjs-evals", "reactbench", "sudo-l7"]);
     expect(web?.fusion.columns.map((column) => column.label)).toEqual(["盲测投票", "还原设计", "Next.js 任务", "React 任务", "工程判断"]);
     expect(web?.fusion.columns.map((column) => column.icon)).toEqual(["users-three", "image", "file-code", "atom", "scales"]);
-    expect(web?.scoring.example?.caption).toContain("ReactBench");
-    expect(web?.scoring.example?.caption).toContain("第 4");
+    expect(web?.scoring.chart?.caption).toContain("ReactBench");
+    expect(web?.scoring.chart?.caption).toContain("第 4");
+    expect(web?.scoring.worked).toMatchObject({
+      key: "model:claude-fable-5-1",
+      name: "Claude Fable 5.1",
+      composite: 84,
+    });
+    expect(web?.scoring.worked?.rows).toHaveLength(5);
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1]);
     expect(opus).toMatchObject({ compositeLabel: "98", count: 4, total: 5 });
@@ -202,7 +208,9 @@ describe("picks", () => {
       ["sudo-l7", "工程判断"],
     ]);
     expect(android?.fusion.columns.map((column) => column.icon)).toEqual(["device-mobile", "scales"]);
-    expect(android?.scoring.example).toBeUndefined();
+    expect(android?.scoring.chart).toBeUndefined();
+    expect(android?.scoring.worked?.composite).toBe(100);
+    expect(android?.scoring.worked?.rows).toHaveLength(2);
     const opus55 = android?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(android?.fusion.rows.find((row) => row.slug === "claude-opus-5")).toBeUndefined();
     expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1]);

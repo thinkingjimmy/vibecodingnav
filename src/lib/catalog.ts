@@ -24,7 +24,7 @@ import {
   type VendorId,
   type WeightClass,
 } from "./contracts";
-import { computeComposite, type CompositeBoardSpec } from "./composite";
+import { computeComposite, explainCompositeScore, type CompositeBoardSpec } from "./composite";
 import { getDictionary } from "./i18n";
 import { localePath, t } from "./locale";
 import { isStale, SITE_SYNC, siteClock } from "./site";
@@ -497,7 +497,7 @@ export function fuseScenario(locale: Locale, scenario: Scenario) {
       || b.coverage - a.coverage
       || a.name.localeCompare(b.name, locale === "zh" ? "zh-CN" : "en");
   });
-  return { columns, rows };
+  return { columns, rows, compositeBoards };
 }
 
 function scenarioCard(locale: Locale, scenario: (typeof scenarios)[number]) {
@@ -595,7 +595,26 @@ export function getHome(locale: Locale) {
   };
 }
 
-function scoringExample(locale: Locale, fusion: ReturnType<typeof fuseScenario>) {
+function formatScoringNum(value: number) {
+  const rounded = Math.round(value * 10) / 10;
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+}
+
+function shortModelName(name: string) {
+  return name.replace(/^Claude\s+/i, "").replace(/^GPT-?/i, "GPT-");
+}
+
+function pickWorkedFusionRow(fusion: ReturnType<typeof fuseScenario>) {
+  const surprise = fusion.rows.find((row) =>
+    row.compositeRank != null
+    && row.compositeRank > 1
+    && row.cells.some((cell) => cell?.rank === 1),
+  );
+  if (surprise) return surprise;
+  return fusion.rows.find((row) => row.composite != null);
+}
+
+function scoringChart(locale: Locale, fusion: ReturnType<typeof fuseScenario>) {
   if (fusion.columns.length < 2) return undefined;
   const surprise = fusion.rows.find((row) =>
     row.compositeRank != null
@@ -609,7 +628,7 @@ function scoringExample(locale: Locale, fusion: ReturnType<typeof fuseScenario>)
   const limit = Math.min(Math.max(4, surprise.compositeRank), fusion.rows.length);
   const models = fusion.rows.slice(0, limit).map((row) => ({
     key: row.key,
-    name: row.name.replace(/^Claude\s+/i, "").replace(/^GPT-?/i, "GPT-"),
+    name: shortModelName(row.name),
     vendor: row.vendor,
     letter: row.letter,
     rank: row.compositeRank ?? 0,
@@ -617,7 +636,7 @@ function scoringExample(locale: Locale, fusion: ReturnType<typeof fuseScenario>)
     bars: row.cells.map((cell) => (cell?.normalized == null ? null : cell.normalized)),
     highlight: row.key === surprise.key ? winIndex : -1,
   }));
-  const shortName = surprise.name.replace(/^Claude\s+/i, "").replace(/^GPT-?/i, "GPT-");
+  const shortName = shortModelName(surprise.name);
   const caption = locale === "zh"
     ? `${shortName} 拿下 ${board.name} 第 1，合起来只排第 ${surprise.compositeRank}。`
     : `${shortName} is #1 on ${board.name}, but only #${surprise.compositeRank} overall.`;
@@ -625,6 +644,55 @@ function scoringExample(locale: Locale, fusion: ReturnType<typeof fuseScenario>)
     caption,
     dimensions: fusion.columns.map((column) => column.label),
     models,
+  };
+}
+
+function scoringWorked(
+  locale: Locale,
+  fusion: ReturnType<typeof fuseScenario>,
+  dict: ReturnType<typeof getDictionary>,
+) {
+  const pick = pickWorkedFusionRow(fusion);
+  if (!pick || pick.composite == null) return undefined;
+  const explanation = explainCompositeScore(fusion.compositeBoards, pick.key);
+  if (!explanation) return undefined;
+  return {
+    key: pick.key,
+    name: pick.name,
+    vendor: pick.vendor,
+    letter: pick.letter,
+    composite: explanation.display,
+    compositeLabel: String(explanation.display),
+    numerator: explanation.numerator,
+    denominator: explanation.denominator,
+    score: explanation.score,
+    numeratorLabel: formatScoringNum(explanation.numerator),
+    denominatorLabel: formatScoringNum(explanation.denominator),
+    exactLabel: formatScoringNum(explanation.score),
+    lead: dict.scenario.scoringExampleLead
+      .replace("{name}", pick.name)
+      .replace("{score}", String(explanation.display)),
+    rows: explanation.boards.map((board, index) => {
+      const column = fusion.columns[index]!;
+      const cell = pick.cells[index];
+      const raw = board.missing
+        ? dict.scenario.scoringMissingCell
+        : `${cell?.score ?? "—"}${cell?.unit ?? ""}${cell ? ` · #${cell.rank}` : ""}`;
+      return {
+        board: column.label,
+        name: column.name,
+        raw,
+        normalizedLabel: formatScoringNum(board.normalized),
+        weightLabel: formatScoringNum(board.effectiveWeight),
+        contributionLabel: formatScoringNum(board.contribution),
+        normalized: board.normalized,
+        weight: board.effectiveWeight,
+        contribution: board.contribution,
+        missing: board.missing,
+        preliminary: board.preliminary,
+        halfWeight: board.missing || board.preliminary,
+      };
+    }),
   };
 }
 
@@ -680,7 +748,8 @@ export function getScenario(locale: Locale, slug: string) {
     scoring: {
       weights: fusion.columns.map((column) => ({ name: column.name, weight: column.weightLabel })),
       caveats: (scenario.scoringCaveats ?? []).map((item) => t(locale, item)),
-      example: scoringExample(locale, fusion),
+      worked: scoringWorked(locale, fusion, dict),
+      chart: scoringChart(locale, fusion),
     },
     why: scenario.whyItMatters.map((item) => ({ title: t(locale, item.title), body: t(locale, item.body) })),
     picks: (scenario.editorPicks ?? []).map((pick) => {

@@ -232,6 +232,9 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   const scoringDialog = page.getByRole("dialog");
   await expect(scoringDialog).toBeVisible();
   await expect(scoringDialog.getByText("综合分怎么算")).toBeVisible();
+  await expect(scoringDialog.getByRole("heading", { name: "公式" })).toBeVisible();
+  await expect(scoringDialog.getByRole("heading", { name: "一个例子" })).toBeVisible();
+  await expect(scoringDialog.getByText(/Claude Fable 5\.1/)).toBeVisible();
   await expect(scoringDialog.getByText(/拿下 ReactBench 第 1/)).toBeVisible();
   await expect(scoringDialog.getByText("Esc 关闭")).toHaveCount(0);
   const scoringClose = scoringDialog.getByRole("button", { name: "关闭" });
@@ -242,7 +245,7 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   expect(dialogBox?.x ?? 0).toBeGreaterThan(40);
   const toc = scoringDialog.getByRole("navigation", { name: "目录" });
   await expect(toc).toBeVisible();
-  await expect(toc.getByRole("button", { name: "为什么合起来看" })).toHaveAttribute("aria-current", "true");
+  await expect(toc.getByRole("button", { name: "公式" })).toHaveAttribute("aria-current", "true");
   await toc.getByRole("button", { name: "注意事项" }).click();
   await expect(toc.getByRole("button", { name: "注意事项" })).toHaveAttribute("aria-current", "true", { timeout: 3000 });
   await expect(scoringDialog.getByRole("heading", { name: "注意事项" })).toBeVisible();
@@ -270,7 +273,7 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   const mobileToc = mobileDialog.getByRole("navigation", { name: "目录" });
   await expect(mobileToc).toBeVisible();
   const tocBox = await mobileToc.boundingBox();
-  const contentHeading = mobileDialog.getByRole("heading", { name: "为什么合起来看" });
+  const contentHeading = mobileDialog.getByRole("heading", { name: "公式" });
   const headingBox = await contentHeading.boundingBox();
   expect((tocBox?.y ?? 0) + (tocBox?.height ?? 0)).toBeLessThanOrEqual((headingBox?.y ?? 9999) + 1);
   await page.keyboard.press("Escape");
