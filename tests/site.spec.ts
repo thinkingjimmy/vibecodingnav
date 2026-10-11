@@ -41,6 +41,30 @@ test("a board card model opens its model page", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Claude Opus 5.5");
 });
 
+test("board card score breakdown follows the pointer inside the viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/zh/");
+  const section = page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) });
+  const row = section.locator("article").first().locator("[aria-label*='综合']").first();
+  await expect(row).toBeVisible();
+  const box = await row.boundingBox();
+  expect(box).toBeTruthy();
+  const pointer = { x: box!.x + Math.min(48, box!.width / 3), y: box!.y + box!.height / 2 };
+  await page.mouse.move(pointer.x, pointer.y);
+  const popup = page.locator("[data-score-breakdown]");
+  await expect(popup).toBeVisible({ timeout: 3000 });
+  const tip = await popup.boundingBox();
+  expect(tip).toBeTruthy();
+  const dx = Math.max(tip!.x - pointer.x, 0, pointer.x - (tip!.x + tip!.width));
+  const dy = Math.max(tip!.y - pointer.y, 0, pointer.y - (tip!.y + tip!.height));
+  expect(Math.hypot(dx, dy)).toBeLessThanOrEqual(40);
+  expect(tip!.x).toBeGreaterThanOrEqual(0);
+  expect(tip!.y).toBeGreaterThanOrEqual(0);
+  expect(tip!.x + tip!.width).toBeLessThanOrEqual(1280);
+  expect(tip!.y + tip!.height).toBeLessThanOrEqual(900);
+  expect(pointer.x < tip!.x || pointer.x > tip!.x + tip!.width || pointer.y < tip!.y || pointer.y > tip!.y + tip!.height).toBeTruthy();
+});
+
 test("view more opens every scenario as a board card", async ({ page }) => {
   await page.goto("/zh/");
   const section = page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) });

@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { fuseScenario } from "@/lib/catalog";
 import type { Dictionary, VendorId } from "@/lib/contracts";
+import { ScoreBreakdown, ScoreBreakdownProvider } from "./score-breakdown";
 import { VendorMark } from "./vendor-mark";
 
 const PAGE = 20;
@@ -108,23 +109,42 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
         </div>
       </div>
       <div ref={scrollRef} className="overflow-x-auto px-4">
-        <table ref={tableRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
-          {cols()}
-          <tbody>
-            {shown.map((row) => (
-              <tr key={row.key} className="rowh border-b border-line">
-                <td className="max-w-0 overflow-hidden px-2 py-2.5">
-                  <ModelName name={row.name} href={row.href} vendor={row.vendor} letter={row.letter} />
-                </td>
-                <td className="num px-2 py-2.5 text-right">{row.compositeLabel}</td>
-                <td className="num px-2 py-2.5 text-right text-mfg">{row.count}/{row.total}</td>
-                {row.cells.map((cell, index) => (
-                  <td key={fusion.columns[index]!.id} className="num px-2 py-2.5 text-right" title={cell?.tip}>{cell ? cell.rank : "—"}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <ScoreBreakdownProvider>
+          <table ref={tableRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
+            {cols()}
+            <tbody>
+              {shown.map((row) => (
+                <tr key={row.key} className="rowh border-b border-line">
+                  <td className="max-w-0 overflow-hidden px-2 py-2.5">
+                    <ModelName name={row.name} href={row.href} vendor={row.vendor} letter={row.letter} />
+                  </td>
+                  <td className="num px-2 py-2.5 text-right">{row.compositeLabel}</td>
+                  <td className="num px-2 py-2.5 text-right text-mfg">{row.count}/{row.total}</td>
+                  {row.cells.map((cell, index) => {
+                    const column = fusion.columns[index]!;
+                    if (!cell?.tip) {
+                      return (
+                        <td key={column.id} className="num px-2 py-2.5 text-right">{cell ? cell.rank : "—"}</td>
+                      );
+                    }
+                    return (
+                      <ScoreBreakdown
+                        key={column.id}
+                        content={{ title: cell.tip }}
+                        label={`${row.name}, ${column.label}: ${cell.tip}`}
+                        render={(props) => (
+                          <td {...props} className="num cursor-default px-2 py-2.5 text-right outline-none">
+                            {cell.rank}
+                          </td>
+                        )}
+                      />
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </ScoreBreakdownProvider>
       </div>
       {rows.length > PAGE ? (
         <div className="px-4 pt-4">

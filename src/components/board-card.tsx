@@ -1,20 +1,17 @@
 /**
- * [INPUT]: 依赖场景卡片数据、厂商标与 Base UI Tooltip
+ * [INPUT]: 依赖场景卡片数据、厂商标与 ScoreBreakdown
  * [OUTPUT]: 对外提供首页和场景列表共用的榜单卡片：名次、厂商标、模型名、综合分；悬停 / 键盘聚焦看各榜
  * [POS]: src/components 的场景榜单卡片
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 "use client";
 
-import { Tooltip } from "@base-ui/react/tooltip";
 import Link from "next/link";
 import type { VendorId } from "@/lib/contracts";
+import { ScoreBreakdown, ScoreBreakdownProvider, type ScoreBreakdownContent } from "./score-breakdown";
 import { VendorMark } from "./vendor-mark";
 
-export interface BoardCardDetail {
-  title: string;
-  boards: { label: string; value: string }[];
-}
+export type BoardCardDetail = ScoreBreakdownContent;
 
 export interface BoardCardRow {
   rank: number;
@@ -51,13 +48,13 @@ export function BoardCard({ card, viewMore }: { card: BoardCardData; viewMore: s
           <Link href={card.href} className="num shrink-0 pt-0.5 text-[12px] text-mfg hover:text-fg">{viewMore} →</Link>
         </div>
       </div>
-      <Tooltip.Provider>
+      <ScoreBreakdownProvider>
         <div className="flex-1 px-4 pb-2.5">
           {card.rows.map((row, index) => (
             <CardRow key={row.name} row={row} index={index} />
           ))}
         </div>
-      </Tooltip.Provider>
+      </ScoreBreakdownProvider>
     </article>
   );
 }
@@ -98,33 +95,17 @@ function CardRow({ row, index }: { row: BoardCardRow; index: number }) {
   }
 
   return (
-    <Tooltip.Root>
-      <Tooltip.Trigger
-        delay={200}
-        render={(props) => (
-          <div
-            {...props}
-            tabIndex={0}
-            className={`-mx-2 flex h-[38px] w-[calc(100%+1rem)] items-center gap-2.5 rounded-md px-2 text-[13.5px] outline-none ${rowHover} ${index ? "border-t border-line" : ""}`}
-            aria-label={`${row.name}, ${row.detail!.title}`}
-          >
-            {content}
-          </div>
-        )}
-      />
-      <Tooltip.Portal>
-        <Tooltip.Positioner side="right" align="start" sideOffset={8} className="z-50">
-          <Tooltip.Popup className="w-[236px] rounded-lg border border-bd bg-bg px-3 py-2.5 text-[12px] text-fg shadow-[0_8px_24px_-12px_rgba(0,0,0,0.18)] outline-none">
-            <div className="mb-1 font-medium">{row.detail.title}</div>
-            {row.detail.boards.map((board) => (
-              <div key={board.label} className="flex justify-between gap-3 py-0.5">
-                <span className="text-mfg">{board.label}</span>
-                <span className="num shrink-0">{board.value}</span>
-              </div>
-            ))}
-          </Tooltip.Popup>
-        </Tooltip.Positioner>
-      </Tooltip.Portal>
-    </Tooltip.Root>
+    <ScoreBreakdown
+      content={row.detail}
+      label={`${row.name}, ${row.detail.title}`}
+      render={(props) => (
+        <div
+          {...props}
+          className={`-mx-2 flex h-[38px] w-[calc(100%+1rem)] items-center gap-2.5 rounded-md px-2 text-[13.5px] outline-none ${rowHover} ${index ? "border-t border-line" : ""}`}
+        >
+          {content}
+        </div>
+      )}
+    />
   );
 }
