@@ -1,513 +1,465 @@
-/* 浏览器验收：六语言路由、品牌一致性、语言菜单、SEO、响应式与视觉回归 */
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 
-const locales = ["en", "zh-CN", "ja", "ko", "es", "fr"] as const;
-const nativeNames = ["English", "中文", "日本語", "한국어", "Español", "Français"] as const;
-const modelRoutes = {
-  en: "/models/kimi-k3/",
-  "zh-CN": "/zh-CN/models/kimi-k3/",
-  ja: "/ja/models/kimi-k3/",
-  ko: "/ko/models/kimi-k3/",
-  es: "/es/models/kimi-k3/",
-  fr: "/fr/models/kimi-k3/",
-} as const;
-
-const gptRoutes = {
-  en: "/models/gpt-5-6-sol/",
-  "zh-CN": "/zh-CN/models/gpt-5-6-sol/",
-} as const;
-
-const cases = [
-  { name: "en-desktop", locale: "en", viewport: { width: 1280, height: 900 } },
-  { name: "zh-desktop", locale: "zh-CN", viewport: { width: 1280, height: 900 } },
-  { name: "en-mobile", locale: "en", viewport: { width: 390, height: 844 } },
-  { name: "zh-mobile", locale: "zh-CN", viewport: { width: 390, height: 844 } },
-] as const;
-
-for (const current of cases) {
-  test(`visual ${current.name}`, async ({ browser }) => {
-    const page = await browser.newPage({ viewport: current.viewport });
-    await page.goto(modelRoutes[current.locale]);
-    await page.waitForLoadState("networkidle");
-    await page.evaluate(async () => document.fonts.ready);
-    await expect(page).toHaveScreenshot(`${current.name}.png`, {
-      animations: "disabled",
-      fullPage: true,
-    });
-    await page.close();
-  });
+function clippedNow(page: Page) {
+  return page.locator("table th, table td").evaluateAll((cells) => cells
+    .filter((cell) => !cell.querySelector(".truncate") && cell.scrollWidth > cell.clientWidth + 1)
+    .map((cell) => (cell.textContent ?? "").trim()));
 }
 
-for (const current of [
-  { name: "language-menu-desktop", viewport: { width: 1280, height: 900 } },
-  { name: "language-menu-mobile", viewport: { width: 390, height: 844 } },
-] as const) {
-  test(`visual ${current.name}`, async ({ browser }) => {
-    const page = await browser.newPage({ viewport: current.viewport });
-    await page.goto(modelRoutes.en);
-    await page.waitForLoadState("networkidle");
-    await page.evaluate(async () => document.fonts.ready);
-    await page.getByRole("button", { name: "Language: English" }).click();
-    await expect(page.getByRole("menuitemradio")).toHaveCount(6);
-    await expect(page).toHaveScreenshot(`${current.name}.png`, {
-      animations: "disabled",
-      fullPage: false,
-    });
-    await page.close();
-  });
-}
-
-test("visual model-menu-desktop", async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto(modelRoutes.en);
-  await page.waitForLoadState("networkidle");
-  await page.evaluate(async () => document.fonts.ready);
-  await page.getByRole("button", { name: "Models: Kimi K3" }).click();
-  await expect(page).toHaveScreenshot("model-menu-desktop.png", {
-    animations: "disabled",
-    fullPage: false,
-  });
-});
-
-for (const locale of locales) {
-  test(`${locale} 静态页面可达`, async ({ page }) => {
-    await page.goto(modelRoutes[locale]);
-    await expect(page.locator("html")).toHaveAttribute("lang", locale);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Kimi K3");
-  });
-}
-
-test("根路径显示 noindex 占位与模型入口", async ({ page }) => {
-  await page.addInitScript(() => localStorage.setItem("lang", "fr"));
-  await page.goto("/");
-  await expect(page).toHaveURL(/\/$/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Home is coming soon.");
-  await expect(page.getByRole("link", { name: /View Kimi K3/ })).toHaveAttribute("href", modelRoutes.en);
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
-});
-
-test("旧 locale 首页不再承载模型内容", async ({ page }) => {
-  for (const route of ["/en/", "/zh-CN/"]) {
-    await page.goto(route);
-    await expect(page.getByRole("heading", { level: 1, name: "Kimi K3" })).toHaveCount(0);
-    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
-  }
-});
-
-test("语言选择器写入记忆并导航", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const header = page.locator("header");
-  const trigger = page.getByRole("button", { name: "Language: English" });
-
-  await expect(header.getByText("Language", { exact: true })).toHaveCount(0);
-  await expect(trigger).toHaveText("");
-  await expect(trigger.locator("svg")).toHaveCount(1);
-  await trigger.click();
-
-  const items = page.getByRole("menuitemradio");
-  await expect(items).toHaveCount(6);
-  for (const name of nativeNames) {
-    await expect(page.getByRole("menuitemradio", { name })).toBeVisible();
-  }
-  await expect(page.getByRole("menuitemradio", { name: "English" })).toHaveAttribute("aria-checked", "true");
-
-  await page.getByRole("menuitemradio", { name: "中文" }).click();
-  await expect(page).toHaveURL(/\/zh-CN\/models\/kimi-k3\/$/);
-  await expect(page.evaluate(() => localStorage.getItem("lang"))).resolves.toBe("zh-CN");
-  const nextTrigger = page.getByRole("button", { name: "语言: 中文" });
-  await expect(nextTrigger).toHaveText("");
-  await expect(nextTrigger.locator("svg")).toHaveCount(1);
-});
-
-test("语言菜单支持键盘开启、导航与关闭", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const trigger = page.getByRole("button", { name: "Language: English" });
-  await trigger.focus();
-  await page.keyboard.press("Enter");
-  await expect(page.getByRole("menuitemradio", { name: "English" })).toBeFocused();
-  await page.keyboard.press("ArrowDown");
-  await expect(page.getByRole("menuitemradio", { name: "中文" })).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(trigger).toBeFocused();
-});
-
-test("canonical 与 hreflang 完整", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://aievalindex.vercel.app/models/kimi-k3/");
-  await expect(page.locator('link[rel="alternate"]')).toHaveCount(7);
-  await expect(page.locator('link[hreflang="zh-CN"]')).toHaveAttribute("href", "https://aievalindex.vercel.app/zh-CN/models/kimi-k3/");
-  await expect(page.locator('link[hreflang="x-default"]')).toHaveAttribute("href", "https://aievalindex.vercel.app/models/kimi-k3/");
-});
-
-test("Header 与浏览器标签共享品牌图标", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  await expect(page.locator('header img[src="/aievalindex-mark.png"]')).toHaveCount(1);
-  await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", "/aievalindex-mark.png");
-});
-
-test("Hero 使用 Moonshot 厂商标记并链接官网", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const hero = page.locator("#models");
-  const vendorLink = hero.getByRole("link", { name: "Moonshot AI" });
-
-  await expect(hero.locator('img[src="/model-logos/moonshot.svg"]')).toHaveCount(1);
-  await expect(hero.getByRole("heading", { level: 1 })).toHaveText("Kimi K3");
-  await expect(vendorLink).toHaveAttribute("href", "https://www.moonshot.ai/");
-  await expect(vendorLink).toHaveAttribute("target", "_blank");
-  await expect(vendorLink).toHaveAttribute("rel", "noopener");
-  await expect(hero.locator(".hero-model-lockup")).toHaveCSS("align-items", "baseline");
-  await expect(hero.locator("dl")).toHaveCSS("text-align", "right");
-  await expect(hero.locator("dl")).toHaveCSS("justify-items", "end");
-});
-
-test("GPT-5.6 Sol (max) 使用 OpenAI 身份、模型级 SEO 与专有权重状态", async ({ page }) => {
-  await page.goto(gptRoutes.en);
-  const hero = page.locator("#models");
-  const leaderboard = page.locator("#leaderboard");
-  const intelligence = leaderboard.getByRole("row").filter({
-    hasText: "Artificial Analysis Intelligence Index v4.1",
-  });
-
-  await expect(page).toHaveTitle(/GPT-5\.6 Sol \(max\).*Intelligence, Speed & Price/);
-  await expect(hero.locator('img[src="/model-logos/openai.svg"]')).toHaveCount(1);
-  await expect(hero.getByRole("heading", { level: 1 })).toHaveText("GPT-5.6 Sol (max)");
-  await expect(hero.getByRole("link", { name: "OpenAI" })).toHaveAttribute("href", "https://openai.com/");
-  await expect(hero.getByText("Not available", { exact: true })).toBeVisible();
-  await expect(hero.locator(".hero-stat-card").first().getByText("58.9", { exact: true })).toBeVisible();
-  await expect(leaderboard.locator("tbody tr")).toHaveCount(11);
-  await expect(leaderboard.getByRole("columnheader", { name: "Fable 5" })).toBeVisible();
-  await expect(leaderboard.getByRole("columnheader", { name: "GPT-5.5" })).toBeVisible();
-  await expect(leaderboard.getByRole("columnheader", { name: "Opus 4.8" })).toBeVisible();
-  await expect(intelligence.getByRole("cell").nth(1)).toHaveText("58.9");
-  await expect(intelligence.getByRole("cell").nth(2)).toHaveText("59.9");
-  await expect(intelligence.getByRole("cell").nth(3)).toHaveText("54.8");
-  await expect(intelligence.getByRole("cell").nth(4)).toHaveText("55.7");
-  await expect(intelligence.getByRole("link")).toHaveAttribute(
-    "href",
-    "https://openai.com/zh-Hans-CN/index/gpt-5-6/",
-  );
-  await expect(leaderboard.getByRole("row", { name: "Wins 8 3 0 0" })).toBeVisible();
-  await expect(page.locator("#data-sources").getByRole("link", { name: "OpenAI" })).toHaveAttribute(
-    "href",
-    "https://openai.com/zh-Hans-CN/index/gpt-5-6/",
-  );
-
-  await page.goto(gptRoutes["zh-CN"]);
+test("chinese home shows the scenario boards", async ({ page }) => {
+  await page.goto("/zh/");
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("GPT-5.6 Sol (max)");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("按场景，选对模型与框架");
+  await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
+  await expect(page.getByText("#1 · #1 · #1 · —").first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
+  await expect(page.getByText("查看完整榜单")).toHaveCount(0);
+  const section = page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) });
+  await expect(section.getByText("LMArena WebDev")).toHaveCount(0);
+  await expect(section.getByText("Android Bench")).toHaveCount(0);
+  await expect(page.locator("#sources")).toBeVisible();
+  const columns = () => section.locator("article").first().locator("xpath=..").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").filter(Boolean).length);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  expect(await columns()).toBe(3);
+  await page.setViewportSize({ width: 800, height: 900 });
+  expect(await columns()).toBe(2);
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await columns()).toBe(1);
 });
 
-test("指标卡在中等宽度保持两列，宽屏展开四列且标题区对齐", async ({ page }) => {
-  await page.setViewportSize({ width: 876, height: 844 });
-  await page.goto(modelRoutes.en);
-  const stats = page.locator(".hero-stats");
-
-  const mediumLayout = await stats.evaluate((grid) => {
-    const cards = Array.from(grid.children) as HTMLElement[];
-    return {
-      columns: getComputedStyle(grid).gridTemplateColumns.split(" ").length,
-      headerHeights: cards.map((card) => card.querySelector<HTMLElement>(".hero-stat-header")!.offsetHeight),
-      firstRowValueTops: cards.slice(0, 2).map((card) => card.querySelector<HTMLElement>(".stat-value")!.offsetTop),
-    };
-  });
-
-  expect(mediumLayout.columns).toBe(2);
-  expect(new Set(mediumLayout.headerHeights).size).toBe(1);
-  expect(new Set(mediumLayout.firstRowValueTops).size).toBe(1);
-
-  await page.setViewportSize({ width: 1280, height: 900 });
-  const desktopLayout = await stats.evaluate((grid) => {
-    const cards = Array.from(grid.children) as HTMLElement[];
-    const badges = Array.from(grid.querySelectorAll<HTMLElement>(".stat-badge"));
-    const bars = Array.from(grid.querySelectorAll<HTMLElement>(".stat-bar"));
-    return {
-      columns: getComputedStyle(grid).gridTemplateColumns.split(" ").length,
-      cardHeights: cards.map((card) => card.offsetHeight),
-      cardRadii: cards.map((card) => getComputedStyle(card).borderRadius),
-      labels: cards.map((card) => card.querySelector<HTMLElement>(".hero-stat-header div")!.textContent),
-      units: Array.from(grid.querySelectorAll<HTMLElement>(".stat-unit")).map((unit) => unit.textContent),
-      badgeColors: badges.map((badge) => getComputedStyle(badge).backgroundColor),
-      barHeights: bars.map((bar) => bar.offsetHeight),
-      barColors: bars.map((bar) => getComputedStyle(bar.firstElementChild!).backgroundColor),
-    };
-  });
-  expect(desktopLayout.columns).toBe(4);
-  expect(new Set(desktopLayout.cardHeights)).toEqual(new Set([136]));
-  expect(new Set(desktopLayout.cardRadii)).toEqual(new Set(["8px"]));
-  expect(desktopLayout.labels).toEqual(["Intelligence", "Output Speed", "Price / 1M", "Context"]);
-  expect(desktopLayout.units).toEqual(["idx", "tokens/s", "tokens"]);
-  expect(desktopLayout.badgeColors[0]).not.toBe(desktopLayout.badgeColors[1]);
-  expect(desktopLayout.badgeColors[1]).toBe(desktopLayout.badgeColors[2]);
-  expect(new Set(desktopLayout.barHeights)).toEqual(new Set([5]));
-  expect(desktopLayout.barColors[0]).not.toBe(desktopLayout.barColors[1]);
+test("a board card model opens its model page", async ({ page }) => {
+  await page.goto("/zh/");
+  const model = page.getByRole("link", { name: "Claude Opus 5.5" }).first();
+  await expect(model).toHaveAttribute("href", "/zh/models/claude-opus-5-5/");
+  await expect(model).toHaveCSS("cursor", "pointer");
+  await expect(model).toHaveCSS("text-decoration-line", "none");
+  await model.hover();
+  await model.click();
+  await expect(page).toHaveURL(/\/zh\/models\/claude-opus-5-5\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Claude Opus 5.5");
 });
 
-test("Header 桌面端主导航指向真实页内区块", async ({ page }) => {
+test("view more opens every scenario as a board card", async ({ page }) => {
+  await page.goto("/zh/");
+  const section = page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) });
+  await section.locator("header").getByRole("link", { name: /查看更多/ }).click();
+  await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
+  const cards = page.locator("article");
+  await expect(cards).toHaveCount(4);
+  await expect(page.getByRole("link", { name: "做全栈 SaaS" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "做 iOS App" })).toHaveCount(0);
+  await expect(page.getByText("LMArena WebDev")).toHaveCount(0);
+  await expect(page.getByText("Android Bench", { exact: true })).toHaveCount(0);
   await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto(modelRoutes.en);
-  const navigation = page.getByRole("navigation", { name: "Primary" });
-  const modelsTrigger = navigation.getByRole("button", { name: "Models: Kimi K3" });
-  const languageTrigger = page.getByRole("button", { name: "Language: English" });
+  const columns = await page.locator("article").first().locator("xpath=..").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
+  expect(columns).toBe(2);
+});
 
-  await expect(modelsTrigger).toBeVisible();
-  expect(await languageTrigger.evaluate((element) => getComputedStyle(element).color)).toBe(
-    await modelsTrigger.evaluate((element) => getComputedStyle(element).color),
-  );
-  await expect(navigation.getByRole("link", { name: "Leaderboard" })).toHaveAttribute("href", "#leaderboard");
-  await expect(navigation.getByRole("link", { name: "Methodology" })).toHaveAttribute("href", "#methodology");
-  await expect(page.locator("#models, #leaderboard, #methodology")).toHaveCount(3);
+test("english home is unprefixed", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Pick the model and the stack for the job");
+  await expect(page.getByRole("link", { name: /View More/ }).first()).toBeVisible();
+  await expect(page.getByText("View the full board")).toHaveCount(0);
+});
+
+test("web benchmark keeps the full source board", async ({ page }) => {
+  await page.goto("/zh/benchmarks/lmarena-webdev/");
+  await expect(page.getByText("前端 Web 开发")).toBeVisible();
+  await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
+  await expect(page.getByText("1813").first()).toBeVisible();
+  await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  await expect(page.getByText("devstral-medium-2507")).toBeVisible();
+  await page.getByRole("button", { name: "开源权重" }).click();
+  await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toHaveCount(0);
+  await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "mimo-v2.6-flash" })).toBeVisible();
+  const mimo = page.getByRole("row").filter({ hasText: "mimo-v2.6-flash" });
+  await expect(mimo.getByText("16", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  await expect(page.getByText("granite-4.1-8b")).toBeVisible();
+});
+
+test("image-to-webdev shows the full board and the price chart", async ({ page }) => {
+  await page.goto("/zh/benchmarks/lmarena-image-to-webdev/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("LMArena Image-to-WebDev");
+  await expect(page.getByText("看一张图或截图，生成对应的网页")).toBeVisible();
+  await expect(page.getByText("这张榜不是文字需求的 WebDev")).toBeVisible();
+  await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
+  await expect(page.getByText("1749").first()).toBeVisible();
+  await expect(page.getByText("+30/-30").first()).toBeVisible();
+  await expect(page.getByText("gemini-2.5-pro")).toHaveCount(0);
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  const last = page.getByRole("row").filter({ hasText: "gemini-2.5-pro" });
+  await expect(last.getByText("64", { exact: true })).toBeVisible();
+  await expect(last.getByText("1285")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "分数与价格" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "arena.ai/leaderboard/code/image-to-webdev/pareto" })).toHaveAttribute("href", "https://arena.ai/leaderboard/code/image-to-webdev/pareto");
+  await expect(page.getByText("1749 · $16/M")).toBeVisible();
+  await expect(page.getByText("1581 · $0.17/M")).toBeVisible();
+});
+
+test("source board filter and header stay under the nav while scrolling", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/zh/benchmarks/lmarena-webdev/");
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  const box = async (selector: string) => {
+    const value = await page.locator(selector).first().boundingBox();
+    if (!value) throw new Error(`missing box ${selector}`);
+    return value;
+  };
+  const boardTop = await page.locator("[data-board-bar]").evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y), boardTop);
+  const nav = await box("header.sticky");
+  const bar = await box("[data-board-bar]");
+  const head = await box("[data-board-head] th");
+  expect(Math.abs(bar.y - (nav.y + nav.height))).toBeLessThanOrEqual(1);
+  expect(Math.abs(head.y - (bar.y + bar.height))).toBeLessThanOrEqual(1);
+  await page.evaluate(() => window.scrollBy(0, 240));
+  const navMid = await box("header.sticky");
+  const barMid = await box("[data-board-bar]");
+  const headMid = await box("[data-board-head] th");
+  expect(Math.abs(barMid.y - (navMid.y + navMid.height))).toBeLessThanOrEqual(1);
+  expect(Math.abs(headMid.y - (barMid.y + barMid.height))).toBeLessThanOrEqual(1);
+  await expect(page.getByRole("columnheader", { name: "分数", exact: true })).toBeInViewport();
+  await expect(page.getByText("全部", { exact: true })).toBeInViewport();
+
+  await page.setViewportSize({ width: 900, height: 800 });
+  const boardTopNarrow = await page.locator("[data-board-scroll]").evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y - 120), boardTopNarrow);
+  const navNarrow = await box("header.sticky");
+  const barNarrow = await box("[data-board-bar]");
+  expect(navNarrow.height).toBeGreaterThan(70);
+  expect(Math.abs(barNarrow.y - (navNarrow.y + navNarrow.height))).toBeLessThanOrEqual(1);
+  await expect(page.getByRole("columnheader", { name: "分数", exact: true })).toBeVisible();
+
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  const navBottom = await box("header.sticky");
+  const barBottom = await box("[data-board-bar]");
+  const headBottom = await box("[data-board-head] th");
+  expect(Math.abs(barBottom.y - (navBottom.y + navBottom.height))).toBeLessThanOrEqual(1);
+  expect(Math.abs(headBottom.y - (barBottom.y + barBottom.height))).toBeLessThanOrEqual(1);
+  await expect(page.getByText("devstral-medium-2507")).toBeVisible();
+
+  await page.setViewportSize({ width: 390, height: 700 });
+  await page.locator("[data-board-scroll]").evaluate((el) => { el.scrollLeft = 180; });
+  const scoreHead = await page.getByRole("columnheader", { name: "分数", exact: true }).boundingBox();
+  const scoreCell = await page.locator("tbody tr").first().locator("td").nth(3).boundingBox();
+  expect(Math.abs((scoreHead?.x ?? 0) - (scoreCell?.x ?? 0))).toBeLessThanOrEqual(1);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/zh/benchmarks/sudo-l7/");
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  const nav2 = await box("header.sticky");
+  const head2 = await box("[data-board-head] th");
+  expect(Math.abs(head2.y - (nav2.y + nav2.height))).toBeLessThanOrEqual(1);
+  await expect(page.locator("[data-board-bar]")).toHaveCount(0);
+});
+
+test("web scenario fuses ranks and links each board", async ({ page }) => {
+  await page.goto("/zh/scenarios/web-frontend/");
+  await expect(page.getByText("默认按平均名次排")).toBeVisible();
+  const webdev = page.getByRole("columnheader", { name: /WebDev/ }).getByRole("link");
+  await expect(webdev).toHaveAttribute("href", "/zh/benchmarks/lmarena-webdev/");
+  await expect(page.getByRole("columnheader", { name: /图生网页/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
+  await expect(page.getByRole("columnheader", { name: /Next.js/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/nextjs-evals/");
+  await expect(page.getByRole("columnheader", { name: /ReactBench/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/reactbench/");
+  const opus = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
+  await expect(opus).toContainText("—");
+  await expect(opus).toContainText("3/4");
+  const firstName = () => page.locator("tbody tr").first().locator("td").first().innerText();
+  const before = await firstName();
+  await page.getByRole("button", { name: "按模型排序" }).click();
+  expect(await firstName()).not.toBe(before);
+
+  await page.setViewportSize({ width: 1280, height: 800 });
+  const fusedTop = await page.locator("[data-fused-head]").evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y), fusedTop);
+  const fusedNav = await page.locator("header.sticky").boundingBox();
+  const fusedHead = await page.locator("[data-fused-head] th").first().boundingBox();
+  expect(Math.abs((fusedHead?.y ?? 0) - ((fusedNav?.y ?? 0) + (fusedNav?.height ?? 0)))).toBeLessThanOrEqual(1);
+  await expect(page.getByRole("columnheader", { name: /图生网页/ })).toBeInViewport();
+  await page.setViewportSize({ width: 900, height: 800 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const fusedTopNarrow = await page.locator("[data-fused-head]").evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y), fusedTopNarrow);
+  const fusedNavNarrow = await page.locator("header.sticky").boundingBox();
+  const fusedHeadNarrow = await page.locator("[data-fused-head] th").first().boundingBox();
+  expect((fusedNavNarrow?.height ?? 0)).toBeGreaterThan(70);
+  expect(Math.abs((fusedHeadNarrow?.y ?? 0) - ((fusedNavNarrow?.y ?? 0) + (fusedNavNarrow?.height ?? 0)))).toBeLessThanOrEqual(1);
+});
+
+test("switching a source filter keeps the table width", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto("/zh/benchmarks/lmarena-webdev/");
+  const measure = () => page.locator("[data-board-scroll] table").evaluate((table) => {
+    const box = table.getBoundingClientRect();
+    const heads = [...table.querySelectorAll("th")].map((cell) => {
+      const rect = cell.getBoundingClientRect();
+      return `${cell.textContent}:${Math.round(rect.x)}:${Math.round(rect.width)}`;
+    });
+    return { width: Math.round(box.width), x: Math.round(box.x), heads };
+  });
+  const all = await measure();
+  await page.getByRole("button", { name: "开源权重" }).click();
+  await expect(page.getByRole("link", { name: "mimo-v2.6-flash" })).toBeVisible();
+  expect(await measure()).toEqual(all);
+  await page.getByRole("button", { name: "专有" }).click();
+  expect(await measure()).toEqual(all);
+  await page.getByRole("button", { name: "全部", exact: true }).click();
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  expect(await clippedNow(page)).toEqual([]);
+
+  await page.goto("/zh/benchmarks/android-bench/");
+  await expect(page.getByRole("columnheader", { name: "Agent" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Claude Opus 5.5", exact: true })).toBeVisible();
+  await expect(page.getByText("32.7").first()).toBeVisible();
+  await expect(page.getByText("claude-code").first()).toBeVisible();
+  await expect(page.getByText("84.7").first()).toBeVisible();
+  await expect(page.getByText("18.7–47.3").first()).toBeVisible();
+  expect(await clippedNow(page)).toEqual([]);
+  await page.getByRole("button", { name: "1.0", exact: true }).click();
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/\?v=1\.0$/);
+  await expect(page.locator("[data-archived=true]")).toContainText("历史版本，不再更新");
+  await expect(page.getByText("91.8").first()).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: "Agent" })).toHaveCount(0);
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  expect(await clippedNow(page)).toEqual([]);
+
+  await page.goto("/zh/benchmarks/terminal-bench-4/");
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  await expect(page.getByText("$3.68k (partial: 324/330)")).toBeVisible();
+  expect(await clippedNow(page)).toEqual([]);
+});
+
+test("android scenario uses only the current version", async ({ page }) => {
+  await page.goto("/zh/scenarios/android-app/");
+  await expect(page.getByRole("columnheader", { name: /Android Bench 2\.0/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/android-bench/");
+  await expect(page.getByRole("columnheader", { name: /^1\.0/ })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Claude Opus 5.5", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Claude Opus 5", exact: true })).toHaveCount(0);
+  const leader = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
+  await expect(leader).toContainText("1/1");
+  await expect(page.getByRole("tab")).toHaveCount(0);
+});
+
+test("removed ios and saas scenarios leave the board list", async ({ page }) => {
+  await page.goto("/zh/scenarios/ios-app/");
+  await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
+  await expect(page.locator("article")).toHaveCount(4);
+  await page.goto("/zh/scenarios/saas/");
+  await expect(page).toHaveURL(/\/zh\/build\/saas\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("全栈");
+  await expect(page.getByRole("link", { name: /写 CLI、脚本与 DevOps/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Supabase Evals" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Convex Evals" })).toBeVisible();
+});
+
+test("removed scenario urls land on the source board", async ({ page }) => {
+  await page.goto("/zh/scenarios/open-frontend/");
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/lmarena-webdev\/$/);
+  await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
+  await page.goto("/scenarios/refactor/");
+  await expect(page).toHaveURL(/\/benchmarks\/android-bench\/$/);
+  await expect(page.getByText("32.7").first()).toBeVisible();
+});
+
+test("old android urls open the merged board on the matching version", async ({ page }) => {
+  await page.goto("/zh/benchmarks/android-bench-1/");
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/\?v=1\.0$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Android Bench");
+  await expect(page.locator("[data-archived=true]")).toContainText("历史版本，不再更新");
+  await expect(page.locator("[data-archived=true]")).toContainText("2026-10-06");
+  await expect(page.getByText("91.8").first()).toBeVisible();
+
+  await page.goto("/zh/benchmarks/android-bench-2/");
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/\?v=2\.0$/);
+  await expect(page.getByText("32.7").first()).toBeVisible();
+  await expect(page.locator("[data-archived=true]")).toHaveCount(0);
+
+  await page.goto("/zh/benchmarks/android-bench-2-long/");
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/#long$/);
+  await expect(page.getByRole("columnheader", { name: "Agent" })).toBeVisible();
+  await expect(page.getByText("32.7").first()).toBeVisible();
+});
+
+test("model, skill, library, category, and build pages render", async ({ page }) => {
+  await page.goto("/zh/models/claude-opus-5-5/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Claude Opus 5.5");
+
+  await page.goto("/zh/benchmarks/swe-bench-verified/");
+  await expect(page.locator("[data-stale=true]")).toBeVisible();
+
+  await page.goto("/zh/tools/motion/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("动效");
+
+  await page.goto("/zh/libraries/phosphor-icons/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Phosphor Icons");
+
+  await page.goto("/zh/skills/frontend-design/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("frontend-design");
+
+  await page.goto("/zh/build/web-frontend/");
+  await expect(page.getByText("AGENTS.md").first()).toBeVisible();
+  await expect(page.getByText("frontend-design").first()).toBeVisible();
+});
+
+test("language switch keeps the page", async ({ page }) => {
+  await page.goto("/zh/scenarios/web-frontend/");
+  await page.getByRole("link", { name: "EN", exact: true }).click();
+  await expect(page).toHaveURL(/\/scenarios\/web-frontend\/$/);
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+});
+
+test("theme toggle persists the dark class", async ({ page }) => {
+  await page.goto("/zh/");
+  await page.getByRole("button", { name: "切换主题" }).click();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+  await page.reload();
+  await expect(page.locator("html")).toHaveClass(/dark/);
+});
+
+test("framework evals stay on separate boards", async ({ page }) => {
+  await page.goto("/zh/libraries/supabase/");
+  await expect(page.getByRole("heading", { name: "框架评测" })).toBeVisible();
+  await expect(page.getByText("91.3").first()).toBeVisible();
+
+  await page.goto("/zh/skills/supabase-skills/");
+  await expect(page.getByRole("heading", { name: "有材料相对基线的变化" })).toBeVisible();
+  await expect(page.getByText("−1.4")).toBeVisible();
+  await expect(page.getByText("0", { exact: true }).first()).toBeVisible();
 
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(navigation).toBeHidden();
+  await page.goto("/zh/libraries/convex/");
+  await expect(page.getByText("90.18").first()).toBeVisible();
+  await expect(page.getByText("无指南 + 网页")).toBeVisible();
+  await expect(page.getByText("With Guidelines 没有收录")).toBeVisible();
+  const convexOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(convexOverflow).toBeLessThanOrEqual(1);
+  await page.setViewportSize({ width: 1280, height: 800 });
+
+  await page.goto("/zh/prompts/convex-ai-rules/");
+  await expect(page.getByRole("heading", { name: "对照臂未核实" })).toBeVisible();
+  await expect(page.locator("table")).toHaveCount(0);
+
+  await page.goto("/zh/prompts/nextjs-agents-md/");
+  await expect(page.getByText("+13.0").first()).toBeVisible();
+
+  await page.goto("/zh/libraries/react/");
+  await expect(page.getByRole("heading", { name: "生态评测" })).toBeVisible();
+  await expect(page.getByText("不是 React 或 Meta 的官方榜")).toBeVisible();
+
+  await page.goto("/zh/build/saas/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("全栈");
+  await expect(page.getByText("不把 Next.js、Supabase、Convex、ReactBench 的通过率加在一起")).toBeVisible();
 });
 
-test("Header 模型菜单按厂商分组并只链接已收录模型", async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto(modelRoutes.en);
-  const trigger = page.getByRole("button", { name: "Models: Kimi K3" });
-  await trigger.click();
-
-  const menu = page.getByRole("menu");
-  await expect(menu).toBeVisible();
-  await expect(menu.getByRole("group")).toHaveCount(4);
-  await expect(menu.getByRole("menuitem")).toHaveCount(10);
-  await expect(menu.locator('[role="menuitem"][aria-disabled="true"]')).toHaveCount(8);
-  await expect(menu.locator(`a[href="${modelRoutes.en}"][aria-current="page"]`)).toContainText("Kimi K3");
-  await expect(menu.locator(`a[href="${gptRoutes.en}"]`)).toContainText("GPT-5.6");
-  await expect(menu.getByText("GPT-5.6", { exact: true })).toBeVisible();
-  await expect(menu.getByText("Claude Opus 4.8", { exact: true })).toBeVisible();
-  await expect(menu.getByText("Gemini 3.5 Flash", { exact: true })).toBeVisible();
-  await expect(menu.getByRole("heading", { name: "OpenAI" })).toHaveCSS("font-size", "12px");
-  await expect(menu.getByText("GPT-5.6", { exact: true })).toHaveCSS("font-size", "16px");
-  await expect(menu.getByText("58.9", { exact: true })).toHaveCSS("font-size", "12px");
-  for (const logo of ["openai.svg", "claude-color.svg", "moonshot.svg", "gemini-color.svg"]) {
-    await expect(menu.locator(`img[src="/model-logos/${logo}"]`)).toHaveCount(1);
+test("scenario, model, build, and benchmark pages match the home width", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const measure = () => page.locator("main").evaluate((el) => getComputedStyle(el).maxWidth);
+  await page.goto("/zh/");
+  const home = await measure();
+  for (const path of [
+    "/zh/scenarios/",
+    "/zh/scenarios/web-frontend/",
+    "/zh/models/",
+    "/zh/models/claude-opus-5-5/",
+    "/zh/build/",
+    "/zh/build/saas/",
+    "/zh/benchmarks/",
+    "/zh/benchmarks/supabase-evals/",
+  ]) {
+    await page.goto(path);
+    expect(await measure()).toBe(home);
+    const footer = await page.locator("footer > div").evaluate((el) => getComputedStyle(el).maxWidth);
+    expect(footer).toBe(home);
   }
-
-  const box = await menu.boundingBox();
-  expect(box).not.toBeNull();
-  expect(box!.x).toBeGreaterThanOrEqual(0);
-  expect(box!.x + box!.width).toBeLessThanOrEqual(1280);
-  expect(box!.width).toBeLessThanOrEqual(760);
-  expect(box!.height).toBeLessThanOrEqual(320);
-  await expect(menu.locator(".grid").first()).toHaveCSS("grid-template-columns", /\S+ \S+ \S+/);
-
-  await page.keyboard.press("Escape");
-  await expect(trigger).toBeFocused();
-  await page.keyboard.press("Enter");
-  await expect(menu.locator(`a[href="${gptRoutes.en}"]`)).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(trigger).toBeFocused();
 });
 
-test("Header 置顶、背景一致且品牌说明归入 Footer", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const description = "An independent, hand-curated index of frontier model evaluations — every number links back to its source.";
-  const header = page.locator("header");
-  const [headerBackground, bodyBackground] = await Promise.all([
-    header.evaluate((element) => getComputedStyle(element).backgroundColor),
-    page.locator("body").evaluate((element) => getComputedStyle(element).backgroundColor),
-  ]);
-
-  await expect(header).toHaveCSS("position", "sticky");
-  await expect(header).toHaveCSS("top", "0px");
-  expect(headerBackground).toBe(bodyBackground);
-  await expect(header.getByText(description, { exact: true })).toHaveCount(0);
-  await expect(page.locator("footer").getByText(description, { exact: true })).toBeVisible();
-});
-
-test("移动端仅跑分容器横向滚动", async ({ page }) => {
+test("long boards stay inside the phone width", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(modelRoutes.en);
-  const widths = await page.evaluate(() => {
-    const scroller = document.querySelector<HTMLElement>(".benchmark-scroll");
-    const tableHead = scroller?.querySelector("thead");
-    const firstRow = scroller?.querySelector("tbody tr");
-    return {
-      body: document.documentElement.scrollWidth === document.documentElement.clientWidth,
-      rowsDoNotOverlap: Boolean(
-        tableHead && firstRow && tableHead.getBoundingClientRect().bottom <= firstRow.getBoundingClientRect().top + 1,
-      ),
-      table: Boolean(scroller && scroller.scrollWidth > scroller.clientWidth),
-    };
-  });
-  expect(widths).toEqual({ body: true, rowsDoNotOverlap: true, table: true });
+  for (const path of ["/zh/scenarios/web-frontend/", "/zh/scenarios/android-app/", "/zh/scenarios/cli-devops/", "/zh/scenarios/production-changes/"]) {
+    await page.goto(path);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(1);
+  }
 });
 
-test("跑分表头滚动时吸附在全局 Header 下方", async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 700 });
-  await page.goto(modelRoutes.en);
-  const header = page.locator("header");
-  const tableHead = page.locator("#leaderboard thead");
-  const benchmarkHeader = tableHead.getByRole("columnheader", { name: "Benchmark" });
-  const modelHeader = tableHead.getByRole("columnheader", { name: "Kimi K3" });
-
-  const tableHeadPageY = await tableHead.evaluate((element) => element.getBoundingClientRect().top + window.scrollY);
-  await page.evaluate((top) => window.scrollTo(0, top + 240), tableHeadPageY);
-
-  const [headerBox, tableHeadBox] = await Promise.all([header.boundingBox(), tableHead.boundingBox()]);
-  expect(headerBox).not.toBeNull();
-  expect(tableHeadBox).not.toBeNull();
-  expect(Math.abs(tableHeadBox!.y - (headerBox!.y + headerBox!.height))).toBeLessThanOrEqual(1);
-  expect(await benchmarkHeader.evaluate((element) => getComputedStyle(element).boxShadow)).not.toBe("none");
-  expect(Number.parseFloat(await modelHeader.evaluate((element) => getComputedStyle(element).fontSize))).toBeGreaterThan(
-    Number.parseFloat(await benchmarkHeader.evaluate((element) => getComputedStyle(element).fontSize)),
-  );
+test("nav highlights only the current section", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  const cases: { path: string; label: string; current: string | null }[] = [
+    { path: "/", label: "Primary", current: null },
+    { path: "/zh/", label: "主导航", current: null },
+    { path: "/scenarios/", label: "Primary", current: "Scenarios" },
+    { path: "/scenarios/web-frontend/", label: "Primary", current: "Scenarios" },
+    { path: "/zh/scenarios/", label: "主导航", current: "场景" },
+    { path: "/zh/scenarios/android-app/", label: "主导航", current: "场景" },
+    { path: "/models/", label: "Primary", current: "Models" },
+    { path: "/zh/models/claude-opus-5-5/", label: "主导航", current: "模型" },
+    { path: "/tools/", label: "Primary", current: "Toolbox" },
+    { path: "/zh/libraries/phosphor-icons/", label: "主导航", current: "工具箱" },
+    { path: "/zh/skills/frontend-design/", label: "主导航", current: "工具箱" },
+    { path: "/build/", label: "Primary", current: "Builds" },
+    { path: "/zh/build/web-frontend/", label: "主导航", current: "组合" },
+    { path: "/benchmarks/", label: "Primary", current: "Benchmarks" },
+    { path: "/zh/benchmarks/android-bench/", label: "主导航", current: "基准" },
+  ];
+  for (const item of cases) {
+    await page.goto(item.path);
+    const nav = page.getByRole("navigation", { name: item.label }).first();
+    const current = nav.locator("[aria-current='page']");
+    if (item.current) {
+      await expect(current).toHaveCount(1);
+      await expect(current).toHaveText(item.current);
+    } else {
+      await expect(current).toHaveCount(0);
+    }
+  }
 });
 
-test("跑分表以图标承载注释和来源", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const row = page.getByRole("row").filter({ hasText: "Intelligence Index v4.1" });
-  const note = row.getByRole("button", { name: /Benchmark note:/ });
+test("closing search does not outline the trigger, and tab still shows a ring", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const item of [
+    { path: "/", name: "Search" },
+    { path: "/zh/", name: "搜索" },
+  ]) {
+    await page.goto(item.path);
+    const trigger = page.getByRole("button", { name: item.name });
+    await page.keyboard.press("Control+k");
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(trigger).toBeFocused();
+    expect(await trigger.evaluate((el) => el.matches(":focus-visible") || getComputedStyle(el).outlineStyle !== "none")).toBe(false);
 
-  await expect(row.getByText("#4/189", { exact: false })).not.toBeVisible();
-  await note.hover();
-  await expect(page.getByRole("tooltip")).toContainText("#4/189 · GPT-5.6 Sol = xhigh effort");
-  await expect(row.getByRole("link", { name: "Intelligence Index v4.1" })).toHaveAttribute("target", "_blank");
-  await expect(page.getByRole("columnheader", { name: "Source" })).toHaveCount(0);
+    await trigger.click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.locator(".fixed.inset-0").click({ position: { x: 8, y: 8 } });
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    expect(await trigger.evaluate((el) => el.matches(":focus-visible") || getComputedStyle(el).outlineStyle !== "none")).toBe(false);
+
+    await page.locator("body").click({ position: { x: 4, y: 200 } });
+    await page.keyboard.press("Tab");
+    const ring = await page.evaluate(() => {
+      const el = document.activeElement;
+      if (!el || el === document.body) return null;
+      const style = getComputedStyle(el);
+      return { visible: el.matches(":focus-visible"), outline: style.outlineStyle, width: style.outlineWidth };
+    });
+    expect(ring?.visible).toBe(true);
+    expect(ring?.outline).not.toBe("none");
+    expect(ring?.width).not.toBe("0px");
+  }
 });
 
-test("跑分区使用比较标题并解释加粗规则", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const leaderboard = page.locator("#leaderboard");
-  const title = leaderboard.getByRole("heading", { level: 2 });
-
-  await expect(title).toHaveText("Kimi K3 vs. frontier anchors");
-  await expect(title.locator("span")).toHaveCSS("color", "rgb(90, 85, 76)");
-  await expect(leaderboard.getByText("Higher is better · best in row bold", { exact: true })).toBeVisible();
-  await expect(leaderboard.locator("strong")).toHaveText("best in row bold");
-  await expect(leaderboard.locator("strong")).toHaveCSS("font-weight", "700");
-  await expect(leaderboard.locator(".benchmark-name").first()).toHaveCSS("top", "-2px");
-});
-
-test("跑分表只加粗每行最佳成绩", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const intelligence = page.getByRole("row").filter({ hasText: "Intelligence Index v4.1" });
-  const programBench = page.getByRole("row").filter({ hasText: "Program Bench" });
-
-  await expect(intelligence.getByRole("cell").nth(1)).not.toHaveAttribute("data-best");
-  await expect(intelligence.getByRole("cell").nth(2)).toHaveAttribute("data-best", "true");
-  await expect(programBench.getByRole("cell").nth(1)).toHaveAttribute("data-best", "true");
-});
-
-test("跑分表底部统计每个模型的胜出项", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  await expect(page.getByRole("row", { name: "Wins 4 3 4 0" })).toBeVisible();
-});
-
-test("跑分比较筛选同步更新可见列、最佳成绩与胜出项", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const leaderboard = page.locator("#leaderboard");
-  const opus = leaderboard.getByRole("button", { name: "Opus 4.8", exact: true });
-  const gpt = leaderboard.getByRole("button", { name: "GPT-5.6", exact: true });
-  const fable = leaderboard.getByRole("button", { name: "Fable 5", exact: true });
-
-  await expect(opus).toHaveAttribute("aria-pressed", "true");
-  await opus.click();
-  await gpt.click();
-  await expect(opus).toHaveAttribute("aria-pressed", "false");
-  await expect(leaderboard.getByRole("columnheader", { name: "Opus 4.8" })).toHaveCount(0);
-  await expect(leaderboard.getByRole("columnheader", { name: "GPT-5.6" })).toHaveCount(0);
-  await expect(leaderboard.getByRole("row", { name: "Wins 6 5" })).toBeVisible();
-
-  const intelligence = leaderboard.getByRole("row").filter({ hasText: "Intelligence Index v4.1" });
-  const programBench = leaderboard.getByRole("row").filter({ hasText: "Program Bench" });
-  await expect(intelligence.getByRole("cell").nth(2)).toHaveAttribute("data-best", "true");
-  await expect(programBench.getByRole("cell").nth(1)).toHaveAttribute("data-best", "true");
-
-  await fable.click();
-  await expect(leaderboard.getByRole("columnheader", { name: "Fable 5" })).toHaveCount(0);
-  await expect(leaderboard.getByRole("row", { name: "Wins 11" })).toBeVisible();
-  await expect(intelligence.getByRole("cell").nth(1)).toHaveAttribute("data-best", "true");
-});
-
-test("社区结论使用紧凑圆角评分分布与带分隔线双栏", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const leaderboard = page.locator("#leaderboard");
-  const verdict = page.locator("#community-verdict");
-  const benchmarkLabel = leaderboard.getByText("Benchmarks", { exact: true });
-  const verdictLabel = verdict.getByText("Community Verdict", { exact: true });
-
-  await expect(verdictLabel).toBeVisible();
-  expect(await verdictLabel.evaluate((element) => {
-    const style = getComputedStyle(element);
-    return [style.color, style.fontFamily, style.fontSize, style.fontWeight, style.letterSpacing];
-  })).toEqual(
-    await benchmarkLabel.evaluate((element) => {
-      const style = getComputedStyle(element);
-      return [style.color, style.fontFamily, style.fontSize, style.fontWeight, style.letterSpacing];
-    }),
-  );
-  await expect(verdict.getByRole("heading", { level: 2 })).toHaveCSS("margin-top", "8px");
-  await expect(verdict.getByRole("heading", { level: 2 })).toHaveText("Admired, with caveats");
-  await expect(verdict.getByRole("img", { name: "3.8 / 5 · 1 rave, 5 mixed, 0 critical" })).toBeVisible();
-  await expect(verdict.getByText("Frontier-tier, and open", { exact: true })).toBeVisible();
-  await expect(verdict.getByText("Weights not out yet", { exact: true })).toBeVisible();
-  await expect(verdict.getByRole("navigation", { name: "Review sources" })).toHaveCount(0);
-  await expect(verdict.locator(".verdict-score")).toHaveCSS("border-radius", "6px");
-  await expect(verdict.locator(".verdict-score-summary")).toHaveCSS("translate", "0px 2px");
-  expect(await verdict.locator("li").evaluateAll((items) => items.every((item) => getComputedStyle(item).borderBottomWidth === "1px"))).toBe(true);
-  await expect(verdict.locator("article")).toHaveCount(0);
-});
-
-test("社区原声流使用三列小圆角平台卡片与正负双色高亮", async ({ page }) => {
-  await page.setViewportSize({ width: 875, height: 814 });
-  await page.goto(modelRoutes.en);
-  const feed = page.locator("#community-reviews");
-
-  await expect(feed.getByRole("heading", { level: 2 })).toHaveText("Straight from the feed");
-  await expect(feed.locator("article")).toHaveCount(4);
-  expect(await feed.locator("article").evaluateAll((cards) => cards.every((card) => getComputedStyle(card).borderRadius === "4px"))).toBe(true);
-  await expect(feed.locator(".review-grid")).toHaveCSS("grid-template-columns", /\S+ \S+ \S+/);
-  await expect(feed.locator('mark[data-tone="positive"]')).not.toHaveCount(0);
-  await expect(feed.locator('mark[data-tone="negative"]')).not.toHaveCount(0);
-  await expect(feed.locator('img[src="/kimi-k3-review-video-editorial.png"]')).toHaveCount(1);
-  const order = await feed.locator("article").evaluateAll((cards) => cards.map((card) => card.textContent ?? ""));
-  expect(order[0]).toContain("Simon Willison");
-  expect(order[1]).toContain("AIReiter");
-  expect(order[2]).toContain("Peter");
-  expect(order[3]).toContain("Lentils");
-  expect(await feed.locator("article").nth(3).evaluate((card) => getComputedStyle(card).gridColumnStart)).toBe("2");
-  await expect(feed.getByRole("link", { name: "Read article" })).toHaveCount(2);
-  await expect(feed.getByRole("link", { name: "Open Lentils on X" })).toHaveAttribute("href", "https://x.com/Lentils80/status/2077387333154857151");
-  await expect(feed.getByRole("link", { name: /Watch video: Peter/ })).toHaveAttribute("href", "https://www.youtube.com/watch?v=LSlV206xPqM");
-});
-
-test("社区原声流在移动端回落单列且不产生页面横向滚动", async ({ page }) => {
+test("home does not scroll sideways on a phone", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(modelRoutes.en);
-  const feed = page.locator("#community-reviews");
-
-  await expect(feed.locator(".review-grid")).toHaveCSS("grid-template-columns", "350px");
-  expect(await page.evaluate(() => document.documentElement.scrollWidth === document.documentElement.clientWidth)).toBe(true);
-});
-
-test("页脚使用品牌说明、真实页内导航与数据来源元信息", async ({ page }) => {
-  await page.goto(modelRoutes.en);
-  const footer = page.getByRole("contentinfo");
-  const footerPrimary = footer.locator(".footer-primary");
-  const main = page.locator("main");
-
-  await expect(footer.getByRole("link", { name: "AIEvalIndex" })).toHaveAttribute("href", "/");
-  await expect(footer.getByText("An independent, hand-curated index of frontier model evaluations — every number links back to its source.", { exact: true })).toBeVisible();
-  await expect(footer.getByRole("navigation", { name: "Explore" }).getByRole("link")).toHaveCount(4);
-  await expect(footer.getByRole("link", { name: "Reviews" })).toHaveAttribute("href", "#community-reviews");
-  await expect(footer.getByRole("navigation", { name: "About" }).getByRole("link")).toHaveCount(2);
-  await expect(footer.getByRole("link", { name: "Artificial Analysis" })).toHaveAttribute("href", "https://artificialanalysis.ai/models/kimi-k3");
-  await expect(footer.getByText("© 2026 AI Eval Index", { exact: true })).toBeVisible();
-  const [mainBox, footerBox] = await Promise.all([main.boundingBox(), footerPrimary.boundingBox()]);
-  expect(footerBox?.x).toBeCloseTo(mainBox?.x ?? 0, 0);
-  expect(footerBox?.width).toBeCloseTo(mainBox?.width ?? 0, 0);
-  expect(await footer.getByRole("link", { name: "Models" }).evaluate((link) => getComputedStyle(link).fontFamily)).toContain("Newsreader");
-  await expect(footer.locator(".footer-primary-grid")).toHaveCSS("grid-template-columns", /.+ .+ .+/);
-});
-
-test("页脚在移动端顺序堆叠并保持正文版心", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto(modelRoutes.en);
-  const footer = page.getByRole("contentinfo");
-
-  await expect(footer.locator(".footer-primary-grid")).toHaveCSS("grid-template-columns", "350px");
-  await expect(footer.locator(".footer-meta")).toHaveCSS("grid-template-columns", "350px");
-  expect(await page.evaluate(() => document.documentElement.scrollWidth === document.documentElement.clientWidth)).toBe(true);
+  await page.goto("/zh/");
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
 });

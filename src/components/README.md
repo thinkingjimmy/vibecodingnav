@@ -3,16 +3,23 @@
 > L2 | 父级: ../README.md
 
 成员清单
-benchmark-table.tsx: Leaderboard 锚点与可交互跑分对照表（Compare 胶囊筛选 + 来源虚线链接、蓝色眉标 + 衬线比较标题 + 等宽规则说明、吸顶常显分隔线、窄屏横向滚动、放大 Kimi 表头与蓝色数据带），按当前可见模型动态标记最佳成绩并统计胜出项，注释走 ui/tooltip
-footer.tsx: 与正文共享 max-w-5xl 版心和 Newsreader / JetBrains Mono 字阶的编辑式页脚（Methodology / Data sources 锚点、本地化品牌说明、桌面三栏与移动端顺序堆叠、Explore / About 真实导航、首要数据源、更新时间与版权信息）
-header.tsx: 紧凑置顶的共享汇聚棱镜标记、桌面模型目录/页内导航与地球图标语言菜单容器
-hero.tsx: Models 锚点、眉标行 + 数据驱动且与文字基线对齐的厂商标记和超大衬线标题 + 新页打开官网的厂商署名 + 支持开放/专有状态的发布/权重元信息 + 规格条与可覆盖说明的紧凑指标卡
-language-select.tsx: Phosphor 地球触发器、国旗/原生语言单选菜单、客户端语言记忆和同模型静态路由切换
-model-menu.tsx: Header 桌面 Models 客户端菜单，按四家厂商展示官方 logo、模型分数、由 slug 推导的当前模型名称、当前链接与不可用状态
-review-feed.tsx: Community Verdict 后的紧凑三列 Community Reviews 原声流，按 blog / X / YouTube 呈现四条小圆角平台卡片，首排固定 Simon / AIReiter / Peter、次排居中 Lentils，并用绿红双色标注本地化关键短语
-reviews.tsx: 编辑式 Community Verdict（本地化结论标题、绿/米灰/红紧凑评分分布与带行分隔的赢点/短板双栏）
-ui/: shadcn Base UI 无业务语义组件，当前提供 Dropdown Menu 与 Tooltip primitive
+arrow-icon.tsx: 服务端页面使用的 Phosphor 箭头，客户端边界
+site-header.tsx: 置顶导航、语言切换、主题与搜索对话框
+site-footer.tsx: 方法论、数据来源、更新日志与建议链接
+frame.tsx: 页头、版心与页脚
+leaderboard.tsx: 基准页的完整来源榜，列宽固定，筛选和表头滚动时吸在导航下
+benchmark-versions.tsx: 基准页的版本切换，默认当前版本，历史版本仍展示完整原榜
+price-chart.tsx: Image-to-WebDev 的分数对混合价格散点
+fused-table.tsx: 场景页的融合表，一列一张榜，格子是名次
+category-list.tsx: 工具箱类型筛选
+copy-block.tsx: 复制安装命令与下载 AGENTS.md
+weights.tsx: Phosphor 字重示例
+vendor-mark.tsx: 模型与工具的 LobeHub 单色厂商标，没有图标时用字母
+eval-table.tsx: 框架评测的基线榜与逐模型变化量，超过 20 行可展开
+board-card.tsx: 首页与场景列表共用的榜单卡片，标题下不列基准名
+rich-text.tsx: 变更日志里的强调与等宽片段
+ui/: 预留给无业务语义的 primitive；当前对话框直接使用 Base UI
 
-法则: Server Component 默认；浏览器状态只进入 benchmark-table、language-select 与 model-menu。
+法则: Server Component 默认。浏览器状态只在页头、来源榜、融合表、评测表、分类筛选、版本切换和复制块里。
 
 [PROTOCOL]: 变更时更新此头部，然后检查 README.md

@@ -1,136 +1,174 @@
 /**
- * [INPUT]: 依赖 Tailwind CSS 4 与 docs/archive/07-17-design-system.md 的设计基线
- * [OUTPUT]: 对外提供全站 reset、design tokens、主题映射与共享组件类，含模型菜单状态、跑分表及社区评价语义色
- * [POS]: src/app 的全局样式真相源，被两套根布局共同加载
+ * [INPUT]: 依赖 Tailwind CSS 4
+ * [OUTPUT]: 对外提供锌色单色变量、浅色与 .dark 深色，以及榜单页的发丝线、等宽数字和代码块
+ * [POS]: src/app 的全局样式，被文档外壳加载
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
-  --color-bg: var(--bg);
-  --color-elevated: var(--bg-elevated);
-  --color-subtle: var(--bg-subtle);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-ink-faint: var(--ink-faint);
-  --color-hairline: var(--hairline);
-  --color-hairline-strong: var(--hairline-strong);
-  --color-accent: var(--accent);
-  --color-accent-soft: var(--accent-soft);
-  --color-accent-text: var(--accent-text);
-  --color-warn: var(--warn);
-  --font-serif: var(--serif);
-  --font-sans: var(--sans);
-  --font-mono: var(--mono);
+  --color-bg: var(--background);
+  --color-fg: var(--foreground);
+  --color-muted: var(--muted);
+  --color-mfg: var(--muted-foreground);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-bd: var(--border);
+  --color-surface: var(--surface);
+  --color-bar: var(--bar);
+  --font-sans: var(--font-geist), "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-mono: var(--font-geist-mono), "Noto Sans CJK SC", ui-monospace, monospace;
 }
 
-/* ============================== Design Tokens ============================== */
 :root {
-  --bg:            #FAF8F4;
-  --bg-elevated:   #FFFFFF;
-  --bg-subtle:     #F2EFE8;
-
-  --ink:           #1A1814;
-  --ink-soft:      #5A554C;
-  --ink-faint:     #8E8678;
-
-  --hairline:         #E4DFD4;
-  --hairline-strong:  #C8C2B3;
-
-  --accent:      oklch(0.45 0.08 250);
-  --accent-soft: oklch(0.92 0.03 250);
-  --accent-text: oklch(0.35 0.10 250);
-  --warn:        oklch(0.55 0.12 30);
-  --review-positive: #2F8666;
-  --review-positive-soft: #E0F0E8;
-  --review-mixed: #C7C0AE;
-  --review-critical: #C85A47;
-  --review-negative-soft: #F8E1DA;
-  --model-positive: #2F8666;
-  --model-neutral: #B8B09F;
-  --model-current: #C99A32;
-
-  --serif: "Newsreader", Georgia, serif;
-  --sans:  "Inter", -apple-system, sans-serif;
-  --mono:  "JetBrains Mono", ui-monospace, monospace;
+  --background: #fff;
+  --foreground: #09090b;
+  --muted: #f4f4f5;
+  --muted-foreground: #71717a;
+  --faint: #a1a1aa;
+  --border: #e4e4e7;
+  --line: color-mix(in oklab, #e4e4e7 64%, #fff);
+  --surface: #fafafa;
+  --bar: #18181b;
+  color-scheme: light;
 }
 
-/* CJK 页面衬线回落宋体系，等宽保持拉丁字体渲染数字 */
-[lang="zh-CN"] { --serif: "Newsreader", Georgia, "Songti SC", "Noto Serif SC", serif; }
-[lang="ja"]    { --serif: "Newsreader", Georgia, "Hiragino Mincho ProN", "Noto Serif JP", serif; }
-[lang="ko"]    { --serif: "Newsreader", Georgia, "Apple Myungjo", "Noto Serif KR", serif; }
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --faint: #71717a;
+  --border: #27272a;
+  --line: color-mix(in oklab, #27272a 64%, #09090b);
+  --surface: #18181b;
+  --bar: #fafafa;
+  color-scheme: dark;
+}
 
-/* ============================== Components ============================== */
-@layer components {
-  /* Section 眉标：顶部发丝线 + mono 大写小字 */
-  .section-label {
-    @apply border-t border-hairline pt-6 mb-3.5 font-mono text-[10px] font-medium uppercase tracking-[.12em] text-ink-faint;
+@layer base {
+  html,
+  body {
+    background: var(--background);
+    color: var(--foreground);
   }
+  body {
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--foreground);
+    color: var(--background);
+  }
+  :focus {
+    outline: none;
+  }
+  :focus-visible {
+    outline: 1px solid color-mix(in oklab, var(--foreground) 55%, transparent);
+    outline-offset: 2px;
+  }
+  [data-restore-focus]:focus,
+  [data-restore-focus]:focus-visible {
+    outline: none;
+  }
+}
 
-  /* Hero 指标卡：衬线大数字 + 行内单位 + 语义排名徽章 + 进度条 */
-  .stat-value {
-    @apply font-serif text-[44px] font-medium leading-none text-accent [font-feature-settings:'tnum'];
-  }
-  .stat-unit {
-    @apply font-mono text-[11px] font-medium text-ink-faint;
-  }
-  .stat-badge {
-    @apply shrink-0 rounded-[3px] bg-accent-soft px-1.5 py-0.5 font-mono text-[10px] font-medium text-accent-text [font-feature-settings:'tnum'];
-  }
-  .stat-badge-neutral {
-    @apply bg-subtle text-ink-faint;
-  }
-  .stat-bar {
-    @apply h-[5px] w-full overflow-hidden rounded-full bg-hairline;
-  }
-  .stat-bar i {
-    @apply block h-full rounded-full bg-accent;
-  }
-  .stat-bar i.stat-bar-neutral {
-    @apply bg-hairline-strong;
-  }
-  /* 货币符号：Newsreader 断笔画 $ 回落 Georgia 单笔画字形 */
-  .stat-currency {
-    font-family: Georgia, serif;
-    font-size: 0.82em;
-  }
-  .stat-separator {
-    @apply text-ink-faint;
-  }
+@utility num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "ss11" 1, "zero" 1, "tnum" 1;
+}
 
-  /* Header 主导航：与编辑部字标拉开层级，保持截图中的大写字距 */
-  .header-nav-link {
-    @apply whitespace-nowrap font-sans text-[12px] font-medium uppercase tracking-[.14em] text-ink-faint transition-colors hover:text-ink focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent;
-  }
+@utility display {
+  font-size: clamp(36px, 5vw, 52px);
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
 
-  /* 数据源徽章 */
-  .tag-chip {
-    @apply inline-flex items-center gap-[5px] rounded border border-hairline bg-elevated px-[9px] py-[3px] font-mono text-[11px] font-medium text-ink-soft transition hover:border-hairline-strong hover:bg-subtle;
+@utility display-page {
+  font-size: clamp(34px, 4.6vw, 48px);
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+@utility pt {
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+}
+
+@utility link-u {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, currentColor 30%, transparent);
+  text-underline-offset: 3px;
+  &:hover {
+    text-decoration-color: currentColor;
   }
-  /* 跑分表：Kimi 列蓝色数据带，每行最佳成绩才加粗 */
-  .bench-num,
-  .k3-cell {
-    @apply px-3 py-2 text-right align-middle font-mono text-[13px] text-ink-soft [font-feature-settings:'tnum'];
+}
+
+@utility rowh {
+  transition: background 0.15s;
+  &:hover {
+    background: color-mix(in oklab, var(--muted) 55%, transparent);
   }
-  .k3-cell {
-    background: var(--accent-soft);
-    color: var(--accent-text);
-  }
-  .best-score { @apply font-semibold text-ink; }
-  .k3-cell.best-score { color: var(--accent-text); }
-  /* 吸顶表头不依赖 border-collapse 绘制边线，避免滚动层合成时分隔线消失 */
-  .benchmark-head th {
-    background: var(--bg);
-    box-shadow: inset 0 -1px 0 var(--ink);
-  }
-  .benchmark-head .benchmark-model-header {
-    background: var(--accent-soft);
-  }
-  /* 注释与来源图标默认隐身，行悬停或键盘聚焦时浮现 */
-  .benchmark-icon {
-    @apply inline-flex size-6 items-center justify-center rounded text-ink-faint opacity-0 transition-opacity hover:text-ink focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent;
-  }
-  tr:hover .benchmark-icon {
-    @apply opacity-100;
+}
+
+@utility tag {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 5px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font: 500 10.5px/1 var(--font-mono), "Noto Sans CJK SC", monospace;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  flex: none;
+}
+
+@utility pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
+  background: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+@utility kbd {
+  font: 500 11px/1 var(--font-mono), monospace;
+  height: 20px;
+  min-width: 20px;
+  padding: 0 5px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 4px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+@utility codefig {
+  border-radius: 12px;
+  background: var(--surface);
+  padding: 4px;
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--border) 64%, transparent);
+}
+
+@utility card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  &:hover {
+    border-color: color-mix(in oklab, var(--foreground) 22%, var(--border));
   }
 }

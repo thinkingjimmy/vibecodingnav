@@ -1,55 +1,49 @@
 # 当前开发基线
 
-> 更新日期：2026-07-19
-> 状态：Kimi K3 已迁入可扩展模型 slug 路由，Header 模型目录与六语言静态 URL 已完成。
+> 更新日期：2026-10-11
+> 状态：站点已重建为 VibeCodingNav。英文在 `/`，中文在 `/zh/`。未部署，也未改 Vercel 配置。
 
 ## 当前能力
 
-- Next.js App Router 生成 `/` noindex 占位、英文 `/models/kimi-k3/` 与五个 `/{locale}/models/kimi-k3/` 静态详情页。
-- 模型注册表以 slug 统一内容查询、静态参数和导航路径；默认英文 URL 无前缀，其他语言使用独立 locale 子路径。
-- 模型、Header 目录与字典均为类型化 TypeScript 内容模块，`satisfies` 在构建期验证数据契约。
-- 页面默认使用 Server Components；客户端代码只负责跑分筛选、Header 模型菜单和语言菜单。
-- Header Models 菜单按 OpenAI / Anthropic / Moonshot / Google 分组展示官方 logo、分数与可用状态；当前只开放 Kimi K3。
-- Metadata API 输出本地化 title、description、canonical、hreflang 与 x-default。
-- Tailwind CSS 4 保持原有暖纸底、三字体、发丝线和低饱和蓝设计系统。
-- `output: export` 输出 `out/`，Vercel 按 Next.js 项目零配置部署。
+- 首页、场景榜单、模型、工具箱分类、库 / Skill / 插件 / Prompt / 工具详情、组合页、基准页和更新日志。
+- 内容是类型化 TypeScript 模块。`validateContent` 在导入时检查 slug、引用和双语字段。
+- 榜单挑选（榜首、价格减半、开源许可）和「出现在」反向链接在 `src/lib/catalog.ts` 构建期计算。
+- 基准日期超过 90 天，或基准已停更，页面标为过期，不作为主要证据。
+- 静态导出仍是 `output: export` 与 `trailingSlash: true`。
 
 ## 数据流
 
 ```text
-src/content/models/{catalog,kimi-k3}.ts + src/content/i18n/*.ts
-                                  │
-                                  ▼
-                  src/lib 模型注册表/路径/兜底层
-                                  │
-                                  ▼
-                      src/app/model-detail.tsx
-                         ┌────────┴────────┐
-                         ▼                 ▼
-       out/models/kimi-k3/    out/{locale}/models/kimi-k3/
+src/content/{models,benchmarks,results,scenarios,categories,items,builds,changes}.ts
+src/content/boards/*.json   公开榜的逐行副本
+                                      │
+                                      ▼
+                              validateContent
+                                      │
+                                      ▼
+                               src/lib/catalog.ts
+                                      │
+                                      ▼
+                         src/views → src/app/(en) 与 (zh)/zh
 ```
 
 ## 本地验证
 
 ```bash
-pnpm dev          # Next.js + Turbopack · http://localhost:3000
-pnpm build        # 生成 out/
-pnpm preview      # 静态预览 · http://localhost:8080
-pnpm check        # lint + typecheck + unit + build + e2e/visual
+pnpm dev
+pnpm build
+pnpm preview
+pnpm check
 ```
 
-自动化验收包含 5 项语言/模型/兜底单测、36 项 Chromium E2E，以及英文/中文桌面、移动端、语言菜单和模型菜单七张视觉金本。
+## 有意留在内容里的边界
 
-## 当前边界
-
-- 只有 Kimi K3 模型详情页；Header 已展示后续模型目录，但未收录模型保持不可用且不生成路由。
-- 数据是 2026-07-17 人工快照；没有后端、数据库、ISR 或自动采集。
-- 根路径只是临时 noindex 占位，不是正式 Home，也不提供本地化版本。
-- ja、ko、es、fr 仍以 AI 翻译为主，英文是最终兜底。
-- canonical 域名固定为 `https://aievalindex.vercel.app`，生产部署尚未验收。
-
-## 下一步
-
-1. 连接 Vercel 并验证根占位、六个模型 URL、静态资源、canonical 与 hreflang。
-2. 完成 zh-CN 内容终校并抽查其他语言术语。
-3. 新增模型时先注册 slug 与详情数据，再开放 Header 对应项，不在共享详情页堆模型分支。
+- 一个基准最多属于一个场景。场景页是融合表：格子是名次，缺席为「—」。完整原榜在基准页。Web 前端含 WebDev、Image-to-WebDev、Next.js Agent Evals、ReactBench；Android 只有 Android Bench 的当前版本 2.0 长程，1.0 是同一基准的历史版本；命令行只有 Terminal-Bench 4.0；生产级改动只有 sudo L7。Supabase 与 Convex 不进场景。Image-to-WebDev 为 64 行，日期 2026-10-09。
+- 融合按 `modelSlug` 对齐，每列取最好名次。没有 slug 的行不跨榜猜测。默认排序是出现过的榜的平均名次，再比出现榜数和主榜名次。
+- 公开榜按来源页全行收录：WebDev 142 行，Android Bench 当前版本 10 行，历史版本 1.0 仍是 32 行，Terminal-Bench 35 行，sudo L7 12 行。开源权重是基准页上的筛选，不重排名次。超过 20 行可展开全部。滚动时筛选和表头吸在导航下。场景融合表的列头同样吸在导航下。多版本基准的场景列、首页卡片和 90 天判断都看当前版本。
+- 「用开源模型做前端」和「大型重构与迁移」已移除。静态页分别转到 WebDev 基准页和 Android Bench 基准页（当前为 2.0 长程）。`output: export` 不支持配置里的 redirect。Android Bench 1.0、2.0 和长程旧地址同样用静态页转到合并页，并选中对应版本。
+- 「做全栈 SaaS」和「做 iOS App」已从场景移除。构建期拒绝两个场景引用同一张基准。全栈仍有组合页 `/build/saas/`，模型取自命令行场景的 Terminal-Bench，框架评测分别引用。iOS 旧地址转到场景列表，SaaS 旧地址转到组合页。
+- 首页和场景列表是同一套 4 张卡片。首页场景榜在桌面为一行三列，较窄时两列，再窄时一列；场景列表仍是两列。卡片标题下不列基准名。
+- sudo L7 没有成本列。博客里的单任务约数只出现在基准说明。Android Bench 两个版本的 asOf 都是来源页最新更新 2026-10-06，过期判断看当前版本。
+- 框架评测挂在库和规则条目上。默认名次是无 Skills、无指南、无 AGENTS.md。ReactBench v1.2 标成生态评测。Convex With Guidelines 未核实，不列入变化量。
+- 变更日志是编辑条目，不会在分数变化时自动生成。

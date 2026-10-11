@@ -1,10 +1,27 @@
 /**
- * [INPUT]: 依赖 src/lib/contracts 的受支持语言集合
- * [OUTPUT]: 对外提供 isLocale 语言合法性判定
- * [POS]: src/lib 的语言边界模块，被本地化动态路由与语言菜单共同消费
+ * [INPUT]: 依赖 Locale 契约
+ * [OUTPUT]: 对外提供语言判断、带尾斜杠的本地化路径，以及中英路径对调
+ * [POS]: src/lib 的路由语言边界，英文在根路径，中文在 /zh/
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 import { LOCALES, type Locale } from "./contracts";
 
-export const isLocale = (value: string): value is Locale =>
-  LOCALES.some((locale) => locale === value);
+export const isLocale = (value: string): value is Locale => LOCALES.some((locale) => locale === value);
+
+export const t = (locale: Locale, text: { zh: string; en: string }) => text[locale];
+
+export function localePath(locale: Locale, path: string): string {
+  const hashAt = path.indexOf("#");
+  const hash = hashAt >= 0 ? path.slice(hashAt) : "";
+  const bare = hashAt >= 0 ? path.slice(0, hashAt) : path;
+  const normalized = bare.startsWith("/") ? bare : `/${bare}`;
+  const withSlash = normalized === "/" ? "/" : normalized.endsWith("/") ? normalized : `${normalized}/`;
+  const localized = locale === "en" ? withSlash : withSlash === "/" ? "/zh/" : `/zh${withSlash}`;
+  return `${localized}${hash}`;
+}
+
+export function swapLocale(pathname: string, target: Locale): string {
+  const stripped = pathname.replace(/\/$/, "") || "/";
+  const withoutZh = stripped.replace(/^\/zh(?=\/|$)/, "") || "/";
+  return localePath(target, withoutZh);
+}
