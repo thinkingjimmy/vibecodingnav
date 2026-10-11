@@ -22,10 +22,10 @@ export const scenarios: Scenario[] = [
     ),
     benchmark: "lmarena-webdev",
     boards: [
-      { id: "webdev", benchmark: "lmarena-webdev", label: tx("WebDev", "WebDev") },
-      { id: "image", benchmark: "lmarena-image-to-webdev", label: tx("图生网页", "From image") },
-      { id: "nextjs", benchmark: "nextjs-evals", label: tx("Next.js", "Next.js") },
-      { id: "reactbench", benchmark: "reactbench", label: tx("ReactBench", "ReactBench") },
+      { id: "webdev", benchmark: "lmarena-webdev", label: tx("WebDev", "WebDev"), weight: 1 },
+      { id: "image", benchmark: "lmarena-image-to-webdev", label: tx("图生网页", "From image"), weight: 0.6 },
+      { id: "nextjs", benchmark: "nextjs-evals", label: tx("Next.js", "Next.js"), weight: 0.4 },
+      { id: "reactbench", benchmark: "reactbench", label: tx("ReactBench", "ReactBench"), weight: 0.4 },
     ],
     valueMetric: "token",
     lead: "top",
@@ -62,7 +62,7 @@ export const scenarios: Scenario[] = [
     ),
     benchmark: "android-bench",
     boards: [
-      { id: "current", benchmark: "android-bench", label: tx("Android Bench 2.0", "Android Bench 2.0") },
+      { id: "current", benchmark: "android-bench", label: tx("Android Bench 2.0", "Android Bench 2.0"), weight: 1 },
     ],
     valueMetric: "run",
     lead: "top",

@@ -1,6 +1,6 @@
 /**
- * [INPUT]: 依赖按模型对齐的名次、基准链接与排序文案
- * [OUTPUT]: 对外提供场景页的融合表：一列一张榜，格子是名次，列头滚动时吸在导航下
+ * [INPUT]: 依赖按模型对齐的名次、综合分、基准链接与排序文案
+ * [OUTPUT]: 对外提供场景页的融合表：综合分列 + 一列一张榜的原始名次，列头滚动时吸在导航下
  * [POS]: src/components 的场景融合表
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -15,21 +15,26 @@ import { VendorMark } from "./vendor-mark";
 
 const PAGE = 20;
 type Fusion = ReturnType<typeof fuseScenario>;
-type SortKey = "model" | "avg" | "count" | number;
+type SortKey = "model" | "composite" | "count" | number;
 
 export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary }) {
-  const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "avg", dir: "asc" });
+  const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "composite", dir: "desc" });
   const [expanded, setExpanded] = useState(false);
   const rows = useMemo(() => {
     const copy = [...fusion.rows];
     const dir = sort.dir === "asc" ? 1 : -1;
     copy.sort((a, b) => {
       if (sort.key === "model") return a.name.localeCompare(b.name, "zh-CN") * dir;
-      if (sort.key === "avg") return (a.avg - b.avg || b.count - a.count || (a.primaryRank ?? 9999) - (b.primaryRank ?? 9999)) * dir;
-      if (sort.key === "count") return (a.count - b.count || a.avg - b.avg) * dir;
+      if (sort.key === "composite") {
+        if (a.composite == null && b.composite == null) return ((a.primaryRank ?? 9999) - (b.primaryRank ?? 9999)) * dir;
+        if (a.composite == null) return 1;
+        if (b.composite == null) return -1;
+        return (Math.round(a.composite) - Math.round(b.composite) || (a.primaryRank ?? 9999) - (b.primaryRank ?? 9999)) * dir;
+      }
+      if (sort.key === "count") return (a.count - b.count || (b.composite ?? -1) - (a.composite ?? -1)) * dir;
       const left = a.cells[sort.key];
       const right = b.cells[sort.key];
-      if (!left && !right) return a.avg - b.avg;
+      if (!left && !right) return (b.composite ?? -1) - (a.composite ?? -1);
       if (!left) return 1;
       if (!right) return -1;
       return (left.rank - right.rank) * dir;
@@ -41,7 +46,7 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
   const trackRef = useRef<HTMLDivElement>(null);
   const headRef = useRef<HTMLTableElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
-  const toggle = (key: SortKey) => setSort((current) => current.key === key ? { key, dir: current.dir === "asc" ? "desc" : "asc" } : { key, dir: key === "model" ? "asc" : "asc" });
+  const toggle = (key: SortKey) => setSort((current) => current.key === key ? { key, dir: current.dir === "asc" ? "desc" : "asc" } : { key, dir: key === "model" ? "asc" : key === "composite" ? "desc" : "asc" });
   const minWidth = `${28 + fusion.columns.length * 7}rem`;
   const cols = () => (
     <colgroup>
@@ -54,7 +59,7 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
   const head = (
     <tr className="num h-10 text-[12px] text-faint">
       <SortHeader label={dict.scenario.colModel} active={sort.key === "model"} dir={sort.dir} onClick={() => toggle("model")} sortLabel={dict.scenario.sortBy} />
-      <SortHeader label={dict.scenario.colAvg} active={sort.key === "avg"} dir={sort.dir} align="right" onClick={() => toggle("avg")} sortLabel={dict.scenario.sortBy} />
+      <SortHeader label={dict.scenario.colComposite} active={sort.key === "composite"} dir={sort.dir} align="right" onClick={() => toggle("composite")} sortLabel={dict.scenario.sortBy} />
       <SortHeader label={dict.scenario.colAppears} active={sort.key === "count"} dir={sort.dir} align="right" onClick={() => toggle("count")} sortLabel={dict.scenario.sortBy} />
       {fusion.columns.map((column, index) => (
         <th key={column.id} className="bg-bg px-2 text-right font-normal whitespace-nowrap">
@@ -111,7 +116,7 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
                 <td className="max-w-0 overflow-hidden px-2 py-2.5">
                   <ModelName name={row.name} href={row.href} vendor={row.vendor} letter={row.letter} />
                 </td>
-                <td className="num px-2 py-2.5 text-right">{row.avgLabel}</td>
+                <td className="num px-2 py-2.5 text-right">{row.compositeLabel}</td>
                 <td className="num px-2 py-2.5 text-right text-mfg">{row.count}/{row.total}</td>
                 {row.cells.map((cell, index) => (
                   <td key={fusion.columns[index]!.id} className="num px-2 py-2.5 text-right" title={cell?.tip}>{cell ? cell.rank : "—"}</td>

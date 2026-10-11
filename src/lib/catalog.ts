@@ -23,6 +23,7 @@ import {
   type VendorId,
   type WeightClass,
 } from "./contracts";
+import { computeComposite, type CompositeBoardSpec } from "./composite";
 import { getDictionary } from "./i18n";
 import { localePath, t } from "./locale";
 import { isStale, SITE_SYNC, siteClock } from "./site";
@@ -385,7 +386,7 @@ function modelIdentity(result: Result) {
   return result.modelSlug ? `model:${result.modelSlug}` : `label:${result.label ?? ""}`;
 }
 
-/** 融合表的对齐规则写在 src/content/boards/README.md。 */
+/** 融合表的对齐规则写在 src/content/boards/README.md。综合分算法在 composite.ts。 */
 export function fuseScenario(locale: Locale, scenario: Scenario) {
   const specs = scenarioBoardSpecs(scenario);
   const columns = specs.map((spec) => {
@@ -409,6 +410,22 @@ export function fuseScenario(locale: Locale, scenario: Scenario) {
     }
     return map;
   });
+  const compositeBoards: CompositeBoardSpec[] = specs.map((spec, index) => {
+    const benchmark = benchmarkBy.get(spec.benchmark)!;
+    return {
+      id: spec.benchmark,
+      kind: benchmark.compositeKind,
+      weight: spec.weight ?? 1,
+      rows: [...best[index]!.entries()].map(([key, row]) => ({
+        key,
+        rank: row.rank!,
+        score: row.score,
+        preliminary: row.preliminary,
+      })),
+    };
+  });
+  const composites = computeComposite(compositeBoards);
+  const compositeByKey = new Map(composites.map((row) => [row.key, row]));
   const keys = [...new Set(best.flatMap((map) => [...map.keys()]))];
   const rows = keys.map((key) => {
     const cells = best.map((map, index) => {
@@ -421,20 +438,22 @@ export function fuseScenario(locale: Locale, scenario: Scenario) {
       const unit = benchmark.scoreUnit && !score.includes("%") ? benchmark.scoreUnit : "";
       const variant = [result.label && result.label !== name ? result.label : "", result.effort ?? "", result.agent ?? ""].filter(Boolean).join(" · ");
       const metric = benchmark.scoreUnit === "%" ? (locale === "zh" ? "通过率" : "pass rate") : (locale === "zh" ? "分数" : "score");
+      const compositeCell = compositeByKey.get(key)?.cells[index] ?? null;
       return {
         rank: result.rank!,
         score,
         unit,
         scoreNumber: result.score,
         scoreUnit: benchmark.scoreUnit,
+        normalized: compositeCell ? Math.round(compositeCell.normalized) : undefined,
         tip: [metric, `${score}${unit}`, variant].filter(Boolean).join(" · "),
       };
     });
     const sample = cells.find((cell) => cell)?.rank != null ? best.find((map) => map.has(key))!.get(key)! : undefined;
     const model = sample?.modelSlug ? modelBy.get(sample.modelSlug) : undefined;
     const ranks = cells.flatMap((cell) => cell ? [cell.rank] : []);
-    const avg = ranks.reduce((sum, rank) => sum + rank, 0) / ranks.length;
     const primary = cells[primaryIndex];
+    const composite = compositeByKey.get(key);
     return {
       key,
       slug: sample?.modelSlug,
@@ -442,14 +461,26 @@ export function fuseScenario(locale: Locale, scenario: Scenario) {
       href: model ? localePath(locale, `/models/${model.slug}`) : undefined,
       vendor: model?.vendor ?? sample?.vendor,
       letter: sample?.letter,
-      avg,
-      avgLabel: Number.isInteger(avg) ? String(avg) : avg.toFixed(1),
+      composite: composite?.score ?? null,
+      compositeLabel: composite ? String(composite.display) : "—",
+      compositeRank: composite?.rank ?? null,
+      compositeTie: composite?.tie ?? false,
+      coverage: composite?.coverage ?? 0,
+      homeEligible: Boolean(composite?.homeEligible && sample?.modelSlug),
       count: ranks.length,
       total: columns.length,
       primaryRank: primary ? primary.rank : null,
       cells,
     };
-  }).sort((a, b) => a.avg - b.avg || b.count - a.count || (a.primaryRank ?? 9999) - (b.primaryRank ?? 9999) || a.name.localeCompare(b.name, locale === "zh" ? "zh-CN" : "en"));
+  }).sort((a, b) => {
+    if (a.composite == null && b.composite == null) return (a.primaryRank ?? 9999) - (b.primaryRank ?? 9999) || a.name.localeCompare(b.name, locale === "zh" ? "zh-CN" : "en");
+    if (a.composite == null) return 1;
+    if (b.composite == null) return -1;
+    return Math.round(b.composite) - Math.round(a.composite)
+      || (a.primaryRank ?? 9999) - (b.primaryRank ?? 9999)
+      || b.coverage - a.coverage
+      || a.name.localeCompare(b.name, locale === "zh" ? "zh-CN" : "en");
+  });
   return { columns, rows };
 }
 
@@ -463,33 +494,59 @@ function scenarioCard(locale: Locale, scenario: (typeof scenarios)[number]) {
       asOf: benchmark?.asOf ?? "",
       rows: scenario.editorPicks.map((pick, index) => {
         const model = modelBy.get(pick.modelSlug)!;
-        return { rank: index + 1, name: model.name, vendor: model.vendor, href: localePath(locale, `/models/${model.slug}`), reason: t(locale, pick.reason) };
+        return {
+          rank: index + 1,
+          rankLabel: String(index + 1),
+          name: model.name,
+          vendor: model.vendor,
+          letter: undefined as string | undefined,
+          href: localePath(locale, `/models/${model.slug}`),
+          reason: t(locale, pick.reason),
+          score: undefined as string | undefined,
+          unit: undefined as string | undefined,
+          detail: undefined as { title: string; boards: { label: string; value: string }[] } | undefined,
+        };
       }),
     };
   }
   const fusion = fuseScenario(locale, scenario);
-  const multi = fusion.columns.length > 1;
-  const rows = fusion.rows.slice(0, 5).map((row, index) => {
-    const cell = row.cells.find((item) => item);
-    const noisy = Boolean(cell && (cell.score.includes("%") || cell.score.includes("±")));
-    return {
-      rank: index + 1,
-      rankLabel: multi ? row.avgLabel : String(row.primaryRank ?? row.cells[0]?.rank ?? row.avgLabel),
-      name: row.name,
-      vendor: row.vendor,
-      letter: row.letter,
-      href: row.href,
-      boards: multi ? row.cells.map((item) => item ? `#${item.rank}` : "—").join(" · ") : undefined,
-      boardsTitle: multi ? fusion.columns.map((column, columnIndex) => `${column.label} ${row.cells[columnIndex] ? `#${row.cells[columnIndex]!.rank}` : "—"}`).join(" · ") : undefined,
-      score: multi || !cell ? undefined : noisy ? formatScore(cell.scoreNumber, cell.scoreUnit) : cell.score,
-      unit: multi || !cell ? undefined : cell.scoreUnit,
-    };
-  });
+  const dict = getDictionary(locale);
+  const rows = fusion.rows
+    .filter((row) => row.homeEligible && row.composite != null)
+    .slice(0, 5)
+    .map((row) => {
+      const count = row.cells.filter(Boolean).length;
+      const tipTemplate = count === row.total ? dict.scenario.compositeTipAll : dict.scenario.compositeTipPartial;
+      return {
+        rank: row.compositeRank ?? 0,
+        rankLabel: String(row.compositeRank ?? ""),
+        name: row.name,
+        vendor: row.vendor,
+        letter: row.letter,
+        href: row.href,
+        reason: undefined as string | undefined,
+        score: row.compositeLabel,
+        unit: undefined as string | undefined,
+        detail: {
+          title: tipTemplate
+            .replace("{score}", row.compositeLabel)
+            .replace("{count}", String(count))
+            .replace("{total}", String(row.total)),
+          boards: fusion.columns.map((column, columnIndex) => {
+            const cell = row.cells[columnIndex];
+            return {
+              label: column.label,
+              value: cell ? `#${cell.rank} · ${cell.normalized ?? "—"}` : "—",
+            };
+          }),
+        },
+      };
+    });
   return {
     href: localePath(locale, `/scenarios/${scenario.slug}`),
     title: t(locale, scenario.title),
     sources: fusion.columns.map((column) => ({ name: column.name, href: column.href })),
-    asOf: multi || !scenario.benchmark ? "" : benchmarkBy.get(scenario.benchmark)?.asOf ?? "",
+    asOf: fusion.columns.length === 1 && scenario.benchmark ? benchmarkBy.get(scenario.benchmark)?.asOf ?? "" : "",
     rows,
   };
 }

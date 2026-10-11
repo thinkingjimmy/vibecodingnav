@@ -12,7 +12,8 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("按场景，选对模型与框架");
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
   await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
-  await expect(page.getByText("#1 · #1 · #1 · —").first()).toBeVisible();
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("97").first()).toBeVisible();
+  await expect(page.getByText("#1 · #1 · #1 · —")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
   const section = page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) });
@@ -163,7 +164,8 @@ test("source board filter and header stay under the nav while scrolling", async 
 
 test("web scenario fuses ranks and links each board", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
-  await expect(page.getByText("默认按平均名次排")).toBeVisible();
+  await expect(page.getByText("默认按综合分排")).toBeVisible();
+  await expect(page.getByRole("button", { name: /综合分/ })).toBeVisible();
   const webdev = page.getByRole("columnheader", { name: /WebDev/ }).getByRole("link");
   await expect(webdev).toHaveAttribute("href", "/zh/benchmarks/lmarena-webdev/");
   await expect(page.getByRole("columnheader", { name: /图生网页/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");

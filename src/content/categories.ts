@@ -121,7 +121,7 @@ export const categories: ToolCategory[] = [
     howToPick: [
       tip("先看基线", "Read the baseline first", "名次用没有 Skills、没有指南、没有 AGENTS.md 的那一列。", "Rank uses the column without skills, guidelines, or AGENTS.md."),
       tip("再看变化量", "Then read the change", "技能和规则页列出每个模型的升降，包括 0 和下降。", "Skill and rules pages list each model's change, including zeros and drops."),
-      tip("不要加总", "Do not add them", "Supabase、Next.js、Convex 和 ReactBench 的分数不能合成一个数。", "Supabase, Next.js, Convex, and ReactBench scores do not combine into one number."),
+      tip("条目页仍分开看", "Keep item pages separate", "Supabase 与 Convex 仍只在条目页单独看。场景综合分只用 Web 前端那一套权重做排序和首页卡片，不替代融合表里的原始名次。", "Supabase and Convex stay on their item pages. The scenario composite uses only the Web frontend board weights for ordering and home cards; it does not replace the raw ranks in the fused table."),
     ],
   },
 ];

@@ -54,6 +54,8 @@ export const PERMISSIVE_LICENSES: readonly LicenseKind[] = ["mit", "apache-2.0",
 
 export type ScoreUnit = "" | "%";
 export type BenchmarkKind = "framework" | "ecosystem";
+/** 综合分单榜归一化：竞技场用对榜首胜率，通过率榜用比值。 */
+export type CompositeKind = "arena" | "rate";
 export type ResultArm = "baseline" | "assisted" | "web";
 export type Ci = { kind: "pm"; value: number } | { kind: "range"; low: number; high: number };
 export type ChangeKind = "board" | "pick" | "method";
@@ -115,6 +117,8 @@ export interface Benchmark {
   links: BenchmarkLink[];
   asOf: string;
   scoreUnit: ScoreUnit;
+  /** 场景综合分用。空单位的竞技场榜为 arena，百分比通过率为 rate。 */
+  compositeKind: CompositeKind;
   domain: LText;
   votes?: string;
   trackedCount?: number;
@@ -183,6 +187,8 @@ export interface ScenarioBoard {
   id: string;
   benchmark: string;
   label: LText;
+  /** 综合分权重。省略时按 1。主榜通常 1，相邻竞技场任务 0.6，厂商 / 生态评测 0.4。 */
+  weight?: number;
 }
 
 export interface Scenario {
@@ -346,9 +352,11 @@ export interface Dictionary {
     preliminary: string;
     rankNote: string;
     fusedNote: string;
-    colAvg: string;
+    colComposite: string;
     colAppears: string;
     sortBy: string;
+    compositeTipAll: string;
+    compositeTipPartial: string;
     explain: string;
     why: string;
     others: string;
