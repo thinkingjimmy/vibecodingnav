@@ -411,7 +411,6 @@ export interface Dictionary {
     scoringFormula: string;
     scoringCaveatsTitle: string;
     scoringExampleLegend: string;
-    scoringOpenBenchmark: string;
     scoringWeight: string;
     scoringRunBy: string;
   };

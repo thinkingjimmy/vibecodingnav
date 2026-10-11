@@ -204,17 +204,18 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(page.getByRole("link", { name: "LMArena Image-to-WebDev" }).first()).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
 });
 
-test("fused table column info popover keeps open to open the benchmark page", async ({ page }) => {
+test("fused table column info popover title link opens the benchmark page", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/zh/scenarios/web-frontend/");
   const header = page.getByRole("button", { name: "按偏好排序" });
   await header.hover();
   const popup = page.locator("[data-column-info]");
   await expect(popup).toBeVisible({ timeout: 3000 });
-  const openBenchmark = popup.getByRole("link", { name: "打开基准页 →" });
-  await openBenchmark.hover();
+  await expect(popup.getByRole("link", { name: "打开基准页 →" })).toHaveCount(0);
+  const titleLink = popup.getByRole("link", { name: "LMArena WebDev" });
+  await titleLink.hover();
   await expect(popup).toBeVisible();
-  await openBenchmark.click();
+  await titleLink.click();
   await expect(page).toHaveURL(/\/zh\/benchmarks\/lmarena-webdev\/$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("LMArena WebDev");
 });

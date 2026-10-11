@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖按模型对齐的名次、综合分、维度列头与排序文案
- * [OUTPUT]: 对外提供场景页的融合表：综合分列 + 一列一张榜的原始名次；列头为同行图标与白话维度，悬停锚定弹层看基准详情
+ * [OUTPUT]: 对外提供场景页的融合表：综合分/上榜列 + 一列一张榜的原始名次；列头为同行图标与白话维度，悬停锚定弹层看基准详情（标题链到基准页）
  * [POS]: src/components 的场景融合表
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -217,9 +217,6 @@ function DimensionHeader({
             </p>
           ) : null}
           {column.dataMeta ? <p className="num text-[11.5px] text-faint">{column.dataMeta}</p> : null}
-          <Link href={column.href} className="inline-block pt-0.5 text-[12.5px] font-medium text-fg link-u">
-            {dict.scenario.scoringOpenBenchmark}
-          </Link>
         </div>
       </ColumnInfoPopover>
     </th>
@@ -240,7 +237,7 @@ function ModelName({ name, href, vendor, letter }: { name: string; href?: string
 function SortHeader({ label, active, dir, align, onClick, sortLabel }: { label: string; active: boolean; dir: "asc" | "desc"; align?: "right"; onClick: () => void; sortLabel: string }) {
   return (
     <th className={`px-2 pb-2.5 align-bottom font-normal ${align === "right" ? "text-right" : "text-left"}`}>
-      <button type="button" className={`inline-flex items-center gap-1 ${align === "right" ? "flex-row-reverse" : ""}`} aria-label={sortLabel.replace("{name}", label)} onClick={onClick}>
+      <button type="button" className={`inline-flex items-center gap-1 text-[13px] font-medium text-fg ${align === "right" ? "flex-row-reverse" : ""}`} aria-label={sortLabel.replace("{name}", label)} onClick={onClick}>
         {label}
         <SortMark active={active} dir={dir} />
       </button>
