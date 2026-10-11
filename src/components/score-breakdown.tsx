@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Base UI Tooltip 与 design tokens
- * [OUTPUT]: 对外提供指针跟随的分数/来源明细浮层（首页卡片、融合表格子共用）
+ * [OUTPUT]: 对外提供指针跟随的明细浮层（首页卡片、融合表格子、列头共用）
  * [POS]: src/components 的悬停明细 primitive
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -15,12 +15,13 @@ export interface ScoreBreakdownBoard {
 }
 
 export interface ScoreBreakdownContent {
-  title: string;
+  title?: string;
   boards?: ScoreBreakdownBoard[];
+  children?: ReactNode;
 }
 
 const popupClass =
-  "max-w-[280px] rounded-lg border border-bd bg-bg px-3 py-2.5 text-[12px] text-fg shadow-[0_8px_24px_-12px_rgba(0,0,0,0.18)] outline-none dark:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.55)]";
+  "max-w-[300px] rounded-lg border border-bd bg-bg px-3 py-2.5 text-[12.5px] leading-snug text-mfg shadow-[0_8px_24px_-12px_rgba(0,0,0,0.18)] outline-none dark:shadow-[0_8px_24px_-12px_rgba(0,0,0,0.55)]";
 
 const OPEN_DELAY = 150;
 
@@ -40,9 +41,10 @@ export function ScoreBreakdown({
   render: TriggerRender;
 }) {
   return (
-    <Tooltip.Root trackCursorAxis="both">
+    <Tooltip.Root trackCursorAxis="both" disableHoverablePopup={false}>
       <Tooltip.Trigger
         delay={OPEN_DELAY}
+        closeOnClick={false}
         render={(props) => render({ ...props, tabIndex: 0, "aria-label": label })}
       />
       <Tooltip.Portal>
@@ -57,13 +59,18 @@ export function ScoreBreakdown({
           className="z-50"
         >
           <Tooltip.Popup data-score-breakdown className={popupClass}>
-            <div className={content.boards?.length ? "mb-1 font-medium" : "font-medium"}>{content.title}</div>
+            {content.title ? (
+              <div className={content.boards?.length || content.children ? "mb-1 font-medium text-fg" : "font-medium text-fg"}>
+                {content.title}
+              </div>
+            ) : null}
             {content.boards?.map((board) => (
               <div key={board.label} className="flex justify-between gap-3 py-0.5">
                 <span className="text-mfg">{board.label}</span>
-                <span className="num shrink-0">{board.value}</span>
+                <span className="num shrink-0 text-fg">{board.value}</span>
               </div>
             ))}
+            {content.children}
           </Tooltip.Popup>
         </Tooltip.Positioner>
       </Tooltip.Portal>

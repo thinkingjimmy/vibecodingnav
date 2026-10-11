@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { BoardCard } from "@/components/board-card";
 import { Frame } from "@/components/frame";
 import { FusedTable } from "@/components/fused-table";
+import { ScenarioHero } from "@/components/scenario-hero";
 import { VendorMark } from "@/components/vendor-mark";
 import { getScenario, listScenarioCards, slugs } from "@/lib/catalog";
 import type { Locale } from "@/lib/contracts";
@@ -56,23 +57,17 @@ export async function ScenarioView({ locale, params }: { locale: Locale; params:
         <span className="num mx-2 text-faint">/</span>
         <span className="num text-fg">{scenario.slug}</span>
       </section>
-      <section className="px-4 pt-6">
-        <h1 className="display-page">{scenario.title}</h1>
-        <p className="mt-5 max-w-[700px] text-[17px] leading-relaxed text-mfg">{scenario.summary}</p>
-        <p className="num mt-6 text-[12px] text-faint">{scenario.meta}</p>
-        {scenario.note ? <p className="mt-4 max-w-[700px] text-[14px] leading-relaxed text-mfg">{scenario.note}</p> : null}
-        {scenario.stale ? <p className="mt-4 text-[14px] text-mfg" data-stale="true">{dict.scenario.staleBanner}</p> : null}
-      </section>
-      {scenario.combo ? (
-        <Link href={scenario.combo.href} className="group mx-4 mt-10 flex h-12 items-center gap-4 rounded-[10px] border border-bd px-4 text-[14px] hover:border-fg/20">
-          <span className="font-medium">{dict.scenario.combo}</span>
-          <span className="truncate text-mfg">{scenario.combo.label}</span>
-          <span className="ml-auto text-faint group-hover:text-fg">{dict.scenario.viewCombo} →</span>
-        </Link>
-      ) : null}
+      <ScenarioHero
+        title={scenario.title}
+        thesis={scenario.thesis}
+        sync={scenario.sync}
+        combo={scenario.combo}
+        scoring={scenario.scoring}
+        dict={dict}
+        stale={scenario.stale}
+      />
       {scenario.fusion.rows.length ? (
         <section className="pt-16">
-          <header className="px-4 pb-5"><h2 className="pt">{dict.scenario.board}</h2></header>
           <FusedTable fusion={scenario.fusion} dict={dict} />
         </section>
       ) : null}

@@ -9,7 +9,7 @@ benchmarks.ts: 基准方法论、来源、更新日期与版本
 results.ts: 各基准的名次与分数；多版本基准的行带 version
 image-to-webdev-chart.ts: 图生网页帕累托页的分数与混合价格
 boards/: 公开榜的逐行副本，以及融合表的模型对齐说明
-scenarios.ts: 场景榜单配置
+scenarios.ts: 场景榜单配置（含融合列维度图标/白话标签与评分注意点）
 categories.ts: 工具箱分类
 items.ts: 库、Skill、插件、Prompt 与工具
 builds.ts: 「做 X」组合，模型行引用挑选而不是抄分数

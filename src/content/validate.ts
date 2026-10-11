@@ -4,7 +4,7 @@
  * [POS]: src/content 的构建期校验，被内容入口在导入时执行
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
-import { ITEM_TYPES, PERMISSIVE_LICENSES, VENDOR_IDS, type LicenseKind, type LText } from "@/lib/contracts";
+import { ITEM_TYPES, PERMISSIVE_LICENSES, SCENARIO_BOARD_ICONS, VENDOR_IDS, type LicenseKind, type LText } from "@/lib/contracts";
 import type { Benchmark, BuildPage, ChangeEntry, Item, Model, Result, Scenario, ToolCategory } from "@/lib/contracts";
 
 export interface ContentBundle {
@@ -148,13 +148,23 @@ export function validateContent(input: ContentBundle): string[] {
 
   const benchmarkBySlug = new Map(input.benchmarks.map((item) => [item.slug, item]));
   const specificOwner = new Map<string, string>();
+  const boardIcons = new Set<string>(SCENARIO_BOARD_ICONS);
   for (const scenario of input.scenarios) {
     text(scenario.title, `scenario.${scenario.slug}.title`, errors);
     text(scenario.summary, `scenario.${scenario.slug}.summary`, errors);
+    text(scenario.thesis, `scenario.${scenario.slug}.thesis`, errors);
     if (scenario.benchmark && !benchmarks.has(scenario.benchmark)) errors.push(`scenario.${scenario.slug} 基准不存在`);
     for (const board of scenario.boards ?? []) {
       if (!benchmarks.has(board.benchmark)) errors.push(`scenario.${scenario.slug} 分表基准不存在: ${board.benchmark}`);
-      text(board.label, `scenario.${scenario.slug}.board.${board.id}`, errors);
+      text(board.label, `scenario.${scenario.slug}.board.${board.id}.label`, errors);
+      text(board.dimension, `scenario.${scenario.slug}.board.${board.id}.dimension`, errors);
+      text(board.blurb, `scenario.${scenario.slug}.board.${board.id}.blurb`, errors);
+      text(board.runBy, `scenario.${scenario.slug}.board.${board.id}.runBy`, errors);
+      if (board.dataNote) text(board.dataNote, `scenario.${scenario.slug}.board.${board.id}.dataNote`, errors);
+      if (!boardIcons.has(board.icon)) errors.push(`scenario.${scenario.slug} 分表图标不合法: ${board.icon}`);
+    }
+    for (const [index, caveat] of (scenario.scoringCaveats ?? []).entries()) {
+      text(caveat, `scenario.${scenario.slug}.scoringCaveats.${index}`, errors);
     }
     if (!scenario.benchmark && !scenario.editorPicks?.length && !scenario.boards?.length) errors.push(`scenario.${scenario.slug} 既没有基准也没有精选`);
     const claimed = new Set<string>();

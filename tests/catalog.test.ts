@@ -177,7 +177,12 @@ describe("picks", () => {
 
   it("fuses scenario boards by model and composite score", () => {
     const web = getScenario("zh", "web-frontend");
+    expect(web?.thesis).toContain("单看哪一张榜都有盲点");
     expect(web?.fusion.columns.map((column) => column.id)).toEqual(["lmarena-webdev", "lmarena-image-to-webdev", "nextjs-evals", "reactbench", "sudo-l7"]);
+    expect(web?.fusion.columns.map((column) => column.label)).toEqual(["偏好", "还原设计", "Next.js 任务", "React 任务", "工程判断"]);
+    expect(web?.fusion.columns.map((column) => column.icon)).toEqual(["users-three", "image", "file-code", "atom", "scales"]);
+    expect(web?.scoring.example?.caption).toContain("ReactBench");
+    expect(web?.scoring.example?.caption).toContain("第 4");
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1]);
     expect(opus).toMatchObject({ compositeLabel: "98", count: 4, total: 5 });
@@ -193,9 +198,11 @@ describe("picks", () => {
 
     const android = getScenario("zh", "android-app");
     expect(android?.fusion.columns.map((column) => [column.id, column.label])).toEqual([
-      ["android-bench", "Android Bench 2.0"],
-      ["sudo-l7", "sudo L7"],
+      ["android-bench", "长程任务"],
+      ["sudo-l7", "工程判断"],
     ]);
+    expect(android?.fusion.columns.map((column) => column.icon)).toEqual(["device-mobile", "scales"]);
+    expect(android?.scoring.example).toBeUndefined();
     const opus55 = android?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(android?.fusion.rows.find((row) => row.slug === "claude-opus-5")).toBeUndefined();
     expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1]);

@@ -188,10 +188,32 @@ export interface EditorPick {
   reason: LText;
 }
 
+/** 融合表列头用的 Phosphor 图标名（kebab-case，与 @phosphor-icons/react 对应）。 */
+export const SCENARIO_BOARD_ICONS = [
+  "users-three",
+  "image",
+  "file-code",
+  "atom",
+  "scales",
+  "device-mobile",
+  "terminal-window",
+] as const;
+export type ScenarioBoardIcon = (typeof SCENARIO_BOARD_ICONS)[number];
+
 export interface ScenarioBoard {
   id: string;
   benchmark: string;
+  /** 短技术名，抽屉权重表等仍可用；列头改用 dimension。 */
   label: LText;
+  /** 列头短白话维度名，例如「偏好」「还原设计」。 */
+  dimension: LText;
+  icon: ScenarioBoardIcon;
+  /** 悬停浮层里 1–2 句：这张榜测什么。 */
+  blurb: LText;
+  /** 谁在跑这张榜，例如「Million 出品的生态评测」。 */
+  runBy: LText;
+  /** 浮层里的样本量/日期说明；省略时由基准的票数、模型数、版本、asOf 拼。 */
+  dataNote?: LText;
   /** 综合分权重。省略时按 1。主榜通常 1，相邻竞技场任务 0.6，厂商 / 生态评测 0.4。 */
   weight?: number;
 }
@@ -199,11 +221,16 @@ export interface ScenarioBoard {
 export interface Scenario {
   slug: string;
   title: LText;
+  /** SEO / metadata 用的较长摘要；页头不再展示。 */
   summary: LText;
+  /** 页头唯一一句说明，例如「单看哪一张榜都有盲点，这里把五张合起来排。」 */
+  thesis: LText;
   /** 首页卡片、挑选和组合使用的那一张来源榜。 */
   benchmark?: string;
   /** 同一场景里的多张来源表。顺序即列顺序。多版本基准只放当前版本。 */
   boards?: ScenarioBoard[];
+  /** 「评分方法」抽屉里场景特有的注意点。 */
+  scoringCaveats?: LText[];
   valueMetric: ValueMetric;
   lead: "top" | "value";
   featured: boolean;
@@ -356,7 +383,6 @@ export interface Dictionary {
     showLess: string;
     preliminary: string;
     rankNote: string;
-    fusedNote: string;
     colComposite: string;
     colAppears: string;
     sortBy: string;
@@ -369,6 +395,23 @@ export interface Dictionary {
     partial: string;
     leadNote: string;
     empty: string;
+    synced: string;
+    scoringMethod: string;
+    scoringClose: string;
+    scoringTitle: string;
+    scoringIntro: string;
+    scoringNormalizeTitle: string;
+    scoringNormalizeBody: string;
+    scoringWeightsTitle: string;
+    scoringWeightsBody: string;
+    scoringMissingTitle: string;
+    scoringMissingBody: string;
+    scoringFormula: string;
+    scoringCaveatsTitle: string;
+    scoringExampleLegend: string;
+    scoringOpenBenchmark: string;
+    scoringWeight: string;
+    scoringRunBy: string;
   };
   model: {
     scores: string;

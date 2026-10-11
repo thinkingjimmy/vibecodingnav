@@ -1,6 +1,6 @@
 /**
- * [INPUT]: 依赖按模型对齐的名次、综合分、基准链接与排序文案
- * [OUTPUT]: 对外提供场景页的融合表：综合分列 + 一列一张榜的原始名次，列头滚动时吸在导航下
+ * [INPUT]: 依赖按模型对齐的名次、综合分、维度列头与排序文案
+ * [OUTPUT]: 对外提供场景页的融合表：综合分列 + 一列一张榜的原始名次；列头为图标与白话维度，悬停看基准详情
  * [POS]: src/components 的场景融合表
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -11,12 +11,14 @@ import Link from "next/link";
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { fuseScenario } from "@/lib/catalog";
 import type { Dictionary, VendorId } from "@/lib/contracts";
+import { BoardDimensionIcon } from "./board-dimension-icon";
 import { ScoreBreakdown, ScoreBreakdownProvider } from "./score-breakdown";
 import { VendorMark } from "./vendor-mark";
 
 const PAGE = 20;
 type Fusion = ReturnType<typeof fuseScenario>;
 type SortKey = "model" | "composite" | "count" | number;
+type FusionColumn = Fusion["columns"][number];
 
 export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary }) {
   const [sort, setSort] = useState<{ key: SortKey; dir: "asc" | "desc" }>({ key: "composite", dir: "desc" });
@@ -58,18 +60,20 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
     </colgroup>
   );
   const head = (
-    <tr className="num h-10 text-[12px] text-faint">
+    <tr className="text-[12px] text-faint">
       <SortHeader label={dict.scenario.colModel} active={sort.key === "model"} dir={sort.dir} onClick={() => toggle("model")} sortLabel={dict.scenario.sortBy} />
       <SortHeader label={dict.scenario.colComposite} active={sort.key === "composite"} dir={sort.dir} align="right" onClick={() => toggle("composite")} sortLabel={dict.scenario.sortBy} />
       <SortHeader label={dict.scenario.colAppears} active={sort.key === "count"} dir={sort.dir} align="right" onClick={() => toggle("count")} sortLabel={dict.scenario.sortBy} />
       {fusion.columns.map((column, index) => (
-        <th key={column.id} className="bg-bg px-2 text-right font-normal whitespace-nowrap">
-          <span className="inline-flex items-center justify-end gap-1">
-            <Link href={column.href} className="link-u">{column.label}</Link>
-            {column.tag ? <span className="text-[10px] text-faint">{column.tag}</span> : null}
-            <SortButton label={column.label} active={sort.key === index} dir={sort.dir} onClick={() => toggle(index)} sortLabel={dict.scenario.sortBy} />
-          </span>
-        </th>
+        <DimensionHeader
+          key={column.id}
+          column={column}
+          active={sort.key === index}
+          dir={sort.dir}
+          onClick={() => toggle(index)}
+          sortLabel={dict.scenario.sortBy}
+          dict={dict}
+        />
       ))}
     </tr>
   );
@@ -97,19 +101,18 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
 
   return (
     <div>
-      <p className="max-w-[760px] px-4 pb-5 text-[13px] leading-relaxed text-faint">{dict.scenario.fusedNote}</p>
-      <div className="sticky z-30 bg-bg" style={{ top: "var(--site-nav, 3.5rem)" }}>
-        <div className="overflow-hidden border-b border-line">
-          <div ref={trackRef} className="px-4">
-            <table ref={headRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
-              {cols()}
-              <thead data-fused-head>{head}</thead>
-            </table>
+      <ScoreBreakdownProvider>
+        <div className="sticky z-30 bg-bg" style={{ top: "var(--site-nav, 3.5rem)" }}>
+          <div className="overflow-hidden border-b border-line">
+            <div ref={trackRef} className="px-4">
+              <table ref={headRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
+                {cols()}
+                <thead data-fused-head>{head}</thead>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
-      <div ref={scrollRef} className="overflow-x-auto px-4">
-        <ScoreBreakdownProvider>
+        <div ref={scrollRef} className="overflow-x-auto px-4">
           <table ref={tableRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
             {cols()}
             <tbody>
@@ -118,7 +121,7 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
                   <td className="max-w-0 overflow-hidden px-2 py-2.5">
                     <ModelName name={row.name} href={row.href} vendor={row.vendor} letter={row.letter} />
                   </td>
-                  <td className="num px-2 py-2.5 text-right">{row.compositeLabel}</td>
+                  <td className="num px-2 py-2.5 text-right font-medium">{row.compositeLabel}</td>
                   <td className="num px-2 py-2.5 text-right text-mfg">{row.count}/{row.total}</td>
                   {row.cells.map((cell, index) => {
                     const column = fusion.columns[index]!;
@@ -144,8 +147,8 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
               ))}
             </tbody>
           </table>
-        </ScoreBreakdownProvider>
-      </div>
+        </div>
+      </ScoreBreakdownProvider>
       {rows.length > PAGE ? (
         <div className="px-4 pt-4">
           <button type="button" className="text-[13px] text-mfg hover:text-fg" onClick={() => setExpanded((value) => !value)}>
@@ -154,6 +157,72 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
         </div>
       ) : null}
     </div>
+  );
+}
+
+function DimensionHeader({
+  column,
+  active,
+  dir,
+  onClick,
+  sortLabel,
+  dict,
+}: {
+  column: FusionColumn;
+  active: boolean;
+  dir: "asc" | "desc";
+  onClick: () => void;
+  sortLabel: string;
+  dict: Dictionary;
+}) {
+  return (
+    <th className="bg-bg px-2 pb-2.5 align-bottom font-normal">
+      <ScoreBreakdown
+        label={sortLabel.replace("{name}", column.label)}
+        content={{
+          children: (
+            <div className="space-y-1.5">
+              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                <Link href={column.href} className="font-medium text-fg link-u">
+                  {column.name}
+                </Link>
+                <span className="num text-[11.5px] text-faint">{dict.scenario.scoringWeight.replace("{weight}", column.weightLabel)}</span>
+              </div>
+              <p className="text-[12.5px] leading-snug text-mfg">{column.blurb}</p>
+              {column.runBy ? (
+                <p className="text-[12px] text-mfg">
+                  <span className="text-faint">{dict.scenario.scoringRunBy}</span> {column.runBy}
+                </p>
+              ) : null}
+              {column.dataMeta ? <p className="num text-[11.5px] text-faint">{column.dataMeta}</p> : null}
+              <Link href={column.href} className="inline-block pt-0.5 text-[12.5px] font-medium text-fg link-u">
+                {dict.scenario.scoringOpenBenchmark}
+              </Link>
+            </div>
+          ),
+        }}
+        render={(props) => {
+          const { onClick: triggerClick, ...triggerProps } = props;
+          return (
+            <button
+              {...triggerProps}
+              type="button"
+              className="ml-auto flex w-full flex-col items-end gap-1.5 text-right outline-none"
+              onClick={(event) => {
+                if (typeof triggerClick === "function") triggerClick(event);
+                onClick();
+              }}
+            >
+              <span className="text-fg"><BoardDimensionIcon name={column.icon} /></span>
+              <span className="inline-flex items-center gap-1 text-[13px] font-medium text-fg">
+                {column.label}
+                <SortMark active={active} dir={dir} />
+              </span>
+            </button>
+          );
+        }}
+      />
+    </th>
   );
 }
 
@@ -170,20 +239,12 @@ function ModelName({ name, href, vendor, letter }: { name: string; href?: string
 
 function SortHeader({ label, active, dir, align, onClick, sortLabel }: { label: string; active: boolean; dir: "asc" | "desc"; align?: "right"; onClick: () => void; sortLabel: string }) {
   return (
-    <th className={`px-2 font-normal ${align === "right" ? "text-right" : "text-left"}`}>
+    <th className={`px-2 pb-2.5 align-bottom font-normal ${align === "right" ? "text-right" : "text-left"}`}>
       <button type="button" className={`inline-flex items-center gap-1 ${align === "right" ? "flex-row-reverse" : ""}`} aria-label={sortLabel.replace("{name}", label)} onClick={onClick}>
         {label}
         <SortMark active={active} dir={dir} />
       </button>
     </th>
-  );
-}
-
-function SortButton({ label, active, dir, onClick, sortLabel }: { label: string; active: boolean; dir: "asc" | "desc"; onClick: () => void; sortLabel: string }) {
-  return (
-    <button type="button" className="inline-flex items-center text-faint" aria-label={sortLabel.replace("{name}", label)} onClick={onClick}>
-      <SortMark active={active} dir={dir} />
-    </button>
   );
 }
 

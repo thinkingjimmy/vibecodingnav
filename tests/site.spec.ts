@@ -188,14 +188,26 @@ test("source board filter and header stay under the nav while scrolling", async 
 
 test("web scenario fuses ranks and links each board", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
-  await expect(page.getByText("默认按综合分排")).toBeVisible();
+  await expect(page.getByText("单看哪一张榜都有盲点，这里把五张合起来排。")).toBeVisible();
+  await expect(page.getByRole("button", { name: "评分方法 →" })).toBeVisible();
   await expect(page.getByRole("button", { name: /综合分/ })).toBeVisible();
-  const webdev = page.getByRole("columnheader", { name: /WebDev/ }).getByRole("link");
+  await expect(page.getByRole("columnheader", { name: /偏好/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /还原设计/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /Next\.js 任务/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /React 任务/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /工程判断/ })).toBeVisible();
+  await page.getByRole("button", { name: "按偏好排序" }).hover();
+  const webdev = page.getByRole("link", { name: "LMArena WebDev" }).first();
+  await expect(webdev).toBeVisible();
   await expect(webdev).toHaveAttribute("href", "/zh/benchmarks/lmarena-webdev/");
-  await expect(page.getByRole("columnheader", { name: /图生网页/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
-  await expect(page.getByRole("columnheader", { name: /Next.js/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/nextjs-evals/");
-  await expect(page.getByRole("columnheader", { name: /ReactBench/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/reactbench/");
-  await expect(page.getByRole("columnheader", { name: /sudo L7/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");
+  await page.getByRole("button", { name: "按还原设计排序" }).hover();
+  await expect(page.getByRole("link", { name: "LMArena Image-to-WebDev" }).first()).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
+  await page.getByRole("button", { name: "评分方法 →" }).click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await expect(page.getByText("综合分怎么算")).toBeVisible();
+  await expect(page.getByText(/拿下 ReactBench 第 1/)).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
   const opus = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
   await expect(opus).toContainText("—");
   await expect(opus).toContainText("4/5");
@@ -210,7 +222,7 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   const fusedNav = await page.locator("header.sticky").boundingBox();
   const fusedHead = await page.locator("[data-fused-head] th").first().boundingBox();
   expect(Math.abs((fusedHead?.y ?? 0) - ((fusedNav?.y ?? 0) + (fusedNav?.height ?? 0)))).toBeLessThanOrEqual(1);
-  await expect(page.getByRole("columnheader", { name: /图生网页/ })).toBeInViewport();
+  await expect(page.getByRole("columnheader", { name: /还原设计/ })).toBeInViewport();
   await page.setViewportSize({ width: 900, height: 800 });
   await page.evaluate(() => window.scrollTo(0, 0));
   const fusedTopNarrow = await page.locator("[data-fused-head]").evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
@@ -266,8 +278,12 @@ test("switching a source filter keeps the table width", async ({ page }) => {
 
 test("android scenario uses only the current version", async ({ page }) => {
   await page.goto("/zh/scenarios/android-app/");
-  await expect(page.getByRole("columnheader", { name: /Android Bench 2\.0/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/android-bench/");
-  await expect(page.getByRole("columnheader", { name: /sudo L7/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");
+  await expect(page.getByRole("columnheader", { name: /长程任务/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /工程判断/ })).toBeVisible();
+  await page.getByRole("button", { name: "按长程任务排序" }).hover();
+  await expect(page.getByRole("link", { name: "Android Bench" }).first()).toHaveAttribute("href", "/zh/benchmarks/android-bench/");
+  await page.getByRole("button", { name: "按工程判断排序" }).hover();
+  await expect(page.getByRole("link", { name: "sudo L7" }).first()).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");
   await expect(page.getByRole("columnheader", { name: /^1\.0/ })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Claude Opus 5.5", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Claude Opus 5", exact: true })).toHaveCount(0);
@@ -297,7 +313,7 @@ test("removed scenario urls land on the source board", async ({ page }) => {
   await expect(page.getByText("32.7").first()).toBeVisible();
   await page.goto("/zh/scenarios/production-changes/");
   await expect(page).toHaveURL(/\/zh\/scenarios\/web-frontend\/$/);
-  await expect(page.getByRole("columnheader", { name: /sudo L7/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /工程判断/ })).toBeVisible();
   await page.goto("/scenarios/production-changes/");
   await expect(page).toHaveURL(/\/scenarios\/web-frontend\/$/);
 });

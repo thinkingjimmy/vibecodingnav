@@ -18,6 +18,7 @@ import {
   type ResultArm,
   type RoleRef,
   type Scenario,
+  type ScenarioBoardIcon,
   type ScoreUnit,
   type SourceFilter,
   type VendorId,
@@ -378,8 +379,28 @@ const HOME_BOARD_COUNT = 3;
 
 function scenarioBoardSpecs(scenario: Scenario) {
   if (scenario.boards?.length) return scenario.boards;
-  if (scenario.benchmark) return [{ id: scenario.benchmark, benchmark: scenario.benchmark, label: { zh: "", en: "" } }];
+  if (scenario.benchmark) {
+    return [{
+      id: scenario.benchmark,
+      benchmark: scenario.benchmark,
+      label: { zh: "", en: "" },
+      dimension: { zh: "", en: "" },
+      icon: "scales" as ScenarioBoardIcon,
+      blurb: { zh: "", en: "" },
+      runBy: { zh: "", en: "" },
+    }];
+  }
   return [];
+}
+
+function boardDataMeta(locale: Locale, spec: ReturnType<typeof scenarioBoardSpecs>[number], benchmark: (typeof benchmarks)[number]) {
+  if (spec.dataNote?.zh) return t(locale, spec.dataNote);
+  const parts: string[] = [];
+  if (benchmark.votes) parts.push(`${benchmark.votes} ${locale === "zh" ? "票" : "votes"}`);
+  if (benchmark.version) parts.push(benchmark.version);
+  if (benchmark.trackedCount) parts.push(`${benchmark.trackedCount} ${locale === "zh" ? "个模型" : "models"}`);
+  if (benchmark.asOf) parts.push(benchmark.asOf);
+  return parts.join(" · ");
 }
 
 function modelIdentity(result: Result) {
@@ -391,12 +412,20 @@ export function fuseScenario(locale: Locale, scenario: Scenario) {
   const specs = scenarioBoardSpecs(scenario);
   const columns = specs.map((spec) => {
     const benchmark = benchmarkBy.get(spec.benchmark)!;
+    const weight = spec.weight ?? 1;
     return {
       id: spec.benchmark,
-      label: spec.label.zh ? t(locale, spec.label) : benchmark.shortName,
+      label: spec.dimension.zh ? t(locale, spec.dimension) : (spec.label.zh ? t(locale, spec.label) : benchmark.shortName),
+      shortLabel: spec.label.zh ? t(locale, spec.label) : benchmark.shortName,
       name: benchmark.name,
       href: localePath(locale, `/benchmarks/${benchmark.slug}`),
       tag: benchmark.kind === "ecosystem" ? t(locale, benchmark.domain) : "",
+      icon: spec.icon,
+      blurb: spec.blurb.zh ? t(locale, spec.blurb) : t(locale, benchmark.measures),
+      runBy: spec.runBy.zh ? t(locale, spec.runBy) : "",
+      weight,
+      weightLabel: weight % 1 === 0 ? String(weight) : weight.toFixed(1),
+      dataMeta: boardDataMeta(locale, spec, benchmark),
     };
   });
   const primaryIndex = Math.max(0, specs.findIndex((spec) => spec.benchmark === scenario.benchmark));
@@ -579,6 +608,39 @@ export function getHome(locale: Locale) {
   };
 }
 
+function scoringExample(locale: Locale, fusion: ReturnType<typeof fuseScenario>) {
+  if (fusion.columns.length < 2) return undefined;
+  const surprise = fusion.rows.find((row) =>
+    row.compositeRank != null
+    && row.compositeRank > 1
+    && row.cells.some((cell) => cell?.rank === 1),
+  );
+  if (!surprise || surprise.compositeRank == null) return undefined;
+  const winIndex = surprise.cells.findIndex((cell) => cell?.rank === 1);
+  if (winIndex < 0) return undefined;
+  const board = fusion.columns[winIndex]!;
+  const limit = Math.min(Math.max(4, surprise.compositeRank), fusion.rows.length);
+  const models = fusion.rows.slice(0, limit).map((row) => ({
+    key: row.key,
+    name: row.name.replace(/^Claude\s+/i, "").replace(/^GPT-?/i, "GPT-"),
+    vendor: row.vendor,
+    letter: row.letter,
+    rank: row.compositeRank ?? 0,
+    score: row.compositeLabel,
+    bars: row.cells.map((cell) => (cell?.normalized == null ? null : cell.normalized)),
+    highlight: row.key === surprise.key ? winIndex : -1,
+  }));
+  const shortName = surprise.name.replace(/^Claude\s+/i, "").replace(/^GPT-?/i, "GPT-");
+  const caption = locale === "zh"
+    ? `${shortName} 拿下 ${board.name} 第 1，合起来只排第 ${surprise.compositeRank}。`
+    : `${shortName} is #1 on ${board.name}, but only #${surprise.compositeRank} overall.`;
+  return {
+    caption,
+    dimensions: fusion.columns.map((column) => column.label),
+    models,
+  };
+}
+
 export function getScenario(locale: Locale, slug: string) {
   const scenario = scenarioBy.get(slug);
   if (!scenario) return undefined;
@@ -613,6 +675,8 @@ export function getScenario(locale: Locale, slug: string) {
     slug,
     title: t(locale, scenario.title),
     summary: t(locale, scenario.summary),
+    thesis: t(locale, scenario.thesis),
+    sync: dict.scenario.synced.replace("{date}", SITE_SYNC),
     meta: [
       scenario.sourceLabel ? t(locale, scenario.sourceLabel) : boards.map((panel) => panel.name).join(" · ") || benchmark?.name,
       boards.length === 1 && benchmark ? `${locale === "zh" ? "榜单日期" : "Board"} ${benchmark.asOf}` : "",
@@ -626,6 +690,11 @@ export function getScenario(locale: Locale, slug: string) {
     rows,
     boards,
     fusion,
+    scoring: {
+      weights: fusion.columns.map((column) => ({ name: column.name, weight: column.weightLabel })),
+      caveats: (scenario.scoringCaveats ?? []).map((item) => t(locale, item)),
+      example: scoringExample(locale, fusion),
+    },
     why: scenario.whyItMatters.map((item) => ({ title: t(locale, item.title), body: t(locale, item.body) })),
     picks: (scenario.editorPicks ?? []).map((pick) => {
       const model = modelBy.get(pick.modelSlug)!;
