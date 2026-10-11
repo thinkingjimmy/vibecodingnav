@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖按模型对齐的名次、综合分、维度列头与排序文案
- * [OUTPUT]: 对外提供场景页的融合表：综合分列 + 一列一张榜的原始名次；列头为图标与白话维度，悬停看基准详情
+ * [OUTPUT]: 对外提供场景页的融合表：综合分列 + 一列一张榜的原始名次；列头为同行图标与白话维度，悬停锚定弹层看基准详情
  * [POS]: src/components 的场景融合表
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -12,6 +12,7 @@ import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { fuseScenario } from "@/lib/catalog";
 import type { Dictionary, VendorId } from "@/lib/contracts";
 import { BoardDimensionIcon } from "./board-dimension-icon";
+import { ColumnInfoPopover } from "./column-info-popover";
 import { ScoreBreakdown, ScoreBreakdownProvider } from "./score-breakdown";
 import { VendorMark } from "./vendor-mark";
 
@@ -177,43 +178,23 @@ function DimensionHeader({
 }) {
   return (
     <th className="bg-bg px-2 pb-2.5 align-bottom font-normal">
-      <ScoreBreakdown
+      <ColumnInfoPopover
         label={sortLabel.replace("{name}", column.label)}
-        content={{
-          children: (
-            <div className="space-y-1.5">
-              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                <Link href={column.href} className="font-medium text-fg link-u">
-                  {column.name}
-                </Link>
-                <span className="num text-[11.5px] text-faint">{dict.scenario.scoringWeight.replace("{weight}", column.weightLabel)}</span>
-              </div>
-              <p className="text-[12.5px] leading-snug text-mfg">{column.blurb}</p>
-              {column.runBy ? (
-                <p className="text-[12px] text-mfg">
-                  <span className="text-faint">{dict.scenario.scoringRunBy}</span> {column.runBy}
-                </p>
-              ) : null}
-              {column.dataMeta ? <p className="num text-[11.5px] text-faint">{column.dataMeta}</p> : null}
-              <Link href={column.href} className="inline-block pt-0.5 text-[12.5px] font-medium text-fg link-u">
-                {dict.scenario.scoringOpenBenchmark}
-              </Link>
-            </div>
-          ),
-        }}
         render={(props) => {
           const { onClick: triggerClick, ...triggerProps } = props;
           return (
             <button
               {...triggerProps}
               type="button"
-              className="ml-auto flex w-full flex-col items-end gap-1.5 text-right outline-none"
+              className="ml-auto inline-flex w-full items-center justify-end gap-1.5 text-right outline-none"
               onClick={(event) => {
                 if (typeof triggerClick === "function") triggerClick(event);
                 onClick();
               }}
             >
-              <span className="text-fg"><BoardDimensionIcon name={column.icon} /></span>
+              <span className="inline-flex shrink-0 text-fg">
+                <BoardDimensionIcon name={column.icon} size={14} />
+              </span>
               <span className="inline-flex items-center gap-1 text-[13px] font-medium text-fg">
                 {column.label}
                 <SortMark active={active} dir={dir} />
@@ -221,7 +202,26 @@ function DimensionHeader({
             </button>
           );
         }}
-      />
+      >
+        <div className="space-y-1.5">
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <Link href={column.href} className="font-medium text-fg link-u">
+              {column.name}
+            </Link>
+            <span className="num text-[11.5px] text-faint">{dict.scenario.scoringWeight.replace("{weight}", column.weightLabel)}</span>
+          </div>
+          <p className="text-[12.5px] leading-snug text-mfg">{column.blurb}</p>
+          {column.runBy ? (
+            <p className="text-[12px] text-mfg">
+              <span className="text-faint">{dict.scenario.scoringRunBy}</span> {column.runBy}
+            </p>
+          ) : null}
+          {column.dataMeta ? <p className="num text-[11.5px] text-faint">{column.dataMeta}</p> : null}
+          <Link href={column.href} className="inline-block pt-0.5 text-[12.5px] font-medium text-fg link-u">
+            {dict.scenario.scoringOpenBenchmark}
+          </Link>
+        </div>
+      </ColumnInfoPopover>
     </th>
   );
 }

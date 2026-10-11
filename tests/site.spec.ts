@@ -202,6 +202,26 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(webdev).toHaveAttribute("href", "/zh/benchmarks/lmarena-webdev/");
   await page.getByRole("button", { name: "按还原设计排序" }).hover();
   await expect(page.getByRole("link", { name: "LMArena Image-to-WebDev" }).first()).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
+});
+
+test("fused table column info popover keeps open to open the benchmark page", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/zh/scenarios/web-frontend/");
+  const header = page.getByRole("button", { name: "按偏好排序" });
+  await header.hover();
+  const popup = page.locator("[data-column-info]");
+  await expect(popup).toBeVisible({ timeout: 3000 });
+  const openBenchmark = popup.getByRole("link", { name: "打开基准页 →" });
+  await openBenchmark.hover();
+  await expect(popup).toBeVisible();
+  await openBenchmark.click();
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/lmarena-webdev\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("LMArena WebDev");
+});
+
+test("web scenario scoring modal and fused table sticky head", async ({ page }) => {
+  await page.goto("/zh/scenarios/web-frontend/");
+  await expect(page.getByRole("columnheader", { name: /偏好/ })).toBeVisible();
   const scoringTrigger = page.getByRole("button", { name: "评分方法 →" });
   await scoringTrigger.click();
   const scoringDialog = page.getByRole("dialog");

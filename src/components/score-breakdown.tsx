@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Base UI Tooltip 与 design tokens
- * [OUTPUT]: 对外提供指针跟随的明细浮层（首页卡片、融合表格子、列头共用）
+ * [OUTPUT]: 对外提供指针跟随的只读明细浮层（首页卡片、融合表格子）；含链接的列头用 ColumnInfoPopover
  * [POS]: src/components 的悬停明细 primitive
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
