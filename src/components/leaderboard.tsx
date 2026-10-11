@@ -1,13 +1,13 @@
 /**
  * [INPUT]: 依赖榜单行、来源列与筛选文案
- * [OUTPUT]: 对外提供按来源列展示的完整榜单，超过 20 行可展开
- * [POS]: src/components 的场景榜单交互
+ * [OUTPUT]: 对外提供按来源列展示的完整榜单，筛选和表头在滚动时吸在导航下，超过 20 行可展开
+ * [POS]: src/components 的基准页榜单交互
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState, type ReactNode } from "react";
+import { useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { BoardRow } from "@/lib/catalog";
 import type { BoardTable, Dictionary, SourceFilter } from "@/lib/contracts";
 import { VendorMark } from "./vendor-mark";
@@ -39,52 +39,95 @@ function ModelCell({ row, table, dict }: { row: BoardRow; table: BoardTable; dic
   return <Link href={row.href} className={className}>{body}</Link>;
 }
 
+function Cols({ headers }: { headers: Column[] }) {
+  return (
+    <colgroup>
+      {headers.map((header) => <col key={header.key} style={header.width ? { width: header.width } : undefined} />)}
+    </colgroup>
+  );
+}
+
 export function Leaderboard({ rows, dict, table, filter: mode }: { rows: BoardRow[]; dict: Dictionary; table: BoardTable; filter: SourceFilter | "none" }) {
   const [filter, setFilter] = useState<Filter>("all");
   const [expanded, setExpanded] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const headRef = useRef<HTMLTableElement>(null);
+  const tableRef = useRef<HTMLTableElement>(null);
   const visible = useMemo(() => rows.filter((row) => matches(row, filter, mode)), [filter, mode, rows]);
   const shown = expanded ? visible : visible.slice(0, PAGE);
   const headers = columns(table, dict);
+  const minWidth = tableMin(table);
+
+  useLayoutEffect(() => {
+    const scroll = scrollRef.current;
+    const track = trackRef.current;
+    const head = headRef.current;
+    const body = tableRef.current;
+    if (!scroll || !track || !head || !body) return;
+    const apply = () => {
+      head.style.width = `${body.offsetWidth}px`;
+      track.style.transform = `translateX(${-scroll.scrollLeft}px)`;
+    };
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(body);
+    observer.observe(scroll);
+    scroll.addEventListener("scroll", apply, { passive: true });
+    return () => {
+      observer.disconnect();
+      scroll.removeEventListener("scroll", apply);
+    };
+  }, [shown, filter, table]);
 
   return (
     <div>
-      {mode !== "none" ? (
-        <div className="flex flex-wrap items-center gap-1 px-4 pb-5 text-[13px]">
-          {([
-            ["all", dict.scenario.filterAll],
-            ["closed", dict.scenario.filterClosed],
-            ["open", dict.scenario.filterOpen],
-          ] as [Filter, string][]).map(([key, label]) => key === filter ? (
-            <span key={key} className="pill">{label}</span>
-          ) : (
-            <button key={key} type="button" className="grid h-7 place-items-center px-2.5 text-mfg hover:text-fg" onClick={() => { setFilter(key); setExpanded(false); }}>{label}</button>
-          ))}
-        </div>
-      ) : null}
-      <div className="overflow-x-auto px-4">
-        <table className="w-full table-fixed border-collapse text-left text-[14px]" style={{ minWidth: tableMin(table) }}>
-          <colgroup>
-            {headers.map((header) => <col key={header.key} style={header.width ? { width: header.width } : undefined} />)}
-          </colgroup>
-          <thead>
-            <tr className="num h-9 border-b border-line text-[12px] text-faint">
-              {headers.map((header) => (
-                <th key={header.key} className={`overflow-hidden px-2 font-normal whitespace-nowrap ${header.align === "right" ? "text-right" : "text-left"}`}>{header.label}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {shown.length === 0 ? (
-              <tr><td className="px-2 py-6 text-mfg" colSpan={headers.length}>{dict.scenario.empty}</td></tr>
-            ) : shown.map((row) => (
-              <tr key={row.key} className="rowh border-b border-line">
-                {headers.map((header) => (
-                  <td key={header.key} className={`overflow-hidden px-2 py-2.5 align-middle ${header.align === "right" ? `num text-right text-mfg ${header.wrap ? "whitespace-normal" : "whitespace-nowrap"}` : `max-w-0 text-left ${header.width ? "whitespace-nowrap" : ""}`}`}>{header.cell(row)}</td>
-                ))}
-              </tr>
+      <div className="sticky top-14 z-30 bg-bg">
+        {mode !== "none" ? (
+          <div data-board-bar className="flex flex-wrap items-center gap-1 px-4 pb-5 text-[13px]">
+            {([
+              ["all", dict.scenario.filterAll],
+              ["closed", dict.scenario.filterClosed],
+              ["open", dict.scenario.filterOpen],
+            ] as [Filter, string][]).map(([key, label]) => key === filter ? (
+              <span key={key} className="pill">{label}</span>
+            ) : (
+              <button key={key} type="button" className="grid h-7 place-items-center px-2.5 text-mfg hover:text-fg" onClick={() => { setFilter(key); setExpanded(false); }}>{label}</button>
             ))}
-          </tbody>
-        </table>
+          </div>
+        ) : null}
+        <div className="overflow-hidden border-b border-line">
+          <div ref={trackRef} className="px-4">
+            <table ref={headRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
+              <Cols headers={headers} />
+              <thead data-board-head>
+                <tr className="num h-9 text-[12px] text-faint">
+                  {headers.map((header) => (
+                    <th key={header.key} className={`h-9 overflow-hidden bg-bg px-2 font-normal whitespace-nowrap ${header.align === "right" ? "text-right" : "text-left"}`}>{header.label}</th>
+                  ))}
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div ref={scrollRef} data-board-scroll className="overflow-x-auto">
+        <div className="px-4">
+          <table ref={tableRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
+            <Cols headers={headers} />
+            <tbody>
+              {shown.length === 0 ? (
+                <tr><td className="border-b border-line px-2 py-6 text-mfg" colSpan={headers.length}>{dict.scenario.empty}</td></tr>
+              ) : shown.map((row) => (
+                <tr key={row.key} className="rowh">
+                  {headers.map((header) => (
+                    <td key={header.key} className={`overflow-hidden border-b border-line px-2 py-2.5 align-middle ${header.align === "right" ? `num text-right text-mfg ${header.wrap ? "whitespace-normal" : "whitespace-nowrap"}` : `max-w-0 text-left ${header.width ? "whitespace-nowrap" : ""}`}`}>{header.cell(row)}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       {visible.length > PAGE ? (
         <div className="px-4 pt-4">

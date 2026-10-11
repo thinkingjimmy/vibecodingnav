@@ -76,6 +76,40 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await expect(page.getByText("granite-4.1-8b")).toBeVisible();
 });
 
+test("source board filter and header stay under the nav while scrolling", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/zh/benchmarks/lmarena-webdev/");
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  const box = async (selector: string) => {
+    const value = await page.locator(selector).first().boundingBox();
+    if (!value) throw new Error(`missing box ${selector}`);
+    return value;
+  };
+  const nav = await box("header.sticky");
+  const bar = await box("[data-board-bar]");
+  const head = await box("[data-board-head] th");
+  expect(Math.abs(bar.y - (nav.y + nav.height))).toBeLessThanOrEqual(1);
+  expect(Math.abs(head.y - (bar.y + bar.height))).toBeLessThanOrEqual(1);
+  await expect(page.getByText("devstral-medium-2507")).toBeVisible();
+
+  await page.setViewportSize({ width: 390, height: 700 });
+  await page.locator("[data-board-scroll]").evaluate((el) => { el.scrollLeft = 180; });
+  const scoreHead = await page.getByRole("columnheader", { name: "分数", exact: true }).boundingBox();
+  const scoreCell = await page.locator("tbody tr").first().locator("td").nth(3).boundingBox();
+  expect(Math.abs((scoreHead?.x ?? 0) - (scoreCell?.x ?? 0))).toBeLessThanOrEqual(1);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(1);
+
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/zh/benchmarks/sudo-l7/");
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  const nav2 = await box("header.sticky");
+  const head2 = await box("[data-board-head] th");
+  expect(Math.abs(head2.y - (nav2.y + nav2.height))).toBeLessThanOrEqual(1);
+  await expect(page.locator("[data-board-bar]")).toHaveCount(0);
+});
+
 test("web scenario fuses ranks and links each board", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
   await expect(page.getByText("默认按平均名次排")).toBeVisible();
@@ -95,7 +129,7 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
 test("switching a source filter keeps the table width", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto("/zh/benchmarks/lmarena-webdev/");
-  const measure = () => page.locator("table").evaluate((table) => {
+  const measure = () => page.locator("[data-board-scroll] table").evaluate((table) => {
     const box = table.getBoundingClientRect();
     const heads = [...table.querySelectorAll("th")].map((cell) => {
       const rect = cell.getBoundingClientRect();
