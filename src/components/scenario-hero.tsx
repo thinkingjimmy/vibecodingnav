@@ -1,6 +1,6 @@
 /**
- * [INPUT]: 依赖场景标题、一句论点、同步日期、推荐组合与评分抽屉数据
- * [OUTPUT]: 对外提供场景页头部：标题 + 一句说明、同步、组合链接、「评分方法」抽屉
+ * [INPUT]: 依赖场景标题、一句论点、同步日期、推荐组合与评分模态数据
+ * [OUTPUT]: 对外提供场景页头部：标题 + 一句说明、同步、组合链接、「评分方法」模态
  * [POS]: src/components 的场景页头部
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -8,7 +8,7 @@
 
 import Link from "next/link";
 import type { Dictionary } from "@/lib/contracts";
-import { ScenarioScoringDrawer, type ScenarioScoring } from "./scenario-scoring-drawer";
+import { ScenarioScoringModal, type ScenarioScoring } from "./scenario-scoring-modal";
 
 export function ScenarioHero({
   title,
@@ -35,7 +35,7 @@ export function ScenarioHero({
           <p className="mt-3.5 max-w-[680px] text-[17px] leading-relaxed text-mfg">{thesis}</p>
         </div>
         <div className="pb-1">
-          <ScenarioScoringDrawer dict={dict} scoring={scoring} />
+          <ScenarioScoringModal dict={dict} scoring={scoring} />
         </div>
       </div>
       <p className="num mt-4 text-[12px] text-faint">{sync}</p>

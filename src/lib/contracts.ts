@@ -229,7 +229,7 @@ export interface Scenario {
   benchmark?: string;
   /** 同一场景里的多张来源表。顺序即列顺序。多版本基准只放当前版本。 */
   boards?: ScenarioBoard[];
-  /** 「评分方法」抽屉里场景特有的注意点。 */
+  /** 「评分方法」模态里场景特有的注意点。 */
   scoringCaveats?: LText[];
   valueMetric: ValueMetric;
   lead: "top" | "value";
@@ -399,6 +399,8 @@ export interface Dictionary {
     scoringMethod: string;
     scoringClose: string;
     scoringTitle: string;
+    scoringToc: string;
+    scoringWhyTitle: string;
     scoringIntro: string;
     scoringNormalizeTitle: string;
     scoringNormalizeBody: string;

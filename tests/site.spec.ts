@@ -202,12 +202,46 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(webdev).toHaveAttribute("href", "/zh/benchmarks/lmarena-webdev/");
   await page.getByRole("button", { name: "按还原设计排序" }).hover();
   await expect(page.getByRole("link", { name: "LMArena Image-to-WebDev" }).first()).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
-  await page.getByRole("button", { name: "评分方法 →" }).click();
-  await expect(page.getByRole("dialog")).toBeVisible();
-  await expect(page.getByText("综合分怎么算")).toBeVisible();
-  await expect(page.getByText(/拿下 ReactBench 第 1/)).toBeVisible();
+  const scoringTrigger = page.getByRole("button", { name: "评分方法 →" });
+  await scoringTrigger.click();
+  const scoringDialog = page.getByRole("dialog");
+  await expect(scoringDialog).toBeVisible();
+  await expect(scoringDialog.getByText("综合分怎么算")).toBeVisible();
+  await expect(scoringDialog.getByText(/拿下 ReactBench 第 1/)).toBeVisible();
+  const dialogBox = await scoringDialog.boundingBox();
+  expect(dialogBox?.width ?? 0).toBeLessThanOrEqual(900);
+  expect(dialogBox?.x ?? 0).toBeGreaterThan(40);
+  const toc = scoringDialog.getByRole("navigation", { name: "目录" });
+  await expect(toc).toBeVisible();
+  await expect(toc.getByRole("button", { name: "为什么合起来看" })).toHaveAttribute("aria-current", "true");
+  await toc.getByRole("button", { name: "注意事项" }).click();
+  await expect(toc.getByRole("button", { name: "注意事项" })).toHaveAttribute("aria-current", "true", { timeout: 3000 });
+  await expect(scoringDialog.getByRole("heading", { name: "注意事项" })).toBeVisible();
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(scoringTrigger).toBeFocused();
+  expect(
+    await scoringTrigger.evaluate((el) => el.matches(":focus-visible") || getComputedStyle(el).outlineStyle !== "none"),
+  ).toBe(false);
+
+  await scoringTrigger.click();
+  await expect(page.getByRole("dialog")).toBeVisible();
+  await page.locator(".fixed.inset-0").click({ position: { x: 8, y: 8 } });
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+
+  await page.setViewportSize({ width: 390, height: 800 });
+  await scoringTrigger.click();
+  const mobileDialog = page.getByRole("dialog");
+  await expect(mobileDialog).toBeVisible();
+  const mobileToc = mobileDialog.getByRole("navigation", { name: "目录" });
+  await expect(mobileToc).toBeVisible();
+  const tocBox = await mobileToc.boundingBox();
+  const contentHeading = mobileDialog.getByRole("heading", { name: "为什么合起来看" });
+  const headingBox = await contentHeading.boundingBox();
+  expect((tocBox?.y ?? 0) + (tocBox?.height ?? 0)).toBeLessThanOrEqual((headingBox?.y ?? 9999) + 1);
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await page.setViewportSize({ width: 1280, height: 800 });
   const opus = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
   await expect(opus).toContainText("—");
   await expect(opus).toContainText("4/5");
