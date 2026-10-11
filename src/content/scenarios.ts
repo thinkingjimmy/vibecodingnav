@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Scenario 契约
- * [OUTPUT]: 对外提供场景榜单：一张基准只属于一个场景，首页与列表同一套三张卡片
+ * [OUTPUT]: 对外提供场景榜单：specific 基准最多一个场景，general 可跨场景；首页与列表同一套三张卡片
  * [POS]: src/content 的场景实体，只引用基准与模型，不复制分数
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -58,12 +58,13 @@ export const scenarios: Scenario[] = [
     slug: "android-app",
     title: tx("做一个 Android App", "Build an Android app"),
     summary: tx(
-      "Kotlin + Compose。这一页按 Android Bench 的当前版本（2.0 长程）排名，格子是名次。1.0 的完整原榜在基准页，标为历史版本。",
-      "Kotlin and Compose. This page ranks models on the current Android Bench version, 2.0 long-horizon. Cells are ranks. The full 1.0 board stays on the benchmark page as an archived version.",
+      "Kotlin + Compose。这一页把 Android Bench 当前版本（2.0 长程）与通用编码能力榜 sudo L7 按模型对齐，格子是名次。1.0 的完整原榜在基准页，标为历史版本。",
+      "Kotlin and Compose. This page lines up the current Android Bench version, 2.0 long-horizon, with the general coding board sudo L7 by model. Cells are ranks. The full 1.0 board stays on the benchmark page as an archived version.",
     ),
     benchmark: "android-bench",
     boards: [
       { id: "current", benchmark: "android-bench", label: tx("Android Bench 2.0", "Android Bench 2.0"), weight: 1 },
+      { id: "sudo", benchmark: "sudo-l7", label: tx("sudo L7", "sudo L7"), weight: 0.6 },
     ],
     valueMetric: "run",
     lead: "top",

@@ -267,11 +267,12 @@ test("switching a source filter keeps the table width", async ({ page }) => {
 test("android scenario uses only the current version", async ({ page }) => {
   await page.goto("/zh/scenarios/android-app/");
   await expect(page.getByRole("columnheader", { name: /Android Bench 2\.0/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/android-bench/");
+  await expect(page.getByRole("columnheader", { name: /sudo L7/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");
   await expect(page.getByRole("columnheader", { name: /^1\.0/ })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Claude Opus 5.5", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Claude Opus 5", exact: true })).toHaveCount(0);
   const leader = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
-  await expect(leader).toContainText("1/1");
+  await expect(leader).toContainText("2/2");
   await expect(page.getByRole("tab")).toHaveCount(0);
 });
 

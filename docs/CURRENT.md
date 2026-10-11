@@ -38,12 +38,12 @@ pnpm check
 
 ## 有意留在内容里的边界
 
-- 一个基准最多属于一个场景。场景页是融合表：格子是名次，缺席为「—」。完整原榜在基准页。Web 前端含 WebDev、Image-to-WebDev、Next.js Agent Evals、ReactBench、sudo L7；Android 只有 Android Bench 的当前版本 2.0 长程，1.0 是同一基准的历史版本；命令行只有 Terminal-Bench 4.0。Supabase 与 Convex 不进场景。Image-to-WebDev 为 64 行，日期 2026-10-09。
-- 融合按 `modelSlug` 对齐，每列取最好名次。没有 slug 的行不跨榜猜测。默认排序与首页卡片用方法 C 综合分（相对榜首、加权、缺榜半权中位收缩）；融合表格子仍是各榜原始名次。Web 前端权重：WebDev 1.0、图生网页 0.6、Next.js 0.4、ReactBench 0.4、sudo L7 0.6。
+- `specific` 基准最多属于一个场景；`general` 可跨场景（目前仅 sudo L7）。场景页是融合表：格子是名次，缺席为「—」。完整原榜在基准页。Web 前端含 WebDev、Image-to-WebDev、Next.js Agent Evals、ReactBench、sudo L7；Android 含 Android Bench 当前版本 2.0 长程与 sudo L7，1.0 是同一基准的历史版本；命令行只有 Terminal-Bench 4.0。Supabase 与 Convex 不进场景。Image-to-WebDev 为 64 行，日期 2026-10-09。
+- 融合按 `modelSlug` 对齐，每列取最好名次。没有 slug 的行不跨榜猜测。默认排序与首页卡片用方法 C 综合分（相对榜首、加权、缺榜半权中位收缩）；融合表格子仍是各榜原始名次。Web 前端权重：WebDev 1.0、图生网页 0.6、Next.js 0.4、ReactBench 0.4、sudo L7 0.6。Android 权重：Android Bench 当前版本 1.0、sudo L7 0.6。
 - 公开榜按来源页全行收录：WebDev 142 行，Android Bench 当前版本 10 行，历史版本 1.0 仍是 32 行，Terminal-Bench 35 行，sudo L7 12 行。开源权重是基准页上的筛选，不重排名次。超过 20 行可展开全部。滚动时筛选和表头吸在导航下。场景融合表的列头同样吸在导航下。多版本基准的场景列、首页卡片和 90 天判断都看当前版本。
 - 「用开源模型做前端」和「大型重构与迁移」已移除。静态页分别转到 WebDev 基准页和 Android Bench 基准页（当前为 2.0 长程）。`output: export` 不支持配置里的 redirect。Android Bench 1.0、2.0 和长程旧地址同样用静态页转到合并页，并选中对应版本。
-- 「做全栈 SaaS」「做 iOS App」和「生产级改动与架构决策」已从场景移除。构建期拒绝两个场景引用同一张基准。全栈仍有组合页 `/build/saas/`，模型取自命令行场景的 Terminal-Bench，框架评测分别引用。iOS 旧地址转到场景列表，SaaS 旧地址转到组合页，生产级改动旧地址转到 Web 前端（sudo L7 在该场景融合表与综合分中）。
+- 「做全栈 SaaS」「做 iOS App」和「生产级改动与架构决策」已从场景移除。构建期拒绝两个场景引用同一张 `specific` 基准；`general` 可复用。全栈仍有组合页 `/build/saas/`，模型取自命令行场景的 Terminal-Bench，框架评测分别引用。iOS 旧地址转到场景列表，SaaS 旧地址转到组合页，生产级改动旧地址转到 Web 前端（sudo L7 在 Web 前端与 Android 的融合表与综合分中）。
 - 首页和场景列表是同一套 3 张卡片。首页场景榜在桌面为一行三列，较窄时两列，再窄时一列；场景列表仍是两列。卡片标题下不列基准名；卡片只显示综合分，悬停或聚焦看各榜明细。
-- sudo L7 是通用编码能力榜，没有成本列。博客里的单任务约数只出现在基准说明。Android Bench 两个版本的 asOf 都是来源页最新更新 2026-10-06，过期判断看当前版本。
+- sudo L7 是通用编码能力榜（`scope: general`），没有成本列。博客里的单任务约数只出现在基准说明。Android Bench 两个版本的 asOf 都是来源页最新更新 2026-10-06，过期判断看当前版本。
 - 框架评测挂在库和规则条目上。默认名次是无 Skills、无指南、无 AGENTS.md。ReactBench v1.2 标成生态评测。Convex With Guidelines 未核实，不列入变化量。
 - 变更日志是编辑条目，不会在分数变化时自动生成。

@@ -67,15 +67,23 @@ describe("composite method C", () => {
     expect(all.find((row) => row.key === "model:gemini-4-argon")?.homeEligible).toBe(false);
   });
 
-  it("matches the doc top-5 for single-board scenarios", () => {
-    expect(computeComposite(scenarioBoards("android-app")).slice(0, 5).map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
+  it("matches the doc top-5 for Android with sudo L7", () => {
+    const rows = computeComposite(scenarioBoards("android-app")).slice(0, 5);
+    console.log("Android top-5 composite:", rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display]));
+    expect(rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
       [1, "claude-opus-5-5", 100],
-      [2, "gpt-6-astra", 86],
-      [3, "claude-fable-5-1", 69],
-      [4, "gpt-6-sol", 55],
-      [5, "qwen3-8-max", 43],
+      [2, "gpt-6-astra", 80],
+      [3, "claude-fable-5-1", 66],
+      [4, "gpt-6-sol", 50],
+      [5, "qwen3-8-max", 40],
     ]);
+    expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
+      [1, 100],
+      [1, 100],
+    ]);
+  });
 
+  it("matches the doc top-5 for single-board CLI", () => {
     const cli = computeComposite(scenarioBoards("cli-devops")).slice(0, 5);
     expect(cli.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
       [1, "claude-opus-5-5", 100],
@@ -145,8 +153,15 @@ describe("composite method C", () => {
     ]);
     expect(home[0]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "#1 · 100", "—", "#1 · 100"]);
     expect(home[0]?.rows.every((row) => !("boards" in row && row.boards))).toBe(true);
-    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "100" });
+    expect(home[1]?.rows.map((row) => [row.name, row.score])).toEqual([
+      ["Claude Opus 5.5", "100"],
+      ["GPT-6 Astra", "80"],
+      ["Claude Fable 5.1", "66"],
+      ["GPT 6 Sol", "50"],
+      ["Qwen3.8 Max", "40"],
+    ]);
     expect(home[1]?.rows[0]?.unit).toBeUndefined();
+    expect(home[1]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100"]);
     expect(home[2]?.rows.map((row) => row.score)).toEqual(["100", "95", "90", "90", "89"]);
     expect(home).toHaveLength(3);
   });

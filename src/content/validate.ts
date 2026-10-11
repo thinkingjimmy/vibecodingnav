@@ -88,6 +88,9 @@ export function validateContent(input: ContentBundle): string[] {
     text(benchmark.caveats, `benchmark.${benchmark.slug}.caveats`, errors);
     text(benchmark.updateCadence, `benchmark.${benchmark.slug}.updateCadence`, errors);
     date(benchmark.asOf, `benchmark.${benchmark.slug}.asOf`, errors);
+    if (benchmark.scope != null && benchmark.scope !== "general" && benchmark.scope !== "specific") {
+      errors.push(`benchmark.${benchmark.slug} scope 不合法: ${String(benchmark.scope)}`);
+    }
     if (!benchmark.links.length) errors.push(`benchmark.${benchmark.slug} 缺少来源`);
     if (!benchmark.versions) continue;
     if (!benchmark.versions.length) errors.push(`benchmark.${benchmark.slug} 版本列表为空`);
@@ -143,7 +146,8 @@ export function validateContent(input: ContentBundle): string[] {
     date(result.asOf, `result.${key}.asOf`, errors);
   }
 
-  const benchmarkOwner = new Map<string, string>();
+  const benchmarkBySlug = new Map(input.benchmarks.map((item) => [item.slug, item]));
+  const specificOwner = new Map<string, string>();
   for (const scenario of input.scenarios) {
     text(scenario.title, `scenario.${scenario.slug}.title`, errors);
     text(scenario.summary, `scenario.${scenario.slug}.summary`, errors);
@@ -157,9 +161,11 @@ export function validateContent(input: ContentBundle): string[] {
     if (scenario.benchmark) claimed.add(scenario.benchmark);
     for (const board of scenario.boards ?? []) claimed.add(board.benchmark);
     for (const benchmark of claimed) {
-      const owner = benchmarkOwner.get(benchmark);
-      if (owner) errors.push(`基准 ${benchmark} 同时属于场景 ${owner} 和 ${scenario.slug}`);
-      else benchmarkOwner.set(benchmark, scenario.slug);
+      const scope = benchmarkBySlug.get(benchmark)?.scope ?? "specific";
+      if (scope === "general") continue;
+      const owner = specificOwner.get(benchmark);
+      if (owner) errors.push(`specific 基准 ${benchmark} 同时属于场景 ${owner} 和 ${scenario.slug}`);
+      else specificOwner.set(benchmark, scenario.slug);
     }
     if (scenario.build && !builds.has(scenario.build)) errors.push(`scenario.${scenario.slug} 组合不存在`);
     for (const related of scenario.related) {

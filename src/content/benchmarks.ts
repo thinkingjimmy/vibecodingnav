@@ -193,13 +193,14 @@ export const benchmarks: Benchmark[] = [
     shortName: "sudo L7",
     scoreUnit: "%",
     compositeKind: "rate",
+    scope: "general",
     asOf: "2026-10-09",
     trackedCount: 12,
     table: "score",
     domain: tx("通用编码能力", "General coding ability"),
     measures: tx(
-      "通用编码能力：在真实代码库里完成改动、发现风险、验证危险情况，并把决定说清楚。60 道题由 staff 及以上工程师编写，多数来自私有生产仓库，也有开源项目。在本站归入 Web 前端场景。",
-      "General coding ability: making changes in real codebases, spotting risk, verifying dangerous cases, and explaining the call. 60 tasks written by staff-level engineers, mostly from private production repositories, plus open source. On this site it belongs to the Web frontend scenario.",
+      "通用编码能力：在真实代码库里完成改动、发现风险、验证危险情况，并把决定说清楚。60 道题由 staff 及以上工程师编写，多数来自私有生产仓库，也有开源项目。在本站作为 general 榜，同时出现在 Web 前端与 Android 场景。",
+      "General coding ability: making changes in real codebases, spotting risk, verifying dangerous cases, and explaining the call. 60 tasks written by staff-level engineers, mostly from private production repositories, plus open source. On this site it is a general board and appears in both the Web frontend and Android scenarios.",
     ),
     method: tx(
       "Surge AI 的 sudo L7。专家为每道题写评分细则，模型对照细则打分，并用单元测试、静态分析等可执行检查作证据。博客称共八个维度，点名的有功能正确性、实践判断、思路协作（Thought Partnership）、验证、工程工艺（Engineering Craft）、如实报告（Truthful Reporting）和沟通。",

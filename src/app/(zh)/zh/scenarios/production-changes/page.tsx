@@ -12,7 +12,7 @@ export default function Page() {
       locale="zh"
       href="/zh/scenarios/web-frontend/"
       title="这个场景已并入「做 Web 前端」"
-      body="sudo L7 是通用编码能力榜，现归入「做 Web 前端」。融合表和综合分在该场景里计入它。"
+      body="sudo L7 是通用编码能力榜，现归入「做 Web 前端」，并同时出现在 Android 场景。本页跳到 Web 前端。"
       label="做 Web 前端"
     />
   );

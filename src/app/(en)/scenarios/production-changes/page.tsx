@@ -12,7 +12,7 @@ export default function Page() {
       locale="en"
       href="/scenarios/web-frontend/"
       title="This scenario moved"
-      body="sudo L7 is a general coding-ability board and now lives in Build a Web frontend. The fused table and composite score include it there."
+      body="sudo L7 is a general coding-ability board. It lives in Build a Web frontend and also appears in Build an Android app. This page sends you to the Web frontend scenario."
       label="Build a Web frontend"
     />
   );

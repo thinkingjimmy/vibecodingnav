@@ -30,11 +30,20 @@ describe("content", () => {
     expect(validateContent({ ...content, benchmarks }).some((error) => error.includes("当前版本"))).toBe(true);
   });
 
-  it("rejects a benchmark used by two scenarios", () => {
-    const donor = content.scenarios[0]!;
+  it("rejects a specific benchmark used by two scenarios", () => {
+    const donor = content.scenarios.find((scenario) => scenario.slug === "android-app")!;
     const extra = { ...donor, slug: "duplicate-board", related: [], build: undefined, boards: undefined };
     const errors = validateContent({ ...content, scenarios: [...content.scenarios, extra] });
-    expect(errors.some((error) => error.includes(donor.benchmark!) && error.includes("duplicate-board"))).toBe(true);
+    expect(errors.some((error) => error.includes("specific") && error.includes("android-bench") && error.includes("duplicate-board"))).toBe(true);
+  });
+
+  it("allows a general benchmark in two scenarios", () => {
+    expect(content.benchmarks.find((benchmark) => benchmark.slug === "sudo-l7")?.scope).toBe("general");
+    expect(validateContent(content)).toEqual([]);
+    const owners = content.scenarios
+      .filter((scenario) => scenario.boards?.some((board) => board.benchmark === "sudo-l7") || scenario.benchmark === "sudo-l7")
+      .map((scenario) => scenario.slug);
+    expect(owners).toEqual(["web-frontend", "android-app"]);
   });
 });
 
@@ -70,9 +79,12 @@ describe("picks", () => {
     expect(resolvePicks("android-app").value?.modelSlug).toBe("gpt-6-sol");
   });
 
-  it("keeps sudo L7 on the Web frontend scenario", () => {
+  it("keeps sudo L7 on the Web frontend and Android scenarios", () => {
     expect(getScenario("zh", "production-changes")).toBeUndefined();
-    expect(getBenchmark("zh", "sudo-l7")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
+    expect(getBenchmark("zh", "sudo-l7")?.scenarios.map((row) => row.href)).toEqual([
+      "/zh/scenarios/web-frontend/",
+      "/zh/scenarios/android-app/",
+    ]);
     expect(getBenchmark("en", "sudo-l7")?.links.map((link) => link.href)).toEqual([
       "https://surgehq.ai/benchmarks/sudo-l7",
       "https://surgehq.ai/blog/sudo-l7",
@@ -92,6 +104,7 @@ describe("picks", () => {
       ["Gemini 3.8 Flash", 10.6],
     ]);
     expect(getModel("en", "claude-sonnet-5-5")?.appearances.some((row) => row.href === "/scenarios/web-frontend/")).toBe(true);
+    expect(getModel("en", "claude-opus-5-5")?.appearances.some((row) => row.href === "/scenarios/android-app/")).toBe(true);
     expect(getModel("zh", "gemini-3-8-flash")?.scoreRows.some((row) => row.name === "sudo L7" && row.score === "10.6")).toBe(true);
   });
 
@@ -130,7 +143,7 @@ describe("picks", () => {
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
-    expect(android?.boards.map((board) => [board.id, board.rows.length])).toEqual([["current", 10]]);
+    expect(android?.boards.map((board) => [board.id, board.rows.length])).toEqual([["current", 10], ["sudo", 12]]);
     expect(android?.boards[0]?.rows.map((row) => [row.rank, row.name, row.agent, row.score, row.ci, row.completion, row.latency, row.price])).toEqual([
       [1, "Claude Opus 5.5", "claude-code", "32.7", "18.7–47.3", "84.7", "15.2", "$215.4"],
       [2, "GPT 6 Astra", "codex", "28.0", "13.3–42.0", "82.2", "7.9", "$375.7"],
@@ -179,14 +192,24 @@ describe("picks", () => {
     expect(web?.fusion.rows[2]?.slug).toBe("gpt-6-astra");
 
     const android = getScenario("zh", "android-app");
-    expect(android?.fusion.columns.map((column) => [column.id, column.label])).toEqual([["android-bench", "Android Bench 2.0"]]);
+    expect(android?.fusion.columns.map((column) => [column.id, column.label])).toEqual([
+      ["android-bench", "Android Bench 2.0"],
+      ["sudo-l7", "sudo L7"],
+    ]);
     const opus55 = android?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(android?.fusion.rows.find((row) => row.slug === "claude-opus-5")).toBeUndefined();
-    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([1]);
+    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1]);
+    expect(opus55).toMatchObject({ compositeLabel: "100", count: 2, total: 2 });
     expect(opus55?.cells[0]?.tip).toContain("claude-code");
     expect(opus55?.cells[0]?.tip).toContain("32.7");
     expect(android?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
-    expect(android?.fusion.rows[0]?.compositeLabel).toBe("100");
+    expect(android?.fusion.rows.map((row) => [row.slug, row.compositeLabel]).slice(0, 5)).toEqual([
+      ["claude-opus-5-5", "100"],
+      ["gpt-6-astra", "80"],
+      ["claude-fable-5-1", "66"],
+      ["gpt-6-sol", "50"],
+      ["qwen3-8-max", "40"],
+    ]);
 
     expect(getBenchmark("zh", "supabase-evals")?.scenarios).toEqual([]);
     expect(getBenchmark("zh", "convex-evals")?.scenarios).toEqual([]);
@@ -214,8 +237,15 @@ describe("picks", () => {
     expect(home[0]?.rows).toHaveLength(5);
     expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "98" });
     expect(home[0]?.rows[0]?.detail?.title).toContain("综合 98");
-    expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench"]);
+    expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench", "sudo L7"]);
     expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "100" });
+    expect(home[1]?.rows.map((row) => [row.name, row.score])).toEqual([
+      ["Claude Opus 5.5", "100"],
+      ["GPT-6 Astra", "80"],
+      ["Claude Fable 5.1", "66"],
+      ["GPT 6 Sol", "50"],
+      ["Qwen3.8 Max", "40"],
+    ]);
     expect(home[2]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "100" });
     expect(home).toHaveLength(3);
   });

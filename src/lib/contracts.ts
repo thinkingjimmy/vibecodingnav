@@ -105,6 +105,9 @@ export interface BenchmarkVersion {
   links?: BenchmarkLink[];
 }
 
+/** specific（默认）：最多属于一个场景。general：通用能力榜，可出现在多个场景（目前仅 sudo L7）。 */
+export type BenchmarkScope = "general" | "specific";
+
 export interface Benchmark {
   slug: string;
   name: string;
@@ -119,6 +122,8 @@ export interface Benchmark {
   scoreUnit: ScoreUnit;
   /** 场景综合分用。空单位的竞技场榜为 arena，百分比通过率为 rate。 */
   compositeKind: CompositeKind;
+  /** 省略时按 specific：最多一个场景。general 可跨场景复用。 */
+  scope?: BenchmarkScope;
   domain: LText;
   votes?: string;
   trackedCount?: number;
