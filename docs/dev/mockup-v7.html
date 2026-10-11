@@ -1,0 +1,741 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>vibecodingnav — 按场景选 AI 编程模型与工具</title>
+<script>if(/[?&]theme=dark/.test(location.search))document.documentElement.classList.add('dark')</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+tailwind.config={darkMode:'class',theme:{extend:{
+  fontFamily:{sans:['Geist','"Noto Sans CJK SC"','"PingFang SC"','sans-serif'],mono:['"Geist Mono"','"Noto Sans CJK SC"','ui-monospace','monospace']},
+  colors:{bg:'var(--background)',fg:'var(--foreground)',muted:'var(--muted)',mfg:'var(--muted-foreground)',line:'var(--line)',bd:'var(--border)',surface:'var(--surface)',faint:'var(--faint)'}
+}}}
+</script>
+<style>
+  :root{--background:#fff;--foreground:#09090b;--muted:#f4f4f5;--muted-foreground:#71717a;--faint:#a1a1aa;--border:#e4e4e7;--line:color-mix(in oklab,#e4e4e7 64%,#fff);--surface:#fafafa;--bar:#18181b;--bar2:#d4d4d8;--col:960px}
+  .dark{--background:#09090b;--foreground:#fafafa;--muted:#27272a;--muted-foreground:#a1a1aa;--faint:#71717a;--border:#27272a;--line:color-mix(in oklab,#27272a 64%,#09090b);--surface:#18181b;--bar:#fafafa;--bar2:#3f3f46}
+  html,body{background:var(--background);color:var(--foreground);overflow-x:clip}
+  body{-webkit-font-smoothing:antialiased;overflow-x:clip;text-rendering:optimizeLegibility}
+  *,::before,::after{border-color:var(--border)}
+  ::selection{background:var(--foreground);color:var(--background)}
+  .page{display:none}.page.active{display:block}
+  .col{max-width:var(--col);margin:0 auto}
+  /* screen lines: 横线延伸到整个视口 */
+  .,.slb{position:relative}
+  .::before,.slb::after{content:"";position:absolute;left:-100vw;width:200vw;height:1px;background:var(--line);pointer-events:none}
+  .::before{top:0}.slb::after{bottom:0}
+  .sl-dash::after{background:linear-gradient(to right,var(--line) 4px,transparent 2px) 0 0/6px 1px repeat-x}
+  .stripes{background:repeating-linear-gradient(315deg,color-mix(in oklab,var(--line) 70%,transparent) 0,color-mix(in oklab,var(--line) 70%,transparent) 1px,transparent 0,transparent 50%) 0 0/10px 10px}
+  .stripe-divider{position:relative;height:32px}
+  .stripe-divider::before{content:"";position:absolute;left:-100vw;width:200vw;height:100%;top:0}
+  .stripe-divider::before{background:repeating-linear-gradient(315deg,color-mix(in oklab,var(--line) 70%,transparent) 0,color-mix(in oklab,var(--line) 70%,transparent) 1px,transparent 0,transparent 50%) 0 0/10px 10px}
+  .dotgrid{background-image:radial-gradient(color-mix(in oklab,var(--foreground) 9%,transparent) 1px,transparent 0);background-size:8px 8px}
+  .num{font-family:'Geist Mono','Noto Sans CJK SC',ui-monospace,monospace;font-feature-settings:"ss11" 1,"zero" 1,"tnum" 1}
+  .tile{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:6px;border:1px solid var(--border);background:var(--muted);color:var(--foreground);flex:none}
+  .tile svg{width:14px;height:14px}
+  .lg{display:inline-grid;place-items:center;width:14px;height:14px;flex:none;color:var(--foreground)}
+  .lg svg{width:14px;height:14px}
+  .lg .ltr{font:600 9px/1 'Geist Mono',monospace;width:14px;height:14px;display:grid;place-items:center;border:1px solid var(--foreground);border-radius:3px}
+  .pill{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:6px;background:var(--muted);font-size:13px;font-weight:500;color:var(--foreground)}
+  .kbd{font:500 11px/1 'Geist Mono',monospace;height:20px;min-width:20px;padding:0 5px;display:inline-grid;place-items:center;border-radius:4px;background:var(--muted);color:var(--muted-foreground)}
+  .vsep{width:1px;height:20px;background:var(--border)}
+  .link-u{text-decoration:underline;text-decoration-color:color-mix(in oklab,currentColor 30%,transparent);text-underline-offset:3px}
+  .link-u:hover{text-decoration-color:currentColor}
+  .rowh{transition:background .15s}.rowh:hover{background:color-mix(in oklab,var(--muted) 55%,transparent)}
+  .bar{height:6px;background:var(--muted);border-radius:1px;overflow:hidden}.bar>i{display:block;height:100%;background:var(--bar)}
+  .bar.b2>i{background:var(--bar2)}
+  .hbar{height:22px;border:1px solid var(--foreground);border-radius:2px}
+  .hbar.lead{background:repeating-linear-gradient(315deg,var(--foreground) 0,var(--foreground) 1px,transparent 0,transparent 50%) 0 0/6px 6px}
+  .hbar.rest{border-color:var(--faint);background:repeating-linear-gradient(315deg,var(--faint) 0,var(--faint) 1px,transparent 0,transparent 50%) 0 0/6px 6px}
+  h2.pt{font-size:26px;line-height:1.2;font-weight:500;letter-spacing:-.025em}
+  h2.pt sup{font-size:13px;font-weight:500;letter-spacing:0;color:var(--muted-foreground);top:-1em;margin-left:4px;font-family:'Geist Mono',monospace}
+  .codefig{border-radius:12px;background:var(--surface);padding:4px;box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--border) 64%,transparent)}
+  .codefig .t{display:flex;align-items:center;gap:8px;padding:8px 10px;font:13px 'Geist Mono',monospace;color:var(--muted-foreground)}
+  .codefig pre{overflow-wrap:anywhere;background:var(--background);border-radius:8px;box-shadow:inset 0 0 0 1px color-mix(in oklab,var(--border) 64%,transparent);padding:14px 16px;font:12.5px/1.75 'Geist Mono','Noto Sans CJK SC',monospace;white-space:pre-wrap;color:var(--foreground)}
+.card{border:1px solid var(--border);border-radius:10px;background:var(--background);display:flex;flex-direction:column}
+  .card:hover{border-color:color-mix(in oklab,var(--foreground) 22%,var(--border))}
+  #changes>*{padding-left:0!important;padding-right:0!important}
+  .tag{display:inline-flex;align-items:center;height:18px;padding:0 5px;border:1px solid var(--border);border-radius:4px;font:500 10.5px/1 'Geist Mono','Noto Sans CJK SC',monospace;color:var(--muted-foreground);white-space:nowrap;flex:none}
+</style>
+</head>
+<body class="font-sans text-[15px]">
+
+<!-- Header -->
+<header class="sticky top-0 z-50 bg-bg border-b border-[var(--line)]">
+  <div class="col h-14 flex items-center gap-3 px-4">
+    <a href="#home" class="flex items-center gap-2.5 font-medium tracking-tight text-[15px]">
+      <svg width="22" height="22" viewBox="0 0 22 22"><rect x=".5" y=".5" width="21" height="21" rx="5" fill="none" stroke="currentColor"/><path d="M6.5 7.5l3.5 3.5-3.5 3.5M11.5 15h4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="square"/></svg>
+      vibecodingnav
+    </a>
+    <div class="flex-1"></div>
+    <nav class="flex items-center gap-5 text-[14px] font-medium text-mfg">
+      <a href="#home" data-nav="home scenario" class="hover:text-fg">场景</a>
+      <a href="#model" data-nav="model" class="hover:text-fg">模型</a>
+      <a href="#tools" data-nav="tools library skill" class="hover:text-fg">工具箱</a>
+      <a href="#build" data-nav="build" class="hover:text-fg">组合</a>
+      <a class="hover:text-fg">基准</a>
+    </nav>
+    <span class="vsep mx-1"></span>
+    <button class="flex items-center gap-2 text-mfg text-[14px] hover:text-fg"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span class="kbd">⌘</span><span class="kbd -ml-1">K</span></button>
+    <span class="vsep mx-1"></span>
+    <span class="num text-[12px] text-mfg">中 / EN</span>
+    <span class="vsep mx-1"></span>
+    <button class="w-8 h-8 grid place-items-center" aria-label="切换主题"><svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 3a9 9 0 010 18z" fill="currentColor"/></svg></button>
+  </div>
+</header>
+
+<!-- ================= HOME ================= -->
+<main id="home" class="page">
+  <div class="col">
+    <section class="px-4 pt-24 pb-4">
+      <h1 class="text-[52px] leading-[1.08] font-medium tracking-[-0.04em]">按场景，选对模型与框架</h1>
+      <p class="mt-5 text-[17px] leading-relaxed text-mfg max-w-[680px]">AI 编程的模型、框架、Prompt 与工具，按你要做的事排好。每条推荐都有出处和日期，也写清楚什么时候别用。</p>
+      <div class="mt-8 flex items-center gap-5 text-[14px]">
+        <span class="text-faint">直接开工</span>
+        <a href="#build" class="link-u font-medium">做 Web 前端</a>
+        <a class="link-u text-mfg">做一个 Android App</a>
+        <a class="link-u text-mfg">写 CLI 与脚本</a>
+        <span class="text-faint num text-[12px]">模型 + Skill + 组件，一套配齐</span>
+      </div>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="pt-16">
+      <header class="px-4 pb-6 flex items-end justify-between"><h2 class="pt">场景榜单</h2><span class="num text-[12px] text-faint pb-1">每张卡片取自该场景最相关的公开基准</span></header>
+      <div class="px-4 grid grid-cols-3 gap-4" id="boards"></div>
+      <div class="px-4 pt-6 flex items-center gap-6 text-[14px] text-mfg"><a class="link-u text-fg">全部场景</a><span>还有：<a class="link-u">做全栈 SaaS</a></span></div>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="pt-20">
+      <header class="px-4 pb-8 flex items-end justify-between"><h2 class="pt">工具箱</h2><span class="num text-[12px] text-faint pb-1">按用途分类：库、Skill、插件与 Prompt 放在一起挑</span></header>
+      <div class="px-4 grid grid-cols-4 gap-x-10 gap-y-10" id="homeTools"></div>
+      <div class="px-4 pt-8 text-[14px]"><a class="link-u">全部分类</a></div>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="pt-20">
+      <header class="px-4 pb-6"><h2 class="pt">最新变化</h2></header>
+      <div id="changes" class="mx-4"></div>
+    </section>
+    <div class="px-4 pt-5 flex gap-2"><a class="pill">全部变化</a><a class="pill">RSS</a></div>
+  </div>
+
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-3"><h2 class="pt">数据来源</h2></header>
+      <p class="text-[14px] text-mfg">标明每个榜单的最后更新日期；超过 90 天未更新的榜单不作为主要证据。</p>
+      <div class="mt-8 grid grid-cols-5 gap-6" id="sources"></div>
+    </section>
+  </div>
+</main>
+
+
+<main id="scenario" class="page">
+  <div class="col">
+    <section class="px-4 pt-16 num text-[12px] text-mfg"><a href="#home" class="hover:text-fg">场景</a><span class="mx-2 text-faint">/</span><span class="text-fg">web-frontend</span></section>
+    <section class="px-4 pt-6">
+      <h1 class="text-[48px] leading-[1.08] font-medium tracking-[-0.04em]">做 Web 前端</h1>
+      <p class="mt-5 text-[17px] leading-relaxed text-mfg max-w-[700px]">落地页、交互组件、React / Next.js 页面。按 LMArena WebDev 社区盲评排名：两个匿名模型同时做同一个需求，由真人投票选出更好的那个。</p>
+      <p class="mt-6 num text-[12px] text-faint">LMArena WebDev · 榜单日期 2026-10-08 · 852,934 票 · 142 个模型 · 本页同步 2026-10-10</p>
+    </section>
+    <a href="#build" class="mx-4 mt-10 flex items-center gap-4 px-4 h-12 rounded-[10px] border border-bd hover:border-[color-mix(in_oklab,var(--foreground)_22%,var(--border))] text-[14px] group">
+      <span class="font-medium">推荐组合</span>
+      <span class="text-mfg">Claude Opus 5.5 + frontend-design + shadcn/ui + Phosphor Icons + Motion</span>
+      <span class="ml-auto text-faint group-hover:text-fg">查看组合 →</span>
+    </a>
+  </div>
+
+  <div class="col">
+    <section class="pt-16">
+      <header class="px-4 pb-5 flex items-end justify-between">
+        <h2 class="pt">完整榜单</h2>
+        <div class="flex items-center gap-1 text-[13px] pb-0.5"><span class="pill">全部</span><a class="px-2.5 h-7 grid place-items-center text-mfg hover:text-fg">闭源</a><a class="px-2.5 h-7 grid place-items-center text-mfg hover:text-fg">开源许可</a><span class="vsep mx-2"></span><a class="px-2.5 h-7 grid place-items-center text-mfg hover:text-fg">每家只看最高档</a></div>
+      </header>
+      <div class="mx-4 grid grid-cols-[44px_1fr_210px_80px_120px_60px] gap-3 h-9 items-center num text-[12px] text-faint border-b border-[var(--line)]"><span>#</span><span>模型</span><span>分数 · 95% CI</span><span class="text-right">票数</span><span class="text-right">价格 $/M 入/出</span><span class="text-right">上下文</span></div>
+      <div id="lb" class="mx-4"></div>
+      <div class="px-4 pt-5 flex items-center gap-4"><a class="pill">显示全部 142 个模型</a><span class="num text-[12px] text-faint">“初步”= 票数较少，名次可能变动 · 排名区间见名次下方</span></div>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-8"><h2 class="pt">榜单解读</h2></header>
+      <dl id="explain" class="max-w-[820px]"></dl>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-8"><h2 class="pt">为什么值得关注</h2></header>
+      <div id="whyMatter" class="grid grid-cols-3 gap-10"></div>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-5"><h2 class="pt">其他场景</h2></header>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 text-[15px]"><a class="link-u">做一个 Android App</a><a class="link-u">写 CLI、脚本与 DevOps</a><a class="link-u">大型重构与迁移</a><a class="link-u">用开源模型做前端</a><a class="link-u">做 iOS App</a></div>
+    </section>
+  </div>
+</main>
+
+
+<main id="tools" class="page">
+  <div class="col">
+    <section class="px-4 pt-16 num text-[12px] text-mfg"><a class="hover:text-fg">工具箱</a><span class="mx-2 text-faint">/</span><span class="text-fg">motion</span></section>
+    <section class="px-4 pt-6">
+      <h1 class="text-[48px] leading-[1.08] font-medium tracking-[-0.04em]">动效</h1>
+      <p class="mt-5 text-[17px] leading-relaxed text-mfg max-w-[700px]">页面过渡、手势、滚动动画，以及让编程 Agent 把动画写对的 Skill 和插件。</p>
+      <p class="mt-6 num text-[12px] text-faint">库 4 · Skill 2 · 插件 1 · 编辑更新 2026-10-10</p>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-14">
+      <div class="px-4 pb-4 flex items-center gap-1 text-[13px]"><span class="pill">全部</span><a class="px-2.5 h-7 grid place-items-center text-mfg">库</a><a class="px-2.5 h-7 grid place-items-center text-mfg">Skill</a><a class="px-2.5 h-7 grid place-items-center text-mfg">插件</a><a class="px-2.5 h-7 grid place-items-center text-mfg">Prompt</a></div>
+      <div id="catList" class="mx-4 border-t border-[var(--line)]"></div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6"><h2 class="pt">怎么选</h2></header>
+      <div id="howPick" class="max-w-[760px] space-y-4 text-[15px] leading-relaxed"></div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4 grid grid-cols-2 gap-10">
+      <div><h3 class="text-[17px] font-medium">出现在这些组合</h3><a href="#build" class="mt-3 block link-u text-[15px]">做 Web 前端</a></div>
+      <div><h3 class="text-[17px] font-medium">其他分类</h3><div class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-mfg"><a class="link-u">UI 组件</a><a class="link-u">图标</a><a class="link-u">字体</a><a class="link-u">图表</a><a class="link-u">表单与校验</a><a class="link-u">设计还原</a><a class="link-u">项目规则</a></div></div>
+    </section>
+  </div>
+</main>
+
+
+<main id="library" class="page">
+  <div class="col">
+    <section class="px-4 pt-16 num text-[12px] text-mfg"><a class="hover:text-fg">工具箱</a><span class="mx-2 text-faint">/</span><a class="hover:text-fg">图标</a><span class="mx-2 text-faint">/</span><span class="text-fg">phosphor-icons</span></section>
+    <section class="px-4 pt-6">
+      <div class="flex items-center gap-4"><span class="w-11 h-11 rounded-full border border-bd grid place-items-center"><svg width="22" height="22" viewBox="0 0 256 256" fill="currentColor"><path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88Zm-40-104a12 12 0 1 1 12 12a12 12 0 0 1-12-12Zm56 0a12 12 0 1 1 12 12a12 12 0 0 1-12-12Zm29.86 41.6a52 52 0 0 1-91.72 0a8 8 0 1 1 13.87-8a36 36 0 0 0 64 0a8 8 0 0 1 13.87 8Z"/></svg></span><h1 class="text-[48px] leading-[1.08] font-medium tracking-[-0.04em]">Phosphor Icons</h1><span class="tag mt-2">库</span></div>
+      <p class="mt-5 text-[17px] leading-relaxed text-mfg max-w-[720px]">为界面设计的统一图标家族：1,248 个图标、6 种字重，按 16×16 网格绘制，小尺寸也清楚。换风格只改一个 <span class="num text-[15px]">weight</span> 属性。</p>
+      <p class="mt-6 num text-[12px] text-faint">MIT · phosphoricons.com · github.com/phosphor-icons · @phosphor-icons/react 2.1.10 · Web / React / Vue / Flutter / Elm</p>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-14 px-4">
+      <div class="grid grid-cols-6 gap-6 text-center" id="weights"></div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6"><h2 class="pt">安装与用法</h2></header>
+      <div class="grid grid-cols-2 gap-6 items-start">
+        <figure class="codefig"><div class="t">终端</div><pre>npm i @phosphor-icons/react</pre></figure>
+        <figure class="codefig"><div class="t">App.tsx</div><pre>import { HeartIcon, CubeIcon } from "@phosphor-icons/react";
+
+&lt;HeartIcon weight="fill" size={20} /&gt;
+&lt;CubeIcon weight="duotone" /&gt;</pre></figure>
+      </div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6"><h2 class="pt">为什么选，什么时候别用</h2></header>
+      <div class="max-w-[780px] space-y-5 text-[15px] leading-relaxed">
+        <p><span class="font-medium">为什么选</span><span class="text-mfg">　同一套图标覆盖细线到填充六种风格，界面换调性不用换图标库；支持 tree-shaking，只打包用到的图标。</span></p>
+        <p><span class="font-medium">别用</span><span class="text-mfg">　需要 OpenAI、Anthropic 等 AI 品牌 logo 时，用 LobeHub Icons；项目已经用 shadcn/ui 默认的 Lucide 且没有字重需求，不必换。</span></p>
+        <p><span class="font-medium">注意</span><span class="text-mfg">　开发模式下从主入口导入，部分打包器会编译全部 9,000+ 个模块，拖慢启动；可按路径单独导入（官方 README 说明）。</span></p>
+      </div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6"><h2 class="pt">给 Agent 的一句话</h2></header>
+      <figure class="codefig max-w-[780px]"><div class="t">AGENTS.md 片段 <span class="tag ml-1">Prompt</span></div><pre>- 图标统一使用 @phosphor-icons/react，默认 weight="regular"，选中态用 "fill"
+- 不要混用其他图标库；按路径单独导入图标</pre></figure>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4 grid grid-cols-2 gap-10">
+      <div><h3 class="text-[17px] font-medium">同类</h3><div id="libPeers" class="mt-3"></div></div>
+      <div><h3 class="text-[17px] font-medium">出现在这些组合</h3><a href="#build" class="mt-3 block link-u text-[15px]">做 Web 前端</a><p class="mt-1 text-[13.5px] text-mfg">作为首选图标库</p></div>
+    </section>
+  </div>
+</main>
+
+
+<main id="skill" class="page">
+  <div class="col">
+    <section class="px-4 pt-16 num text-[12px] text-mfg"><a class="hover:text-fg">工具箱</a><span class="mx-2 text-faint">/</span><a class="hover:text-fg">UI 组件</a><span class="mx-2 text-faint">/</span><span class="text-fg">frontend-design</span></section>
+    <section class="px-4 pt-6">
+      <div class="flex items-center gap-4"><span class="w-11 h-11 rounded-full border border-bd grid place-items-center [&_svg]:w-6 [&_svg]:h-6" data-logo="anthropic"></span><h1 class="text-[48px] leading-[1.08] font-medium tracking-[-0.04em]">frontend-design</h1><span class="tag mt-2">Skill</span></div>
+      <p class="mt-5 text-[17px] leading-relaxed text-mfg max-w-[720px]">Anthropic 官方 Agent Skill。新建或改造界面时，引导 Agent 先定审美方向、字体和版式，再写代码，避开一眼就是 AI 生成的模板样式。</p>
+      <p class="mt-6 num text-[12px] text-faint">Anthropic · anthropics/skills · Apache-2.0 · Agent Skills 格式（SKILL.md）· 最近更新 2026-09-04</p>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6"><h2 class="pt">它让 Agent 做什么</h2></header>
+      <ul id="skillDoes" class="max-w-[780px] space-y-3.5 text-[15px] leading-relaxed"></ul>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6"><h2 class="pt">安装</h2></header>
+      <div class="grid grid-cols-2 gap-6 items-start">
+        <figure class="codefig"><div class="t">Claude Code</div><pre>/plugin marketplace add anthropics/skills
+/plugin install example-skills@anthropic-agent-skills</pre></figure>
+        <figure class="codefig"><div class="t">其他 Agent · skills CLI</div><pre>npx skills add https://github.com/anthropics/skills/tree/main/skills/frontend-design</pre></figure>
+      </div>
+      <p class="mt-4 text-[13.5px] text-mfg">frontend-design 包含在 example-skills 插件里。Claude.ai 付费计划已内置这些示例技能。</p>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6"><h2 class="pt">兼容的 Agent</h2></header>
+      <div id="compat" class="max-w-[780px]"></div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6"><h2 class="pt">什么时候别用</h2></header>
+      <p class="max-w-[780px] text-[15px] leading-relaxed text-mfg">品牌规范或 Figma 稿已经定死时，这个技能会推着 Agent 做出“与众不同”的选择，可能偏离规范；这时改用 web-design-guidelines 做规范审查更合适。它只给设计指导，不提供组件或代码模板。</p>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4 grid grid-cols-3 gap-10">
+      <div><h3 class="text-[17px] font-medium">常和它一起用</h3><div class="mt-3 space-y-2 text-[15px]"><a href="#library" class="flex items-center gap-2"><span class="link-u">Phosphor Icons</span><span class="tag">库</span></a><a class="flex items-center gap-2"><span class="link-u">shadcn/ui</span><span class="tag">库</span></a><a class="flex items-center gap-2"><span class="link-u">Motion</span><span class="tag">库</span></a></div></div>
+      <div><h3 class="text-[17px] font-medium">出现在</h3><div class="mt-3 space-y-2 text-[15px]"><a href="#build" class="block link-u">组合 · 做 Web 前端</a><a href="#scenario" class="block link-u">场景 · 做 Web 前端</a></div></div>
+      <div><h3 class="text-[17px] font-medium">来源</h3><div class="mt-3 space-y-2 num text-[13px] text-mfg"><div>github.com/anthropics/skills</div><div>skills/frontend-design/SKILL.md</div></div></div>
+    </section>
+  </div>
+</main>
+
+
+<main id="build" class="page">
+  <div class="col">
+    <section class="px-4 pt-16 num text-[12px] text-mfg"><a class="hover:text-fg">组合</a><span class="mx-2 text-faint">/</span><span class="text-fg">web-frontend</span></section>
+    <section class="px-4 pt-6">
+      <h1 class="text-[48px] leading-[1.08] font-medium tracking-[-0.04em]">做 Web 前端，用这一套</h1>
+      <p class="mt-5 text-[17px] leading-relaxed text-mfg max-w-[720px]">模型、Skill、组件、图标、动效、字体一次配齐。模型取自 LMArena WebDev 榜单，其余由编辑按用途挑选；每一项都能单独换。</p>
+      <p class="mt-6 num text-[12px] text-faint">编辑更新 2026-10-10 · 模型依据 LMArena WebDev 2026-10-08</p>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-14">
+      <div class="mx-4 grid grid-cols-[110px_260px_1fr] gap-6 h-9 items-center num text-[12px] text-faint border-b border-[var(--line)]"><span>角色</span><span>首选</span><span>备选 · 什么时候换</span></div>
+      <div id="stack" class="mx-4"></div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6 flex items-end justify-between"><h2 class="pt">带走这一套</h2><div class="flex gap-2 pb-0.5"><a class="pill">复制 AGENTS.md</a><a class="pill">下载</a></div></header>
+      <div class="grid grid-cols-[1.25fr_1fr] gap-6 items-start">
+        <figure class="codefig"><div class="t">AGENTS.md</div><pre># 前端约定
+- 组件：shadcn/ui，按需 npx shadcn@latest add &lt;component&gt;，不另引 UI 库
+- 图标：@phosphor-icons/react，默认 weight="regular"
+- 动效：motion/react；只给用户操作的反馈加动效，不做整页淡入
+- 字体：Geist Sans / Geist Mono，中文回退霞鹜文楷
+- 动手前用 frontend-design 定方案，完成后用 web-design-guidelines 自查</pre></figure>
+        <figure class="codefig"><div class="t">安装</div><pre># Skill（Claude Code）
+/plugin marketplace add anthropics/skills
+/plugin install example-skills@anthropic-agent-skills
+
+# 审查 Skill 与 Motion AI Kit
+npx skills add https://github.com/vercel-labs/agent-skills/tree/main/skills/web-design-guidelines
+npx motion-ai
+
+# 依赖
+npm i @phosphor-icons/react motion geist</pre></figure>
+      </div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-6"><h2 class="pt">这一套不适合</h2></header>
+      <div class="max-w-[780px] space-y-3 text-[15px] leading-relaxed text-mfg">
+        <p><span class="text-fg font-medium">移动端原生</span>　Kotlin / Compose 项目看「做一个 Android App」，模型排名不同。</p>
+        <p><span class="text-fg font-medium">后端与脚本为主</span>　界面只是薄薄一层时，按 Terminal-Bench 选模型更准。</p>
+        <p><span class="text-fg font-medium">预算紧</span>　把模型换成 Claude Sonnet 5.5（价格减半，分数低 39）或开源的 MiMo V2.6 Flash，其余不变。</p>
+      </div>
+    </section>
+  </div>
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-5"><h2 class="pt">依据</h2></header>
+      <div class="flex flex-wrap gap-x-6 gap-y-2 text-[15px]"><a href="#scenario" class="link-u">场景榜单 · 做 Web 前端</a><a href="#tools" class="link-u">工具箱 · 动效</a><a href="#skill" class="link-u">Skill · frontend-design</a><a href="#library" class="link-u">库 · Phosphor Icons</a></div>
+    </section>
+  </div>
+</main>
+
+
+<main id="model" class="page">
+  <div class="col">
+    <section class="px-4 pt-16 num text-[12px] text-mfg"><a class="hover:text-fg">模型</a><span class="mx-2 text-faint">/</span><span class="text-fg">claude-opus-5-5</span></section>
+    <section class="px-4 pt-6">
+      <div class="flex items-center gap-4"><span class="w-11 h-11 rounded-full border border-bd grid place-items-center [&_svg]:w-6 [&_svg]:h-6" data-logo="anthropic"></span><h1 class="text-[48px] leading-[1.08] font-medium tracking-[-0.04em]">Claude Opus 5.5</h1></div>
+      <p class="mt-5 text-[17px] leading-relaxed text-mfg max-w-[720px]">目前我们追踪的三个活跃编程基准上都排第一。适合高难度、跨模块的 Agent 任务；对成本敏感的批量任务，有便宜得多、差距不大的选择。</p>
+      <p class="mt-6 num text-[12px] text-faint">Anthropic · 闭源 · 上下文 1M · $4 / $20 每百万 tokens · 常用 Agent Claude Code · 数据抓取 2026-10-10</p>
+    </section>
+  </div>
+
+
+  <div class="col">
+    <section class="pt-20 grid grid-cols-3 gap-10 px-4">
+      <div><div class="num text-[12px] text-mfg">Terminal-Bench 4.0</div><div class="mt-3 num text-[40px] leading-none font-medium tracking-tight">64.8<span class="text-[18px] text-faint">%</span></div><div class="num text-[12px] text-mfg mt-3">#1 · ±3.1</div></div>
+      <div><div class="num text-[12px] text-mfg">LMArena WebDev</div><div class="mt-3 num text-[40px] leading-none font-medium tracking-tight">1813</div><div class="num text-[12px] text-mfg mt-3">#1 / 142 · ±15</div></div>
+      <div><div class="num text-[12px] text-mfg">Android Bench 长程</div><div class="mt-3 num text-[40px] leading-none font-medium tracking-tight">32.7<span class="text-[18px] text-faint">%</span></div><div class="num text-[12px] text-mfg mt-3">#1 / 10 · 18.7–47.3</div></div>
+    </section>
+  </div>
+
+
+  <div class="col">
+    <section class="pt-20">
+      <header class="px-4 pb-6 flex items-end justify-between"><h2 class="pt">基准成绩</h2><span class="num text-[12px] text-faint pb-2">超过 90 天未更新的榜单不计入推荐</span></header>
+      <div class="border-b border-[var(--line)] grid grid-cols-[200px_160px_1fr_56px_70px_96px] gap-3 px-4 h-9 items-center num text-[12px] text-faint"><span>基准</span><span>设置</span><span>分数</span><span class="text-right">排名</span><span class="text-right">成本</span><span class="text-right">数据日期</span></div>
+      <div id="scoreRows"></div>
+    </section>
+  </div>
+
+
+  <div class="col">
+    <section class="pt-20">
+      <header class="px-4 pb-6"><h2 class="pt">选不选它</h2></header>
+      <div class="grid grid-cols-2 gap-10 text-[14px] leading-relaxed">
+        <div class="">
+          <div class="border-b border-[var(--line)] px-4 h-10 flex items-center gap-2 text-[14px] font-medium"><span class="w-1.5 h-1.5 rounded-full bg-fg"></span>为什么选</div>
+          <ul class="divide-y divide-[var(--line)]">
+            <li class="px-4 py-3">Terminal-Bench、LMArena WebDev、Android Bench 长程任务三项第一，覆盖终端、前端、移动端。</li>
+            <li class="px-4 py-3">Terminal-Bench 领先第二名 Sonnet 5.5 三个百分点（<span class="num">64.8%</span> vs <span class="num">61.8%</span>），单次跑分成本更低（<span class="num">$4.7k</span> vs <span class="num">$7.3k</span>）。</li>
+          </ul>
+        </div>
+        <div>
+          <div class="border-b border-[var(--line)] px-4 h-10 flex items-center gap-2 text-[14px] font-medium"><span class="w-1.5 h-1.5 rounded-full border border-fg"></span>什么时候别选</div>
+          <ul class="divide-y divide-[var(--line)]">
+            <li class="px-4 py-3">批量或 CI 任务：GPT-6.1 Sol 在 Terminal-Bench 拿到 <span class="num">58.2%</span>，成本 <span class="num">$0.6k</span>，约为它的八分之一。</li>
+            <li class="px-4 py-3">只做前端：Claude Sonnet 5.5 WebDev <span class="num">1774</span> 分，价格只有一半（<span class="num">$2 / $10</span>）。</li>
+            <li class="px-4 py-3">对延迟敏感：Android Bench 长程任务平均耗时 <span class="num">15.2</span> 小时。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <div class="col">
+    <section class="pt-20">
+      <header class="px-4 pb-6 flex items-end justify-between"><h2 class="pt">出现在这些场景</h2><span class="num text-[12px] text-faint pb-2">由场景页推荐自动汇总</span></header>
+      <div id="appears"></div>
+    </section>
+  </div>
+
+
+  <div class="col">
+    <section class="pt-20 px-4">
+      <header class="pb-5"><h2 class="pt">出现在这些组合</h2></header>
+      <a href="#build" class="rowh flex items-center gap-4 h-12 border-y border-[var(--line)] group"><span class="text-[15px] font-medium">做 Web 前端</span><span class="text-[14px] text-mfg">首选模型，搭配 frontend-design + shadcn/ui + Phosphor Icons + Motion</span><span class="ml-auto text-faint group-hover:text-fg">→</span></a>
+    </section>
+  </div>
+
+  <div class="col">
+    <section class="pt-20">
+      <header class="px-4 pb-6"><h2 class="pt">同级对比</h2></header>
+      <div class="border-b border-[var(--line)] grid grid-cols-[1fr_150px_120px_150px] px-4 h-9 items-center num text-[12px] text-faint"><span>模型</span><span class="text-right">Terminal-Bench 4.0</span><span class="text-right">WebDev</span><span class="text-right">价格 / 百万 tokens</span></div>
+      <div id="peers"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="mt-28 border-t border-[var(--line)]">
+  <div class="col h-16 px-4 flex items-center gap-5 num text-[12px] text-mfg">
+    <span class="text-fg">vibecodingnav</span><a class="hover:text-fg">方法论</a><a class="hover:text-fg">数据来源</a><a class="hover:text-fg">更新日志</a><a class="hover:text-fg">提交建议</a>
+    <span class="ml-auto">无广告 · 无付费排名 · © 2026 Jimmy Wong</span>
+  </div>
+</footer>
+
+<script>
+const LOGO={
+ anthropic:'<svg viewBox="0 0 24 24"><path fill="currentColor" d="M4.709 15.955l4.72-2.647.08-.23-.08-.128H9.2l-.79-.048-2.698-.073-2.339-.097-2.266-.122-.571-.121L0 11.784l.055-.352.48-.321.686.06 1.52.103 2.278.158 1.652.097 2.449.255h.389l.055-.157-.134-.098-.103-.097-2.358-1.596-2.552-1.688-1.336-.972-.724-.491-.364-.462-.158-1.008.656-.722.881.06.225.061.893.686 1.908 1.476 2.491 1.833.365.304.145-.103.019-.073-.164-.274-1.355-2.446-1.446-2.49-.644-1.032-.17-.619a2.97 2.97 0 01-.104-.729L6.283.134 6.696 0l.996.134.42.364.62 1.414 1.002 2.229 1.555 3.03.456.898.243.832.091.255h.158V9.01l.128-1.706.237-2.095.23-2.695.08-.76.376-.91.747-.492.584.28.48.685-.067.444-.286 1.851-.559 2.903-.364 1.942h.212l.243-.242.985-1.306 1.652-2.064.73-.82.85-.904.547-.431h1.033l.76 1.129-.34 1.166-1.064 1.347-.881 1.142-1.264 1.7-.79 1.36.073.11.188-.02 2.856-.606 1.543-.28 1.841-.315.833.388.091.395-.328.807-1.969.486-2.309.462-3.439.813-.042.03.049.061 1.549.146.662.036h1.622l3.02.225.79.522.474.638-.079.485-1.215.62-1.64-.389-3.829-.91-1.312-.329h-.182v.11l1.093 1.068 2.006 1.81 2.509 2.33.127.578-.322.455-.34-.049-2.205-1.657-.851-.747-1.926-1.62h-.128v.17l.444.649 2.345 3.521.122 1.08-.17.353-.608.213-.668-.122-1.374-1.925-1.415-2.167-1.143-1.943-.14.08-.674 7.254-.316.37-.729.28-.607-.461-.322-.747.322-1.476.389-1.924.315-1.53.286-1.9.17-.632-.012-.042-.14.018-1.434 1.967-2.18 2.945-1.726 1.845-.414.164-.717-.37.067-.662.401-.589 2.388-3.036 1.44-1.882.93-1.086-.006-.158h-.055L4.132 18.56l-1.13.146-.487-.456.061-.746.231-.243 1.908-1.312-.006.006z"/></svg>',
+ openai:'<svg viewBox="0 0 24 24"><path fill="currentColor" d="M21.55 10.004a5.416 5.416 0 00-.478-4.501c-1.217-2.09-3.662-3.166-6.05-2.66A5.59 5.59 0 0010.831 1C8.39.995 6.224 2.546 5.473 4.838A5.553 5.553 0 001.76 7.496a5.487 5.487 0 00.691 6.5 5.416 5.416 0 00.477 4.502c1.217 2.09 3.662 3.165 6.05 2.66A5.586 5.586 0 0013.168 23c2.443.006 4.61-1.546 5.361-3.84a5.553 5.553 0 003.715-2.66 5.488 5.488 0 00-.693-6.497v.001zm-8.381 11.558a4.199 4.199 0 01-2.675-.954c.034-.018.093-.05.132-.074l4.44-2.53a.71.71 0 00.364-.623v-6.176l1.877 1.069c.02.01.033.029.036.05v5.115c-.003 2.274-1.87 4.118-4.174 4.123zM4.192 17.78a4.059 4.059 0 01-.498-2.763c.032.02.09.055.131.078l4.44 2.53c.225.13.504.13.73 0l5.42-3.088v2.138a.068.068 0 01-.027.057L9.9 19.288c-1.999 1.136-4.552.46-5.707-1.51h-.001zM3.023 8.216A4.15 4.15 0 015.198 6.41l-.002.151v5.06a.711.711 0 00.364.624l5.42 3.087-1.876 1.07a.067.067 0 01-.063.005l-4.489-2.559c-1.995-1.14-2.679-3.658-1.53-5.63h.001zm15.417 3.54l-5.42-3.088L14.896 7.6a.067.067 0 01.063-.006l4.489 2.557c1.998 1.14 2.683 3.662 1.529 5.633a4.163 4.163 0 01-2.174 1.807V12.38a.71.71 0 00-.363-.623zm1.867-2.773a6.04 6.04 0 00-.132-.078l-4.44-2.53a.731.731 0 00-.729 0l-5.42 3.088V7.325a.068.068 0 01.027-.057L14.1 4.713c2-1.137 4.555-.46 5.707 1.513.487.833.664 1.809.499 2.757h.001zm-11.741 3.81l-1.877-1.068a.065.065 0 01-.036-.051V6.559c.001-2.277 1.873-4.122 4.181-4.12.976 0 1.92.338 2.671.954-.034.018-.092.05-.131.073l-4.44 2.53a.71.71 0 00-.365.623l-.003 6.173v.002zm1.02-2.168L12 9.25l2.414 1.375v2.75L12 14.75l-2.415-1.375v-2.75z"/></svg>',
+ kimi:'<svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.738 5.776c.163-.209.306-.4.457-.585.07-.087.064-.153-.004-.244-.655-.861-.717-1.817-.34-2.787.283-.73.909-1.072 1.674-1.145.477-.045.945.004 1.379.236.57.305.902.77 1.01 1.412.086.512.07 1.012-.075 1.508-.257.878-.888 1.333-1.753 1.448-.718.096-1.446.108-2.17.157-.056.004-.113 0-.178 0z"/><path fill="currentColor" d="M17.962 1.844h-4.326l-3.425 7.81H5.369V1.878H1.5V22h3.87v-8.477h6.824a3.025 3.025 0 002.743-1.75V22h3.87v-8.477a3.87 3.87 0 00-3.588-3.86v-.01h-2.125a3.94 3.94 0 002.323-2.12l2.545-5.689z"/></svg>',
+ zhipu:'<span class="ltr">Z</span>', qwen:'<span class="ltr">Q</span>', google:'<span class="ltr">G</span>', meta:'<span class="ltr">M</span>', xai:'<span class="ltr">x</span>', xiaomi:'<span class="ltr" style="font-size:7.5px">mi</span>', tencent:'<span class="ltr">T</span>', deepseek:'<span class="ltr">D</span>',
+};
+const L=k=>`<span class="lg">${LOGO[k]||''}</span>`;
+const $=id=>document.getElementById(id)||{};
+const arrow='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+/* Fig.1 —— Terminal-Bench 4.0 前五（真实数据） */
+const tb=[['Opus 5.5',64.8],['Sonnet 5.5',61.8],['GPT-6 Astra',58.2],['GPT-6.1 Sol',58.2],['Fable 5.1',57.9]];
+
+
+/* 首页 */
+const scn=[
+ {n:'01',t:'做 Web 前端',d:'落地页、交互组件、React / Next.js 页面',v:'anthropic',m:'Claude Opus 5.5',s:'1813',b:'LMArena WebDev'},
+ {n:'02',t:'做一个 Android App',d:'Kotlin + Compose，新功能与库迁移',v:'anthropic',m:'Claude Opus 5',s:'91.8%',b:'Android Bench 1.0',href:'#scenario'},
+ {n:'03',t:'写 CLI、脚本与 DevOps',d:'终端里的 Agent 任务与自动化',v:'anthropic',m:'Claude Opus 5.5',s:'64.8%',b:'Terminal-Bench 4.0'},
+ {n:'04',t:'做全栈 SaaS',d:'Next.js、数据库、鉴权与部署',v:'openai',m:'GPT-6.1 Sol',s:'58.2%',b:'Terminal-Bench 4.0 · 性价比'},
+ {n:'05',t:'大型重构与迁移',d:'跨模块改造、框架与依赖升级',v:'anthropic',m:'Claude Opus 5.5',s:'32.7%',b:'Android Bench 长程'},
+ {n:'06',t:'做 iOS App',d:'SwiftUI 与原生能力',soon:true},
+];
+
+
+
+/* 场景榜单（真实数据，2026-10 抓取） */
+const BOARDS=[
+ {t:'做 Web 前端',src:'LMArena WebDev',date:'2026-10-08',unit:'',href:'#scenario',rows:[['anthropic','Claude Opus 5.5','1813'],['openai','GPT-6 Astra','1786'],['anthropic','Claude Sonnet 5.5','1774'],['openai','GPT-6.1 Sol','1755'],['anthropic','Claude Fable 5.1','1744']]},
+ {t:'做一个 Android App',src:'Android Bench 1.0',date:'2026-08-11',unit:'%',rows:[['anthropic','Claude Opus 5','91.8'],['anthropic','Claude Fable 5','90.9'],['openai','GPT 5.6 Sol','90.8'],['kimi','Kimi K3','90.2'],['openai','GPT 5.6 Luna','87.6']]},
+ {t:'写 CLI、脚本与 DevOps',src:'Terminal-Bench 4.0',date:'2026-10-10',unit:'%',rows:[['anthropic','Claude Opus 5.5','64.8'],['anthropic','Claude Sonnet 5.5','61.8'],['openai','GPT-6 Astra','58.2'],['openai','GPT-6.1 Sol','58.2'],['anthropic','Claude Fable 5.1','57.9']]},
+ {t:'大型重构与迁移',src:'Android Bench 2.0 长程',date:'2026-10-10',unit:'%',rows:[['anthropic','Claude Opus 5.5','32.7'],['openai','GPT 6 Astra','28.0'],['anthropic','Claude Fable 5.1','22.7'],['openai','GPT 6 Sol','18.0'],['qwen','Qwen3.8 Max','14.0']]},
+ {t:'用开源模型做前端',src:'LMArena WebDev · 开源许可',date:'2026-10-08',unit:'',rows:[['xiaomi','MiMo V2.6 Flash','1637','MIT'],['tencent','HY4 Preview','1632','Apache 2.0'],['xiaomi','MiMo V2.6 Pro','1629','MIT'],['zhipu','GLM-5.3','1622','MIT'],['deepseek','DeepSeek V4.1 Flash','1619','MIT']]},
+ {t:'做 iOS App',src:'暂无专项基准 · 编辑精选',date:'',editor:true,rows:[['anthropic','Claude Opus 5.5','三项活跃基准第一'],['anthropic','Claude Sonnet 5.5','前端分高，价格减半'],['openai','GPT-6.1 Sol','Agent 任务性价比'],['zhipu','GLM-5.3','开源，可自托管']]},
+];
+const arr='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+$('boards').innerHTML=BOARDS.map(b=>`
+ <a ${b.href?`href="${b.href}"`:''} class="card group">
+   <div class="px-4 pt-4 pb-3">
+     <div class="flex items-center justify-between"><span class="text-[16px] font-medium tracking-[-0.01em]">${b.t}</span><span class="text-faint group-hover:text-fg transition-colors">${arr}</span></div>
+     <div class="mt-1 num text-[11px] text-faint">${b.src}${b.date?' · '+b.date:''}</div>
+   </div>
+   <div class="px-4 flex-1">${b.rows.map((r,i)=>`
+     <div class="flex items-center gap-2.5 h-9 ${i?'border-t border-[var(--line)]':''} text-[13.5px]">
+       <span class="num text-[11px] text-faint w-3">${i+1}</span>${L(r[0])}
+       <span class="truncate ${i?'':'font-medium'}">${r[1]}</span>${r[3]?`<span class="num text-[10.5px] text-faint">${r[3]}</span>`:''}
+       ${b.editor?`<span class="ml-auto text-[12px] text-mfg whitespace-nowrap">${r[2]}</span>`:`<span class="ml-auto num ${i?'text-mfg':''}">${r[2]}${b.unit?`<span class="text-faint text-[11px]">${b.unit}</span>`:''}</span>`}
+     </div>`).join('')}</div>
+   <div class="px-4 h-10 mt-2 border-t border-[var(--line)] flex items-center text-[12.5px] text-mfg group-hover:text-fg">${b.editor?'查看推荐理由':'查看完整榜单'}<span class="ml-1">→</span></div>
+ </a>`).join('');
+
+const changes=[
+ ['10-08','榜单','<span class="font-medium">LMArena WebDev</span>：Claude Opus 5.5（max）以 <span class="num">1813</span> 分居首，领先 GPT-6 Astra <span class="num">27</span> 分。','lmarena.ai'],
+ ['09-29','榜单','<span class="font-medium">Terminal-Bench 4.0</span>：GPT-6.1 Sol 以 <span class="num">58.2%</span> 并列第 3，成本 <span class="num">$0.6k</span>，不到 GPT-6 Astra 的五分之一。','tbench.ai'],
+ ['09-29','推荐','「做全栈 SaaS」首选调整为 <span class="font-medium">GPT-6.1 Sol</span>：综合成本后性价比最高。','编辑'],
+ ['09-22','榜单','<span class="font-medium">Terminal-Bench 4.0</span>：Claude Opus 5.5 以 <span class="num">64.8%</span> 登顶。','tbench.ai'],
+ ['08-11','榜单','<span class="font-medium">Android Bench</span>：新增 Claude Opus 5、GPT 5.6 Sol / Luna / Terra、Kimi K3、Qwen3.8 Max 等 8 个模型。','android.com'],
+ ['—','方法论','SWE-bench Verified 自 2026 年 2 月起未收录新一代模型，暂不作为主要证据。','编辑'],
+];
+$('changes').innerHTML=changes.map((c,i)=>`<div class="rowh grid grid-cols-[64px_64px_1fr_130px] items-baseline px-4 py-3 text-[14px] ${i<changes.length-1?'border-b border-[var(--line)]':''}">
+  <span class="num text-[12px] text-mfg">${c[0]}</span><span class="num text-[12px] ${c[1]==='榜单'?'text-faint':'text-fg'}">${c[1]}</span>
+  <span class="leading-relaxed pr-6">${c[2]}</span><span class="num text-[11px] text-faint text-right">${c[3]}</span></div>`).join('');
+
+const ic={
+ fw:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>',
+ sk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v4a1 1 0 001 1h4M17 21H7a2 2 0 01-2-2V5a2 2 0 012-2h7l5 5v11a2 2 0 01-2 2zM9 13h6M9 17h4"/></svg>',
+ tl:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 17l6-6-6-6M12 19h8"/></svg>',
+};
+const feat=[
+ ['UI 组件库',[['shadcn/ui','复制进项目、可随意改的组件，AI 生成界面的默认底座','MIT · ui.shadcn.com']]],
+ ['图标',[['Phosphor Icons','六种字重的统一图标家族，细线到填充风格一致','MIT · phosphoricons.com']]],
+ ['中文字体',[['qiaomu-cover-fonts','19 款中文 + 15 款英文 OFL 字体，已子集化，可随产品打包','OFL-1.1 · github.com']]],
+ ['动效',[['Motion','React / JS 动画库，手势、布局过渡与滚动动画','MIT · motion.dev']]],
+ ['图表',[['Recharts','基于 React 与 D3 的声明式图表，后台面板够用','MIT · recharts.github.io'],['Tremor','可复制粘贴的仪表盘组件','Apache-2.0 · tremor.so']]],
+ ['表单与校验',[['React Hook Form','高性能表单状态管理，少重渲染','MIT · react-hook-form.com'],['Zod','TypeScript 优先的 schema 校验，前后端共用一份类型','MIT · zod.dev']]],
+ ['命令菜单 ⌘K',[['cmdk','无样式的命令菜单组件，做全局搜索与快捷操作','MIT · github.com']]],
+ ['消息提示',[['Sonner','开箱即用的 React toast，一行调用','MIT · sonner.emilkowal.ski']]],
+ ['文档站',[['Fumadocs','基于 React 的文档框架，MDX、搜索与侧栏开箱即有','MIT · fumadocs.dev']]],
+ ['Agent 技能',[['frontend-design','Anthropic 官方技能：让 Agent 做出不千篇一律的前端','anthropics/skills'],['web-design-guidelines','Vercel 官方技能：按 Web 界面规范审查代码','vercel-labs/agent-skills']]],
+ ['规则与 Prompt',[['AGENTS.md','给编程 Agent 写项目说明的开放格式','MIT · agents.md'],['system-prompts 合集','主流 AI 编程工具的系统提示词，写规则前参考','GPL-3.0 · github.com']]],
+ ['设计到代码',[['open-design','开源 Claude Design 替代，Agent 直接产出原型与落地页','Apache-2.0 · open-design.ai']]],
+];
+$('featured').innerHTML=feat.map(([h,it])=>`<div><div class="num text-[12px] text-faint pb-3">${h}</div>${it.map((f,i)=>`<a class="group block ${i?'mt-4':''}"><div class="flex items-baseline gap-3"><span class="text-[15px] font-medium group-hover:underline underline-offset-4 decoration-[var(--border)]">${f[0]}</span><span class="ml-auto num text-[11px] text-faint whitespace-nowrap">${f[2]}</span></div><p class="mt-1 text-[13.5px] leading-relaxed text-mfg">${f[1]}</p></a>`).join('')}</div>`).join('');
+
+const src=[['Android Bench','2026-08-11','移动端'],['LMArena WebDev','2026-10-08','前端'],['Terminal-Bench 4.0','2026-09-29','终端 Agent'],['SWE-bench Verified','2026-02-26','停更'],['Aider Polyglot','2025-11-20','停更']];
+$('sources').innerHTML=src.map((s,i)=>{const off=s[2]==='停更';return `<div><div class="text-[14px] font-medium ${off?'text-faint':''}">${s[0]}</div><div class="num text-[12px] mt-2 ${off?'text-faint':'text-mfg'}">${s[1]}</div><div class="num text-[11px] ${off?'text-faint':'text-mfg'}">${s[2]}</div></div>`}).join('');
+
+/* 场景页 */
+const picks=[
+ {r:1,role:'标准任务首选',v:'anthropic',m:'Claude Opus 5',sub:'1.0',s:91.8,max:100,ci:'87.4–95.7',c:'$175.4',why:'1.0 标准任务第一，日常新功能与迁移最稳。',not:'前四名都在 90.2–91.8% 之间，置信区间重叠；预算有限时差价不值得。'},
+ {r:2,role:'性价比',v:'openai',m:'GPT 5.6 Luna',sub:'1.0',s:87.6,max:100,ci:'81.8–92.3',c:'$7.2',why:'只比第一低约 4 个百分点，成本约为二十四分之一，适合批量与 CI。',not:'长程任务里同系列 GPT 6 Luna 仅 10.7%，复杂多模块工作别让它单挑。'},
+ {r:3,role:'长程任务首选',v:'anthropic',m:'Claude Opus 5.5',sub:'2.0 长程',s:32.7,max:50,ci:'18.7–47.3',c:'$215.4',why:'长程任务第一，跨模块的完整功能开发通过率最高。',not:'区间与第二名 GPT 6 Astra（28.0%）大幅重叠；平均耗时 15.2 小时。',href:'#model'},
+ {r:4,role:'备选',v:'kimi',m:'Kimi K3',sub:'1.0',s:90.2,max:100,ci:'85.0–94.6',c:'$112.9',why:'1.0 标准任务 90.2%，与头部几乎打平，成本低约三分之一。',not:'平均耗时 29.6 小时，约为 Claude Opus 5 的两倍多，不适合交互式开发。'},
+];
+$('picks').innerHTML=picks.map((p,i)=>`
+ <div class="rowh grid grid-cols-[40px_1fr_210px_80px] px-4 py-5 ${i<picks.length-1?'border-b border-[var(--line)]':''}">
+   <span class="num text-[13px] text-faint pt-1">0${p.r}</span>
+   <div class="pr-8">
+     <div class="flex items-center gap-2.5"><a ${p.href?`href="${p.href}"`:''} class="flex items-center gap-2 text-[17px] font-medium tracking-[-0.015em] hover:underline underline-offset-4">${L(p.v)}${p.m}</a><span class="num text-[11px] text-mfg border border-bd rounded px-1.5 py-0.5">${p.role}</span></div>
+     <p class="mt-2.5 text-[14px] leading-relaxed"><span class="num text-[12px] text-faint mr-2">为什么选</span>${p.why}</p>
+     <p class="mt-1 text-[14px] leading-relaxed text-mfg"><span class="num text-[12px] text-faint mr-2">何时别选</span>${p.not}</p>
+   </div>
+   <div class="pt-0.5">
+     <div class="flex items-baseline gap-2"><span class="num text-[22px] font-medium">${p.s}<span class="text-[12px] text-faint">%</span></span><span class="num text-[11px] text-faint">${p.sub}</span></div>
+     <div class="bar mt-2"><i style="width:${p.s/p.max*100}%"></i></div>
+     <div class="num text-[11px] text-faint mt-1.5">CI ${p.ci}</div>
+   </div>
+   <span class="num text-[14px] text-right pt-1.5">${p.c}</span>
+ </div>`).join('');
+
+const b1=[['anthropic','Claude Opus 5',91.8,'$175.4'],['anthropic','Claude Fable 5',90.9,'$144.3'],['openai','GPT 5.6 Sol',90.8,'$150.0'],['kimi','Kimi K3',90.2,'$112.9'],['openai','GPT 5.6 Luna',87.6,'$7.2'],['qwen','Qwen3.8 Max',87.0,'$196.7'],['openai','GPT 5.6 Terra',86.8,'$48.0']];
+const b2=[['anthropic','Claude Opus 5.5',32.7,'$215.4'],['openai','GPT 6 Astra',28.0,'$375.7'],['anthropic','Claude Fable 5.1',22.7,'$492.6'],['openai','GPT 6 Sol',18.0,'$93.4'],['qwen','Qwen3.8 Max',14.0,'$260.2'],['kimi','Kimi K3',12.0,'$418.3'],['openai','GPT 6 Luna',10.7,'$5.3']];
+const board=(rows,max)=>rows.map((r,i)=>`<div class="rowh grid grid-cols-[20px_1fr_72px_44px_60px] gap-2 items-center px-4 h-10 text-[13px] ${i<rows.length-1?'border-b border-[var(--line)]':''}">
+  <span class="num text-faint text-[11px]">${i+1}</span><span class="flex items-center gap-2">${L(r[0])}${r[1]}</span>
+  <span class="bar ${i?'b2':''}"><i style="width:${r[2]/max*100}%"></i></span><span class="num text-right">${r[2].toFixed(1)}</span><span class="num text-right text-faint text-[12px]">${r[3]}</span></div>`).join('');
+$('board1').innerHTML=board(b1,100); $('board2').innerHTML=board(b2,40);
+
+const fw=[['Jetpack Compose','UI','官方声明式 UI，模型训练语料充足，Bench 迁移任务的目标框架。','大量依赖老 View 体系、短期内不打算迁移的存量页面。'],
+ ['Material 3','设计系统','组件齐全，生成界面一致性高。','品牌设计系统与 Material 差异很大时。'],
+ ['Hilt / Koin','依赖注入','Bench 含 Hilt → Koin 迁移任务，可直接对照各模型表现。','单模块小 Demo，手动注入更直接。'],
+ ['Kotlin Multiplatform','跨端','需要与 iOS 共享数据层时。','只做 Android；长程榜公开结果中 KMP 迁移任务无一通过。']];
+$('fw').innerHTML=fw.map((r,i)=>`<div class="rowh grid grid-cols-[190px_1fr_1fr] gap-6 px-4 py-3.5 text-[14px] leading-relaxed ${i<fw.length-1?'border-b border-[var(--line)]':''}">
+  <span><span class="block font-medium">${r[0]}</span><span class="num text-[11px] text-faint">${r[1]}</span></span><span>${r[2]}</span><span class="text-mfg">${r[3]}</span></div>`).join('');
+
+const sk=[['Android AGENTS.md','规则文件 · Claude Code / Codex / Cursor','AGENTS.md','- 每次修改后运行 ./gradlew test lint\n- UI 使用 Compose + Material 3，禁止新增 XML\n- 新功能先写 ViewModel 单测，再写界面'],
+ ['XML → Compose 分屏迁移','Prompt · 任意 Agent','prompt.md','一次只迁移一个屏幕。先列出该屏全部状态\n与交互，再生成 Composable，最后补 Preview\n与截图对比测试。']];
+$('sk').innerHTML=sk.map((s,i)=>`<div class="p-4 ${i===0?'':''}">
+  <div class="flex items-baseline justify-between"><span class="text-[15px] font-medium">${s[0]}</span></div>
+  <div class="num text-[11px] text-faint mt-1">${s[1]}</div>
+  <div class="codefig mt-3"><div class="t">${ic.sk.replace('<svg','<svg width="14" height="14"')}<span>${s[2]}</span><button class="ml-auto text-[12px] hover:text-fg">复制</button></div><pre>${s[3]}</pre></div></div>`).join('');
+
+const tl=[['Claude Code','CLI Agent','长程任务第 1、3 名使用的 Agent；适合多模块改造。'],['Codex','CLI Agent','长程任务第 2 名 GPT 6 Astra 使用的 Agent。'],['Android Studio','IDE','模拟器与 Compose Preview，人工验收 Agent 的产出。']];
+$('tl').innerHTML=tl.map((t,i)=>`<div class="rowh p-4 ${i<2?'':''}"><div class="flex items-center gap-3"><span class="text-[15px] font-medium">${t[0]}</span><span class="ml-auto num text-[11px] text-faint">${t[1]}</span></div><p class="mt-3 text-[13px] leading-relaxed text-mfg">${t[2]}</p></div>`).join('');
+
+/* 模型页 */
+const sr=[['Terminal-Bench 4.0','max · Claude Code',64.8,'64.8%','±3.1','#1','$4.7k','2026-10-10'],
+ ['LMArena WebDev','max',90.3,'1813','±15','#1','—','2026-10-08'],
+ ['Android Bench 2.0','长程 · claude-code',65.4,'32.7%','18.7–47.3','#1','$215.4','2026-10-10'],
+ ['SWE-bench Verified','—',0,'榜单尚未收录该模型','','—','—','2026-02-26'],
+ ['Aider Polyglot','—',0,'榜单已停更','','—','—','2025-11-20']];
+$('scoreRows').innerHTML=sr.map((r,i)=>{const on=r[2]>0;return `<div class="rowh grid grid-cols-[200px_160px_1fr_56px_70px_96px] gap-3 items-center px-4 h-12 text-[14px] ${i<sr.length-1?'border-b border-[var(--line)]':''} ${on?'':'text-faint'}">
+  <span class="font-medium ${on?'':'text-faint'}">${on?`<a class="link-u">${r[0]}</a>`:r[0]}</span><span class="num text-[12px] ${on?'text-mfg':''}">${r[1]}</span>
+  ${on?`<span class="flex items-center gap-3"><span class="num w-12">${r[3]}</span><span class="bar flex-1"><i style="width:${r[2]}%"></i></span><span class="num text-[11px] text-faint w-[64px]">${r[4]}</span></span>`:`<span class="num text-[12px]">${r[3]}</span>`}
+  <span class="num text-right">${r[5]}</span><span class="num text-right">${r[6]}</span><span class="num text-right text-[12px] ${on?'text-mfg':''}">${r[7]}</span></div>`}).join('');
+
+const ap=[['做 Web 前端','首选 · #1','LMArena WebDev 1813','#scenario'],['写 CLI、脚本与 DevOps','首选 · #1','Terminal-Bench 4.0 64.8%',''],['做一个 Android App','长程首选 · #3','Android Bench 长程 32.7%',''],['大型重构与迁移','首选 · #1','Android Bench 长程 32.7%',''],['做全栈 SaaS','备选 · #2','Terminal-Bench 4.0 64.8%','']];
+$('appears').innerHTML=ap.map((a,i)=>`<a ${a[3]?`href="${a[3]}"`:''} class="rowh grid grid-cols-[1fr_140px_240px_36px] items-center px-4 h-12 ${i<ap.length-1?'border-b border-[var(--line)]':''} group">
+  <span class="text-[15px] font-medium">${a[0]}</span><span class="num text-[12px] text-mfg">${a[1]}</span><span class="num text-[12px] text-mfg">${a[2]}</span><span class="justify-self-end text-faint group-hover:text-fg">${arrow}</span></a>`).join('');
+
+const peers=[['anthropic','Claude Opus 5.5','64.8%','1813','$4 / $20',1],['anthropic','Claude Sonnet 5.5','61.8%','1774','$2 / $10'],['openai','GPT-6 Astra','58.2%','1786','$10 / $50'],['openai','GPT-6.1 Sol','58.2%','1755','$2 / $10'],['zhipu','GLM-5.3','41.8%','1622','$1.40 / $4.40']];
+$('peers').innerHTML=peers.map((p,i)=>`<div class="rowh grid grid-cols-[1fr_150px_120px_150px] items-center px-4 h-11 text-[14px] ${i<peers.length-1?'border-b border-[var(--line)]':''} ${p[5]?'bg-surface':''}">
+  <span class="flex items-center gap-2 font-medium">${L(p[0])}${p[1]}${p[5]?'<span class="num text-[11px] text-faint font-normal ml-1">当前</span>':''}</span>
+  <span class="num text-right">${p[2]}</span><span class="num text-right">${p[3]}</span><span class="num text-right text-mfg">${p[4]}</span></div>`).join('');
+
+/* ---------- v7 ---------- */
+const TAG=t=>`<span class="tag">${t}</span>`;
+/* 首页工具箱（紧凑） */
+const HT=[
+ ['UI 组件','',[['shadcn/ui','库'],['shadcn MCP','插件'],['frontend-design','Skill','#skill']]],
+ ['图标','',[['Phosphor Icons','库','#library'],['LobeHub Icons','库'],['Lucide','库']]],
+ ['动效','#tools',[['Motion','库'],['Motion AI Kit','插件'],['gsap-skills','Skill']]],
+ ['字体','',[['Geist','库'],['霞鹜文楷','库'],['qiaomu-cover-fonts','库']]],
+ ['图表','',[['Recharts','库'],['Apache ECharts','库'],['mcp-server-chart','插件']]],
+ ['表单与校验','',[['React Hook Form','库'],['Zod','库'],['TanStack Form','库']]],
+ ['设计还原','',[['Figma MCP server','插件'],['open-design','工具'],['web-design-guidelines','Skill']]],
+ ['项目规则','',[['AGENTS.md','Prompt'],['system-prompts 合集','Prompt'],['skill-creator','Skill']]],
+];
+$('homeTools').innerHTML=HT.map(([c,h,it])=>`<div>
+  <a ${h?`href="${h}"`:''} class="flex items-center justify-between text-[15px] font-medium group">${c}<span class="text-faint group-hover:text-fg">${arr}</span></a>
+  <div class="mt-3 space-y-2">${it.map(x=>`<a ${x[2]?`href="${x[2]}"`:''} class="flex items-center gap-2 text-[14px] text-mfg hover:text-fg"><span class="truncate">${x[0]}</span><span class="ml-auto">${TAG(x[1])}</span></a>`).join('')}</div></div>`).join('');
+
+/* 场景完整榜单 LMArena WebDev 2026-10-08 */
+const LB=[
+[1,'1–1','anthropic','Claude Opus 5.5','max','闭源',1813,15,'2,294','$4 / $20','1M'],
+[2,'2–3','openai','GPT-6 Astra','max','闭源',1786,11,'5,189','$10 / $50','1.1M'],
+[3,'2–4','anthropic','Claude Sonnet 5.5','xhigh','闭源',1774,15,'2,323','$2 / $10','1M'],
+[4,'3–5','openai','GPT-6.1 Sol','max','闭源',1755,15,'2,102','$2 / $10','1.1M'],
+[5,'4–5','anthropic','Claude Fable 5.1','max','闭源',1744,9,'6,663','$10 / $50','1M'],
+[6,'6–6','anthropic','Claude Sonnet 5.5','high','闭源',1715,11,'3,984','$2 / $10','1M'],
+[7,'7–9','anthropic','Claude Opus 5','max','闭源',1691,6,'17,320','$5 / $25','1M'],
+[8,'7–11','openai','GPT-6 Sol','max','闭源',1688,12,'3,407','$2 / $10','1.1M'],
+[9,'7–13','google','Gemini 4 Argon','high','闭源',1678,15,'1,771','$2 / $10','1M',1],
+[10,'8–11','qwen','Qwen3.8 Max','0902','闭源',1674,8,'11,182','$2 / $6','—',1],
+[11,'8–14','qwen','Qwen3.8 Max','','闭源',1672,12,'3,446','$2 / $6','1M',1],
+[12,'10–14','anthropic','Claude Opus 5','high','闭源',1657,6,'22,340','$5 / $25','1M'],
+[13,'10–15','meta','Muse Spark 1.3','max','闭源',1657,8,'7,886','$1.25 / $4.25','1M'],
+[14,'11–15','kimi','Kimi K3','max','Kimi K3 license',1654,6,'17,412','$3 / $15','1M'],
+[15,'13–23','xai','Grok 4.7','xhigh','闭源',1639,11,'3,936','$2 / $6','500K'],
+[16,'15–23','xiaomi','MiMo V2.6 Flash','','MIT',1637,10,'4,058','$0.14 / $0.28','1.1M'],
+[17,'15–25','qwen','Qwen3.8 Flash Next','','qwen-community',1633,8,'6,932','$0.16 / $0.47','1M',1],
+[18,'15–25','tencent','HY4 Preview','','Apache 2.0',1632,10,'4,792','$0.83 / $2.50','1M',1],
+[19,'15–25','xiaomi','MiMo V2.6 Pro','','MIT',1629,11,'3,649','$0.43 / $0.87','1.1M'],
+[20,'15–25','meta','Muse Spark 1.3','xHigh','闭源',1626,8,'7,123','$1.25 / $4.25','1M'],
+];
+$('lb').innerHTML=LB.map((r,i)=>{const w=((r[6]-1500)/(1813-1500)*100).toFixed(1);const lo=((r[6]-r[7]-1500)/(313)*100).toFixed(1),hi=((r[6]+r[7]-1500)/313*100).toFixed(1);
+return `<a ${i===0?'href="#model"':''} class="rowh grid grid-cols-[44px_1fr_210px_80px_120px_60px] gap-3 items-center py-2.5 ${i<LB.length-1?'border-b border-[var(--line)]':''} text-[14px] group">
+ <span><span class="block num text-[13px] ${i<3?'text-fg':'text-mfg'}">${r[0]}</span><span class="block num text-[10.5px] text-faint">${r[1]}</span></span>
+ <span class="flex items-center gap-2.5 min-w-0">${L(r[2])}<span class="${i<5?'font-medium':''} truncate">${r[3]}</span>${r[4]?`<span class="num text-[11px] text-faint">${r[4]}</span>`:''}${r[5]!=='闭源'?`<span class="num text-[10.5px] text-mfg">${r[5]}</span>`:''}${r[11]?`<span class="text-[11px] text-faint">初步</span>`:''}</span>
+ <span class="flex items-center gap-3"><span class="num w-[38px] ${i<5?'':'text-mfg'}">${r[6]}</span><span class="relative flex-1 h-[6px] bg-muted rounded-[1px]"><i class="absolute inset-y-0 left-0 bg-[var(--bar)] rounded-[1px]" style="width:${w}%"></i><i class="absolute -inset-y-[3px] border-x border-[var(--faint)]" style="left:${lo}%;width:${hi-lo}%"></i></span><span class="num text-[11px] text-faint w-[26px]">±${r[7]}</span></span>
+ <span class="num text-right text-mfg">${r[8]}</span><span class="num text-right text-mfg">${r[9]}</span><span class="num text-right text-mfg">${r[10]}</span></a>`}).join('');
+
+const EX=[
+ ['测什么','前端 Web 开发：落地页、交互组件、小游戏和完整页面，也包括需要多步推理和工具调用的 Agent 编程流程。'],
+ ['怎么测','用户提交一个需求，两个匿名模型各自生成可交互的 Web 应用，在沙盒里跑起来；用户试用后投票选胜方或平局，只有身份揭晓前的投票计入。'],
+ ['分数含义','用 Bradley-Terry 模型从两两对战结果估计相对强度，读法类似国际象棋的 Elo：差 100 分约等于 64% 的胜率。± 是 95% 置信区间，名次下方的区间表示统计上可能的名次范围。'],
+ ['注意','衡量的是人类偏好（好不好看、能不能跑），不是测试通过率；需求多是单页 demo，对大型代码库和长程重构参考有限。同一模型不同推理档位（max / high）分开排名。标“初步”的模型票数少，名次可能变动。'],
+ ['更新','持续更新。本页榜单日期 2026-10-08，2026-10-10 同步；每周同步一次，变化写入首页「最新变化」。'],
+ ['来源','<span class="num text-[13px]">lmarena.ai/leaderboard/webdev</span> · 方法说明 <span class="num text-[13px]">arena.ai/blog/webdev-arena</span> · 排名代码开源 <span class="num text-[13px]">github.com/lmarena/arena-rank</span>'],
+];
+$('explain').innerHTML=EX.map((e,i)=>`<div class="grid grid-cols-[120px_1fr] gap-6 py-4 ${i?'border-t border-[var(--line)]':''}"><dt class="text-[15px] font-medium">${e[0]}</dt><dd class="text-[15px] leading-relaxed text-mfg">${e[1]}</dd></div>`).join('');
+
+const WM=[
+ ['最接近“做出来好不好”','前端质量很难用测试用例衡量。盲评投票直接反映用户第一眼的判断：布局、细节、能不能用。'],
+ ['新、快、样本大','85 万票、142 个模型，新模型通常几天内上榜，是挑前端模型最新鲜的信号。'],
+ ['把价格一起看','第 3 名 Claude Sonnet 5.5 只比第 1 名低 39 分，价格是一半；开源的 MiMo V2.6 Flash 排第 16，价格 $0.14 / $0.28。'],
+];
+$('whyMatter').innerHTML=WM.map(w=>`<div><h3 class="text-[16px] font-medium">${w[0]}</h3><p class="mt-2 text-[14.5px] leading-relaxed text-mfg">${w[1]}</p></div>`).join('');
+
+/* 工具分类：动效 */
+const CAT=[
+ ['Motion','库','React / JS / Vue 动画库：手势、布局过渡、滚动动画，声明式写法。','React 项目的交互动效','MIT · motion.dev'],
+ ['Motion AI Kit','插件','Motion 官方 AI 工具包：Cursor 插件，或用 npx motion-ai 给 Claude Code 等装上 Motion 技能和文档 MCP；可生成 CSS 弹簧曲线。','已经选了 Motion，想让 Agent 写对','motiondivision/ai-kit'],
+ ['GSAP','库','时间线与 ScrollTrigger 滚动动画，框架无关；被 Webflow 收购后全部插件免费，含商用。','复杂时间线、滚动叙事页面','免费商用 · gsap.com'],
+ ['gsap-skills','Skill','GSAP 官方 Agent Skills：核心 API、时间线、ScrollTrigger、插件，以及 React / Vue / Svelte 里的正确写法。','用 GSAP 时一起装','MIT · greensock/gsap-skills'],
+ ['react-view-transitions','Skill','Vercel 出品：用 React 的 View Transition API 做路由切换、共享元素和列表重排动画，不引第三方库。','Next.js 页面切换','MIT · vercel-labs/agent-skills'],
+ ['React Bits','库','可复制的动画交互组件：文字特效、背景、卡片与光标效果。','落地页的点睛效果，用一两个即可','MIT + Commons Clause · reactbits.dev'],
+ ['Anime.js','库','轻量 JavaScript 动画引擎，适合原生 JS 与 SVG 动画。','不用 React 的页面','MIT · animejs.com'],
+];
+$('catList').innerHTML=CAT.map((c,i)=>`<a class="rowh grid grid-cols-[220px_1fr_210px] gap-6 py-4 border-b border-[var(--line)] group">
+ <span class="flex items-center gap-2"><span class="text-[15px] font-medium">${c[0]}</span>${TAG(c[1])}</span>
+ <span><span class="block text-[14.5px] leading-relaxed">${c[2]}</span><span class="block mt-1 text-[13px] text-mfg">适合：${c[3]}</span></span>
+ <span class="num text-[11.5px] text-faint text-right pt-1">${c[4]}</span></a>`).join('');
+$('howPick').innerHTML=[
+ ['React 项目','先用 Motion；让 Agent 写的话，把 Motion AI Kit 一起装上。'],
+ ['复杂时间线或滚动叙事','选 GSAP，并装 gsap-skills，避免 Agent 写出过时的 Club 插件用法。'],
+ ['Next.js 页面切换','先试 View Transitions：浏览器原生、零依赖，不支持的浏览器自动跳过动画。'],
+ ['少即是多','一个页面只留一处编排好的动效，比处处淡入更像人做的。'],
+].map(x=>`<p><span class="font-medium">${x[0]}</span><span class="text-mfg">　${x[1]}</span></p>`).join('');
+
+/* 库详情：Phosphor 字重 */
+const face='M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88a88.1 88.1 0 0 1-88 88Zm-40-104a12 12 0 1 1 12 12a12 12 0 0 1-12-12Zm56 0a12 12 0 1 1 12 12a12 12 0 0 1-12-12Zm29.86 41.6a52 52 0 0 1-91.72 0a8 8 0 1 1 13.87-8a36 36 0 0 0 64 0a8 8 0 0 1 13.87 8Z';
+const sw={Thin:2,Light:6,Regular:12,Bold:20};
+const PH={"thin": "<svg width=\"44\" height=\"44\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M171.46,154c-9.55,16.52-25.39,26-43.46,26s-33.91-9.48-43.46-26a4,4,0,0,1,6.92-4c8.21,14.19,21.19,22,36.54,22s28.33-7.81,36.54-22a4,4,0,1,1,6.92,4ZM228,128A100,100,0,1,1,128,28,100.11,100.11,0,0,1,228,128Zm-8,0a92,92,0,1,0-92,92A92.1,92.1,0,0,0,220,128ZM92,116a8,8,0,1,0-8-8A8,8,0,0,0,92,116Zm72-16a8,8,0,1,0,8,8A8,8,0,0,0,164,100Z\"/></svg>", "light": "<svg width=\"44\" height=\"44\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M173.19,155c-9.92,17.16-26.39,27-45.19,27s-35.27-9.84-45.19-27a6,6,0,0,1,10.38-6c7.84,13.54,20.2,21,34.81,21s27-7.46,34.81-21a6,6,0,1,1,10.38,6ZM230,128A102,102,0,1,1,128,26,102.12,102.12,0,0,1,230,128Zm-12,0a90,90,0,1,0-90,90A90.1,90.1,0,0,0,218,128ZM92,118a10,10,0,1,0-10-10A10,10,0,0,0,92,118Zm72-20a10,10,0,1,0,10,10A10,10,0,0,0,164,98Z\"/></svg>", "regular": "<svg width=\"44\" height=\"44\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.07,48c-10.29,17.79-27.4,28-46.93,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.07-20a8,8,0,0,1,13.86,8Z\"/></svg>", "bold": "<svg width=\"44\" height=\"44\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M178.39,158c-11,19.06-29.39,30-50.39,30s-39.36-10.93-50.39-30a12,12,0,0,1,20.78-12c3.89,6.73,12.91,18,29.61,18s25.72-11.28,29.61-18a12,12,0,1,1,20.78,12ZM236,128A108,108,0,1,1,128,20,108.12,108.12,0,0,1,236,128Zm-24,0a84,84,0,1,0-84,84A84.09,84.09,0,0,0,212,128ZM92,124a16,16,0,1,0-16-16A16,16,0,0,0,92,124Zm72-32a16,16,0,1,0,16,16A16,16,0,0,0,164,92Z\"/></svg>", "fill": "<svg width=\"44\" height=\"44\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24ZM92,96a12,12,0,1,1-12,12A12,12,0,0,1,92,96Zm82.92,60c-10.29,17.79-27.39,28-46.92,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.08-20a8,8,0,1,1,13.84,8ZM164,120a12,12,0,1,1,12-12A12,12,0,0,1,164,120Z\"/></svg>", "duotone": "<svg width=\"44\" height=\"44\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 256 256\" fill=\"currentColor\"><path d=\"M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z\" opacity=\"0.2\"/><path d=\"M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM80,108a12,12,0,1,1,12,12A12,12,0,0,1,80,108Zm96,0a12,12,0,1,1-12-12A12,12,0,0,1,176,108Zm-1.08,48c-10.29,17.79-27.39,28-46.92,28s-36.63-10.2-46.92-28a8,8,0,1,1,13.84-8c7.47,12.91,19.21,20,33.08,20s25.61-7.1,33.08-20a8,8,0,1,1,13.84,8Z\"/></svg>"};
+$('weights').innerHTML=['Thin','Light','Regular','Bold','Fill','Duotone'].map(w=>`<div class="py-6"><div class="grid place-items-center">${PH[w.toLowerCase()]}</div><div class="mt-3 num text-[12px] text-mfg">${w}</div></div>`).join('');
+$('libPeers').innerHTML=[['LobeHub Icons','AI / LLM 品牌 logo，React 组件或静态 SVG','MIT · lobehub.com/icons'],['Lucide','shadcn/ui 默认图标，社区维护的 Feather 分支','ISC · lucide.dev'],['Iconify','一套语法用 200+ 个开源图标集','MIT · iconify.design']].map((p,i)=>`<a class="block py-3 ${i?'border-t border-[var(--line)]':''}"><div class="flex items-center gap-2"><span class="text-[15px] font-medium">${p[0]}</span>${TAG('库')}<span class="ml-auto num text-[11px] text-faint">${p[2]}</span></div><p class="mt-1 text-[13.5px] text-mfg">${p[1]}</p></a>`).join('');
+
+/* Skill 详情 */
+$('skillDoes').innerHTML=[
+ ['先找题材','先确定产品是什么、给谁用、页面的主要任务，从题材本身找视觉方向，而不是套默认模板。'],
+ ['先出方案再写代码','写代码前给出紧凑的设计方案：4–6 个色值、字体角色、版式草图和原则，并对照需求自查有没有落入通用套路。'],
+ ['点名常见的“AI 味”','列出生成页面的常见特征（米色底配赤陶色、圆角卡片套件、全大写眉标等），需求没要求时主动避开。'],
+ ['动效克制','一次编排好的入场优于每个区块都淡入；回应用户操作的动效可以用。'],
+ ['边做边截图自查','完成前对照截图删掉多余装饰：“出门前照镜子，摘掉一件配饰”。'],
+].map(x=>`<li class="grid grid-cols-[150px_1fr] gap-6"><span class="font-medium">${x[0]}</span><span class="text-mfg">${x[1]}</span></li>`).join('');
+$('compat').innerHTML=[['Claude Code','插件市场安装','原生'],['Claude.ai','付费计划已内置','原生'],['Claude API','通过 Skills API 上传','原生'],['Cursor · Codex · Copilot 等','通过 skills CLI 安装，需支持 Agent Skills 格式','skills CLI']].map((c,i)=>`<div class="grid grid-cols-[240px_1fr_100px] gap-6 py-3 text-[15px] ${i?'border-t border-[var(--line)]':''}"><span class="font-medium">${c[0]}</span><span class="text-mfg">${c[1]}</span><span class="num text-[12px] text-faint text-right">${c[2]}</span></div>`).join('');
+
+/* 组合 */
+const ST=[
+ ['模型','anthropic','Claude Opus 5.5','WebDev #1 · 1813','省钱：Claude Sonnet 5.5（#3 · 1774，价格减半）· 开源：MiMo V2.6 Flash（#16 · MIT）','#model'],
+ ['Skill','anthropic','frontend-design','Skill · Anthropic','完成后用 web-design-guidelines 按 Web 界面规范自查','#skill'],
+ ['UI 组件','','shadcn/ui','库 · MIT','要完全无样式、自己定设计系统时用 Base UI'],
+ ['图标','','Phosphor Icons','库 · MIT','需要 AI 品牌 logo 时加 LobeHub Icons','#library'],
+ ['动效','','Motion + Motion AI Kit','库 + 插件','滚动叙事页面换 GSAP + gsap-skills','#tools'],
+ ['字体','','Geist Sans / Mono','库 · OFL-1.1','中文用霞鹜文楷；封面类视觉用 qiaomu-cover-fonts'],
+ ['设计稿','','Figma MCP server','插件 · Figma','没有设计稿时用 open-design 先出原型'],
+];
+$('stack').innerHTML=ST.map((s,i)=>`<a ${s[5]?`href="${s[5]}"`:''} class="rowh grid grid-cols-[110px_260px_1fr] gap-6 items-center py-4 ${i<ST.length-1?'border-b border-[var(--line)]':''} group">
+ <span class="text-[14px] text-mfg">${s[0]}</span>
+ <span><span class="flex items-center gap-2 text-[16px] font-medium">${s[1]?L(s[1]):''}${s[2]}</span><span class="block mt-1 num text-[11.5px] text-faint">${s[3]}</span></span>
+ <span class="text-[14px] text-mfg leading-relaxed">${s[4]}</span></a>`).join('');
+
+document.querySelectorAll('[data-logo]').forEach(e=>e.innerHTML=LOGO[e.dataset.logo]);
+function route(){const id=(location.hash||'#home').slice(1);
+ document.documentElement.style.setProperty('--col', id==='home'?'1200px':'960px');
+ document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
+ document.querySelectorAll('[data-nav]').forEach(a=>{const on=a.dataset.nav.split(' ').includes(id);a.classList.toggle('text-fg',on)});
+ scrollTo(0,0);}
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
