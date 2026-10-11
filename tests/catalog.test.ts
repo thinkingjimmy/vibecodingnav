@@ -23,6 +23,13 @@ describe("content", () => {
     expect(validateContent(broken).some((error) => error.includes("重复"))).toBe(true);
   });
 
+  it("requires exactly one current benchmark version", () => {
+    const benchmarks = content.benchmarks.map((benchmark) => benchmark.slug === "android-bench" && benchmark.versions
+      ? { ...benchmark, versions: benchmark.versions.map((version) => ({ ...version, current: true, archived: false })) }
+      : benchmark);
+    expect(validateContent({ ...content, benchmarks }).some((error) => error.includes("当前版本"))).toBe(true);
+  });
+
   it("rejects a benchmark used by two scenarios", () => {
     const donor = content.scenarios[0]!;
     const extra = { ...donor, slug: "duplicate-board", related: [], build: undefined, boards: undefined };
@@ -42,7 +49,7 @@ describe("stale clock", () => {
     expect(getBenchmark("zh", "swe-bench-verified")?.stale).toBe(true);
     expect(getBenchmark("zh", "aider-polyglot")?.stale).toBe(true);
     expect(getBenchmark("zh", "lmarena-webdev")?.stale).toBe(false);
-    expect(getBenchmark("zh", "android-bench-1")?.stale).toBe(false);
+    expect(getBenchmark("zh", "android-bench")?.stale).toBe(false);
   });
 });
 
@@ -59,7 +66,8 @@ describe("picks", () => {
   it("resolves cheaper terminal and android rows", () => {
     expect(resolvePicks("cli-devops").value?.modelSlug).toBe("gpt-6-1-sol");
     expect(resolvePicks("cli-devops").open?.modelSlug).toBe("glm-5-3");
-    expect(resolvePicks("android-app").value?.modelSlug).toBe("gpt-5-6-luna");
+    expect(resolvePicks("android-app").top?.modelSlug).toBe("claude-opus-5-5");
+    expect(resolvePicks("android-app").value?.modelSlug).toBe("gpt-6-sol");
   });
 
   it("follows the sudo L7 leaderboard order", () => {
@@ -128,8 +136,8 @@ describe("picks", () => {
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
-    expect(android?.boards.map((board) => [board.id, board.rows.length])).toEqual([["1-0", 32], ["long", 10]]);
-    expect(android?.boards[1]?.rows.map((row) => [row.rank, row.name, row.agent, row.score, row.ci, row.completion, row.latency, row.price])).toEqual([
+    expect(android?.boards.map((board) => [board.id, board.rows.length])).toEqual([["current", 10]]);
+    expect(android?.boards[0]?.rows.map((row) => [row.rank, row.name, row.agent, row.score, row.ci, row.completion, row.latency, row.price])).toEqual([
       [1, "Claude Opus 5.5", "claude-code", "32.7", "18.7–47.3", "84.7", "15.2", "$215.4"],
       [2, "GPT 6 Astra", "codex", "28.0", "13.3–42.0", "82.2", "7.9", "$375.7"],
       [3, "Claude Fable 5.1", "claude-code", "22.7", "10.7–36.0", "82.4", "22.2", "$492.6"],
@@ -141,15 +149,23 @@ describe("picks", () => {
       [9, "Gemini 3.7 Flash", "antigravity-sdk", "7.3", "1.3–14.7", "50.1", "9.9", "$26.0"],
       [10, "Claude Sonnet 5", "claude-code", "6.7", "1.3–13.3", "59.8", "14.7", "$283.7"],
     ]);
-    expect(android?.boards[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5", score: "91.8", ci: "87.4–95.7", latency: "13.2", price: "$175.4" });
-    expect(android?.boards[0]?.rows[31]).toMatchObject({ name: "Qwen3.6 35b A3b", score: "37.0", weights: "open" });
+    const archived = getBenchmark("zh", "android-bench")?.versions?.find((version) => version.id === "1.0");
+    expect(archived?.archived).toBe(true);
+    expect(archived?.leaderboard).toHaveLength(32);
+    expect(archived?.leaderboard?.[0]).toMatchObject({ name: "Claude Opus 5", score: "91.8", ci: "87.4–95.7", latency: "13.2", price: "$175.4" });
+    expect(archived?.leaderboard?.[31]).toMatchObject({ name: "Qwen3.6 35b A3b", score: "37.0", weights: "open" });
 
     const terminal = getScenario("zh", "cli-devops")?.boards[0]?.rows ?? [];
     expect(terminal).toHaveLength(35);
     expect(terminal[3]).toMatchObject({ name: "GPT-6.1 Sol", rank: 3, score: "58.2% ± 3.1%", price: "$634.24" });
     expect(terminal[20]).toMatchObject({ name: "Grok 4.7", rank: 21, price: "$3.68k (partial: 324/330)" });
     expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(142);
-    expect(getBenchmark("zh", "android-bench-2-long")?.leaderboard?.[0]).toMatchObject({ name: "Claude Opus 5.5", agent: "claude-code", score: "32.7" });
+    const androidBench = getBenchmark("zh", "android-bench");
+    expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
+    expect(androidBench?.versions?.[0]?.current).toBe(true);
+    expect(androidBench?.leaderboard).toHaveLength(10);
+    expect(androidBench?.leaderboard?.[0]).toMatchObject({ name: "Claude Opus 5.5", agent: "claude-code", score: "32.7" });
+    expect(getBenchmark("en", "android-bench")?.versions?.[1]?.label).toBe("1.0");
   });
 
   it("fuses scenario boards by model and average rank", () => {
@@ -168,14 +184,13 @@ describe("picks", () => {
     expect(web?.fusion.rows.findIndex((row) => row.slug === "claude-fable-5-1")).toBeGreaterThan(0);
 
     const android = getScenario("zh", "android-app");
-    expect(android?.fusion.columns.map((column) => column.id)).toEqual(["android-bench-1", "android-bench-2-long"]);
-    const opus5 = android?.fusion.rows.find((row) => row.slug === "claude-opus-5");
+    expect(android?.fusion.columns.map((column) => [column.id, column.label])).toEqual([["android-bench", "Android Bench 2.0"]]);
     const opus55 = android?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
-    expect(opus5?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, null]);
-    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([null, 1]);
-    expect(opus55?.cells[1]?.tip).toContain("claude-code");
-    expect(android?.fusion.rows[0]?.slug).toBe("claude-opus-5");
-    expect(android?.fusion.rows[1]?.slug).toBe("claude-opus-5-5");
+    expect(android?.fusion.rows.find((row) => row.slug === "claude-opus-5")).toBeUndefined();
+    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([1]);
+    expect(opus55?.cells[0]?.tip).toContain("claude-code");
+    expect(opus55?.cells[0]?.tip).toContain("32.7");
+    expect(android?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
 
     expect(getBenchmark("zh", "supabase-evals")?.scenarios).toEqual([]);
     expect(getBenchmark("zh", "convex-evals")?.scenarios).toEqual([]);
@@ -194,15 +209,16 @@ describe("picks", () => {
     ]);
     expect(getBenchmark("zh", "nextjs-evals")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
     expect(getBenchmark("zh", "reactbench")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
-    expect(getBenchmark("zh", "android-bench-1")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/android-app/"]);
-    expect(getBenchmark("zh", "android-bench-2-long")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/android-app/"]);
+    expect(getBenchmark("zh", "android-bench")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/android-app/"]);
+    expect(getBenchmark("zh", "android-bench-1")).toBeUndefined();
+    expect(getBenchmark("zh", "android-bench-2-long")).toBeUndefined();
 
     const home = getHome("zh").cards;
     expect(home[0]?.sources?.map((source) => source.name)).toEqual(["LMArena WebDev", "LMArena Image-to-WebDev", "Next.js Agent Evals", "ReactBench"]);
     expect(home[0]?.rows).toHaveLength(5);
     expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", boards: "#1 · #1 · #1 · —" });
-    expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench 1.0", "Android Bench 2.0 长程"]);
-    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5", rankLabel: "1", boards: "#1 · —" });
+    expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench"]);
+    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "32.7", unit: "%" });
     expect(home[2]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "64.8", unit: "%" });
     expect(home[3]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "45", unit: "%" });
   });
@@ -271,7 +287,11 @@ describe("backlinks", () => {
 
 describe("stale picks", () => {
   it("withholds the android model once the board is past 90 days", () => {
-    expect(resolvePicks("android-app", "2027-01-04").top?.modelSlug).toBe("claude-opus-5");
+    expect(resolvePicks("android-app", "2027-01-04").top?.modelSlug).toBe("claude-opus-5-5");
+    const live = getBuild("zh", "android-app");
+    expect(live?.roles[0]?.primary.name).toBe("Claude Opus 5.5");
+    expect(live?.roles[0]?.alternative).toContain("GPT 6 Sol");
+    expect(live?.roles[0]?.alternative).toContain("不到一半");
     expect(resolvePicks("android-app", "2027-01-05").top).toBeUndefined();
     expect(resolvePicks("android-app", "2027-01-05").stale).toBe(true);
 

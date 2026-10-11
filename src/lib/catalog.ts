@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖已校验的内容包、字典、路径与 90 天过期判断
- * [OUTPUT]: 对外提供页面可直接渲染的本地化视图、榜单筛选行、组合解析与反向链接
+ * [OUTPUT]: 对外提供页面可直接渲染的本地化视图、榜单筛选行、当前版本、组合解析与反向链接
  * [POS]: src/lib 的读取模型，分数与反链在构建时从实体算出，页面不再拼接数据
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -67,6 +67,24 @@ export interface BoardRow {
   releaseDate?: string;
 }
 
+export interface VersionBoard {
+  id: string;
+  label: string;
+  asOf: string;
+  current: boolean;
+  archived: boolean;
+  aliases: string[];
+  table?: BoardTable;
+  filter: SourceFilter | "none";
+  measures: string;
+  method: string;
+  scoreMeaning: string;
+  caveats: string;
+  updateCadence: string;
+  links: { label: string; href: string }[];
+  leaderboard?: BoardRow[];
+}
+
 export interface SearchEntry {
   href: string;
   title: string;
@@ -112,9 +130,19 @@ function runCostUsd(label?: string) {
   return amount ? Number(amount[1]) : null;
 }
 
-function rowsFor(benchmark: string) {
+function currentVersionId(benchmark: string) {
+  return benchmarkBy.get(benchmark)?.versions?.find((version) => version.current)?.id;
+}
+
+function isCurrentResult(result: Result) {
+  const current = currentVersionId(result.benchmark);
+  return current ? result.version === current : !result.version;
+}
+
+function rowsFor(benchmark: string, versionId?: string) {
+  const selected = versionId ?? currentVersionId(benchmark);
   return results
-    .filter((result) => result.benchmark === benchmark && (result.arm ?? "baseline") === "baseline" && result.rank != null)
+    .filter((result) => result.benchmark === benchmark && (result.arm ?? "baseline") === "baseline" && result.rank != null && (selected ? result.version === selected : !result.version))
     .sort((a, b) => a.rank! - b.rank!);
 }
 
@@ -152,10 +180,10 @@ export function resolvePicks(scenarioSlug: string, clock = CLOCK) {
   return { top, value, open, stale: false };
 }
 
-function toBoardRows(locale: Locale, benchmarkSlug: string): BoardRow[] {
+function toBoardRows(locale: Locale, benchmarkSlug: string, versionId?: string): BoardRow[] {
   const benchmark = benchmarkBy.get(benchmarkSlug);
   const unit = benchmark?.scoreUnit ?? "";
-  return rowsFor(benchmarkSlug).map((result, index) => {
+  return rowsFor(benchmarkSlug, versionId).map((result, index) => {
     const model = result.modelSlug ? modelBy.get(result.modelSlug) : undefined;
     const ciLow = result.ci?.kind === "pm" ? result.score - result.ci.value : result.ci?.low;
     const ciHigh = result.ci?.kind === "pm" ? result.score + result.ci.value : result.ci?.high;
@@ -372,7 +400,7 @@ export function fuseScenario(locale: Locale, scenario: Scenario) {
   });
   const primaryIndex = Math.max(0, specs.findIndex((spec) => spec.benchmark === scenario.benchmark));
   const best = specs.map((spec) => {
-    const rows = results.filter((result) => result.benchmark === spec.benchmark && (result.arm ?? "baseline") === "baseline" && result.rank != null);
+    const rows = rowsFor(spec.benchmark);
     const map = new Map<string, Result>();
     for (const row of rows) {
       const key = modelIdentity(row);
@@ -551,7 +579,7 @@ export function getScenario(locale: Locale, slug: string) {
 }
 
 function bestResult(modelSlug: string, benchmarkSlug: string) {
-  const rows = results.filter((result) => result.modelSlug === modelSlug && result.benchmark === benchmarkSlug);
+  const rows = results.filter((result) => result.modelSlug === modelSlug && result.benchmark === benchmarkSlug && isCurrentResult(result));
   return rows.length ? bestRow(rows) : undefined;
 }
 
@@ -580,7 +608,7 @@ export function getModel(locale: Locale, slug: string) {
       name: benchmark.name,
       setting: result!.setting ?? result!.effort ?? "—",
       score: formatScore(result!.score, benchmark.scoreUnit),
-      width: Math.max(8, Math.round((result!.score / Math.max(...results.filter((row) => row.benchmark === benchmark.slug).map((row) => row.score), result!.score)) * 100)),
+      width: Math.max(8, Math.round((result!.score / Math.max(...results.filter((row) => row.benchmark === benchmark.slug && isCurrentResult(row)).map((row) => row.score), result!.score)) * 100)),
       ci: formatCi(result!.ci),
       rank: result!.rank ? `#${result!.rank}` : "—",
       cost: result!.runCost ?? "—",
@@ -790,6 +818,23 @@ export function getBenchmark(locale: Locale, slug: string) {
     table: benchmark.table,
     filter: (benchmark.sourceFilter ?? "none") as SourceFilter | "none",
     leaderboard: benchmark.table ? toBoardRows(locale, slug) : undefined,
+    versions: benchmark.versions?.map((version): VersionBoard => ({
+      id: version.id,
+      label: t(locale, version.label),
+      asOf: version.asOf,
+      current: Boolean(version.current),
+      archived: Boolean(version.archived),
+      aliases: version.aliases ?? [],
+      table: version.table,
+      filter: (version.sourceFilter ?? "none") as SourceFilter | "none",
+      measures: t(locale, version.measures),
+      method: t(locale, version.method),
+      scoreMeaning: t(locale, version.scoreMeaning),
+      caveats: t(locale, version.caveats),
+      updateCadence: t(locale, version.updateCadence),
+      links: version.links ?? benchmark.links,
+      leaderboard: version.table ? toBoardRows(locale, slug, version.id) : undefined,
+    })),
     chart: slug === "lmarena-image-to-webdev" ? imageToWebdevChart(locale) : undefined,
     board: benchmark.kind ? frameworkEval(locale, slug, "board") : undefined,
     scenarios: scenarios.filter((scenario) => scenario.benchmark === slug || scenario.boards?.some((board) => board.benchmark === slug)).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
@@ -800,7 +845,7 @@ export function listModels(locale: Locale) {
   return models
     .map((model) => {
       const best = results.filter((result) => {
-        if (result.modelSlug !== model.slug || !result.rank || (result.arm ?? "baseline") !== "baseline") return false;
+        if (result.modelSlug !== model.slug || !result.rank || (result.arm ?? "baseline") !== "baseline" || !isCurrentResult(result)) return false;
         const board = benchmarkBy.get(result.benchmark)!;
         return !board.kind && !board.retired && !isStale(board.asOf, CLOCK);
       }).sort((a, b) => a.rank! - b.rank!)[0];

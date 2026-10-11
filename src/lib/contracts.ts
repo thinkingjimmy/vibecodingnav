@@ -83,6 +83,26 @@ export interface BenchmarkLink {
   href: string;
 }
 
+/** 同一基准的一个版本。当前版本只有一个；其余版本归档后仍保留完整原榜。 */
+export interface BenchmarkVersion {
+  id: string;
+  label: LText;
+  asOf: string;
+  current?: boolean;
+  archived?: boolean;
+  /** 旧地址的查询参数或 hash，例如 long。 */
+  aliases?: string[];
+  table?: BoardTable;
+  sourceFilter?: SourceFilter;
+  trackedCount?: number;
+  measures: LText;
+  method: LText;
+  scoreMeaning: LText;
+  caveats: LText;
+  updateCadence: LText;
+  links?: BenchmarkLink[];
+}
+
 export interface Benchmark {
   slug: string;
   name: string;
@@ -100,11 +120,14 @@ export interface Benchmark {
   trackedCount?: number;
   retired?: boolean;
   kind?: BenchmarkKind;
-  /** 场景榜单按来源页的列来画。框架评测不使用。 */
+  /** 场景榜单按来源页的列来画。框架评测不使用。有 versions 时等于当前版本。 */
   table?: BoardTable;
-  /** 来源页自己的筛选。筛选保留来源名次。 */
+  /** 来源页自己的筛选。筛选保留来源名次。有 versions 时等于当前版本。 */
   sourceFilter?: SourceFilter;
+  /** 没有多版本原榜时的版本说明，例如 ReactBench v1.2。 */
   version?: string;
+  /** 多份完整原榜。场景、首页和过期判断只用 current 那一版。 */
+  versions?: BenchmarkVersion[];
   assistedLabel?: LText;
   webLabel?: LText;
 }
@@ -146,6 +169,8 @@ export interface Result {
   releaseDate?: string;
   preliminary?: boolean;
   asOf: string;
+  /** 多版本基准才填，并且必须对上某个版本 id。 */
+  version?: string;
   arm?: ResultArm;
 }
 
@@ -166,7 +191,7 @@ export interface Scenario {
   summary: LText;
   /** 首页卡片、挑选和组合使用的那一张来源榜。 */
   benchmark?: string;
-  /** 同一场景里的多张来源表，例如 Android 1.0 与长程。顺序即页签顺序。 */
+  /** 同一场景里的多张来源表。顺序即列顺序。多版本基准只放当前版本。 */
   boards?: ScenarioBoard[];
   valueMetric: ValueMetric;
   lead: "top" | "value";
@@ -424,6 +449,7 @@ export interface Dictionary {
     usedBy: string;
     stale: string;
     version: string;
+    archived: string;
     board: string;
   };
   changes: {

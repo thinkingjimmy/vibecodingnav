@@ -56,10 +56,11 @@ function boardCi(row: BoardJson): Ci | undefined {
   return undefined;
 }
 
-function board(benchmark: string, asOf: string, rows: BoardJson[]): Result[] {
+function board(benchmark: string, asOf: string, rows: BoardJson[], version?: string): Result[] {
   return rows.map((row) => ({
     benchmark,
     asOf,
+    version,
     rank: row.rank,
     rankSpread: row.rankSpread,
     modelSlug: row.modelSlug,
@@ -163,8 +164,8 @@ export const results: Result[] = [
   ...board("lmarena-image-to-webdev", "2026-10-09", imageToWebdevRows as BoardJson[]),
   ...board("terminal-bench-4", "2026-10-06", terminalRows as BoardJson[]),
   ...board("sudo-l7", "2026-10-09", sudoRows as BoardJson[]),
-  ...board("android-bench-1", "2026-10-06", android1 as BoardJson[]),
-  ...board("android-bench-2-long", "2026-10-06", androidLong as BoardJson[]),
+  ...board("android-bench", "2026-10-06", androidLong as BoardJson[], "2.0"),
+  ...board("android-bench", "2026-10-06", android1 as BoardJson[], "1.0"),
   fw("supabase-evals", "2026-10-10", "claude-opus-5-5", 91.3, { rank: 1, effort: "high", setting: "high · Claude Code" }),
   fw("supabase-evals", "2026-10-10", "kimi-k3", 84.1, { rank: 2, setting: "OpenCode" }),
   fw("supabase-evals", "2026-10-10", "grok-4-7", 78.3, { rank: 3, effort: "high", setting: "high · Grok" }),

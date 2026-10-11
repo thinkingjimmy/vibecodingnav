@@ -173,6 +173,7 @@ const zh = {
     usedBy: "用在这些场景",
     stale: "已超过 90 天，不作为主要证据",
     version: "版本",
+    archived: "历史版本，不再更新",
     board: "基线榜",
   },
   changes: {

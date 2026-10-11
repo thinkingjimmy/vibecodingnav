@@ -47,7 +47,7 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$4 / $20",
     agents: ["Claude Code"],
-    headlines: ["terminal-bench-4", "lmarena-webdev", "android-bench-2-long"],
+    headlines: ["terminal-bench-4", "lmarena-webdev", "android-bench"],
     peerTable: {
       benchmarks: ["terminal-bench-4", "lmarena-webdev"],
       slugs: ["claude-sonnet-5-5", "gpt-6-astra", "gpt-6-1-sol", "glm-5-3"],
@@ -149,7 +149,7 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1M",
     priceLabel: "$5 / $25",
-    headlines: ["android-bench-1", "lmarena-webdev"],
+    headlines: ["android-bench", "lmarena-webdev"],
     summary: tx(
       "Android Bench 1.0 第一，91.8%。WebDev 最高档排第七。长程榜的第一名是 Opus 5.5，不是它。",
       "First on Android Bench 1.0 at 91.8%. Its best WebDev row is seventh. Opus 5.5, not this model, leads the long-horizon board.",
@@ -363,7 +363,7 @@ export const models: Model[] = [
     vendorName: "OpenAI",
     license: "proprietary",
     licenseLabel: prop,
-    headlines: ["android-bench-1"],
+    headlines: ["android-bench"],
     summary: tx("Android Bench 1.0 第五，87.6%，跑分成本 $7.2。标准任务的省钱档。", "Fifth on Android Bench 1.0 at 87.6%, run cost $7.2. The value tier for standard tasks."),
     why: [tx("只比第一低约 4 个点，成本约为二十四分之一。", "About four points behind first, at roughly a twenty-fourth of the cost.")],
     whyNot: [tx("同系列在长程榜只有 10.7% 的是 GPT 6 Luna。复杂多模块工作不要用便宜档单挑。", "The cheap long-horizon row in this family is GPT 6 Luna at 10.7%. Do not give multi-module work to the cheap tier alone.")],

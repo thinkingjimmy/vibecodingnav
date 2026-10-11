@@ -6,6 +6,7 @@
  */
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { BenchmarkVersions } from "@/components/benchmark-versions";
 import { EvalTable } from "@/components/eval-table";
 import { Frame } from "@/components/frame";
 import { Leaderboard } from "@/components/leaderboard";
@@ -83,27 +84,31 @@ export async function BenchmarkView({ locale, params }: { locale: Locale; params
         <p className="num mt-6 break-all text-[12px] text-faint">{benchmark.asOf} · {benchmark.domain}{benchmark.version ? ` · ${benchmark.version}` : ""}</p>
         {benchmark.stale ? <p className="mt-4 text-[14px] text-mfg" data-stale="true">{dict.benchmark.stale}</p> : null}
       </section>
-      <dl className="mx-4 mt-12 max-w-[820px]">
-        {rows.map(([label, body], index) => (
-          <div key={label} className={`grid gap-3 py-4 md:grid-cols-[120px_1fr] md:gap-6 ${index ? "border-t border-line" : ""}`}>
-            <dt className="font-medium">{label}</dt>
-            <dd className="leading-relaxed text-mfg">{body}</dd>
-          </div>
-        ))}
-        <div className="grid gap-3 border-t border-line py-4 md:grid-cols-[120px_1fr] md:gap-6">
-          <dt className="font-medium">{dict.benchmark.source}</dt>
-          <dd className="space-y-1">{benchmark.links.map((link) => <a key={link.href} href={link.href} className="num block text-[13px] link-u">{link.label}</a>)}</dd>
-        </div>
-      </dl>
-      {benchmark.leaderboard ? (
-        <section className="pt-16">
-          <header className="px-4 pb-4">
-            <h2 className="pt">{dict.scenario.board}</h2>
-            <p className="num mt-2 text-[12px] text-faint">{benchmark.leaderboard.length}</p>
-          </header>
-          <Leaderboard rows={benchmark.leaderboard} dict={dict} table={benchmark.table!} filter={benchmark.filter} />
-        </section>
-      ) : null}
+      {benchmark.versions?.length ? <BenchmarkVersions versions={benchmark.versions} dict={dict} /> : (
+        <>
+          <dl className="mx-4 mt-12 max-w-[820px]">
+            {rows.map(([label, body], index) => (
+              <div key={label} className={`grid gap-3 py-4 md:grid-cols-[120px_1fr] md:gap-6 ${index ? "border-t border-line" : ""}`}>
+                <dt className="font-medium">{label}</dt>
+                <dd className="leading-relaxed text-mfg">{body}</dd>
+              </div>
+            ))}
+            <div className="grid gap-3 border-t border-line py-4 md:grid-cols-[120px_1fr] md:gap-6">
+              <dt className="font-medium">{dict.benchmark.source}</dt>
+              <dd className="space-y-1">{benchmark.links.map((link) => <a key={link.href} href={link.href} className="num block text-[13px] link-u">{link.label}</a>)}</dd>
+            </div>
+          </dl>
+          {benchmark.leaderboard ? (
+            <section className="pt-16">
+              <header className="px-4 pb-4">
+                <h2 className="pt">{dict.scenario.board}</h2>
+                <p className="num mt-2 text-[12px] text-faint">{benchmark.leaderboard.length}</p>
+              </header>
+              <Leaderboard rows={benchmark.leaderboard} dict={dict} table={benchmark.table!} filter={benchmark.filter} />
+            </section>
+          ) : null}
+        </>
+      )}
       {benchmark.chart ? (
         <section className="pt-16">
           <PriceChart title={benchmark.chart.title} note={benchmark.chart.note} href={benchmark.chart.href} hrefLabel={benchmark.chart.hrefLabel} points={benchmark.chart.points} />

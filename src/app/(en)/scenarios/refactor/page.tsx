@@ -10,10 +10,10 @@ export default function Page() {
   return (
     <MovedView
       locale="en"
-      href="/benchmarks/android-bench-2-long/"
+      href="/benchmarks/android-bench/"
       title="This scenario moved"
-      body="Large refactors now use the Android Bench 2.0 long-horizon board. The full source table is on the benchmark page."
-      label="Android Bench 2.0 long-horizon"
+      body="Large refactors now use Android Bench. The current version is 2.0 long-horizon, and the full source table is on the benchmark page."
+      label="Android Bench"
     />
   );
 }

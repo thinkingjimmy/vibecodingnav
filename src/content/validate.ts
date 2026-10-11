@@ -19,6 +19,7 @@ export interface ContentBundle {
 }
 
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const VERSION_ID = /^[a-z0-9.]+(?:-[a-z0-9.]+)*$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 
 function unique(slugs: string[], label: string, errors: string[]) {
@@ -62,6 +63,7 @@ export function validateContent(input: ContentBundle): string[] {
   const items = new Set(input.items.map((item) => item.slug));
   const builds = new Set(input.builds.map((item) => item.slug));
   const resultKeys = new Set<string>();
+  const versionIds = new Map<string, Set<string>>();
 
   for (const model of input.models) {
     text(model.summary, `model.${model.slug}.summary`, errors);
@@ -87,13 +89,52 @@ export function validateContent(input: ContentBundle): string[] {
     text(benchmark.updateCadence, `benchmark.${benchmark.slug}.updateCadence`, errors);
     date(benchmark.asOf, `benchmark.${benchmark.slug}.asOf`, errors);
     if (!benchmark.links.length) errors.push(`benchmark.${benchmark.slug} 缺少来源`);
+    if (!benchmark.versions) continue;
+    if (!benchmark.versions.length) errors.push(`benchmark.${benchmark.slug} 版本列表为空`);
+    const currents = benchmark.versions.filter((version) => version.current);
+    if (currents.length !== 1) errors.push(`benchmark.${benchmark.slug} 必须有且只有一个当前版本`);
+    const ids = new Set<string>();
+    for (const version of benchmark.versions) {
+      const path = `benchmark.${benchmark.slug}.version.${version.id}`;
+      if (!VERSION_ID.test(version.id)) errors.push(`${path} 版本号不合法`);
+      if (ids.has(version.id)) errors.push(`benchmark.${benchmark.slug} 版本重复: ${version.id}`);
+      ids.add(version.id);
+      if (version.current && version.archived) errors.push(`${path} 当前版本不能归档`);
+      if (!version.current && !version.archived) errors.push(`${path} 旧版本必须归档`);
+      text(version.label, `${path}.label`, errors);
+      text(version.measures, `${path}.measures`, errors);
+      text(version.method, `${path}.method`, errors);
+      text(version.scoreMeaning, `${path}.scoreMeaning`, errors);
+      text(version.caveats, `${path}.caveats`, errors);
+      text(version.updateCadence, `${path}.updateCadence`, errors);
+      date(version.asOf, `${path}.asOf`, errors);
+    }
+    const aliases = new Set<string>();
+    for (const version of benchmark.versions) {
+      for (const alias of version.aliases ?? []) {
+        if (!VERSION_ID.test(alias) || ids.has(alias) || aliases.has(alias)) errors.push(`benchmark.${benchmark.slug} 版本别名不合法: ${alias}`);
+        aliases.add(alias);
+      }
+    }
+    const current = currents[0];
+    if (current) {
+      if (benchmark.asOf !== current.asOf) errors.push(`benchmark.${benchmark.slug} 日期必须等于当前版本`);
+      if (benchmark.table !== current.table) errors.push(`benchmark.${benchmark.slug} 榜单表必须等于当前版本`);
+      if (benchmark.trackedCount !== current.trackedCount) errors.push(`benchmark.${benchmark.slug} 行数必须等于当前版本`);
+      if ((benchmark.sourceFilter ?? "") !== (current.sourceFilter ?? "")) errors.push(`benchmark.${benchmark.slug} 筛选必须等于当前版本`);
+    }
+    versionIds.set(benchmark.slug, ids);
   }
 
   for (const result of input.results) {
-    const key = `${result.benchmark}|${result.label ?? result.modelSlug ?? ""}|${result.effort ?? ""}|${result.agent ?? ""}|${result.arm ?? "baseline"}|${result.rank ?? ""}`;
+    const key = `${result.benchmark}|${result.version ?? ""}|${result.label ?? result.modelSlug ?? ""}|${result.effort ?? ""}|${result.agent ?? ""}|${result.arm ?? "baseline"}|${result.rank ?? ""}`;
     if (resultKeys.has(key)) errors.push(`result 重复: ${key}`);
     resultKeys.add(key);
     if (!benchmarks.has(result.benchmark)) errors.push(`result 基准不存在: ${result.benchmark}`);
+    const ids = versionIds.get(result.benchmark);
+    if (ids) {
+      if (!result.version || !ids.has(result.version)) errors.push(`result 版本不存在: ${key}`);
+    } else if (result.version) errors.push(`result 基准没有版本: ${key}`);
     if (!result.modelSlug && !result.label) errors.push(`result 缺少模型: ${key}`);
     if (result.modelSlug && !models.has(result.modelSlug)) errors.push(`result 模型不存在: ${result.modelSlug}`);
     if (result.vendor && !VENDOR_IDS.includes(result.vendor)) errors.push(`result 厂商未知: ${key}`);

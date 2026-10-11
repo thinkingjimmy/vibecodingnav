@@ -15,12 +15,13 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.getByText("#1 · #1 · #1 · —").first()).toBeVisible();
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
-  const bench = page.getByRole("link", { name: "Android Bench 1.0", exact: true });
-  await expect(bench).toHaveAttribute("href", "/zh/benchmarks/android-bench-1/");
+  const bench = page.locator("article").filter({ has: page.getByRole("link", { name: "做一个 Android App", exact: true }) }).getByRole("link", { name: "Android Bench", exact: true });
+  await expect(bench).toHaveAttribute("href", "/zh/benchmarks/android-bench/");
   await expect(page.locator("#sources")).toBeVisible();
   await bench.click();
-  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench-1\/$/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Android Bench 1.0");
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Android Bench");
+  await expect(page.getByText("32.7").first()).toBeVisible();
 });
 
 test("a board card model opens its model page", async ({ page }) => {
@@ -44,7 +45,7 @@ test("view more opens every scenario as a board card", async ({ page }) => {
   await expect(cards).toHaveCount(4);
   await expect(page.getByRole("link", { name: "做全栈 SaaS" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "做 iOS App" })).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Android Bench 1.0", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Android Bench", exact: true })).toBeVisible();
   await page.setViewportSize({ width: 1280, height: 900 });
   const columns = await page.locator("article").first().locator("xpath=..").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
   expect(columns).toBe(2);
@@ -209,19 +210,20 @@ test("switching a source filter keeps the table width", async ({ page }) => {
   await page.getByRole("button", { name: /显示全部/ }).click();
   expect(await clippedNow(page)).toEqual([]);
 
-  await page.goto("/zh/benchmarks/android-bench-1/");
-  await expect(page.getByText("91.8").first()).toBeVisible();
-  await expect(page.getByRole("columnheader", { name: "Agent" })).toHaveCount(0);
-  await page.getByRole("button", { name: /显示全部/ }).click();
-  expect(await clippedNow(page)).toEqual([]);
-
-  await page.goto("/zh/benchmarks/android-bench-2-long/");
+  await page.goto("/zh/benchmarks/android-bench/");
   await expect(page.getByRole("columnheader", { name: "Agent" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Claude Opus 5.5", exact: true })).toBeVisible();
   await expect(page.getByText("32.7").first()).toBeVisible();
   await expect(page.getByText("claude-code").first()).toBeVisible();
   await expect(page.getByText("84.7").first()).toBeVisible();
   await expect(page.getByText("18.7–47.3").first()).toBeVisible();
+  expect(await clippedNow(page)).toEqual([]);
+  await page.getByRole("button", { name: "1.0", exact: true }).click();
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/\?v=1\.0$/);
+  await expect(page.locator("[data-archived=true]")).toContainText("历史版本，不再更新");
+  await expect(page.getByText("91.8").first()).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: "Agent" })).toHaveCount(0);
+  await page.getByRole("button", { name: /显示全部/ }).click();
   expect(await clippedNow(page)).toEqual([]);
 
   await page.goto("/zh/benchmarks/terminal-bench-4/");
@@ -230,14 +232,14 @@ test("switching a source filter keeps the table width", async ({ page }) => {
   expect(await clippedNow(page)).toEqual([]);
 });
 
-test("android scenario lines the two boards up by rank", async ({ page }) => {
+test("android scenario uses only the current version", async ({ page }) => {
   await page.goto("/zh/scenarios/android-app/");
-  await expect(page.getByRole("link", { name: "Claude Opus 5", exact: true })).toBeVisible();
-  await expect(page.getByRole("columnheader", { name: /^1\.0/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/android-bench-1/");
-  await expect(page.getByRole("columnheader", { name: /2\.0 长程/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/android-bench-2-long/");
-  const leader = page.getByRole("row").filter({ hasText: "Claude Opus 5" }).first();
-  await expect(leader).toContainText("—");
-  await expect(leader).toContainText("1/2");
+  await expect(page.getByRole("columnheader", { name: /Android Bench 2\.0/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/android-bench/");
+  await expect(page.getByRole("columnheader", { name: /^1\.0/ })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Claude Opus 5.5", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Claude Opus 5", exact: true })).toHaveCount(0);
+  const leader = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
+  await expect(leader).toContainText("1/1");
   await expect(page.getByRole("tab")).toHaveCount(0);
 });
 
@@ -258,7 +260,26 @@ test("removed scenario urls land on the source board", async ({ page }) => {
   await expect(page).toHaveURL(/\/zh\/benchmarks\/lmarena-webdev\/$/);
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
   await page.goto("/scenarios/refactor/");
-  await expect(page).toHaveURL(/\/benchmarks\/android-bench-2-long\/$/);
+  await expect(page).toHaveURL(/\/benchmarks\/android-bench\/$/);
+  await expect(page.getByText("32.7").first()).toBeVisible();
+});
+
+test("old android urls open the merged board on the matching version", async ({ page }) => {
+  await page.goto("/zh/benchmarks/android-bench-1/");
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/\?v=1\.0$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Android Bench");
+  await expect(page.locator("[data-archived=true]")).toContainText("历史版本，不再更新");
+  await expect(page.locator("[data-archived=true]")).toContainText("2026-10-06");
+  await expect(page.getByText("91.8").first()).toBeVisible();
+
+  await page.goto("/zh/benchmarks/android-bench-2/");
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/\?v=2\.0$/);
+  await expect(page.getByText("32.7").first()).toBeVisible();
+  await expect(page.locator("[data-archived=true]")).toHaveCount(0);
+
+  await page.goto("/zh/benchmarks/android-bench-2-long/");
+  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/#long$/);
+  await expect(page.getByRole("columnheader", { name: "Agent" })).toBeVisible();
   await expect(page.getByText("32.7").first()).toBeVisible();
 });
 

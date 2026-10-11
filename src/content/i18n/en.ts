@@ -173,6 +173,7 @@ const en = {
     usedBy: "Used by",
     stale: "Older than 90 days, not primary evidence",
     version: "Version",
+    archived: "Archived version, no longer updated",
     board: "Baseline board",
   },
   changes: {

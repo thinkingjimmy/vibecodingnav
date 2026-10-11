@@ -114,14 +114,14 @@ npm i @phosphor-icons/react motion geist`,
     updatedAt: "2026-10-10",
     title: tx("做一个 Android App，用这一套", "Build an Android app with this set"),
     summary: tx(
-      "模型取自 Android Bench 1.0。界面用 Jetpack Compose。仓库约定写在 AGENTS.md 里，避免 Agent 再新增 XML。",
-      "The model comes from Android Bench 1.0. UI is Jetpack Compose. Repo rules live in AGENTS.md so the agent does not add more XML.",
+      "模型取自 Android Bench 当前的 2.0 长程版本。界面用 Jetpack Compose。仓库约定写在 AGENTS.md 里，避免 Agent 再新增 XML。",
+      "The model comes from the current Android Bench version, 2.0 long-horizon. UI is Jetpack Compose. Repo rules live in AGENTS.md so the agent does not add more XML.",
     ),
     roles: [
       {
         role: tx("模型", "Model"),
         primary: { kind: "pick", pick: "top" },
-        alternatives: [{ ref: { kind: "pick", pick: "value" }, tone: "value", when: tx("成本约为二十四分之一", "about a twenty-fourth of the cost") }],
+        alternatives: [{ ref: { kind: "pick", pick: "value" }, tone: "value", when: tx("跑分成本不到一半", "under half the run cost") }],
       },
       {
         role: tx("UI", "UI"),
@@ -158,7 +158,7 @@ Use Jetpack Compose: developer.android.com/jetpack/compose`,
     ),
     notFor: [
       { title: tx("Web 前端", "Web frontend"), body: tx("浏览器里的页面看「做 Web 前端」，榜单是 LMArena WebDev。", "For a page in the browser, open “Build a Web frontend”. That board is LMArena WebDev."), href: "/build/web-frontend" },
-      { title: tx("长程跨模块改造", "Long cross-module work"), body: tx("标准任务的第一名不等于 2.0 长程的第一名。完整原榜在长程基准页。", "First on standard tasks is not first on the 2.0 long-horizon table. The full source board is on the long-horizon benchmark page."), href: "/benchmarks/android-bench-2-long" },
+      { title: tx("标准任务的历史版本", "The archived standard-task board"), body: tx("当前组合按 2.0 长程。1.0 的完整原榜仍在基准页，标为历史版本，不再更新。", "The current set follows 2.0 long-horizon. The full 1.0 board stays on the benchmark page, marked as an archived version that is no longer updated."), href: "/benchmarks/android-bench/#1.0" },
       { title: tx("iOS", "iOS"), body: tx("没有公开的 iOS 专项榜，这里不单开场景。", "There is no public iOS board, so this site does not invent a scenario for it.") },
     ],
   },

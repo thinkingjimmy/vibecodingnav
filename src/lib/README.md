@@ -7,7 +7,7 @@ contracts.ts: Locale、双语文本、内容实体与 UI 字典类型
 i18n.ts: 中英字典入口
 locale.ts: 英文根路径、中文 `/zh/` 前缀与语言对调
 site.ts: vibecodingnav.com、90 天过期判断与 hreflang metadata
-catalog.ts: 榜单行、挑选、组合解析、反向链接与搜索条目
+catalog.ts: 榜单行、挑选、组合解析、当前版本、反向链接与搜索条目
 utils.ts: Tailwind 类名合并
 
 法则: 纯函数优先·常量集中·页面不直连内容文件

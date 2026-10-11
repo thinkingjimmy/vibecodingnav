@@ -10,10 +10,10 @@ export default function Page() {
   return (
     <MovedView
       locale="zh"
-      href="/zh/benchmarks/android-bench-2-long/"
-      title="这个场景已并入 Android 长程榜"
-      body="大型重构与迁移不再单独成场景。Android Bench 2.0 长程的完整原榜在基准页。"
-      label="Android Bench 2.0 长程"
+      href="/zh/benchmarks/android-bench/"
+      title="这个场景已并入 Android Bench"
+      body="大型重构与迁移不再单独成场景。Android Bench 的当前版本是 2.0 长程，完整原榜在基准页。"
+      label="Android Bench"
     />
   );
 }

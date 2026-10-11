@@ -4,9 +4,70 @@
  * [POS]: src/content 的方法论实体
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
-import type { Benchmark, LText } from "@/lib/contracts";
+import type { Benchmark, BenchmarkVersion, LText } from "@/lib/contracts";
 
 const tx = (zh: string, en: string): LText => ({ zh, en });
+
+const androidCurrent: BenchmarkVersion = {
+  id: "2.0",
+  label: tx("2.0 长程", "2.0 long-horizon"),
+  asOf: "2026-10-06",
+  current: true,
+  aliases: ["long", "2"],
+  table: "android-long",
+  sourceFilter: "weights",
+  trackedCount: 10,
+  measures: tx("跨模块、耗时很长的 Android 改造：完整功能，而不是单点修改。", "Long Android changes across modules: a whole feature, not a single edit."),
+  method: tx(
+    "developer.android.com/bench 的 Long-horizon task results。每一行是模型加 agent harness。列是通过率、CI、完成度、平均耗时和平均成本。",
+    "Long-horizon task results on developer.android.com/bench. Each row is a model plus its agent harness. Columns are pass rate, CI, completion, average latency, and average cost.",
+  ),
+  scoreMeaning: tx(
+    "百分比是 30 个任务的平均通过率。完成度是失败时离做完还有多近。耗时单位是小时，成本是一整次跑分。",
+    "The percent is the average pass rate across 30 tasks. Completion is how close a failed run got. Latency is in hours. Cost is one full run.",
+  ),
+  caveats: tx(
+    "整体通过率不高，置信区间很宽，第一名 18.7–47.3 和第二名 13.3–42.0 重叠。1.0 仍完整保留在本页，作为历史版本，不再作为场景的当前列。",
+    "Pass rates are low and intervals are wide. First place, 18.7–47.3, overlaps second place, 13.3–42.0. Version 1.0 stays complete on this page as an archived version, and is no longer the scenario's current column.",
+  ),
+  updateCadence: tx(
+    "页面最新的 agent 结果写着 2026-10-06。本页于 2026-10-10 与 #long-horizon-task-results 逐行核对，10 行全部收录。",
+    "The page's newest agent results are dated 2026-10-06. This page checked all 10 rows against #long-horizon-task-results on 2026-10-10.",
+  ),
+  links: [{ label: "developer.android.com/bench", href: "https://developer.android.com/bench" }],
+};
+
+const androidArchived: BenchmarkVersion = {
+  id: "1.0",
+  label: tx("1.0", "1.0"),
+  asOf: "2026-10-06",
+  archived: true,
+  aliases: ["1"],
+  table: "android-1",
+  sourceFilter: "weights",
+  trackedCount: 32,
+  measures: tx("Android 上的标准任务：新功能、库迁移，以及 Kotlin / Compose 相关的修改。", "Standard Android tasks: new features, library migrations, and Kotlin / Compose changes."),
+  method: tx(
+    "Android 官方 Android Bench 的 1.0 任务表。分数是多次运行的平均通过率。页面用 weight___open / weight___closed 区分开源权重和闭源，本页筛选沿用这个标记，不重排名次。",
+    "The 1.0 task table on the official Android Bench. The score is the average pass rate across runs. The page marks rows weight___open or weight___closed. This page filters on that mark and does not renumber.",
+  ),
+  scoreMeaning: tx(
+    "百分比是任务通过率。CI、平均耗时（小时）和平均成本与来源表同一行。",
+    "The percent is the task pass rate. CI, average latency in hours, and average cost are the same cells as the source table.",
+  ),
+  caveats: tx(
+    "前几名的区间经常重叠，分差很小时不要只看名次。这是历史版本，场景页使用当前的 2.0 长程。来源表头把 CI 写成了 Cl range。",
+    "Intervals at the top often overlap. A small gap is not a reason to pay for first place. This is an archived version; the scenario uses the current 2.0 long-horizon table. The source heading spells the CI column as Cl range.",
+  ),
+  updateCadence: tx(
+    "页面最新动态写到 2026-10-06。本页于 2026-10-10 与 developer.android.com/bench 的 1.0 表逐行核对，32 行全部收录。",
+    "The page's latest update is 2026-10-06. This page checked all 32 rows of the 1.0 table against developer.android.com/bench on 2026-10-10.",
+  ),
+  links: [
+    { label: "developer.android.com/bench", href: "https://developer.android.com/bench" },
+    { label: "methodology", href: "https://developer.android.com/bench/methodology/1" },
+  ],
+};
 
 export const benchmarks: Benchmark[] = [
   {
@@ -83,36 +144,22 @@ export const benchmarks: Benchmark[] = [
     ],
   },
   {
-    slug: "android-bench-1",
-    name: "Android Bench 1.0",
+    slug: "android-bench",
+    name: "Android Bench",
     shortName: "Android Bench",
     scoreUnit: "%",
-    asOf: "2026-10-06",
-    trackedCount: 32,
-    table: "android-1",
-    sourceFilter: "weights",
+    asOf: androidCurrent.asOf,
+    trackedCount: androidCurrent.trackedCount,
+    table: androidCurrent.table,
+    sourceFilter: androidCurrent.sourceFilter,
     domain: tx("移动端", "Mobile"),
-    measures: tx("Android 上的标准任务：新功能、库迁移，以及 Kotlin / Compose 相关的修改。", "Standard Android tasks: new features, library migrations, and Kotlin / Compose changes."),
-    method: tx(
-      "Android 官方 Android Bench 的 1.0 任务表。分数是多次运行的平均通过率。页面用 weight___open / weight___closed 区分开源权重和闭源，本页筛选沿用这个标记，不重排名次。",
-      "The 1.0 task table on the official Android Bench. The score is the average pass rate across runs. The page marks rows weight___open or weight___closed. This page filters on that mark and does not renumber.",
-    ),
-    scoreMeaning: tx(
-      "百分比是任务通过率。CI、平均耗时（小时）和平均成本与来源表同一行。",
-      "The percent is the task pass rate. CI, average latency in hours, and average cost are the same cells as the source table.",
-    ),
-    caveats: tx(
-      "前几名的区间经常重叠，分差很小时不要只看名次。长程任务在同一页的 2.0 长程表，不另开场景。来源表头把 CI 写成了 Cl range。",
-      "Intervals at the top often overlap. A small gap is not a reason to pay for first place. Long-horizon tasks are the 2.0 table on the same page, not a separate scenario. The source heading spells the CI column as Cl range.",
-    ),
-    updateCadence: tx(
-      "页面最新动态写到 2026-10-06。本页于 2026-10-10 与 developer.android.com/bench 的 1.0 表逐行核对，32 行全部收录。",
-      "The page's latest update is 2026-10-06. This page checked all 32 rows of the 1.0 table against developer.android.com/bench on 2026-10-10.",
-    ),
-    links: [
-      { label: "developer.android.com/bench", href: "https://developer.android.com/bench" },
-      { label: "methodology", href: "https://developer.android.com/bench/methodology/1" },
-    ],
+    measures: androidCurrent.measures,
+    method: androidCurrent.method,
+    scoreMeaning: androidCurrent.scoreMeaning,
+    caveats: androidCurrent.caveats,
+    updateCadence: androidCurrent.updateCadence,
+    links: androidCurrent.links ?? [],
+    versions: [androidCurrent, androidArchived],
   },
   {
     slug: "terminal-bench-4",
@@ -135,35 +182,6 @@ export const benchmarks: Benchmark[] = [
     caveats: tx("它不衡量界面好不好看。同一通过率下，跑分成本可以差一个数量级。", "It does not measure whether a UI looks right. At a similar pass rate, run cost can differ by an order of magnitude."),
     updateCadence: tx("榜单 updated_at 为 2026-10-06。本页于 2026-10-10 核对全部 35 行。", "The board updated_at is 2026-10-06. This page checked all 35 rows on 2026-10-10."),
     links: [{ label: "tbench.ai", href: "https://tbench.ai" }],
-  },
-  {
-    slug: "android-bench-2-long",
-    name: "Android Bench 2.0 长程",
-    shortName: "Android 长程",
-    scoreUnit: "%",
-    asOf: "2026-10-06",
-    trackedCount: 10,
-    table: "android-long",
-    sourceFilter: "weights",
-    domain: tx("移动端", "Mobile"),
-    measures: tx("跨模块、耗时很长的 Android 改造：完整功能，而不是单点修改。", "Long Android changes across modules: a whole feature, not a single edit."),
-    method: tx(
-      "developer.android.com/bench 的 Long-horizon task results。每一行是模型加 agent harness。列是通过率、CI、完成度、平均耗时和平均成本。",
-      "Long-horizon task results on developer.android.com/bench. Each row is a model plus its agent harness. Columns are pass rate, CI, completion, average latency, and average cost.",
-    ),
-    scoreMeaning: tx(
-      "百分比是 30 个任务的平均通过率。完成度是失败时离做完还有多近。耗时单位是小时，成本是一整次跑分。",
-      "The percent is the average pass rate across 30 tasks. Completion is how close a failed run got. Latency is in hours. Cost is one full run.",
-    ),
-    caveats: tx(
-      "整体通过率不高，置信区间很宽，第一名 18.7–47.3 和第二名 13.3–42.0 重叠。这张表在 Android 场景里，不单独成场景。",
-      "Pass rates are low and intervals are wide. First place, 18.7–47.3, overlaps second place, 13.3–42.0. This table lives on the Android scenario.",
-    ),
-    updateCadence: tx(
-      "页面最新的 agent 结果写着 2026-10-06。本页于 2026-10-10 与 #long-horizon-task-results 逐行核对，10 行全部收录。",
-      "The page's newest agent results are dated 2026-10-06. This page checked all 10 rows against #long-horizon-task-results on 2026-10-10.",
-    ),
-    links: [{ label: "developer.android.com/bench", href: "https://developer.android.com/bench" }],
   },
   {
     slug: "sudo-l7",
