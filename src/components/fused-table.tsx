@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖按模型对齐的名次、基准链接与排序文案
- * [OUTPUT]: 对外提供场景页的融合表：一列一张榜，格子是名次
+ * [OUTPUT]: 对外提供场景页的融合表：一列一张榜，格子是名次，列头滚动时吸在导航下
  * [POS]: src/components 的场景融合表
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -8,7 +8,7 @@
 
 import { CaretDown, CaretUp } from "@phosphor-icons/react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { fuseScenario } from "@/lib/catalog";
 import type { Dictionary, VendorId } from "@/lib/contracts";
 import { VendorMark } from "./vendor-mark";
@@ -37,35 +37,74 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
     return copy;
   }, [fusion.rows, sort]);
   const shown = expanded ? rows : rows.slice(0, PAGE);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const headRef = useRef<HTMLTableElement>(null);
+  const tableRef = useRef<HTMLTableElement>(null);
   const toggle = (key: SortKey) => setSort((current) => current.key === key ? { key, dir: current.dir === "asc" ? "desc" : "asc" } : { key, dir: key === "model" ? "asc" : "asc" });
+  const minWidth = `${28 + fusion.columns.length * 7}rem`;
+  const cols = () => (
+    <colgroup>
+      <col style={{ width: "16rem" }} />
+      <col style={{ width: "6rem" }} />
+      <col style={{ width: "5rem" }} />
+      {fusion.columns.map((column) => <col key={column.id} />)}
+    </colgroup>
+  );
+  const head = (
+    <tr className="num h-10 text-[12px] text-faint">
+      <SortHeader label={dict.scenario.colModel} active={sort.key === "model"} dir={sort.dir} onClick={() => toggle("model")} sortLabel={dict.scenario.sortBy} />
+      <SortHeader label={dict.scenario.colAvg} active={sort.key === "avg"} dir={sort.dir} align="right" onClick={() => toggle("avg")} sortLabel={dict.scenario.sortBy} />
+      <SortHeader label={dict.scenario.colAppears} active={sort.key === "count"} dir={sort.dir} align="right" onClick={() => toggle("count")} sortLabel={dict.scenario.sortBy} />
+      {fusion.columns.map((column, index) => (
+        <th key={column.id} className="bg-bg px-2 text-right font-normal whitespace-nowrap">
+          <span className="inline-flex items-center justify-end gap-1">
+            <Link href={column.href} className="link-u">{column.label}</Link>
+            {column.tag ? <span className="text-[10px] text-faint">{column.tag}</span> : null}
+            <SortButton label={column.label} active={sort.key === index} dir={sort.dir} onClick={() => toggle(index)} sortLabel={dict.scenario.sortBy} />
+          </span>
+        </th>
+      ))}
+    </tr>
+  );
+
+  useLayoutEffect(() => {
+    const scroll = scrollRef.current;
+    const track = trackRef.current;
+    const headTable = headRef.current;
+    const body = tableRef.current;
+    if (!scroll || !track || !headTable || !body) return;
+    const apply = () => {
+      headTable.style.width = `${body.offsetWidth}px`;
+      track.style.transform = `translateX(${-scroll.scrollLeft}px)`;
+    };
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(body);
+    observer.observe(scroll);
+    scroll.addEventListener("scroll", apply, { passive: true });
+    return () => {
+      observer.disconnect();
+      scroll.removeEventListener("scroll", apply);
+    };
+  }, [shown, sort, fusion.columns]);
 
   return (
     <div>
       <p className="max-w-[760px] px-4 pb-5 text-[13px] leading-relaxed text-faint">{dict.scenario.fusedNote}</p>
-      <div className="overflow-x-auto px-4">
-        <table className="w-full table-fixed border-collapse text-left text-[14px]" style={{ minWidth: `${28 + fusion.columns.length * 7}rem` }}>
-          <colgroup>
-            <col style={{ width: "16rem" }} />
-            <col style={{ width: "6rem" }} />
-            <col style={{ width: "5rem" }} />
-            {fusion.columns.map((column) => <col key={column.id} />)}
-          </colgroup>
-          <thead>
-            <tr className="num h-10 border-b border-line text-[12px] text-faint">
-              <SortHeader label={dict.scenario.colModel} active={sort.key === "model"} dir={sort.dir} onClick={() => toggle("model")} sortLabel={dict.scenario.sortBy} />
-              <SortHeader label={dict.scenario.colAvg} active={sort.key === "avg"} dir={sort.dir} align="right" onClick={() => toggle("avg")} sortLabel={dict.scenario.sortBy} />
-              <SortHeader label={dict.scenario.colAppears} active={sort.key === "count"} dir={sort.dir} align="right" onClick={() => toggle("count")} sortLabel={dict.scenario.sortBy} />
-              {fusion.columns.map((column, index) => (
-                <th key={column.id} className="px-2 text-right font-normal">
-                  <span className="inline-flex items-center justify-end gap-1">
-                    <Link href={column.href} className="link-u">{column.label}</Link>
-                    {column.tag ? <span className="text-[10px] text-faint">{column.tag}</span> : null}
-                    <SortButton label={column.label} active={sort.key === index} dir={sort.dir} onClick={() => toggle(index)} sortLabel={dict.scenario.sortBy} />
-                  </span>
-                </th>
-              ))}
-            </tr>
-          </thead>
+      <div className="sticky z-30 bg-bg" style={{ top: "var(--site-nav, 3.5rem)" }}>
+        <div className="overflow-hidden border-b border-line">
+          <div ref={trackRef} className="px-4">
+            <table ref={headRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
+              {cols()}
+              <thead data-fused-head>{head}</thead>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div ref={scrollRef} className="overflow-x-auto px-4">
+        <table ref={tableRef} className="w-full table-fixed border-separate border-spacing-0 text-left text-[14px]" style={{ minWidth }}>
+          {cols()}
           <tbody>
             {shown.map((row) => (
               <tr key={row.key} className="rowh border-b border-line">

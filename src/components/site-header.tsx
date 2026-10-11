@@ -10,7 +10,7 @@ import { Dialog } from "@base-ui/react/dialog";
 import { ArrowRight, CircleHalf, MagnifyingGlass, TerminalWindow } from "@phosphor-icons/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Dictionary, Locale } from "@/lib/contracts";
 import type { SearchEntry } from "@/lib/catalog";
 import { localePath, swapLocale } from "@/lib/locale";
@@ -35,7 +35,17 @@ function isActive(path: string, key: (typeof links)[number][0]) {
 
 export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Dictionary; entries: SearchEntry[] }) {
   const path = usePathname() || "/";
+  const headerRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
+  useLayoutEffect(() => {
+    const node = headerRef.current;
+    if (!node) return;
+    const apply = () => document.documentElement.style.setProperty("--site-nav", `${node.offsetHeight}px`);
+    apply();
+    const observer = new ResizeObserver(apply);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
   const [query, setQuery] = useState("");
   const router = useRouter();
   const results = useMemo(() => {
@@ -66,7 +76,7 @@ export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Di
   );
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-bg">
+    <header ref={headerRef} className="sticky top-0 z-50 border-b border-line bg-bg">
       <div className="mx-auto flex h-14 w-full max-w-[1200px] items-center gap-3 px-4">
         <Link href={localePath(locale, "/")} className="flex items-center gap-2.5 text-[15px] font-medium tracking-tight">
           <TerminalWindow size={22} aria-hidden="true" />

@@ -170,6 +170,22 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   const before = await firstName();
   await page.getByRole("button", { name: "按模型排序" }).click();
   expect(await firstName()).not.toBe(before);
+
+  await page.setViewportSize({ width: 1280, height: 800 });
+  const fusedTop = await page.locator("[data-fused-head]").evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y), fusedTop);
+  const fusedNav = await page.locator("header.sticky").boundingBox();
+  const fusedHead = await page.locator("[data-fused-head] th").first().boundingBox();
+  expect(Math.abs((fusedHead?.y ?? 0) - ((fusedNav?.y ?? 0) + (fusedNav?.height ?? 0)))).toBeLessThanOrEqual(1);
+  await expect(page.getByRole("columnheader", { name: /图生网页/ })).toBeInViewport();
+  await page.setViewportSize({ width: 900, height: 800 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+  const fusedTopNarrow = await page.locator("[data-fused-head]").evaluate((el) => el.getBoundingClientRect().top + window.scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y), fusedTopNarrow);
+  const fusedNavNarrow = await page.locator("header.sticky").boundingBox();
+  const fusedHeadNarrow = await page.locator("[data-fused-head] th").first().boundingBox();
+  expect((fusedNavNarrow?.height ?? 0)).toBeGreaterThan(70);
+  expect(Math.abs((fusedHeadNarrow?.y ?? 0) - ((fusedNavNarrow?.y ?? 0) + (fusedNavNarrow?.height ?? 0)))).toBeLessThanOrEqual(1);
 });
 
 test("switching a source filter keeps the table width", async ({ page }) => {

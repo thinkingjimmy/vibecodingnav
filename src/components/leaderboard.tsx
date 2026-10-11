@@ -50,9 +50,6 @@ function Cols({ headers }: { headers: Column[] }) {
 export function Leaderboard({ rows, dict, table, filter: mode }: { rows: BoardRow[]; dict: Dictionary; table: BoardTable; filter: SourceFilter | "none" }) {
   const [filter, setFilter] = useState<Filter>("all");
   const [expanded, setExpanded] = useState(false);
-  const boardRef = useRef<HTMLDivElement>(null);
-  const spacerRef = useRef<HTMLDivElement>(null);
-  const chromeRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const headRef = useRef<HTMLTableElement>(null);
@@ -63,54 +60,29 @@ export function Leaderboard({ rows, dict, table, filter: mode }: { rows: BoardRo
   const minWidth = tableMin(table);
 
   useLayoutEffect(() => {
-    const board = boardRef.current;
-    const spacer = spacerRef.current;
-    const chrome = chromeRef.current;
     const scroll = scrollRef.current;
     const track = trackRef.current;
     const head = headRef.current;
     const body = tableRef.current;
-    if (!board || !spacer || !chrome || !scroll || !track || !head || !body) return;
-    let applying = false;
+    if (!scroll || !track || !head || !body) return;
     const apply = () => {
-      if (applying) return;
-      applying = true;
       head.style.width = `${body.offsetWidth}px`;
       track.style.transform = `translateX(${-scroll.scrollLeft}px)`;
-      const nav = document.querySelector("header");
-      const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
-      const rect = board.getBoundingClientRect();
-      const chromeHeight = chrome.offsetHeight;
-      const pin = rect.top < navBottom - 0.5 && rect.bottom > navBottom + 0.5;
-      const top = pin ? Math.min(navBottom, rect.bottom - chromeHeight) : 0;
-      chrome.style.position = pin ? "fixed" : "";
-      chrome.style.top = pin ? `${top}px` : "";
-      chrome.style.left = pin ? `${rect.left}px` : "";
-      chrome.style.width = pin ? `${rect.width}px` : "";
-      chrome.style.zIndex = pin ? "30" : "";
-      spacer.style.height = pin ? `${chromeHeight}px` : "0px";
-      applying = false;
     };
     apply();
     const observer = new ResizeObserver(apply);
     observer.observe(body);
     observer.observe(scroll);
-    observer.observe(board);
     scroll.addEventListener("scroll", apply, { passive: true });
-    window.addEventListener("scroll", apply, { passive: true });
-    window.addEventListener("resize", apply);
     return () => {
       observer.disconnect();
       scroll.removeEventListener("scroll", apply);
-      window.removeEventListener("scroll", apply);
-      window.removeEventListener("resize", apply);
     };
   }, [shown, filter, table]);
 
   return (
-    <div ref={boardRef}>
-      <div ref={spacerRef} />
-      <div ref={chromeRef} className="z-30 bg-bg">
+    <div>
+      <div className="sticky z-30 bg-bg" style={{ top: "var(--site-nav, 3.5rem)" }}>
         {mode !== "none" ? (
           <div data-board-bar className="flex flex-wrap items-center gap-1 px-4 pb-5 text-[13px]">
             {([
