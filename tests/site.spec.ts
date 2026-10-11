@@ -422,6 +422,41 @@ test("nav highlights only the current section", async ({ page }) => {
   }
 });
 
+test("closing search does not outline the trigger, and tab still shows a ring", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  for (const item of [
+    { path: "/", name: "Search" },
+    { path: "/zh/", name: "搜索" },
+  ]) {
+    await page.goto(item.path);
+    const trigger = page.getByRole("button", { name: item.name });
+    await page.keyboard.press("Control+k");
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    await expect(trigger).toBeFocused();
+    expect(await trigger.evaluate((el) => el.matches(":focus-visible") || getComputedStyle(el).outlineStyle !== "none")).toBe(false);
+
+    await trigger.click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await page.locator(".fixed.inset-0").click({ position: { x: 8, y: 8 } });
+    await expect(page.getByRole("dialog")).toHaveCount(0);
+    expect(await trigger.evaluate((el) => el.matches(":focus-visible") || getComputedStyle(el).outlineStyle !== "none")).toBe(false);
+
+    await page.locator("body").click({ position: { x: 4, y: 200 } });
+    await page.keyboard.press("Tab");
+    const ring = await page.evaluate(() => {
+      const el = document.activeElement;
+      if (!el || el === document.body) return null;
+      const style = getComputedStyle(el);
+      return { visible: el.matches(":focus-visible"), outline: style.outlineStyle, width: style.outlineWidth };
+    });
+    expect(ring?.visible).toBe(true);
+    expect(ring?.outline).not.toBe("none");
+    expect(ring?.width).not.toBe("0px");
+  }
+});
+
 test("home does not scroll sideways on a phone", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/zh/");

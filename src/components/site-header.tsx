@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖字典、搜索条目、Phosphor 图标与 Base UI Dialog
- * [OUTPUT]: 对外提供置顶导航、语言切换、主题与 ⌘K 搜索
+ * [OUTPUT]: 对外提供置顶导航、语言切换、主题与 ⌘K 搜索；关闭搜索后焦点回到按钮但不画焦点环
  * [POS]: src/components 的全站页头
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -24,9 +24,21 @@ const links = [
   ["benchmarks", "/benchmarks"],
 ] as const;
 
+function restoreFocusQuietly(node: HTMLElement | null) {
+  if (!node) return;
+  node.dataset.restoreFocus = "";
+  node.focus({ preventScroll: true, focusVisible: false });
+  const clear = () => {
+    delete node.dataset.restoreFocus;
+    node.removeEventListener("blur", clear);
+  };
+  node.addEventListener("blur", clear);
+}
+
 export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Dictionary; entries: SearchEntry[] }) {
   const path = usePathname() || "/";
   const headerRef = useRef<HTMLElement>(null);
+  const searchTriggerRef = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
   useLayoutEffect(() => {
     const node = headerRef.current;
@@ -79,14 +91,20 @@ export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Di
         <div className="flex-1 lg:hidden" />
         <span className="mx-1 hidden h-5 w-px bg-bd sm:block" />
         <Dialog.Root open={open} onOpenChange={setOpen}>
-          <Dialog.Trigger className="flex items-center gap-2 text-[14px] text-mfg hover:text-fg" aria-label={dict.nav.search}>
+          <Dialog.Trigger ref={searchTriggerRef} className="flex items-center gap-2 text-[14px] text-mfg hover:text-fg" aria-label={dict.nav.search}>
             <MagnifyingGlass size={15} />
             <span className="kbd">⌘</span>
             <span className="kbd -ml-1">K</span>
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Backdrop className="fixed inset-0 z-50 bg-fg/20" />
-            <Dialog.Popup className="fixed top-[12vh] left-1/2 z-50 w-[min(560px,calc(100vw-2rem))] -translate-x-1/2 rounded-[12px] border border-bd bg-bg shadow-none outline-none">
+            <Dialog.Popup
+              finalFocus={() => {
+                restoreFocusQuietly(searchTriggerRef.current);
+                return false;
+              }}
+              className="fixed top-[12vh] left-1/2 z-50 w-[min(560px,calc(100vw-2rem))] -translate-x-1/2 rounded-[12px] border border-bd bg-bg shadow-none"
+            >
               <Dialog.Title className="sr-only">{dict.search.title}</Dialog.Title>
               <Dialog.Description className="sr-only">{dict.search.placeholder}</Dialog.Description>
               <input
@@ -94,7 +112,7 @@ export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Di
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder={dict.search.placeholder}
-                className="h-12 w-full bg-transparent px-4 text-[15px] outline-none placeholder:text-faint"
+                className="h-12 w-full bg-transparent px-4 text-[15px] placeholder:text-faint"
                 onKeyDown={(event) => {
                   if (event.key === "Enter" && results[0]) {
                     setOpen(false);

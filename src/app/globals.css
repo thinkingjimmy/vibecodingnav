@@ -61,9 +61,16 @@
     background: var(--foreground);
     color: var(--background);
   }
+  :focus {
+    outline: none;
+  }
   :focus-visible {
-    outline: 2px solid var(--foreground);
+    outline: 1px solid color-mix(in oklab, var(--foreground) 55%, transparent);
     outline-offset: 2px;
+  }
+  [data-restore-focus]:focus,
+  [data-restore-focus]:focus-visible {
+    outline: none;
   }
 }
 
