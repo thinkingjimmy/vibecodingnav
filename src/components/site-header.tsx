@@ -14,6 +14,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { Dictionary, Locale } from "@/lib/contracts";
 import type { SearchEntry } from "@/lib/catalog";
 import { localePath, swapLocale } from "@/lib/locale";
+import { activeNav } from "@/lib/nav";
 
 const links = [
   ["scenarios", "/scenarios"],
@@ -22,16 +23,6 @@ const links = [
   ["builds", "/build"],
   ["benchmarks", "/benchmarks"],
 ] as const;
-
-function isActive(path: string, key: (typeof links)[number][0]) {
-  const bare = path.replace(/\/$/, "") || "/";
-  const rest = bare.replace(/^\/zh(?=\/|$)/, "") || "/";
-  if (key === "scenarios") return rest === "/" || rest.startsWith("/scenarios");
-  if (key === "models") return rest.startsWith("/models");
-  if (key === "tools") return ["/tools", "/libraries", "/skills", "/plugins", "/prompts", "/apps"].some((prefix) => rest.startsWith(prefix));
-  if (key === "builds") return rest.startsWith("/build");
-  return rest.startsWith("/benchmarks");
-}
 
 export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Dictionary; entries: SearchEntry[] }) {
   const path = usePathname() || "/";
@@ -65,10 +56,11 @@ export function SiteHeader({ locale, dict, entries }: { locale: Locale; dict: Di
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const current = activeNav(path);
   const nav = (
     <nav aria-label={dict.nav.primary} className="flex items-center gap-5 text-[14px] font-medium text-mfg">
       {links.map(([key, href]) => (
-        <Link key={key} href={localePath(locale, href)} className={isActive(path, key) ? "text-fg" : "hover:text-fg"} aria-current={isActive(path, key) ? "page" : undefined}>
+        <Link key={key} href={localePath(locale, href)} className={current === key ? "text-fg" : "hover:text-fg"} aria-current={current === key ? "page" : undefined}>
           {dict.nav[key]}
         </Link>
       ))}

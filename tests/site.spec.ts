@@ -390,6 +390,38 @@ test("long boards stay inside the phone width", async ({ page }) => {
   }
 });
 
+test("nav highlights only the current section", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  const cases: { path: string; label: string; current: string | null }[] = [
+    { path: "/", label: "Primary", current: null },
+    { path: "/zh/", label: "主导航", current: null },
+    { path: "/scenarios/", label: "Primary", current: "Scenarios" },
+    { path: "/scenarios/web-frontend/", label: "Primary", current: "Scenarios" },
+    { path: "/zh/scenarios/", label: "主导航", current: "场景" },
+    { path: "/zh/scenarios/android-app/", label: "主导航", current: "场景" },
+    { path: "/models/", label: "Primary", current: "Models" },
+    { path: "/zh/models/claude-opus-5-5/", label: "主导航", current: "模型" },
+    { path: "/tools/", label: "Primary", current: "Toolbox" },
+    { path: "/zh/libraries/phosphor-icons/", label: "主导航", current: "工具箱" },
+    { path: "/zh/skills/frontend-design/", label: "主导航", current: "工具箱" },
+    { path: "/build/", label: "Primary", current: "Builds" },
+    { path: "/zh/build/web-frontend/", label: "主导航", current: "组合" },
+    { path: "/benchmarks/", label: "Primary", current: "Benchmarks" },
+    { path: "/zh/benchmarks/android-bench/", label: "主导航", current: "基准" },
+  ];
+  for (const item of cases) {
+    await page.goto(item.path);
+    const nav = page.getByRole("navigation", { name: item.label }).first();
+    const current = nav.locator("[aria-current='page']");
+    if (item.current) {
+      await expect(current).toHaveCount(1);
+      await expect(current).toHaveText(item.current);
+    } else {
+      await expect(current).toHaveCount(0);
+    }
+  }
+});
+
 test("home does not scroll sideways on a phone", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/zh/");
