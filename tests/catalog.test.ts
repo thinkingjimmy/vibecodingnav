@@ -154,16 +154,16 @@ describe("picks", () => {
 
   it("fuses scenario boards by model and average rank", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.fusion.columns.map((column) => column.id)).toEqual(["lmarena-webdev", "nextjs-evals", "reactbench"]);
+    expect(web?.fusion.columns.map((column) => column.id)).toEqual(["lmarena-webdev", "lmarena-image-to-webdev", "nextjs-evals", "reactbench"]);
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
-    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, null]);
-    expect(opus).toMatchObject({ avg: 1, count: 2, total: 3 });
+    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null]);
+    expect(opus).toMatchObject({ avg: 1, count: 3, total: 4 });
     expect(opus?.cells[0]?.tip).toContain("1813");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 3, 1]);
-    expect(fable).toMatchObject({ avg: 3, count: 3 });
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 3, 1]);
+    expect(fable).toMatchObject({ avg: 3.25, count: 4 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows.findIndex((row) => row.slug === "claude-fable-5-1")).toBeGreaterThan(0);
 
@@ -179,15 +179,28 @@ describe("picks", () => {
 
     expect(getBenchmark("zh", "supabase-evals")?.scenarios).toEqual([]);
     expect(getBenchmark("zh", "convex-evals")?.scenarios).toEqual([]);
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard).toHaveLength(64);
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1749", ci: "+30/-30" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[63]).toMatchObject({ name: "gemini-2.5-pro", rank: 64, score: "1285" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.chart?.points).toHaveLength(64);
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.chart?.points.filter((point) => point.pareto).map((point) => [point.name, point.priceLabel])).toEqual([
+      ["claude-opus-5.5-max", "16"],
+      ["claude-sonnet-5.5-xhigh", "8"],
+      ["muse-spark-1.3-max", "3.50"],
+      ["deepseek-v4.1-flash-max", "0.97"],
+      ["mimo-v2.6-flash", "0.25"],
+      ["glm-5.3-flash", "0.17"],
+    ]);
     expect(getBenchmark("zh", "nextjs-evals")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
     expect(getBenchmark("zh", "reactbench")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
     expect(getBenchmark("zh", "android-bench-1")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/android-app/"]);
     expect(getBenchmark("zh", "android-bench-2-long")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/android-app/"]);
 
     const home = getHome("zh").cards;
-    expect(home[0]?.sources?.map((source) => source.name)).toEqual(["LMArena WebDev", "Next.js Agent Evals", "ReactBench"]);
+    expect(home[0]?.sources?.map((source) => source.name)).toEqual(["LMArena WebDev", "LMArena Image-to-WebDev", "Next.js Agent Evals", "ReactBench"]);
     expect(home[0]?.rows).toHaveLength(5);
-    expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", boards: "#1 · #1 · —" });
+    expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", boards: "#1 · #1 · #1 · —" });
     expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench 1.0", "Android Bench 2.0 长程"]);
     expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5", rankLabel: "1", boards: "#1 · —" });
     expect(home[2]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "64.8", unit: "%" });

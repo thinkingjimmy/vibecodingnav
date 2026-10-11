@@ -8,6 +8,7 @@ site-header.tsx: 置顶导航、语言切换、主题与搜索对话框
 site-footer.tsx: 方法论、数据来源、更新日志与建议链接
 frame.tsx: 页头、版心与页脚
 leaderboard.tsx: 基准页的完整来源榜，列宽固定，筛选和表头滚动时吸在导航下
+price-chart.tsx: Image-to-WebDev 的分数对混合价格散点
 fused-table.tsx: 场景页的融合表，一列一张榜，格子是名次
 category-list.tsx: 工具箱类型筛选
 copy-block.tsx: 复制安装命令与下载 AGENTS.md

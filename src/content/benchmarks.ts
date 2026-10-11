@@ -47,6 +47,42 @@ export const benchmarks: Benchmark[] = [
     ],
   },
   {
+    slug: "lmarena-image-to-webdev",
+    name: "LMArena Image-to-WebDev",
+    shortName: "Image-to-WebDev",
+    scoreUnit: "",
+    asOf: "2026-10-09",
+    votes: "177,108",
+    trackedCount: 64,
+    table: "webdev",
+    sourceFilter: "license",
+    domain: tx("前端", "Frontend"),
+    measures: tx(
+      "看一张图或截图，生成对应的网页。来源页同时把需要多步推理和工具调用的 Agent 编程流程算进这张榜。",
+      "Generate a web page from an image or screenshot. The source page also includes agentic coding flows that need several steps and tool use.",
+    ),
+    method: tx(
+      "两个匿名模型各自根据同一张图生成网页，用户看过之后投票选胜方或平局。只计揭晓身份之前的票。",
+      "Two anonymous models each build a page from the same image. A person votes after looking. Only votes cast before the identities are revealed count.",
+    ),
+    scoreMeaning: tx(
+      "分数是两两投票估计的相对强度，读法类似 Elo。分数旁的 +30/-30 是页面展示的区间，上下界来自同一套 rating。",
+      "The score is a pairwise strength estimate, read like Elo. The +30/-30 beside a score is the interval printed on the page, from that row’s rating bounds.",
+    ),
+    caveats: tx(
+      "衡量的是人对生成页面的偏好，不是测试通过率。同一模型的不同推理档位和 harness 分开排名。标“初步”的行票数较少，名次可能变动。这张榜不是文字需求的 WebDev。",
+      "It measures whether a person prefers the generated page, not whether tests pass. Effort tiers and harnesses of the same model are ranked separately. Preliminary rows have fewer votes and can move. This is not the text-prompt WebDev board.",
+    ),
+    updateCadence: tx(
+      "持续更新。本页榜单日期 2026-10-09，2026-10-11 同步；每周同步一次，变化写入首页「最新变化」。",
+      "Updated continuously. This page's board date is 2026-10-09, synced 2026-10-11. We sync weekly and write changes on the home page.",
+    ),
+    links: [
+      { label: "arena.ai/leaderboard/code/image-to-webdev", href: "https://arena.ai/leaderboard/code/image-to-webdev" },
+      { label: "arena.ai/.../image-to-webdev/pareto", href: "https://arena.ai/leaderboard/code/image-to-webdev/pareto" },
+    ],
+  },
+  {
     slug: "android-bench-1",
     name: "Android Bench 1.0",
     shortName: "Android Bench",

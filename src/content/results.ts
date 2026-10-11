@@ -9,6 +9,7 @@ import android1 from "./boards/android-1.json";
 import androidLong from "./boards/android-long.json";
 import sudoRows from "./boards/sudo.json";
 import terminalRows from "./boards/terminal.json";
+import imageToWebdevRows from "./boards/image-to-webdev.json";
 import webdevRows from "./boards/webdev.json";
 
 interface BoardJson {
@@ -159,6 +160,7 @@ function reactBench(): Result[] {
 
 export const results: Result[] = [
   ...board("lmarena-webdev", "2026-10-08", webdevRows as BoardJson[]),
+  ...board("lmarena-image-to-webdev", "2026-10-09", imageToWebdevRows as BoardJson[]),
   ...board("terminal-bench-4", "2026-10-06", terminalRows as BoardJson[]),
   ...board("sudo-l7", "2026-10-09", sudoRows as BoardJson[]),
   ...board("android-bench-1", "2026-10-06", android1 as BoardJson[]),

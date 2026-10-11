@@ -12,6 +12,15 @@ export const changes: ChangeEntry[] = [
   {
     date: "10-09",
     kind: "board",
+    source: "arena.ai",
+    text: tx(
+      "**LMArena Image-to-WebDev**：64 个模型，Claude Opus 5.5（max）`1749`。图生网页，不是文字需求的 WebDev。",
+      "**LMArena Image-to-WebDev**: 64 models. Claude Opus 5.5 (max) scores `1749`. This is image-to-page, not the text-prompt WebDev board.",
+    ),
+  },
+  {
+    date: "10-09",
+    kind: "board",
     source: "surgehq.ai",
     text: tx(
       "**sudo L7**：Claude Opus 5.5 与 Claude Sonnet 5.5 均为 `45%`，页面先列 Opus。GPT 6 Astra `32.2%`。",

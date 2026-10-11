@@ -4,6 +4,7 @@
 
 成员清单
 webdev.json: LMArena WebDev 142 行，2026-10-10 从 arena.ai/leaderboard/code/webdev 解析
+image-to-webdev.json: LMArena Image-to-WebDev 64 行，2026-10-11 从 arena.ai/leaderboard/code/image-to-webdev 解析，榜单日期 2026-10-09。pareto 与 paretoPrice 只属于帕累托页列出的 6 个最优点，blend 是 (输入 + 3×输出) / 4
 android-1.json: Android Bench 1.0 的 32 行
 android-long.json: Android Bench 2.0 长程的 10 行
 terminal.json: Terminal-Bench 4.0 的 35 行 display

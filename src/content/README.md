@@ -7,6 +7,7 @@ i18n/: 中文与英文 UI 字典
 models.ts: 模型身份、许可与编辑说明
 benchmarks.ts: 基准方法论、来源与更新日期
 results.ts: 各基准的名次与分数
+image-to-webdev-chart.ts: 图生网页帕累托页的分数与混合价格
 boards/: 公开榜的逐行副本，以及融合表的模型对齐说明
 scenarios.ts: 场景榜单配置
 categories.ts: 工具箱分类

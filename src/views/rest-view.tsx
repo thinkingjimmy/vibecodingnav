@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { EvalTable } from "@/components/eval-table";
 import { Frame } from "@/components/frame";
 import { Leaderboard } from "@/components/leaderboard";
+import { PriceChart } from "@/components/price-chart";
 import { RichText } from "@/components/rich-text";
 import { getBenchmark, getChanges, listBenchmarks, slugs } from "@/lib/catalog";
 import type { Locale } from "@/lib/contracts";
@@ -101,6 +102,11 @@ export async function BenchmarkView({ locale, params }: { locale: Locale; params
             <p className="num mt-2 text-[12px] text-faint">{benchmark.leaderboard.length}</p>
           </header>
           <Leaderboard rows={benchmark.leaderboard} dict={dict} table={benchmark.table!} filter={benchmark.filter} />
+        </section>
+      ) : null}
+      {benchmark.chart ? (
+        <section className="pt-16">
+          <PriceChart title={benchmark.chart.title} note={benchmark.chart.note} href={benchmark.chart.href} hrefLabel={benchmark.chart.hrefLabel} points={benchmark.chart.points} />
         </section>
       ) : null}
       {benchmark.board ? (

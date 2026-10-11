@@ -38,7 +38,7 @@ pnpm check
 
 ## 有意留在内容里的边界
 
-- 一个基准最多属于一个场景。场景页是融合表：格子是名次，缺席为「—」。完整原榜在基准页。Web 前端含 WebDev、Next.js Agent Evals、ReactBench；Android 含 1.0 与 2.0 长程；命令行只有 Terminal-Bench 4.0；生产级改动只有 sudo L7。Supabase 与 Convex 不进场景。
+- 一个基准最多属于一个场景。场景页是融合表：格子是名次，缺席为「—」。完整原榜在基准页。Web 前端含 WebDev、Image-to-WebDev、Next.js Agent Evals、ReactBench；Android 含 1.0 与 2.0 长程；命令行只有 Terminal-Bench 4.0；生产级改动只有 sudo L7。Supabase 与 Convex 不进场景。Image-to-WebDev 为 64 行，日期 2026-10-09。
 - 融合按 `modelSlug` 对齐，每列取最好名次。没有 slug 的行不跨榜猜测。默认排序是出现过的榜的平均名次，再比出现榜数和主榜名次。
 - 公开榜按来源页全行收录：WebDev 142 行，Android 1.0 的 32 行，2.0 长程 10 行，Terminal-Bench 35 行，sudo L7 12 行。开源权重是基准页上的筛选，不重排名次。超过 20 行可展开全部。滚动时筛选和表头吸在导航下。
 - 「用开源模型做前端」和「大型重构与迁移」已移除。静态页分别转到 WebDev 基准页和 Android 长程基准页。`output: export` 不支持配置里的 redirect。

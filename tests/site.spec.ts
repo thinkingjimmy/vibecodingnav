@@ -12,7 +12,7 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("按场景，选对模型与框架");
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
   await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
-  await expect(page.getByText("#1 · #1 · —").first()).toBeVisible();
+  await expect(page.getByText("#1 · #1 · #1 · —").first()).toBeVisible();
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
   const bench = page.getByRole("link", { name: "Android Bench 1.0", exact: true });
@@ -76,6 +76,25 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await expect(page.getByText("granite-4.1-8b")).toBeVisible();
 });
 
+test("image-to-webdev shows the full board and the price chart", async ({ page }) => {
+  await page.goto("/zh/benchmarks/lmarena-image-to-webdev/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("LMArena Image-to-WebDev");
+  await expect(page.getByText("看一张图或截图，生成对应的网页")).toBeVisible();
+  await expect(page.getByText("这张榜不是文字需求的 WebDev")).toBeVisible();
+  await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
+  await expect(page.getByText("1749").first()).toBeVisible();
+  await expect(page.getByText("+30/-30").first()).toBeVisible();
+  await expect(page.getByText("gemini-2.5-pro")).toHaveCount(0);
+  await page.getByRole("button", { name: /显示全部/ }).click();
+  const last = page.getByRole("row").filter({ hasText: "gemini-2.5-pro" });
+  await expect(last.getByText("64", { exact: true })).toBeVisible();
+  await expect(last.getByText("1285")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "分数与价格" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "arena.ai/leaderboard/code/image-to-webdev/pareto" })).toHaveAttribute("href", "https://arena.ai/leaderboard/code/image-to-webdev/pareto");
+  await expect(page.getByText("1749 · $16/M")).toBeVisible();
+  await expect(page.getByText("1581 · $0.17/M")).toBeVisible();
+});
+
 test("source board filter and header stay under the nav while scrolling", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/zh/benchmarks/lmarena-webdev/");
@@ -115,11 +134,12 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(page.getByText("默认按平均名次排")).toBeVisible();
   const webdev = page.getByRole("columnheader", { name: /WebDev/ }).getByRole("link");
   await expect(webdev).toHaveAttribute("href", "/zh/benchmarks/lmarena-webdev/");
+  await expect(page.getByRole("columnheader", { name: /图生网页/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
   await expect(page.getByRole("columnheader", { name: /Next.js/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/nextjs-evals/");
   await expect(page.getByRole("columnheader", { name: /ReactBench/ }).getByRole("link")).toHaveAttribute("href", "/zh/benchmarks/reactbench/");
   const opus = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
   await expect(opus).toContainText("—");
-  await expect(opus).toContainText("2/3");
+  await expect(opus).toContainText("3/4");
   const firstName = () => page.locator("tbody tr").first().locator("td").first().innerText();
   const before = await firstName();
   await page.getByRole("button", { name: "按模型排序" }).click();

@@ -5,6 +5,7 @@
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 import { content } from "@/content";
+import { imageToWebdevChart } from "@/content/image-to-webdev-chart";
 import { isPermissiveLicense } from "@/content/validate";
 import {
   ITEM_SEGMENT,
@@ -789,6 +790,7 @@ export function getBenchmark(locale: Locale, slug: string) {
     table: benchmark.table,
     filter: (benchmark.sourceFilter ?? "none") as SourceFilter | "none",
     leaderboard: benchmark.table ? toBoardRows(locale, slug) : undefined,
+    chart: slug === "lmarena-image-to-webdev" ? imageToWebdevChart(locale) : undefined,
     board: benchmark.kind ? frameworkEval(locale, slug, "board") : undefined,
     scenarios: scenarios.filter((scenario) => scenario.benchmark === slug || scenario.boards?.some((board) => board.benchmark === slug)).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),
   };

@@ -17,12 +17,13 @@ export const scenarios: Scenario[] = [
     slug: "web-frontend",
     title: tx("做 Web 前端", "Build a Web frontend"),
     summary: tx(
-      "落地页、交互组件、React / Next.js 页面。这一页把 LMArena WebDev、Next.js Agent Evals 和生态评测 ReactBench 按模型对齐，格子里是名次。完整原榜在各基准页。",
-      "Landing pages, interactive components, and React / Next.js screens. This page lines up LMArena WebDev, Next.js Agent Evals, and the ReactBench ecosystem eval by model. Cells are ranks. The full source boards live on the benchmark pages.",
+      "落地页、交互组件、React / Next.js 页面。这一页把 LMArena WebDev、Image-to-WebDev、Next.js Agent Evals 和生态评测 ReactBench 按模型对齐，格子里是名次。完整原榜在各基准页。",
+      "Landing pages, interactive components, and React / Next.js screens. This page lines up LMArena WebDev, Image-to-WebDev, Next.js Agent Evals, and the ReactBench ecosystem eval by model. Cells are ranks. The full source boards live on the benchmark pages.",
     ),
     benchmark: "lmarena-webdev",
     boards: [
       { id: "webdev", benchmark: "lmarena-webdev", label: tx("WebDev", "WebDev") },
+      { id: "image", benchmark: "lmarena-image-to-webdev", label: tx("图生网页", "From image") },
       { id: "nextjs", benchmark: "nextjs-evals", label: tx("Next.js", "Next.js") },
       { id: "reactbench", benchmark: "reactbench", label: tx("ReactBench", "ReactBench") },
     ],
