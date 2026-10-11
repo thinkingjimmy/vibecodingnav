@@ -392,13 +392,21 @@ function scenarioBoardSpecs(scenario: Scenario) {
   return [];
 }
 
+/** 融合列、评分权重表与小多图共用：按权重降序；同权保持 boards 声明顺序。 */
+function boardsByWeight(specs: ReturnType<typeof scenarioBoardSpecs>) {
+  return specs
+    .map((spec, index) => ({ spec, index }))
+    .sort((a, b) => (b.spec.weight ?? 1) - (a.spec.weight ?? 1) || a.index - b.index)
+    .map(({ spec }) => spec);
+}
+
 function modelIdentity(result: Result) {
   return result.modelSlug ? `model:${result.modelSlug}` : `label:${result.label ?? ""}`;
 }
 
 /** 融合表的对齐规则写在 src/content/boards/README.md。综合分算法在 composite.ts。 */
 export function fuseScenario(locale: Locale, scenario: Scenario) {
-  const specs = scenarioBoardSpecs(scenario);
+  const specs = boardsByWeight(scenarioBoardSpecs(scenario));
   const columns = specs.map((spec) => {
     const benchmark = benchmarkBy.get(spec.benchmark)!;
     const weight = spec.weight ?? 1;

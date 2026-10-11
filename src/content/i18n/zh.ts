@@ -42,7 +42,6 @@ const zh = {
     comboFullLink: "完整搭配与理由 →",
     comboModelPurpose: "写代码的主力",
     sortByComposite: "按综合分排序",
-    cellRanksNote: "格子里是各榜原始名次",
     howScored: "怎么算的？",
     takeawayPrefix: "目前",
     takeawayAllFirst: "在参加的 {count} 项里都是第一。",

@@ -162,7 +162,7 @@ describe("composite method C", () => {
       "claude-fable-5-1",
       "gpt-6-1-sol",
     ]);
-    expect(web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1]);
+    expect(web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, 1, null]);
 
     const home = getHome("zh").cards;
     expect(home[0]?.rows.map((row) => [row.name, row.score])).toEqual([
@@ -172,7 +172,8 @@ describe("composite method C", () => {
       ["Claude Fable 5.1", "84"],
       ["GPT-6.1 Sol", "80"],
     ]);
-    expect(home[0]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "#1 · 100", "—", "#1 · 100"]);
+    expect(home[0]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "#1 · 100", "#1 · 100", "—"]);
+
     expect(home[0]?.rows.every((row) => !("boards" in row && row.boards))).toBe(true);
     expect(home[1]?.rows.map((row) => [row.name, row.score])).toEqual([
       ["Claude Opus 5.5", "100"],

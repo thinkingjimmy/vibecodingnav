@@ -183,9 +183,23 @@ describe("picks", () => {
     expect(web?.comboSection?.items[0]).toMatchObject({ highlight: true, purpose: "写代码的主力" });
     expect(getScenario("zh", "cli-devops")?.takeaway?.sentence).toMatch(/排第一/);
     expect(getScenario("en", "web-frontend")?.takeaway?.sentence).toMatch(/first on/i);
-    expect(web?.fusion.columns.map((column) => column.id)).toEqual(["lmarena-webdev", "lmarena-image-to-webdev", "nextjs-evals", "reactbench", "sudo-l7"]);
-    expect(web?.fusion.columns.map((column) => column.label)).toEqual(["盲测投票", "还原设计", "Next.js 任务", "React 任务", "工程判断"]);
-    expect(web?.fusion.columns.map((column) => column.icon)).toEqual(["users-three", "image", "file-code", "atom", "scales"]);
+    expect(web?.fusion.columns.map((column) => [column.id, column.weight])).toEqual([
+      ["lmarena-webdev", 1],
+      ["lmarena-image-to-webdev", 0.6],
+      ["sudo-l7", 0.6],
+      ["nextjs-evals", 0.4],
+      ["reactbench", 0.4],
+    ]);
+    expect(web?.fusion.columns.map((column) => column.label)).toEqual(["盲测投票", "还原设计", "工程判断", "Next.js 任务", "React 任务"]);
+    expect(web?.fusion.columns.map((column) => column.icon)).toEqual(["users-three", "image", "scales", "file-code", "atom"]);
+    expect(web?.scoring.weights.map((row) => row.name)).toEqual([
+      "LMArena WebDev",
+      "LMArena Image-to-WebDev",
+      "sudo L7",
+      "Next.js Agent Evals",
+      "ReactBench",
+    ]);
+    expect(web?.scoring.chart?.dimensions).toEqual(["盲测投票", "还原设计", "工程判断", "Next.js 任务", "React 任务"]);
     expect(web?.scoring.chart?.caption).toContain("ReactBench");
     expect(web?.scoring.chart?.caption).toContain("第 4");
     expect(web?.scoring.worked).toMatchObject({
@@ -193,24 +207,31 @@ describe("picks", () => {
       name: "Claude Fable 5.1",
       composite: 84,
     });
+    expect(web?.scoring.worked?.rows.map((row) => row.board)).toEqual([
+      "盲测投票",
+      "还原设计",
+      "工程判断",
+      "Next.js 任务",
+      "React 任务",
+    ]);
     expect(web?.scoring.worked?.rows).toHaveLength(5);
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
-    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1]);
+    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, 1, null]);
     expect(opus).toMatchObject({ compositeLabel: "98", count: 4, total: 5 });
     expect(opus?.cells[0]?.tip).toContain("1813");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 3, 1, 5]);
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 5, 3, 1]);
     expect(fable).toMatchObject({ compositeLabel: "84", count: 5 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
     expect(web?.fusion.rows[2]?.slug).toBe("gpt-6-astra");
 
     const android = getScenario("zh", "android-app");
-    expect(android?.fusion.columns.map((column) => [column.id, column.label])).toEqual([
-      ["android-bench", "长程任务"],
-      ["sudo-l7", "工程判断"],
+    expect(android?.fusion.columns.map((column) => [column.id, column.label, column.weight])).toEqual([
+      ["android-bench", "长程任务", 1],
+      ["sudo-l7", "工程判断", 0.6],
     ]);
     expect(android?.fusion.columns.map((column) => column.icon)).toEqual(["device-mobile", "scales"]);
     expect(android?.scoring.chart).toBeUndefined();
@@ -253,7 +274,7 @@ describe("picks", () => {
     expect(getBenchmark("zh", "android-bench-2-long")).toBeUndefined();
 
     const home = getHome("zh").cards;
-    expect(home[0]?.sources?.map((source) => source.name)).toEqual(["LMArena WebDev", "LMArena Image-to-WebDev", "Next.js Agent Evals", "ReactBench", "sudo L7"]);
+    expect(home[0]?.sources?.map((source) => source.name)).toEqual(["LMArena WebDev", "LMArena Image-to-WebDev", "sudo L7", "Next.js Agent Evals", "ReactBench"]);
     expect(home[0]?.rows).toHaveLength(5);
     expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "98" });
     expect(home[0]?.rows[0]?.detail?.title).toContain("综合 98");

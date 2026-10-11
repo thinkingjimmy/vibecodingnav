@@ -192,22 +192,26 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(page.getByText(/目前.*Claude Opus 5\.5/)).toBeVisible();
   await expect(page.getByRole("button", { name: "怎么算的？" })).toBeVisible();
   await expect(page.getByText("按综合分排序")).toBeVisible();
-  await expect(page.getByText(/格子里是各榜原始名次/)).toBeVisible();
+  await expect(page.getByText(/格子里是各榜原始名次/)).toHaveCount(0);
+  await expect(page.getByText(/本页同步/)).toBeVisible();
   await expect(page.getByRole("heading", { name: "推荐组合" })).toBeVisible();
   await expect(page.getByRole("link", { name: /完整搭配与理由/ })).toBeVisible();
   await expect(page.getByRole("button", { name: /综合分/ })).toBeVisible();
-  await expect(page.getByRole("columnheader", { name: /盲测投票/ })).toBeVisible();
-  await expect(page.getByRole("columnheader", { name: /还原设计/ })).toBeVisible();
-  await expect(page.getByRole("columnheader", { name: /Next\.js 任务/ })).toBeVisible();
-  await expect(page.getByRole("columnheader", { name: /React 任务/ })).toBeVisible();
-  await expect(page.getByRole("columnheader", { name: /工程判断/ })).toBeVisible();
+  await expect(page.locator("[data-fused-head] th").nth(3)).toContainText("盲测投票");
+  await expect(page.locator("[data-fused-head] th").nth(4)).toContainText("还原设计");
+  await expect(page.locator("[data-fused-head] th").nth(5)).toContainText("工程判断");
+  await expect(page.locator("[data-fused-head] th").nth(6)).toContainText("Next.js 任务");
+  await expect(page.locator("[data-fused-head] th").nth(7)).toContainText("React 任务");
   await page.getByRole("button", { name: "按盲测投票排序" }).hover();
   const webdev = page.getByRole("link", { name: "LMArena WebDev" }).first();
   await expect(webdev).toBeVisible();
   await expect(webdev).toHaveAttribute("href", "/zh/benchmarks/lmarena-webdev/");
   await page.getByRole("button", { name: "按还原设计排序" }).hover();
   await expect(page.getByRole("link", { name: "LMArena Image-to-WebDev" }).first()).toHaveAttribute("href", "/zh/benchmarks/lmarena-image-to-webdev/");
+  await page.getByRole("button", { name: "按工程判断排序" }).hover();
+  await expect(page.getByRole("link", { name: "sudo L7" }).first()).toHaveAttribute("href", "/zh/benchmarks/sudo-l7/");
 });
+
 
 test("fused table column info popover title link opens the benchmark page", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });

@@ -42,7 +42,6 @@ const en = {
     comboFullLink: "Full set and reasons →",
     comboModelPurpose: "The main model for coding",
     sortByComposite: "Sorted by composite",
-    cellRanksNote: "Cells show each board’s raw rank",
     howScored: "How is it scored?",
     takeawayPrefix: "Right now",
     takeawayAllFirst: "is first on all {count} boards it enters.",

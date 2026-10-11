@@ -354,7 +354,6 @@ export interface Dictionary {
     comboFullLink: string;
     comboModelPurpose: string;
     sortByComposite: string;
-    cellRanksNote: string;
     howScored: string;
     takeawayPrefix: string;
     takeawayAllFirst: string;

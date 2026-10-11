@@ -71,8 +71,6 @@ export async function ScenarioView({ locale, params }: { locale: Locale; params:
           <div className="flex h-11 items-center justify-between gap-4 px-4 text-[13px] text-mfg">
             <span className="text-fg">{dict.scenario.sortByComposite}</span>
             <span className="num shrink-0 text-faint">
-              {dict.scenario.cellRanksNote}
-              <span className="mx-2 text-faint/50">·</span>
               {dict.scenario.synced.replace("{date}", scenario.syncDate)}
             </span>
           </div>
