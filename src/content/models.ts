@@ -363,9 +363,15 @@ export const models: Model[] = [
     vendorName: "OpenAI",
     license: "proprietary",
     licenseLabel: prop,
-    headlines: ["android-bench"],
-    summary: tx("Android Bench 1.0 第五，87.6%，跑分成本 $7.2。标准任务的省钱档。", "Fifth on Android Bench 1.0 at 87.6%, run cost $7.2. The value tier for standard tasks."),
-    why: [tx("只比第一低约 4 个点，成本约为二十四分之一。", "About four points behind first, at roughly a twenty-fourth of the cost.")],
+    headlines: ["slop-index", "android-bench"],
+    summary: tx(
+      "The Slop Index 反转后第 1（100 − Slop = 74）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
+      "First on The Slop Index after inversion (100 − Slop = 74). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
+    ),
+    why: [
+      tx("写文档和文案场景里最少 AI slop。", "Least AI slop on the docs-and-copy scenario."),
+      tx("Android 标准任务只比第一低约 4 个点，成本约为二十四分之一。", "On Android standard tasks, about four points behind first at roughly a twenty-fourth of the cost."),
+    ],
     whyNot: [tx("同系列在长程榜只有 10.7% 的是 GPT 6 Luna。复杂多模块工作不要用便宜档单挑。", "The cheap long-horizon row in this family is GPT 6 Luna at 10.7%. Do not give multi-module work to the cheap tier alone.")],
   }),
   model({

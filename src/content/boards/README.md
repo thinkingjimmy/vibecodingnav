@@ -9,8 +9,9 @@ android-1.json: Android Bench 历史版本 1.0 的 32 行，基准 slug 是 andr
 android-long.json: Android Bench 当前版本 2.0 长程的 10 行，同一基准 slug
 terminal.json: Terminal-Bench 4.0 的 35 行 display
 sudo.json: sudo L7 的 12 行，按页面顺序
+slop-index.json: The Slop Index 39 行，2026-10-11 从 theslopindex.com/leaderboard 抓取；来源是 slop 越高越差、#1 最渣，本站反转为最少 slop 为 #1，score 存 100 − Slop Score
 
-这些文件是来源页的逐行副本。`results.ts` 只做模型页映射，不删行、不重排。框架评测的行写在 `results.ts`，不进这些 JSON。
+这些文件是来源页的逐行副本。`results.ts` 只做模型页映射，不删行、不重排。框架评测的行写在 `results.ts`，不进这些 JSON。Slop Index 是唯一在入库前反转名次与分数方向的榜，说明写在基准与场景文案里。
 
 Android 的两份 JSON 是同一个基准的两个版本，不是两个场景列。场景、首页和 90 天判断只用 `current`。ReactBench、Terminal-Bench、Convex 仍是单条 `version` 字符串，没有第二份可核对的原榜，所以不拆成 `versions`。
 

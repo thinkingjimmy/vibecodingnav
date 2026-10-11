@@ -197,6 +197,7 @@ export const SCENARIO_BOARD_ICONS = [
   "scales",
   "device-mobile",
   "terminal-window",
+  "article",
 ] as const;
 export type ScenarioBoardIcon = (typeof SCENARIO_BOARD_ICONS)[number];
 

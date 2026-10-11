@@ -188,6 +188,42 @@ export const benchmarks: Benchmark[] = [
     links: [{ label: "tbench.ai", href: "https://tbench.ai" }],
   },
   {
+    slug: "slop-index",
+    name: "The Slop Index",
+    shortName: "Slop Index",
+    scoreUnit: "",
+    compositeKind: "rate",
+    asOf: "2026-10-11",
+    votes: "1,795",
+    trackedCount: 39,
+    table: "score",
+    domain: tx("文档与文案", "Docs and copy"),
+    measures: tx(
+      "模型写邮件、博客/随笔、推文和 Discord 聊天时，有多像聊天机器人（AI slop）。分数越高越不像机器人。",
+      "How chatbot-like a model's writing is across email, blog/essays, tweets, and Discord chat. Higher scores mean less chatbot-like writing.",
+    ),
+    method: tx(
+      "Slashy 的 The Slop Index。对 39 个前沿模型在 4 个领域、112 个场景上各采多样本，对照 2022 年前真人写作基线。综合分为现场盲测竞技场（40%）加上简洁、模板化、节奏、AI 套话四条机械轴（各 15%）。来源榜 Slop Score 0–100，越高越渣，#1 最渣；本站已反转为最少 slop 为 #1，分数用 100 − Slop Score。开放数据在 GitHub。",
+      "Slashy's The Slop Index. Thirty-nine frontier models, 112 scenarios in four domains, compared with pre-2022 human writing. The blend is a live blind arena (40%) plus conciseness, templating, rhythm, and AI tells (15% each). The source Slop Score is 0–100, higher = worse, #1 = sloppiest; this site inverts so least slop is #1 and stores 100 − Slop Score. Open data is on GitHub.",
+    ),
+    scoreMeaning: tx(
+      "本站分数 = 100 − 来源 Slop Score，越高越像真人。来源榜把最高 slop 排第 1；这里已反转，最少 slop 为第 1。综合分按通过率比值相对榜首归一化；单榜场景下综合分等于该归一化分。",
+      "This site's score is 100 − the source Slop Score; higher is more human-like. The source ranks the highest slop as #1; ranks here are inverted so least slop is #1. Composite uses the pass-rate ratio to the leader; with one board, composite equals that normalized score.",
+    ),
+    caveats: tx(
+      "竞技场票数仍在累计，现场 Elo 会变。机械轴相对本榜内模型归一化。这张榜不衡量代码或界面质量。",
+      "Arena votes are still accumulating, so the live Elo moves. Mechanical axes are normalized within this board. It does not measure code or UI quality.",
+    ),
+    updateCadence: tx(
+      "来源 https://theslopindex.com/leaderboard ，开放数据 https://github.com/hgaddipati1118/slop-index 。本页于 2026-10-11 抓取全部 39 行（当时 1,795 票）。",
+      "Source https://theslopindex.com/leaderboard ; open data https://github.com/hgaddipati1118/slop-index . This page fetched all 39 rows on 2026-10-11 (1,795 votes then).",
+    ),
+    links: [
+      { label: "theslopindex.com/leaderboard", href: "https://theslopindex.com/leaderboard" },
+      { label: "github.com/hgaddipati1118/slop-index", href: "https://github.com/hgaddipati1118/slop-index" },
+    ],
+  },
+  {
     slug: "sudo-l7",
     name: "sudo L7",
     shortName: "sudo L7",

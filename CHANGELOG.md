@@ -13,6 +13,7 @@
 
 ### 新增
 
+- 新增场景「写文档和文案」（Write docs & copy），挂 The Slop Index 一张榜。2026-10-11 从 https://theslopindex.com/leaderboard 抓取 39 行（当时 1,795 票）；开放数据 https://github.com/hgaddipati1118/slop-index 。来源 Slop Score 越高越差、#1 最渣；本站反转为最少 slop 为 #1，分数存 100 − Slop Score。维度标签「像真人」，图标 Phosphor Article。未另建推荐组合（工具箱无可对应文案栈）。首页 featured 场景增至 4 张。
 - Web 前端增加 LMArena Image-to-WebDev。完整榜 64 行，榜单日期 2026-10-09，177,108 票。基准页在原榜之后画出分数对混合价格，实心点是帕累托页列出的 6 个模型。
 - 场景综合分（方法 C）：每张榜相对榜首归一化（竞技场按对榜首胜率，通过率按比值，榜首 100），按场景权重加权；缺榜按中位水平半权计入，初步行半权。只用于融合表默认排序和首页卡片；融合表格子仍是各榜原始名次。
 - 基准增加 `scope`：`specific`（默认）最多属于一个场景；`general` 可跨场景复用。目前仅 sudo L7 为 `general`。

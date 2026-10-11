@@ -11,7 +11,8 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("按场景，选对模型与框架");
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
-  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(3);
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
+  await expect(page.getByRole("link", { name: /写文档和文案/ })).toBeVisible();
   await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("98").first()).toBeVisible();
   await expect(page.getByText("#1 · #1 · #1 · —")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
@@ -71,7 +72,8 @@ test("view more opens every scenario as a board card", async ({ page }) => {
   await section.locator("header").getByRole("link", { name: /查看更多/ }).click();
   await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
   const cards = page.locator("article");
-  await expect(cards).toHaveCount(3);
+  await expect(cards).toHaveCount(4);
+  await expect(page.getByRole("link", { name: /写文档和文案/ })).toBeVisible();
   await expect(page.getByRole("link", { name: "做全栈 SaaS" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "做 iOS App" })).toHaveCount(0);
   await expect(page.getByText("LMArena WebDev")).toHaveCount(0);
@@ -375,7 +377,8 @@ test("android scenario uses only the current version", async ({ page }) => {
 test("removed ios and saas scenarios leave the board list", async ({ page }) => {
   await page.goto("/zh/scenarios/ios-app/");
   await expect(page).toHaveURL(/\/zh\/scenarios\/$/);
-  await expect(page.locator("article")).toHaveCount(3);
+  await expect(page.locator("article")).toHaveCount(4);
+  await expect(page.getByRole("link", { name: /写文档和文案/ })).toBeVisible();
   await page.goto("/zh/scenarios/saas/");
   await expect(page).toHaveURL(/\/zh\/build\/saas\/$/);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("全栈");
@@ -512,7 +515,7 @@ test("scenario, model, build, and benchmark pages match the home width", async (
 
 test("long boards stay inside the phone width", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const path of ["/zh/scenarios/web-frontend/", "/zh/scenarios/android-app/", "/zh/scenarios/cli-devops/"]) {
+  for (const path of ["/zh/scenarios/web-frontend/", "/zh/scenarios/android-app/", "/zh/scenarios/cli-devops/", "/zh/scenarios/write-docs/"]) {
     await page.goto(path);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(1);

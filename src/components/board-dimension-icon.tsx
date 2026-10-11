@@ -4,7 +4,7 @@
  * [POS]: src/components 的场景列头图标映射
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
-import { Atom, DeviceMobile, FileCode, Image, Scales, TerminalWindow, UsersThree } from "@phosphor-icons/react";
+import { Article, Atom, DeviceMobile, FileCode, Image, Scales, TerminalWindow, UsersThree } from "@phosphor-icons/react";
 import type { ScenarioBoardIcon } from "@/lib/contracts";
 
 const ICONS = {
@@ -15,6 +15,7 @@ const ICONS = {
   scales: Scales,
   "device-mobile": DeviceMobile,
   "terminal-window": TerminalWindow,
+  article: Article,
 } as const satisfies Record<ScenarioBoardIcon, typeof Scales>;
 
 export function BoardDimensionIcon({ name, size = 20 }: { name: ScenarioBoardIcon; size?: number }) {

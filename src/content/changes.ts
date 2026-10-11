@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-11",
+    kind: "board",
+    source: "theslopindex.com",
+    text: tx(
+      "**写文档和文案**：新增场景，挂 The Slop Index 39 行。来源最渣为 #1；本站反转后 GPT-5.6 Luna 居首（100 − Slop = `74`）。",
+      "**Write docs & copy**: new scenario on The Slop Index, 39 rows. Source ranks sloppiest first; after inversion GPT-5.6 Luna leads (100 − Slop = `74`).",
+    ),
+  },
+  {
     date: "10-09",
     kind: "board",
     source: "arena.ai",

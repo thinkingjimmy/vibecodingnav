@@ -11,6 +11,7 @@ import sudoRows from "./boards/sudo.json";
 import terminalRows from "./boards/terminal.json";
 import imageToWebdevRows from "./boards/image-to-webdev.json";
 import webdevRows from "./boards/webdev.json";
+import slopIndexRows from "./boards/slop-index.json";
 
 interface BoardJson {
   rank: number;
@@ -163,6 +164,7 @@ export const results: Result[] = [
   ...board("lmarena-webdev", "2026-10-08", webdevRows as BoardJson[]),
   ...board("lmarena-image-to-webdev", "2026-10-09", imageToWebdevRows as BoardJson[]),
   ...board("terminal-bench-4", "2026-10-06", terminalRows as BoardJson[]),
+  ...board("slop-index", "2026-10-11", slopIndexRows as BoardJson[]),
   ...board("sudo-l7", "2026-10-09", sudoRows as BoardJson[]),
   ...board("android-bench", "2026-10-06", androidLong as BoardJson[], "2.0"),
   ...board("android-bench", "2026-10-06", android1 as BoardJson[], "1.0"),

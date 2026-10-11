@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖 Scenario 契约
- * [OUTPUT]: 对外提供场景榜单：specific 基准最多一个场景，general 可跨场景；首页与列表同一套三张卡片；融合列头用维度图标与白话标签
+ * [OUTPUT]: 对外提供场景榜单：specific 基准最多一个场景，general 可跨场景；首页与列表同一套 featured 卡片；融合列头用维度图标与白话标签
  * [POS]: src/content 的场景实体，只引用基准与模型，不复制分数
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -127,7 +127,7 @@ export const scenarios: Scenario[] = [
         "Third place, Claude Sonnet 5.5, is 39 points behind first at half the price. Open-weight MiMo V2.6 Flash is 16th at $0.14 / $0.28.",
       ),
     ],
-    related: ["android-app", "cli-devops"],
+    related: ["android-app", "cli-devops", "write-docs"],
   },
   {
     slug: "android-app",
@@ -196,7 +196,7 @@ export const scenarios: Scenario[] = [
         "The 1.0 standard-task table is still the full 32 rows, marked archived on the benchmark page. The scenario and the home card use only 2.0 long-horizon.",
       ),
     ],
-    related: ["web-frontend", "cli-devops"],
+    related: ["web-frontend", "cli-devops", "write-docs"],
   },
   {
     slug: "cli-devops",
@@ -252,6 +252,62 @@ export const scenarios: Scenario[] = [
         "Whether a screen looks right is LMArena WebDev. This board only asks if the terminal task gets finished.",
       ),
     ],
-    related: ["web-frontend", "android-app"],
+    related: ["web-frontend", "android-app", "write-docs"],
+  },
+  {
+    slug: "write-docs",
+    title: tx("写文档和文案", "Write docs & copy"),
+    summary: tx(
+      "邮件、博客/随笔、推文和聊天文案。按 The Slop Index 衡量写作有多像真人、多不像聊天机器人。来源榜把最渣排第 1；本站已反转为最少 slop 为第 1。",
+      "Email, blog/essays, tweets, and chat copy. Ranked by The Slop Index on how human and un-chatbot-like the writing is. The source ranks the sloppiest first; this site inverts so least slop is #1.",
+    ),
+    thesis: tx(
+      "按真人写作相似度，挑出写文档和文案最合适的模型。",
+      "Pick the best model for docs and copy by human-like writing.",
+    ),
+    benchmark: "slop-index",
+    boards: [
+      board(
+        "slop",
+        "slop-index",
+        tx("The Slop Index", "The Slop Index"),
+        tx("像真人", "Human-like"),
+        "article",
+        tx(
+          "测写作有多像聊天机器人。来源 Slop Score 越高越差、#1 最渣；本站反转为最少 slop 为 #1，分数用 100 − Slop Score（越高越像真人）。40% 现场盲测 + 四条机械轴各 15%，对照 2022 年前真人写作。",
+          "Measures how chatbot-like the writing is. The source Slop Score is higher = worse, #1 = sloppiest; this site inverts so least slop is #1 and uses 100 − Slop Score (higher = more human). 40% live blind votes plus four mechanical axes at 15% each, vs pre-2022 human writing.",
+        ),
+        1,
+      ),
+    ],
+    scoringCaveats: [
+      tx("来源榜 #1 是最渣；本站名次与分数均已反转，最少 slop 为 #1。", "Source #1 is the sloppiest; ranks and scores here are inverted so least slop is #1."),
+      tx("只有一张榜时，综合分等于相对榜首的归一化分。", "With one board, the composite equals the score normalized to the leader."),
+      tx("竞技场票数仍在累计；这张榜不衡量代码或界面。", "Arena votes are still accumulating; this board ignores code and UI."),
+    ],
+    valueMetric: "token",
+    lead: "top",
+    featured: true,
+    whyItMatters: [
+      point(
+        "最少 slop 不是最贵",
+        "Least slop is not the priciest",
+        "反转后榜首 GPT-5.6 Luna 的来源 Slop Score 是 26。更贵的 Fable 5（$30/M）在来源榜更靠前、更渣。",
+        "After inversion, GPT-5.6 Luna leads with a source Slop Score of 26. Pricier Fable 5 ($30/M) sits higher on the source board—more slop, not less.",
+      ),
+      point(
+        "人和机器一起量",
+        "People and machines both vote",
+        "40% 来自现场盲测竞技场，60% 是相对 2022 年前真人写作的机械轴：简洁、模板化、节奏、AI 套话。",
+        "40% is the live blind arena; 60% is mechanical distance from pre-2022 human writing: conciseness, templating, rhythm, and AI tells.",
+      ),
+      point(
+        "四个领域同一套题",
+        "The same tasks in four domains",
+        "112 个场景覆盖邮件、博客/随笔、推文和 Discord。写干净邮件的模型，不一定写干净随笔。",
+        "112 scenarios cover email, blog/essays, tweets, and Discord. A clean email writer is not always a clean essay writer.",
+      ),
+    ],
+    related: ["web-frontend", "cli-devops", "android-app"],
   },
 ];

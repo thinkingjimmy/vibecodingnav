@@ -96,6 +96,26 @@ describe("composite method C", () => {
     expect(cli[3]?.tie).toBe(true);
   });
 
+  it("equals normalized score for single-board Slop Index", () => {
+    const boards = scenarioBoards("write-docs");
+    expect(boards).toHaveLength(1);
+    const rows = computeComposite(boards);
+    const leader = rows[0]!;
+    expect(leader.key).toBe("model:gpt-5-6-luna");
+    expect(leader.display).toBe(100);
+    expect(leader.cells[0]?.normalized).toBe(100);
+    for (const row of rows.slice(0, 5)) {
+      expect(row.display).toBe(Math.round(row.cells[0]!.normalized));
+    }
+    expect(rows.slice(0, 5).map((row) => [row.rank, row.key.replace(/^(model:|label:)/, ""), row.display])).toEqual([
+      [1, "gpt-5-6-luna", 100],
+      [2, "DeepSeek V4", 97],
+      [3, "gpt-5-6-sol", 92],
+      [4, "deepseek-v4-1-flash", 91],
+      [5, "Inkling Small", 89],
+    ]);
+  });
+
   it("halves weight for preliminary rows and missing boards", () => {
     const boards: CompositeBoardSpec[] = [
       {
@@ -132,7 +152,7 @@ describe("composite method C", () => {
   });
 
   it("worked example contributions sum to the displayed composite", () => {
-    for (const slug of ["web-frontend", "android-app", "cli-devops"] as const) {
+    for (const slug of ["web-frontend", "android-app", "cli-devops", "write-docs"] as const) {
       for (const locale of ["zh", "en"] as const) {
         const worked = getScenario(locale, slug)?.scoring.worked;
         expect(worked, `${slug}/${locale}`).toBeDefined();
@@ -185,6 +205,8 @@ describe("composite method C", () => {
     expect(home[1]?.rows[0]?.unit).toBeUndefined();
     expect(home[1]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100"]);
     expect(home[2]?.rows.map((row) => row.score)).toEqual(["100", "95", "90", "90", "89"]);
-    expect(home).toHaveLength(3);
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 5.6 Luna", score: "100" });
+    expect(home[3]?.rows.map((row) => row.score).slice(0, 3)).toEqual(["100", "92", "91"]);
+    expect(home).toHaveLength(4);
   });
 });
