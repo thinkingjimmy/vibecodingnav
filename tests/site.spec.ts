@@ -15,13 +15,17 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.getByText("#1 · #1 · #1 · —").first()).toBeVisible();
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
-  const bench = page.locator("article").filter({ has: page.getByRole("link", { name: "做一个 Android App", exact: true }) }).getByRole("link", { name: "Android Bench", exact: true });
-  await expect(bench).toHaveAttribute("href", "/zh/benchmarks/android-bench/");
+  const section = page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) });
+  await expect(section.getByText("LMArena WebDev")).toHaveCount(0);
+  await expect(section.getByText("Android Bench")).toHaveCount(0);
   await expect(page.locator("#sources")).toBeVisible();
-  await bench.click();
-  await expect(page).toHaveURL(/\/zh\/benchmarks\/android-bench\/$/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Android Bench");
-  await expect(page.getByText("32.7").first()).toBeVisible();
+  const columns = () => section.locator("article").first().locator("xpath=..").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").filter(Boolean).length);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  expect(await columns()).toBe(3);
+  await page.setViewportSize({ width: 800, height: 900 });
+  expect(await columns()).toBe(2);
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(await columns()).toBe(1);
 });
 
 test("a board card model opens its model page", async ({ page }) => {
@@ -45,7 +49,8 @@ test("view more opens every scenario as a board card", async ({ page }) => {
   await expect(cards).toHaveCount(4);
   await expect(page.getByRole("link", { name: "做全栈 SaaS" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "做 iOS App" })).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Android Bench", exact: true })).toBeVisible();
+  await expect(page.getByText("LMArena WebDev")).toHaveCount(0);
+  await expect(page.getByText("Android Bench", { exact: true })).toHaveCount(0);
   await page.setViewportSize({ width: 1280, height: 900 });
   const columns = await page.locator("article").first().locator("xpath=..").evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(" ").length);
   expect(columns).toBe(2);

@@ -3,7 +3,7 @@
 > L2 | 父级: ../README.md
 
 成员清单
-home-view.tsx: 首页与 metadata
+home-view.tsx: 首页与 metadata，场景榜桌面三列
 scenario-view.tsx: 场景列表、融合名次表与 metadata
 moved-view.tsx: 已移除场景地址的跳转说明
 model-view.tsx: 模型列表、模型详情与 metadata

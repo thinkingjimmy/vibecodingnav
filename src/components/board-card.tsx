@@ -1,6 +1,6 @@
 /**
  * [INPUT]: 依赖场景卡片数据与厂商标
- * [OUTPUT]: 对外提供首页和场景列表共用的榜单卡片，模型名链到模型页
+ * [OUTPUT]: 对外提供首页和场景列表共用的榜单卡片，标题下不列基准名，模型名链到模型页
  * [POS]: src/components 的场景榜单卡片
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
@@ -40,12 +40,6 @@ export function BoardCard({ card, viewMore }: { card: BoardCardData; viewMore: s
         <div className="flex items-start justify-between gap-3">
           <Link href={card.href} className="text-[16px] font-medium tracking-[-0.01em] hover:text-fg">{card.title}</Link>
           <Link href={card.href} className="num shrink-0 pt-0.5 text-[12px] text-mfg hover:text-fg">{viewMore} →</Link>
-        </div>
-        <div className="num mt-1 text-[11px] text-faint">
-          {card.sources?.length ? card.sources.map((source, index) => (
-            <span key={source.href}>{index ? " · " : ""}<Link href={source.href} className="link-u hover:text-fg">{source.name}</Link></span>
-          )) : card.sourceHref ? <Link href={card.sourceHref} className="link-u hover:text-fg">{card.sourceName}</Link> : card.sourceName}
-          {card.asOf ? ` · ${card.asOf}` : ""}
         </div>
       </div>
       <div className="flex-1 px-4 pb-4">
