@@ -63,8 +63,8 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
   const head = (
     <tr className="text-[12px] text-faint">
       <SortHeader label={dict.scenario.colModel} active={sort.key === "model"} dir={sort.dir} onClick={() => toggle("model")} sortLabel={dict.scenario.sortBy} />
-      <SortHeader label={dict.scenario.colComposite} active={sort.key === "composite"} dir={sort.dir} align="right" onClick={() => toggle("composite")} sortLabel={dict.scenario.sortBy} />
-      <SortHeader label={dict.scenario.colAppears} active={sort.key === "count"} dir={sort.dir} align="right" onClick={() => toggle("count")} sortLabel={dict.scenario.sortBy} />
+      <SortHeader label={dict.scenario.colComposite} active={sort.key === "composite"} dir={sort.dir} onClick={() => toggle("composite")} sortLabel={dict.scenario.sortBy} />
+      <SortHeader label={dict.scenario.colAppears} active={sort.key === "count"} dir={sort.dir} onClick={() => toggle("count")} sortLabel={dict.scenario.sortBy} />
       {fusion.columns.map((column, index) => (
         <DimensionHeader
           key={column.id}
@@ -122,13 +122,13 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
                   <td className="max-w-0 overflow-hidden px-2 py-2.5">
                     <ModelName name={row.name} href={row.href} vendor={row.vendor} letter={row.letter} />
                   </td>
-                  <td className="num px-2 py-2.5 text-right font-medium">{row.compositeLabel}</td>
-                  <td className="num px-2 py-2.5 text-right text-mfg">{row.count}/{row.total}</td>
+                  <td className="num px-2 py-2.5 font-medium">{row.compositeLabel}</td>
+                  <td className="num px-2 py-2.5 text-mfg">{row.count}/{row.total}</td>
                   {row.cells.map((cell, index) => {
                     const column = fusion.columns[index]!;
                     if (!cell?.tip) {
                       return (
-                        <td key={column.id} className="num px-2 py-2.5 text-right">{cell ? cell.rank : "—"}</td>
+                        <td key={column.id} className="num px-2 py-2.5">{cell ? cell.rank : "—"}</td>
                       );
                     }
                     return (
@@ -137,7 +137,7 @@ export function FusedTable({ fusion, dict }: { fusion: Fusion; dict: Dictionary 
                         content={{ title: cell.tip }}
                         label={`${row.name}, ${column.label}: ${cell.tip}`}
                         render={(props) => (
-                          <td {...props} className="num cursor-default px-2 py-2.5 text-right outline-none">
+                          <td {...props} className="num cursor-default px-2 py-2.5 outline-none">
                             {cell.rank}
                           </td>
                         )}
@@ -186,7 +186,7 @@ function DimensionHeader({
             <button
               {...triggerProps}
               type="button"
-              className="ml-auto inline-flex w-full items-center justify-end gap-1.5 text-right outline-none"
+              className="group inline-flex w-full items-center gap-1.5 outline-none"
               onClick={(event) => {
                 if (typeof triggerClick === "function") triggerClick(event);
                 onClick();
@@ -195,10 +195,8 @@ function DimensionHeader({
               <span className="inline-flex shrink-0 text-fg">
                 <BoardDimensionIcon name={column.icon} size={14} />
               </span>
-              <span className="inline-flex items-center gap-1 text-[13px] font-medium text-fg">
-                {column.label}
-                <SortMark active={active} dir={dir} />
-              </span>
+              <span className="text-[13px] font-medium text-fg">{column.label}</span>
+              <SortMark active={active} dir={dir} />
             </button>
           );
         }}
@@ -234,10 +232,10 @@ function ModelName({ name, href, vendor, letter }: { name: string; href?: string
   return <Link href={href} className="block min-w-0 no-underline">{body}</Link>;
 }
 
-function SortHeader({ label, active, dir, align, onClick, sortLabel }: { label: string; active: boolean; dir: "asc" | "desc"; align?: "right"; onClick: () => void; sortLabel: string }) {
+function SortHeader({ label, active, dir, onClick, sortLabel }: { label: string; active: boolean; dir: "asc" | "desc"; onClick: () => void; sortLabel: string }) {
   return (
-    <th className={`px-2 pb-2.5 align-bottom font-normal ${align === "right" ? "text-right" : "text-left"}`}>
-      <button type="button" className={`inline-flex items-center gap-1 text-[13px] font-medium text-fg ${align === "right" ? "flex-row-reverse" : ""}`} aria-label={sortLabel.replace("{name}", label)} onClick={onClick}>
+    <th className="px-2 pb-2.5 align-bottom text-left font-normal">
+      <button type="button" className="group inline-flex items-center gap-1 text-[13px] font-medium text-fg" aria-label={sortLabel.replace("{name}", label)} onClick={onClick}>
         {label}
         <SortMark active={active} dir={dir} />
       </button>
@@ -246,6 +244,12 @@ function SortHeader({ label, active, dir, align, onClick, sortLabel }: { label: 
 }
 
 function SortMark({ active, dir }: { active: boolean; dir: "asc" | "desc" }) {
-  if (!active) return <CaretUp className="opacity-0" size={12} aria-hidden />;
-  return dir === "asc" ? <CaretUp size={12} aria-hidden /> : <CaretDown size={12} aria-hidden />;
+  const Icon = active && dir === "desc" ? CaretDown : CaretUp;
+  return (
+    <Icon
+      size={12}
+      aria-hidden
+      className={active ? "shrink-0 text-fg" : "shrink-0 opacity-0 text-faint group-hover:opacity-50 group-focus-visible:opacity-50"}
+    />
+  );
 }

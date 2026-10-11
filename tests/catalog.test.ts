@@ -179,7 +179,7 @@ describe("picks", () => {
     const web = getScenario("zh", "web-frontend");
     expect(web?.thesis).toContain("单看哪一张榜都有盲点");
     expect(web?.fusion.columns.map((column) => column.id)).toEqual(["lmarena-webdev", "lmarena-image-to-webdev", "nextjs-evals", "reactbench", "sudo-l7"]);
-    expect(web?.fusion.columns.map((column) => column.label)).toEqual(["偏好", "还原设计", "Next.js 任务", "React 任务", "工程判断"]);
+    expect(web?.fusion.columns.map((column) => column.label)).toEqual(["盲测投票", "还原设计", "Next.js 任务", "React 任务", "工程判断"]);
     expect(web?.fusion.columns.map((column) => column.icon)).toEqual(["users-three", "image", "file-code", "atom", "scales"]);
     expect(web?.scoring.example?.caption).toContain("ReactBench");
     expect(web?.scoring.example?.caption).toContain("第 4");

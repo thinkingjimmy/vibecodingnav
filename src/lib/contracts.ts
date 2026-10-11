@@ -205,7 +205,7 @@ export interface ScenarioBoard {
   benchmark: string;
   /** 短技术名，抽屉权重表等仍可用；列头改用 dimension。 */
   label: LText;
-  /** 列头短白话维度名，例如「偏好」「还原设计」。 */
+  /** 列头短白话维度名，例如「盲测投票」「还原设计」。 */
   dimension: LText;
   icon: ScenarioBoardIcon;
   /** 悬停浮层里 1–2 句：这张榜测什么。 */

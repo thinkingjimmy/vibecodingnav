@@ -42,7 +42,7 @@ export const scenarios: Scenario[] = [
         "webdev",
         "lmarena-webdev",
         tx("WebDev", "WebDev"),
-        tx("偏好", "Preference"),
+        tx("盲测投票", "Blind votes"),
         "users-three",
         tx(
           "真人盲评两个模型做出的完整网页：布局、细节、能不能用。衡量的是人类偏好，不是测试通过率。",

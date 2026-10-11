@@ -191,12 +191,12 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
   await expect(page.getByText("单看哪一张榜都有盲点，这里把五张合起来排。")).toBeVisible();
   await expect(page.getByRole("button", { name: "评分方法 →" })).toBeVisible();
   await expect(page.getByRole("button", { name: /综合分/ })).toBeVisible();
-  await expect(page.getByRole("columnheader", { name: /偏好/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /盲测投票/ })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: /还原设计/ })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: /Next\.js 任务/ })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: /React 任务/ })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: /工程判断/ })).toBeVisible();
-  await page.getByRole("button", { name: "按偏好排序" }).hover();
+  await page.getByRole("button", { name: "按盲测投票排序" }).hover();
   const webdev = page.getByRole("link", { name: "LMArena WebDev" }).first();
   await expect(webdev).toBeVisible();
   await expect(webdev).toHaveAttribute("href", "/zh/benchmarks/lmarena-webdev/");
@@ -207,7 +207,7 @@ test("web scenario fuses ranks and links each board", async ({ page }) => {
 test("fused table column info popover title link opens the benchmark page", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/zh/scenarios/web-frontend/");
-  const header = page.getByRole("button", { name: "按偏好排序" });
+  const header = page.getByRole("button", { name: "按盲测投票排序" });
   await header.hover();
   const popup = page.locator("[data-column-info]");
   await expect(popup).toBeVisible({ timeout: 3000 });
@@ -222,7 +222,7 @@ test("fused table column info popover title link opens the benchmark page", asyn
 
 test("web scenario scoring modal and fused table sticky head", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
-  await expect(page.getByRole("columnheader", { name: /偏好/ })).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: /盲测投票/ })).toBeVisible();
   const scoringTrigger = page.getByRole("button", { name: "评分方法 →" });
   await scoringTrigger.click();
   const scoringDialog = page.getByRole("dialog");
