@@ -1,7 +1,7 @@
 /**
  * [INPUT]: 依赖 Locale 与页面标题文案
- * [OUTPUT]: 对外提供 vibecodingnav.com 站点常量、90 天过期判断与 hreflang metadata
- * [POS]: src/lib 的站点级常量，页面不得散落域名或过期阈值
+ * [OUTPUT]: 对外提供 vibecodingnav.com 站点常量、GA4 测量 ID、90 天过期判断与 hreflang metadata
+ * [POS]: src/lib 的站点级常量，页面不得散落域名、GA ID 或过期阈值
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
 import type { Metadata } from "next";
@@ -10,6 +10,7 @@ import { localePath } from "./locale";
 
 export const SITE_URL = "https://vibecodingnav.com";
 export const SITE_NAME = "vibecodingnav";
+export const GA_MEASUREMENT_ID = "G-ZBKDEBT9C6";
 export const CONTENT_CLOCK = "2026-10-10";
 export const SITE_SYNC = "2026-10-10";
 export const STALE_DAYS = 90;

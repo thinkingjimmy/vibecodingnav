@@ -1,12 +1,14 @@
 /**
- * [INPUT]: 依赖 Geist 字体、全局样式与语言
- * [OUTPUT]: 对外提供带主题启动脚本的 HTML 文档外壳
+ * [INPUT]: 依赖 Geist 字体、全局样式、语言与 GA 测量 ID
+ * [OUTPUT]: 对外提供带主题启动脚本与生产环境 GA4 的 HTML 文档外壳
  * [POS]: src/app 的文档外壳，英文与中文两套根布局共用
  * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
  */
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import type { ReactNode } from "react";
+import { GA_MEASUREMENT_ID } from "@/lib/site";
 import "./globals.css";
 
 const sans = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" });
@@ -21,6 +23,7 @@ export function DocumentShell({ lang, children }: { lang: "en" | "zh"; children:
         <Script id="theme-boot" strategy="beforeInteractive">{themeBoot}</Script>
         {children}
       </body>
+      {process.env.NODE_ENV === "production" ? <GoogleAnalytics gaId={GA_MEASUREMENT_ID} /> : null}
     </html>
   );
 }

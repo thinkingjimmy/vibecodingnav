@@ -11,6 +11,10 @@
 
 ## 2026-10-12
 
+### 新增
+
+- 全站接入 Google Analytics GA4（`G-ZBKDEBT9C6`）：经 `@next/third-parties` 的 `GoogleAnalytics` 挂在共用 `DocumentShell`，中英根布局一并覆盖；测量 ID 集中在 `GA_MEASUREMENT_ID`；仅生产构建注入（`next dev` 不加载），静态导出 HTML 含 gtag.js。
+
 ### 变更
 
 - Android 场景融合表里 Android Bench 的白话维度标签由「长程任务」改为「安卓开发」（英 Android dev），列头图标由 DeviceMobile 改为 Phosphor AndroidLogo，避免与 DeepSWE「长程工程」混淆。列头悬停说明、评分模态权重/例子/小多图与 i18n 均走同一 `dimension` 字段。
