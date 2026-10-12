@@ -13,11 +13,13 @@
 
 ### 新增
 
+- 「写文档和文案」挂入 EQ-Bench Creative Writing v3（https://eqbench.com/creative_writing.html）：2026-10-12 从页面 `creative_writing.js`（v=1.0.91）嵌入 CSV 抓取全部 140 行，主指标归一化 Elo（越高越好；锚定 DeepSeek-R1=1500、ministral-3b=200）。方法 C 权重 0.6，Slop Index 仍为 1.0；列序按权重为「像真人」→「创意写作」。维度标签「创意写作」，图标 Phosphor PenNib。基准页含完整原榜；Creative Writing 29/140 行映射到本站模型；Slop Index 同步补齐 Grok 4.5 / Muse Spark 1.1 等可对齐 `modelSlug`。
 - 工具箱「字体」分类新增 Best Free Fonts（https://bestfreefonts.com/）：精选免费字体目录，强调真正免费，收录字体常见为 SIL Open Font License；与 qiaomu-cover-fonts 等同列。
 - 全站接入 Google Analytics GA4（`G-ZBKDEBT9C6`）：经 `@next/third-parties` 的 `GoogleAnalytics` 挂在共用 `DocumentShell`，中英根布局一并覆盖；测量 ID 集中在 `GA_MEASUREMENT_ID`；仅生产构建注入（`next dev` 不加载），静态导出 HTML 含 gtag.js。
 
 ### 变更
 
+- 写文档和文案场景由单榜变为双榜综合分；首页该卡与场景 takeaway 随融合表重算（不再等于单看 Slop Index）。
 - Android 场景融合表里 Android Bench 的白话维度标签由「长程任务」改为「安卓开发」（英 Android dev），列头图标由 DeviceMobile 改为 Phosphor AndroidLogo，避免与 DeepSWE「长程工程」混淆。列头悬停说明、评分模态权重/例子/小多图与 i18n 均走同一 `dimension` 字段。
 
 ### 修复

@@ -88,11 +88,15 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1.1M",
     priceLabel: "$10 / $50",
+    headlines: ["eqbench-creative-writing", "lmarena-webdev"],
     summary: tx(
-      "WebDev 第二，1786 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第三，32.2%；博客没有给出它的美元成本。",
-      "Second on WebDev at 1786. Tied at 58.2% on Terminal-Bench. Third on sudo L7 at 32.2%. The blog does not give a dollar cost.",
+      "EQ-Bench Creative Writing v3 第 1（Elo 2173.3）。WebDev 第二，1786 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第三，32.2%。",
+      "First on EQ-Bench Creative Writing v3 (Elo 2173.3). Second on WebDev at 1786. Tied at 58.2% on Terminal-Bench. Third on sudo L7 at 32.2%.",
     ),
-    why: [tx("WebDev 只比第一名低 27 分。", "27 points behind first on WebDev.")],
+    why: [
+      tx("写文档和文案场景综合分居首：Creative Writing Elo 榜首，并上过 Slop Index。", "Leads the docs-and-copy composite: first on Creative Writing Elo and present on Slop Index."),
+      tx("WebDev 只比第一名低 27 分。", "27 points behind first on WebDev."),
+    ],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
   }),
   model({
@@ -508,14 +512,17 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["slop-index", "android-bench"],
     summary: tx(
-      "The Slop Index 反转后第 1（100 − Slop = 74）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
-      "First on The Slop Index after inversion (100 − Slop = 74). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
+      "The Slop Index 反转后第 1（100 − Slop = 74）。EQ-Bench Creative Writing Elo 1828.7（约第 23）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
+      "First on The Slop Index after inversion (100 − Slop = 74). EQ-Bench Creative Writing Elo 1828.7 (about 23rd). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
     ),
     why: [
-      tx("写文档和文案场景里最少 AI slop。", "Least AI slop on the docs-and-copy scenario."),
+      tx("写文档和文案场景主榜（Slop Index）最少 AI slop。", "Least AI slop on the docs-and-copy primary board (Slop Index)."),
       tx("Android 标准任务只比第一低约 4 个点，成本约为二十四分之一。", "On Android standard tasks, about four points behind first at roughly a twenty-fourth of the cost."),
     ],
-    whyNot: [tx("同系列在长程榜只有 10.7% 的是 GPT 6 Luna。复杂多模块工作不要用便宜档单挑。", "The cheap long-horizon row in this family is GPT 6 Luna at 10.7%. Do not give multi-module work to the cheap tier alone.")],
+    whyNot: [
+      tx("创意写作 Elo 远低于 Astra / Fable；综合分不再单靠像真人取胜。", "Creative-writing Elo sits well behind Astra / Fable; human-like alone no longer wins the composite."),
+      tx("同系列在长程榜只有 10.7% 的是 GPT 6 Luna。复杂多模块工作不要用便宜档单挑。", "The cheap long-horizon row in this family is GPT 6 Luna at 10.7%. Do not give multi-module work to the cheap tier alone."),
+    ],
   }),
   model({
     slug: "gpt-5-6-terra",

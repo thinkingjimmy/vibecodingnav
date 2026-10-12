@@ -199,6 +199,7 @@ export const SCENARIO_BOARD_ICONS = [
   "android-logo",
   "terminal-window",
   "article",
+  "pen-nib",
 ] as const;
 export type ScenarioBoardIcon = (typeof SCENARIO_BOARD_ICONS)[number];
 

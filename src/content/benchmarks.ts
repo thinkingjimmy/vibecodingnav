@@ -207,8 +207,8 @@ export const benchmarks: Benchmark[] = [
       "Slashy's The Slop Index. Thirty-nine frontier models, 112 scenarios in four domains, compared with pre-2022 human writing. The blend is a live blind arena (40%) plus conciseness, templating, rhythm, and AI tells (15% each). The source Slop Score is 0–100, higher = worse, #1 = sloppiest; this site inverts so least slop is #1 and stores 100 − Slop Score. Open data is on GitHub.",
     ),
     scoreMeaning: tx(
-      "本站分数 = 100 − 来源 Slop Score，越高越像真人。来源榜把最高 slop 排第 1；这里已反转，最少 slop 为第 1。综合分按通过率比值相对榜首归一化；单榜场景下综合分等于该归一化分。",
-      "This site's score is 100 − the source Slop Score; higher is more human-like. The source ranks the highest slop as #1; ranks here are inverted so least slop is #1. Composite uses the pass-rate ratio to the leader; with one board, composite equals that normalized score.",
+      "本站分数 = 100 − 来源 Slop Score，越高越像真人。来源榜把最高 slop 排第 1；这里已反转，最少 slop 为第 1。综合分按通过率比值相对榜首归一化。",
+      "This site's score is 100 − the source Slop Score; higher is more human-like. The source ranks the highest slop as #1; ranks here are inverted so least slop is #1. Composite uses the pass-rate ratio to the leader.",
     ),
     caveats: tx(
       "竞技场票数仍在累计，现场 Elo 会变。机械轴相对本榜内模型归一化。这张榜不衡量代码或界面质量。",
@@ -221,6 +221,42 @@ export const benchmarks: Benchmark[] = [
     links: [
       { label: "theslopindex.com/leaderboard", href: "https://theslopindex.com/leaderboard" },
       { label: "github.com/hgaddipati1118/slop-index", href: "https://github.com/hgaddipati1118/slop-index" },
+    ],
+  },
+  {
+    slug: "eqbench-creative-writing",
+    name: "EQ-Bench Creative Writing v3",
+    shortName: "Creative Writing",
+    scoreUnit: "",
+    compositeKind: "arena",
+    asOf: "2026-10-12",
+    trackedCount: 140,
+    table: "score",
+    domain: tx("文档与文案", "Docs and copy"),
+    measures: tx(
+      "模型在创意写作提示上的表现：人物与洞察、趣味与原创、行文质量、情节与人物连贯、遵从提示、世界与氛围，以及少套话、少炫技词汇、少堆砌比喻。",
+      "Creative writing on prompts: character and insight, interest and originality, prose quality, plot and character coherence, following the brief, world and atmosphere, plus avoiding cliches, show-off vocab, and metaphor overload.",
+    ),
+    method: tx(
+      "EQ-Bench Creative Writing v3。32 道写作题各跑 3 次（共 96 条），temp 0.7、min_p 0.1。Claude 4 Sonnet 按 rubric 打绝对分；再用 Claude Sonnet 4.6 与邻近模型成对对战（Glicko，按 + 档计入胜幅），得到相对 Elo。成对评前截断到 4000 字符，并双向评以控制位置偏好。",
+      "EQ-Bench Creative Writing v3. Thirty-two writing prompts × 3 iterations (96 items), temp 0.7, min_p 0.1. Claude 4 Sonnet grades a rubric absolute score; Claude Sonnet 4.6 then runs pairwise matchups against neighbors (Glicko, with + margins) for relative Elo. Pairwise inputs are truncated to 4000 characters and judged both ways for position bias.",
+    ),
+    scoreMeaning: tx(
+      "榜单主指标是归一化 Elo（越高越好）。相对分会随新模型加入漂移，故锚定 DeepSeek-R1 = 1500、ministral-3b = 200。综合分按竞技场规则：相对榜首的预期胜率 × 2（榜首 100）。Rubric、Slop、Repetition、Length 等列是来源页辅助指标，不进本站综合分。",
+      "The leaderboard metric is normalized Elo (higher is better). Relative ratings drift when models are added, so scores are anchored to DeepSeek-R1 = 1500 and ministral-3b = 200. Composite treats it as an arena board: twice the expected win rate vs the leader (leader = 100). Rubric, Slop, Repetition, and Length stay source-side auxiliaries and do not enter this site's composite.",
+    ),
+    caveats: tx(
+      "LLM 裁判有自我偏好与审美偏差；官方说明这不是角色扮演评测，也不代表你的口味。只测英文。来源页标 🆕 的是新上榜模型，不是本站的「初步」半权行。",
+      "An LLM judge has self-preference and taste bias; the authors say this is not a roleplay eval and does not match your taste. English only. Source 🆕 marks newly added models, not this site's preliminary half-weight flag.",
+    ),
+    updateCadence: tx(
+      "来源 https://eqbench.com/creative_writing.html ；方法说明 https://eqbench.com/about.html#creative-writing-v3 ；评测代码 https://github.com/EQ-bench/creative-writing-bench 。本页于 2026-10-12 从来源页 creative_writing.js（v=1.0.91）嵌入的榜单 CSV 抓取全部 140 行，按 Elo 降序。",
+      "Source https://eqbench.com/creative_writing.html ; methodology https://eqbench.com/about.html#creative-writing-v3 ; harness https://github.com/EQ-bench/creative-writing-bench . This page fetched all 140 rows on 2026-10-12 from the CSV embedded in creative_writing.js (v=1.0.91), ordered by Elo descending.",
+    ),
+    links: [
+      { label: "eqbench.com/creative_writing.html", href: "https://eqbench.com/creative_writing.html" },
+      { label: "eqbench.com/about.html#creative-writing-v3", href: "https://eqbench.com/about.html#creative-writing-v3" },
+      { label: "github.com/EQ-bench/creative-writing-bench", href: "https://github.com/EQ-bench/creative-writing-bench" },
     ],
   },
   {

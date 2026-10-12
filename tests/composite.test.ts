@@ -97,24 +97,25 @@ describe("composite method C", () => {
     expect(cli[4]?.tie).toBe(true);
   });
 
-  it("equals normalized score for single-board Slop Index", () => {
+  it("blends Slop Index (rate, 1.0) with Creative Writing Elo (arena, 0.6)", () => {
     const boards = scenarioBoards("write-docs");
-    expect(boards).toHaveLength(1);
-    const rows = computeComposite(boards);
-    const leader = rows[0]!;
-    expect(leader.key).toBe("model:gpt-5-6-luna");
-    expect(leader.display).toBe(100);
-    expect(leader.cells[0]?.normalized).toBe(100);
-    for (const row of rows.slice(0, 5)) {
-      expect(row.display).toBe(Math.round(row.cells[0]!.normalized));
-    }
-    expect(rows.slice(0, 5).map((row) => [row.rank, row.key.replace(/^(model:|label:)/, ""), row.display])).toEqual([
-      [1, "gpt-5-6-luna", 100],
-      [2, "DeepSeek V4", 97],
-      [3, "gpt-5-6-sol", 92],
-      [4, "deepseek-v4-1-flash", 91],
-      [5, "Inkling Small", 89],
+    expect(boards.map((board) => [board.id, board.kind, board.weight])).toEqual([
+      ["slop-index", "rate", 1],
+      ["eqbench-creative-writing", "arena", 0.6],
     ]);
+    const rows = computeComposite(boards);
+    expect(rows.slice(0, 3).map((row) => [row.rank, row.key.replace(/^(model:|label:)/, ""), row.display])).toEqual([
+      [1, "gpt-6-astra", 85],
+      [2, "claude-fable-5-1", 83],
+      [3, "DeepSeek V4", 81],
+    ]);
+    const astra = rows.find((row) => row.key === "model:gpt-6-astra")!;
+    expect(astra.homeEligible).toBe(true);
+    expect(astra.cells[0]?.rank).toBe(22);
+    expect(astra.cells[1]?.rank).toBe(1);
+    const luna = rows.find((row) => row.key === "model:gpt-5-6-luna")!;
+    expect(luna.cells[0]?.rank).toBe(1);
+    expect(luna.display).toBeLessThan(astra.display);
   });
 
   it("halves weight for preliminary rows and missing boards", () => {
@@ -215,8 +216,12 @@ describe("composite method C", () => {
     expect(home[1]?.rows[0]?.unit).toBeUndefined();
     expect(home[1]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "—"]);
     expect(home[2]?.rows.map((row) => row.score)).toEqual(["96", "94", "92", "89", "88"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 5.6 Luna", score: "100" });
-    expect(home[3]?.rows.map((row) => row.score).slice(0, 3)).toEqual(["100", "92", "91"]);
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT-6 Astra", score: "85" });
+    expect(home[3]?.rows.map((row) => [row.name, row.score]).slice(0, 3)).toEqual([
+      ["GPT-6 Astra", "85"],
+      ["Claude Fable 5.1", "83"],
+      ["GLM-5.3", "79"],
+    ]);
     expect(home).toHaveLength(4);
   });
 });

@@ -178,11 +178,20 @@ describe("picks", () => {
     expect(terminal).toHaveLength(35);
     expect(terminal[3]).toMatchObject({ name: "GPT-6.1 Sol", rank: 3, score: "58.2% ± 3.1%", price: "$634.24" });
     expect(terminal[20]).toMatchObject({ name: "Grok 4.7", rank: 21, price: "$3.68k (partial: 324/330)" });
-    const slop = getScenario("zh", "write-docs")?.boards[0]?.rows ?? [];
-    expect(slop).toHaveLength(39);
+    const writeDocs = getScenario("zh", "write-docs");
+    expect(writeDocs?.boards.map((board) => [board.id, board.rows.length])).toEqual([
+      ["slop", 39],
+      ["creative", 140],
+    ]);
+    const slop = writeDocs?.boards[0]?.rows ?? [];
     expect(slop[0]).toMatchObject({ name: "GPT-5.6 Luna", rank: 1, score: "74", price: "$3.5" });
     expect(slop[38]).toMatchObject({ name: "Gemini 3.5 Flash", rank: 39, score: "35" });
     expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(39);
+    const creative = getBenchmark("zh", "eqbench-creative-writing");
+    expect(creative?.leaderboard).toHaveLength(140);
+    expect(creative?.leaderboard?.[0]).toMatchObject({ name: "gpt-6-astra", rank: 1, score: "2173.3" });
+    expect(creative?.leaderboard?.[4]).toMatchObject({ name: "kimi-k3", rank: 5, score: "2082.3" });
+    expect(creative?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
     expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(142);
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
@@ -203,8 +212,10 @@ describe("picks", () => {
     expect(getScenario("zh", "write-docs")?.thesis).toContain("真人写作");
     expect(getScenario("zh", "write-docs")?.fusion.columns.map((column) => [column.id, column.label, column.icon, column.weight])).toEqual([
       ["slop-index", "像真人", "article", 1],
+      ["eqbench-creative-writing", "创意写作", "pen-nib", 0.6],
     ]);
-    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT 5\.6 Luna|排第一/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT-6 Astra/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/2/);
     expect(getScenario("en", "web-frontend")?.takeaway?.sentence).toMatch(/first on/i);
     expect(web?.fusion.columns.map((column) => [column.id, column.weight])).toEqual([
       ["lmarena-webdev", 1],
@@ -371,7 +382,13 @@ describe("picks", () => {
     expect(home[2]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "96" });
     expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1"]);
     expect(home[3]?.title).toBe("写文档和文案");
-    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 5.6 Luna", score: "100" });
+    expect(home[3]?.sources?.map((source) => source.name)).toEqual(["The Slop Index", "EQ-Bench Creative Writing v3"]);
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT-6 Astra", rankLabel: "1" });
+    expect(home[3]?.rows.map((row) => row.name).slice(0, 3)).toEqual([
+      "GPT-6 Astra",
+      "Claude Fable 5.1",
+      "GLM-5.3",
+    ]);
     expect(home).toHaveLength(4);
   });
 

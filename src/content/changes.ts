@@ -11,6 +11,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 export const changes: ChangeEntry[] = [
   {
     date: "10-12",
+    kind: "board",
+    source: "eqbench.com",
+    text: tx(
+      "**写文档和文案**：挂入 EQ-Bench Creative Writing v3，140 行 Elo；权重 0.6（Slop Index 仍 1.0）。综合分榜首 GPT-6 Astra。",
+      "**Write docs & copy**: adds EQ-Bench Creative Writing v3, 140 Elo rows; weight 0.6 (Slop Index stays 1.0). Composite lead is GPT-6 Astra.",
+    ),
+  },
+  {
+    date: "10-12",
     kind: "pick",
     source: "bestfreefonts.com",
     text: tx(
