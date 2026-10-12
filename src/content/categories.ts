@@ -55,12 +55,13 @@ export const categories: ToolCategory[] = [
     slug: "type",
     title: tx("字体", "Type"),
     summary: tx("界面字体、中文回退，以及只用于封面的展示字体。", "UI type, a Chinese fallback, and display faces that stay on covers."),
-    updatedAt: "2026-10-10",
-    items: ["geist", "lxgw-wenkai", "qiaomu-cover-fonts"],
+    updatedAt: "2026-10-12",
+    items: ["geist", "lxgw-wenkai", "qiaomu-cover-fonts", "best-free-fonts"],
     howToPick: [
       tip("界面与数字", "UI and figures", "Geist Sans / Mono。", "Geist Sans and Mono."),
       tip("中文正文", "Chinese text", "回退到霞鹜文楷。", "Fall back to LXGW WenKai."),
       tip("封面", "Covers", "用 qiaomu-cover-fonts，不要拿来排长文。", "Use qiaomu-cover-fonts, not for long text."),
+      tip("先翻免费字", "Browse free faces first", "用 Best Free Fonts 按风格预览真正免费（常见 OFL）的候选。", "Use Best Free Fonts to preview truly free candidates by style (commonly OFL)."),
     ],
   },
   {

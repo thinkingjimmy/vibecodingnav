@@ -13,6 +13,7 @@
 
 ### 新增
 
+- 工具箱「字体」分类新增 Best Free Fonts（https://bestfreefonts.com/）：精选免费字体目录，强调真正免费，收录字体常见为 SIL Open Font License；与 qiaomu-cover-fonts 等同列。
 - 全站接入 Google Analytics GA4（`G-ZBKDEBT9C6`）：经 `@next/third-parties` 的 `GoogleAnalytics` 挂在共用 `DocumentShell`，中英根布局一并覆盖；测量 ID 集中在 `GA_MEASUREMENT_ID`；仅生产构建注入（`next dev` 不加载），静态导出 HTML 含 gtag.js。
 
 ### 变更

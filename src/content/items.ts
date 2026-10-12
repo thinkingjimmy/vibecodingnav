@@ -241,7 +241,7 @@ export const items: Item[] = [
     whyPick: tx("拉丁文清晰，和本站同一套字。中文需要回退字体。", "Clear in Latin, and it is the type this site uses. Chinese needs a fallback."),
     whenNot: tx("以中文正文为主时，正文用霞鹜文楷，Geist 留作拉丁文和数字。", "When the body is mostly Chinese, use LXGW WenKai for prose and keep Geist for Latin and figures."),
     install: [{ label: tx("终端", "Terminal"), cmd: "npm i geist" }],
-    peers: ["lxgw-wenkai", "qiaomu-cover-fonts"],
+    peers: ["lxgw-wenkai", "qiaomu-cover-fonts", "best-free-fonts"],
   }),
   item({
     slug: "lxgw-wenkai",
@@ -253,7 +253,7 @@ export const items: Item[] = [
     fitFor: tx("中文界面需要可随产品分发的正文字体。", "A Chinese UI that needs a redistributable text face."),
     whyPick: tx("OFL，可打包。楷体比默认黑体更少“系统默认”的感觉。", "OFL, so it can ship with the product. Kai reads less like a default system sans."),
     whenNot: tx("数据密集的后台仍用黑体或 Geist。", "Dense admin UI should stay on a gothic or Geist."),
-    peers: ["geist", "qiaomu-cover-fonts"],
+    peers: ["geist", "qiaomu-cover-fonts", "best-free-fonts"],
   }),
   item({
     slug: "qiaomu-cover-fonts",
@@ -264,7 +264,22 @@ export const items: Item[] = [
     fitFor: tx("封面、大标题，而不是长正文。", "Covers and large titles, not long body text."),
     whyPick: tx("子集之后体积可控。", "Subsetting keeps the files smaller."),
     whenNot: tx("界面正文不要用展示字体。", "Do not set body copy in a display face."),
-    peers: ["geist", "lxgw-wenkai"],
+    peers: ["geist", "lxgw-wenkai", "best-free-fonts"],
+  }),
+  item({
+    slug: "best-free-fonts",
+    type: "tool",
+    name: "Best Free Fonts",
+    homepage: "https://bestfreefonts.com/",
+    oneLiner: tx(
+      "精选免费字体目录，可预览衬线 / 无衬线 / 展示 / 手写 / 等宽等；强调真正免费，收录字体常见为 SIL Open Font License。",
+      "Curated free fonts to preview—serif, sans, display, script, monospace—focused on truly free faces, commonly under the SIL Open Font License.",
+    ),
+    fitFor: tx("还没有定字体，想先按风格翻真正免费可用的候选。", "You have not locked a face yet and want to browse truly free candidates by style."),
+    whyPick: tx("把免费字体收成一处预览，并链到各字体原出处。", "One place to preview free faces and follow through to each font's source."),
+    whenNot: tx("已有可打包的界面或封面字体时，不必再绕一圈目录。", "Skip the directory when you already have a shippable UI or cover face."),
+    peers: ["geist", "lxgw-wenkai", "qiaomu-cover-fonts"],
+    verifiedAt: "2026-10-12",
   }),
   item({
     slug: "recharts",

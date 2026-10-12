@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-12",
+    kind: "pick",
+    source: "bestfreefonts.com",
+    text: tx(
+      "**Best Free Fonts**：字体分类新增精选免费字体目录；强调真正免费，收录常见 SIL Open Font License。",
+      "**Best Free Fonts**: added to Type—a curated free-font directory focused on truly free faces, commonly SIL Open Font License.",
+    ),
+  },
+  {
     date: "10-11",
     kind: "board",
     source: "deepswe.datacurve.ai",
