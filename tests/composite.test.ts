@@ -47,14 +47,14 @@ describe("composite method C", () => {
   it("matches the doc top-5 for Web frontend", () => {
     const all = computeComposite(scenarioBoards("web-frontend"));
     const rows = all.slice(0, 5);
-    // Web top-5 after DeepSWE v1.1 (weight 0.6, rate → ratio to leader)
+    // Web top-5 after FrontierCode 1.1 (weight 0.6, rate → ratio to leader)
     console.log("Web top-5 composite:", rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display]));
     expect(rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
-      [1, "claude-opus-5-5", 96],
-      [2, "claude-sonnet-5-5", 91],
-      [3, "gpt-6-astra", 89],
-      [4, "claude-fable-5-1", 84],
-      [5, "gpt-6-1-sol", 81],
+      [1, "claude-opus-5-5", 97],
+      [2, "claude-sonnet-5-5", 92],
+      [3, "gpt-6-astra", 90],
+      [4, "claude-fable-5-1", 85],
+      [5, "gpt-6-1-sol", 83],
     ]);
     expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
       [1, 100],
@@ -63,38 +63,39 @@ describe("composite method C", () => {
       null,
       [1, 100],
       null,
+      [1, 100],
     ]);
-    expect(rows[3]?.coverage).toBeCloseTo(5 / 6, 5);
+    expect(rows[3]?.coverage).toBeCloseTo(6 / 7, 5);
     expect(all.find((row) => row.key === "model:gemini-4-argon")?.homeEligible).toBe(false);
   });
 
-  it("matches the doc top-5 for Android with sudo L7 and DeepSWE", () => {
+  it("matches the doc top-5 for Android with sudo L7, DeepSWE, and FrontierCode", () => {
     const rows = computeComposite(scenarioBoards("android-app")).slice(0, 5);
     console.log("Android top-5 composite:", rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display]));
     expect(rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
-      [1, "claude-opus-5-5", 97],
-      [2, "gpt-6-astra", 86],
-      [3, "claude-fable-5-1", 69],
-      [4, "gpt-6-sol", 56],
-      [5, "qwen3-8-max", 50],
+      [1, "claude-opus-5-5", 98],
+      [2, "gpt-6-astra", 88],
+      [3, "claude-fable-5-1", 75],
+      [4, "gpt-6-sol", 65],
+      [5, "kimi-k3", 57],
     ]);
     expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
       [1, 100],
       [1, 100],
       null,
+      [1, 100],
     ]);
   });
 
-  it("matches the doc top-5 for CLI with DeepSWE", () => {
+  it("matches the doc top-5 for CLI with DeepSWE and FrontierCode", () => {
     const cli = computeComposite(scenarioBoards("cli-devops")).slice(0, 5);
     expect(cli.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
-      [1, "claude-opus-5-5", 96],
-      [2, "gpt-6-astra", 94],
-      [3, "claude-sonnet-5-5", 92],
-      [4, "claude-opus-5", 89],
-      [5, "gpt-6-1-sol", 88],
+      [1, "claude-opus-5-5", 97],
+      [2, "gpt-6-astra", 95],
+      [3, "claude-sonnet-5-5", 93],
+      [4, "claude-opus-5", 92],
+      [5, "gpt-6-1-sol", 89],
     ]);
-    expect(cli[4]?.tie).toBe(true);
   });
 
   it("blends Slop Index (rate, 1.0) with Creative Writing Elo (arena, 0.6)", () => {
@@ -170,13 +171,13 @@ describe("composite method C", () => {
       }
     }
     const web = getScenario("zh", "web-frontend")!.scoring.worked!;
-    expect(web).toMatchObject({ key: "model:gpt-6-astra", composite: 89 });
-    expect(Math.round(web.numerator / web.denominator)).toBe(89);
+    expect(web).toMatchObject({ key: "model:gpt-6-astra", composite: 90 });
+    expect(Math.round(web.numerator / web.denominator)).toBe(90);
   });
 
   it("wires composite into fused tables and home cards", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.fusion.rows[0]).toMatchObject({ slug: "claude-opus-5-5", compositeLabel: "96" });
+    expect(web?.fusion.rows[0]).toMatchObject({ slug: "claude-opus-5-5", compositeLabel: "97" });
     expect(web?.fusion.rows.map((row) => row.slug).slice(0, 5)).toEqual([
       "claude-opus-5-5",
       "claude-sonnet-5-5",
@@ -185,16 +186,16 @@ describe("composite method C", () => {
       "gpt-6-1-sol",
     ]);
     expect(web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([
-      1, 1, 1, null, 1, null,
+      1, 1, 1, null, 1, 1, null,
     ]);
 
     const home = getHome("zh").cards;
     expect(home[0]?.rows.map((row) => [row.name, row.score])).toEqual([
-      ["Claude Opus 5.5", "96"],
-      ["Claude Sonnet 5.5", "91"],
-      ["GPT-6 Astra", "89"],
-      ["Claude Fable 5.1", "84"],
-      ["GPT-6.1 Sol", "81"],
+      ["Claude Opus 5.5", "97"],
+      ["Claude Sonnet 5.5", "92"],
+      ["GPT-6 Astra", "90"],
+      ["Claude Fable 5.1", "85"],
+      ["GPT-6.1 Sol", "83"],
     ]);
     expect(home[0]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual([
       "#1 · 100",
@@ -202,20 +203,21 @@ describe("composite method C", () => {
       "#1 · 100",
       "—",
       "#1 · 100",
+      "#1 · 100",
       "—",
     ]);
 
     expect(home[0]?.rows.every((row) => !("boards" in row && row.boards))).toBe(true);
     expect(home[1]?.rows.map((row) => [row.name, row.score])).toEqual([
-      ["Claude Opus 5.5", "97"],
-      ["GPT-6 Astra", "86"],
-      ["Claude Fable 5.1", "69"],
-      ["Qwen3.8 Max", "50"],
-      ["Kimi K3", "50"],
+      ["Claude Opus 5.5", "98"],
+      ["GPT-6 Astra", "88"],
+      ["Claude Fable 5.1", "75"],
+      ["GPT 6 Sol", "65"],
+      ["Kimi K3", "57"],
     ]);
     expect(home[1]?.rows[0]?.unit).toBeUndefined();
-    expect(home[1]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "—"]);
-    expect(home[2]?.rows.map((row) => row.score)).toEqual(["96", "94", "92", "89", "88"]);
+    expect(home[1]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "—", "#1 · 100"]);
+    expect(home[2]?.rows.map((row) => row.score)).toEqual(["97", "95", "93", "92", "89"]);
     expect(home[3]?.rows[0]).toMatchObject({ name: "GPT-6 Astra", score: "85" });
     expect(home[3]?.rows.map((row) => [row.name, row.score]).slice(0, 3)).toEqual([
       ["GPT-6 Astra", "85"],

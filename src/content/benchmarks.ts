@@ -435,6 +435,43 @@ export const benchmarks: Benchmark[] = [
     links: [{ label: "reactbench.com/data", href: "https://www.reactbench.com/data" }],
   },
   {
+    slug: "frontiercode-1-1",
+    name: "FrontierCode 1.1",
+    shortName: "FrontierCode",
+    scoreUnit: "%",
+    compositeKind: "rate",
+    scope: "general",
+    asOf: "2026-10-13",
+    trackedCount: 130,
+    table: "frontiercode",
+    domain: tx("通用可合并性", "General mergeability"),
+    measures: tx(
+      "通用可合并性：维护者会不会合并这份 PR。任务由维护者编写，用单元测试、评分细则与验证器打分。不公平的联网使用会被清零。在本站作为 general 榜，同时出现在 Web 前端、Android 与 CLI / DevOps 场景。",
+      "General mergeability: would the maintainer actually merge this PR? Maintainer-crafted tasks, graded by unit tests, rubrics, and verifiers. Runs flagged for unfair internet use are zeroed. On this site it is a general board and appears in the Web frontend, Android, and CLI / DevOps scenarios.",
+    ),
+    method: tx(
+      "Cognition 的 FrontierCode 1.1（当前修订）。公开页默认 Main 集；本站按「All reasoning levels」收录全部（模型 × 推理档）行，不截断。名次 # 按该模型在 Main 上最高分推理档排序，与来源表一致。Score 是 rubric 加权聚合；Pass rate、Flag rate、Cost / rollout、Output tokens 与来源列一致。",
+      "Cognition's FrontierCode 1.1 (current revision). The public page defaults to the Main set; this site imports every (model × reasoning effort) row from All reasoning levels, untruncated. The # column ranks models by their best Main effort, matching the source table. Score is the weighted rubric aggregate; Pass rate, Flag rate, Cost / rollout, and Output tokens match the source columns.",
+    ),
+    scoreMeaning: tx(
+      "百分比是可合并性 Score（越高越好）。不公平联网被标记的 run 记 0。综合分按通过率口径：相对榜首比值归一化。",
+      "The percent is the mergeability Score (higher is better). Runs flagged for unfair internet use score 0. Composite treats it as a rate board: ratio to the leader.",
+    ),
+    caveats: tx(
+      "Main 与 Extended 是两套任务集；本站只收录默认 Main。Score (pre-flag) 与 Flag rate (1.0) 在 1.1 Main 数据里为空，来源页也不显示这两列。SWE-* 等行没有站内模型页时只保留来源名。",
+      "Main and Extended are separate task sets; this page keeps the default Main board only. Score (pre-flag) and Flag rate (1.0) are null in the 1.1 Main payload, so the source page omits those columns. Rows such as SWE-* without a model page keep the source label only.",
+    ),
+    updateCadence: tx(
+      "修订 1.1 为当前版本；不公平联网使用的 run 清零。本页于 2026-10-13 从 https://cognition.com/data/frontiercode-leaderboard/data.json 的 v1_1.main 同步 130 行（43 个模型的全部推理档），与页面 All reasoning levels 一致。",
+      "Revision 1.1 is current; unfair-internet runs are zeroed. This page synced 130 rows (all reasoning levels for 43 models) from https://cognition.com/data/frontiercode-leaderboard/data.json key v1_1 Main on 2026-10-13, matching the page's All reasoning levels view.",
+    ),
+    links: [
+      { label: "cognition.com/frontiercode", href: "https://cognition.com/frontiercode" },
+      { label: "cognition.com/blog/frontier-code-1.1", href: "https://cognition.com/blog/frontier-code-1.1" },
+      { label: "data/frontiercode-leaderboard/data.json", href: "https://cognition.com/data/frontiercode-leaderboard/data.json" },
+    ],
+  },
+  {
     slug: "deepswe-v1-1",
     name: "DeepSWE v1.1",
     shortName: "DeepSWE",

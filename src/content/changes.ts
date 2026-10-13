@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-13",
+    kind: "board",
+    source: "cognition.com/frontiercode",
+    text: tx(
+      "**FrontierCode 1.1**：Main 集 130 行（全部推理档）。Claude Opus 5.5 `54.6%`。通用榜，挂入 Web 前端 / Android / CLI，权重 0.6。",
+      "**FrontierCode 1.1**: 130 Main rows (all reasoning levels). Claude Opus 5.5 `54.6%`. General board on Web frontend / Android / CLI at weight 0.6.",
+    ),
+  },
+  {
     date: "10-12",
     kind: "board",
     source: "eqbench.com",

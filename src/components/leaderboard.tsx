@@ -23,8 +23,9 @@ function matches(row: BoardRow, filter: Filter, mode: SourceFilter | "none") {
 
 function ModelCell({ row, table, dict }: { row: BoardRow; table: BoardTable; dict: Dictionary }) {
   const meta = table === "webdev" ? [row.org, row.license].filter(Boolean).join(" · ") : "";
+  const title = table === "frontiercode" && row.agent ? `Harness: ${row.agent}` : undefined;
   const body = (
-    <span className="flex w-full min-w-0 items-center gap-2.5">
+    <span className="flex w-full min-w-0 items-center gap-2.5" title={title}>
       <VendorMark vendor={row.vendor} letter={row.letter} />
       <span className="min-w-0">
         <span className={`block truncate ${row.rank <= 5 ? "font-medium" : ""}`}>{row.name}</span>
@@ -152,6 +153,7 @@ interface Column {
 
 function tableMin(table: BoardTable) {
   if (table === "terminal") return "72rem";
+  if (table === "frontiercode") return "64rem";
   if (table === "android-long") return "56rem";
   if (table === "webdev") return "48rem";
   if (table === "android-1") return "40rem";
@@ -210,6 +212,17 @@ function columns(table: BoardTable, dict: Dictionary): Column[] {
       left("org", text.colModelOrg, "6.5rem", (row) => row.org),
       right("tokens", text.colTokens, "5.5rem", (row) => row.tokens),
       right("cost", text.colRunCost, "9rem", (row) => row.price, true),
+    ];
+  }
+  if (table === "frontiercode") {
+    return [
+      left("rank", text.colRank, "3rem", rank),
+      left("model", text.colModel, undefined, model),
+      right("score", text.colScore, "5rem", (row) => row.score),
+      right("pass", text.colPass, "6.5rem", (row) => row.passRate ?? "—"),
+      right("flag", text.colFlagRate, "5.5rem", (row) => row.flagRate ?? "—"),
+      right("cost", text.colCostRollout, "7.5rem", (row) => row.price ?? "—"),
+      right("tokens", text.colOutputTokens, "7rem", (row) => row.tokens ?? "—"),
     ];
   }
   return [

@@ -40,6 +40,7 @@ describe("content", () => {
   it("allows a general benchmark in multiple scenarios", () => {
     expect(content.benchmarks.find((benchmark) => benchmark.slug === "sudo-l7")?.scope).toBe("general");
     expect(content.benchmarks.find((benchmark) => benchmark.slug === "deepswe-v1-1")?.scope).toBe("general");
+    expect(content.benchmarks.find((benchmark) => benchmark.slug === "frontiercode-1-1")?.scope).toBe("general");
     expect(validateContent(content)).toEqual([]);
     const sudoOwners = content.scenarios
       .filter((scenario) => scenario.boards?.some((board) => board.benchmark === "sudo-l7") || scenario.benchmark === "sudo-l7")
@@ -49,6 +50,10 @@ describe("content", () => {
       .filter((scenario) => scenario.boards?.some((board) => board.benchmark === "deepswe-v1-1") || scenario.benchmark === "deepswe-v1-1")
       .map((scenario) => scenario.slug);
     expect(deepsweOwners).toEqual(["web-frontend", "android-app", "cli-devops"]);
+    const frontierOwners = content.scenarios
+      .filter((scenario) => scenario.boards?.some((board) => board.benchmark === "frontiercode-1-1") || scenario.benchmark === "frontiercode-1-1")
+      .map((scenario) => scenario.slug);
+    expect(frontierOwners).toEqual(["web-frontend", "android-app", "cli-devops"]);
   });
 });
 
@@ -155,6 +160,7 @@ describe("picks", () => {
       ["current", 10],
       ["sudo", 12],
       ["deepswe", 28],
+      ["frontiercode", 130],
     ]);
     expect(android?.boards[0]?.rows.map((row) => [row.rank, row.name, row.agent, row.score, row.ci, row.completion, row.latency, row.price])).toEqual([
       [1, "Claude Opus 5.5", "claude-code", "32.7", "18.7–47.3", "84.7", "15.2", "$215.4"],
@@ -205,7 +211,7 @@ describe("picks", () => {
     const web = getScenario("zh", "web-frontend");
     expect(web?.thesis).toContain("按真人盲测、设计还原");
     expect(web?.takeaway?.sentence).toMatch(/Claude Opus 5\.5/);
-    expect(web?.takeaway?.sentence).toContain("4");
+    expect(web?.takeaway?.sentence).toContain("5");
     expect(web?.comboSection?.items[0]).toMatchObject({ highlight: true, purpose: "写代码的主力" });
     expect(getScenario("zh", "cli-devops")?.takeaway?.sentence).toMatch(/Claude Opus 5\.5/);
     expect(getScenario("zh", "cli-devops")?.takeaway?.sentence).toMatch(/第一/);
@@ -222,6 +228,7 @@ describe("picks", () => {
       ["lmarena-image-to-webdev", 0.6],
       ["sudo-l7", 0.6],
       ["deepswe-v1-1", 0.6],
+      ["frontiercode-1-1", 0.6],
       ["nextjs-evals", 0.4],
       ["reactbench", 0.4],
     ]);
@@ -230,6 +237,7 @@ describe("picks", () => {
       "还原设计",
       "工程判断",
       "长程工程",
+      "能否合并",
       "Next.js 任务",
       "React 任务",
     ]);
@@ -238,6 +246,7 @@ describe("picks", () => {
       "image",
       "scales",
       "road-horizon",
+      "git-merge",
       "file-code",
       "atom",
     ]);
@@ -246,6 +255,7 @@ describe("picks", () => {
       "LMArena Image-to-WebDev",
       "sudo L7",
       "DeepSWE v1.1",
+      "FrontierCode 1.1",
       "Next.js Agent Evals",
       "ReactBench",
     ]);
@@ -254,6 +264,7 @@ describe("picks", () => {
       "还原设计",
       "工程判断",
       "长程工程",
+      "能否合并",
       "Next.js 任务",
       "React 任务",
     ]);
@@ -262,26 +273,27 @@ describe("picks", () => {
     expect(web?.scoring.worked).toMatchObject({
       key: "model:gpt-6-astra",
       name: "GPT-6 Astra",
-      composite: 89,
+      composite: 90,
     });
     expect(web?.scoring.worked?.rows.map((row) => row.board)).toEqual([
       "盲测投票",
       "还原设计",
       "工程判断",
       "长程工程",
+      "能否合并",
       "Next.js 任务",
       "React 任务",
     ]);
-    expect(web?.scoring.worked?.rows).toHaveLength(6);
+    expect(web?.scoring.worked?.rows).toHaveLength(7);
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
-    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1, null]);
-    expect(opus).toMatchObject({ compositeLabel: "96", count: 4, total: 6 });
+    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1, 1, null]);
+    expect(opus).toMatchObject({ compositeLabel: "97", count: 5, total: 7 });
     expect(opus?.cells[0]?.tip).toContain("1813");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 5, null, 3, 1]);
-    expect(fable).toMatchObject({ compositeLabel: "84", count: 5 });
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 5, null, 6, 3, 1]);
+    expect(fable).toMatchObject({ compositeLabel: "85", count: 6 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
     expect(web?.fusion.rows[2]?.slug).toBe("gpt-6-astra");
@@ -291,39 +303,42 @@ describe("picks", () => {
       ["android-bench", "安卓开发", 1],
       ["sudo-l7", "工程判断", 0.6],
       ["deepswe-v1-1", "长程工程", 0.6],
+      ["frontiercode-1-1", "能否合并", 0.6],
     ]);
-    expect(android?.fusion.columns.map((column) => column.icon)).toEqual(["android-logo", "scales", "road-horizon"]);
+    expect(android?.fusion.columns.map((column) => column.icon)).toEqual(["android-logo", "scales", "road-horizon", "git-merge"]);
     expect(android?.scoring.chart?.caption).toContain("DeepSWE");
-    expect(android?.scoring.worked?.composite).toBe(86);
-    expect(android?.scoring.worked?.rows).toHaveLength(3);
+    expect(android?.scoring.worked?.composite).toBe(88);
+    expect(android?.scoring.worked?.rows).toHaveLength(4);
     const opus55 = android?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(android?.fusion.rows.find((row) => row.slug === "claude-opus-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([
       null,
       null,
       3,
+      3,
     ]);
-    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, null]);
-    expect(opus55).toMatchObject({ compositeLabel: "97", count: 2, total: 3 });
+    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, null, 1]);
+    expect(opus55).toMatchObject({ compositeLabel: "98", count: 3, total: 4 });
     expect(opus55?.cells[0]?.tip).toContain("claude-code");
     expect(opus55?.cells[0]?.tip).toContain("32.7");
     expect(android?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(android?.fusion.rows.map((row) => [row.slug, row.compositeLabel]).slice(0, 5)).toEqual([
-      ["claude-opus-5-5", "97"],
-      ["gpt-6-astra", "86"],
-      ["claude-fable-5-1", "69"],
-      ["gpt-6-sol", "56"],
-      ["qwen3-8-max", "50"],
+      ["claude-opus-5-5", "98"],
+      ["gpt-6-astra", "88"],
+      ["claude-fable-5-1", "75"],
+      ["gpt-6-sol", "65"],
+      ["kimi-k3", "57"],
     ]);
 
     const cli = getScenario("zh", "cli-devops");
     expect(cli?.fusion.columns.map((column) => [column.id, column.label, column.icon, column.weight])).toEqual([
       ["terminal-bench-4", "终端任务", "terminal-window", 1],
       ["deepswe-v1-1", "长程工程", "road-horizon", 0.6],
+      ["frontiercode-1-1", "能否合并", "git-merge", 0.6],
     ]);
     expect(cli?.fusion.rows.map((row) => [row.slug, row.compositeLabel]).slice(0, 3)).toEqual([
-      ["claude-opus-5-5", "96"],
-      ["gpt-6-astra", "94"],
-      ["claude-sonnet-5-5", "92"],
+      ["claude-opus-5-5", "97"],
+      ["gpt-6-astra", "95"],
+      ["claude-sonnet-5-5", "93"],
     ]);
     expect(getBenchmark("zh", "deepswe-v1-1")?.scenarios.map((row) => row.href)).toEqual([
       "/zh/scenarios/web-frontend/",
@@ -335,6 +350,23 @@ describe("picks", () => {
       name: "GPT 6 Astra",
       rank: 1,
       score: "74.1",
+    });
+    expect(getBenchmark("zh", "frontiercode-1-1")?.scenarios.map((row) => row.href)).toEqual([
+      "/zh/scenarios/web-frontend/",
+      "/zh/scenarios/android-app/",
+      "/zh/scenarios/cli-devops/",
+    ]);
+    expect(getBenchmark("zh", "frontiercode-1-1")?.leaderboard).toHaveLength(130);
+    expect(getBenchmark("zh", "frontiercode-1-1")?.leaderboard?.[0]).toMatchObject({
+      name: "Claude Opus 5.5",
+      rank: 1,
+      score: "54.6%",
+      passRate: "59.6%",
+      flagRate: "0.0%",
+      price: "$0.80",
+      tokens: "18.5k",
+      effort: "medium",
+      agent: "claude-code",
     });
 
     expect(getBenchmark("zh", "supabase-evals")?.scenarios).toEqual([]);
@@ -364,23 +396,24 @@ describe("picks", () => {
       "LMArena Image-to-WebDev",
       "sudo L7",
       "DeepSWE v1.1",
+      "FrontierCode 1.1",
       "Next.js Agent Evals",
       "ReactBench",
     ]);
     expect(home[0]?.rows).toHaveLength(5);
-    expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "96" });
-    expect(home[0]?.rows[0]?.detail?.title).toContain("综合 96");
-    expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench", "sudo L7", "DeepSWE v1.1"]);
-    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "97" });
+    expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "97" });
+    expect(home[0]?.rows[0]?.detail?.title).toContain("综合 97");
+    expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench", "sudo L7", "DeepSWE v1.1", "FrontierCode 1.1"]);
+    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "98" });
     expect(home[1]?.rows.map((row) => [row.name, row.score])).toEqual([
-      ["Claude Opus 5.5", "97"],
-      ["GPT-6 Astra", "86"],
-      ["Claude Fable 5.1", "69"],
-      ["Qwen3.8 Max", "50"],
-      ["Kimi K3", "50"],
+      ["Claude Opus 5.5", "98"],
+      ["GPT-6 Astra", "88"],
+      ["Claude Fable 5.1", "75"],
+      ["GPT 6 Sol", "65"],
+      ["Kimi K3", "57"],
     ]);
-    expect(home[2]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "96" });
-    expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1"]);
+    expect(home[2]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "97" });
+    expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1", "FrontierCode 1.1"]);
     expect(home[3]?.title).toBe("写文档和文案");
     expect(home[3]?.sources?.map((source) => source.name)).toEqual(["The Slop Index", "EQ-Bench Creative Writing v3"]);
     expect(home[3]?.rows[0]).toMatchObject({ name: "GPT-6 Astra", rankLabel: "1" });

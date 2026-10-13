@@ -9,6 +9,16 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-10-13
+
+### 新增
+
+- 新增通用榜 FrontierCode 1.1（Cognition）：测 PR 可合并性（维护者会不会合并），单元测试 + 评分细则 + 验证器；不公平联网使用清零。2026-10-13 从 https://cognition.com/data/frontiercode-leaderboard/data.json（`v1_1` Main）同步 130 行，与页面 All reasoning levels 一致（43 模型全部推理档；# 为最佳档名次）。列：Score、Pass rate、Flag rate、Cost / rollout、Output tokens（及 harness）。`scope: general`，挂入 Web 前端 / Android / CLI·DevOps，方法 C 权重 0.6。维度标签「能否合并」，图标 Phosphor GitMerge。榜首 Claude Opus 5.5（medium）54.6%。
+
+### 变更
+
+- `Benchmark.scope: general` 现包括 sudo L7、DeepSWE v1.1 与 FrontierCode 1.1；三场景融合表与综合分均增加 FrontierCode 列。首页观测权重门槛随总权重调整（Web ≥ 2.1 / 4.2，Android ≥ 1.4 / 2.8，CLI ≥ 1.1 / 2.2）。
+
 ## 2026-10-12
 
 ### 新增

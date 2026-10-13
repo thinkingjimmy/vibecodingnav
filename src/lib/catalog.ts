@@ -66,6 +66,8 @@ export interface BoardRow {
   completion?: string;
   latency?: string;
   tokens?: string;
+  passRate?: string;
+  flagRate?: string;
   releaseDate?: string;
 }
 
@@ -217,6 +219,8 @@ function toBoardRows(locale: Locale, benchmarkSlug: string, versionId?: string):
       completion: result.completion,
       latency: result.latency,
       tokens: result.tokens,
+      passRate: result.passRate,
+      flagRate: result.flagRate,
       releaseDate: result.releaseDate,
     };
   });

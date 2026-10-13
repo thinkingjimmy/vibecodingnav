@@ -8,6 +8,7 @@ import type { Ci, Result, VendorId, WeightClass } from "@/lib/contracts";
 import android1 from "./boards/android-1.json";
 import androidLong from "./boards/android-long.json";
 import deepsweRows from "./boards/deepswe.json";
+import frontiercodeRows from "./boards/frontiercode.json";
 import sudoRows from "./boards/sudo.json";
 import terminalRows from "./boards/terminal.json";
 import imageToWebdevRows from "./boards/image-to-webdev.json";
@@ -41,6 +42,8 @@ interface BoardJson {
   completion?: string;
   latency?: string;
   tokens?: string;
+  passRate?: string;
+  flagRate?: string;
   releaseDate?: string;
   preliminary?: boolean;
 }
@@ -88,6 +91,8 @@ function board(benchmark: string, asOf: string, rows: BoardJson[], version?: str
     completion: row.completion,
     latency: row.latency,
     tokens: row.tokens,
+    passRate: row.passRate,
+    flagRate: row.flagRate,
     releaseDate: row.releaseDate,
     preliminary: row.preliminary || undefined,
   }));
@@ -170,6 +175,7 @@ export const results: Result[] = [
   ...board("eqbench-creative-writing", "2026-10-12", eqbenchCreativeWritingRows as BoardJson[]),
   ...board("sudo-l7", "2026-10-09", sudoRows as BoardJson[]),
   ...board("deepswe-v1-1", "2026-09-22", deepsweRows as BoardJson[]),
+  ...board("frontiercode-1-1", "2026-10-13", frontiercodeRows as BoardJson[]),
   ...board("android-bench", "2026-10-06", androidLong as BoardJson[], "2.0"),
   ...board("android-bench", "2026-10-06", android1 as BoardJson[], "1.0"),
   fw("supabase-evals", "2026-10-10", "claude-opus-5-5", 91.3, { rank: 1, effort: "high", setting: "high · Claude Code" }),

@@ -141,7 +141,7 @@ export interface Benchmark {
   webLabel?: LText;
 }
 
-export type BoardTable = "webdev" | "android-1" | "android-long" | "terminal" | "score";
+export type BoardTable = "webdev" | "android-1" | "android-long" | "terminal" | "score" | "frontiercode";
 export type SourceFilter = "license" | "weights";
 export type WeightClass = "open" | "closed";
 
@@ -175,6 +175,8 @@ export interface Result {
   completion?: string;
   latency?: string;
   tokens?: string;
+  passRate?: string;
+  flagRate?: string;
   releaseDate?: string;
   preliminary?: boolean;
   asOf: string;
@@ -196,6 +198,7 @@ export const SCENARIO_BOARD_ICONS = [
   "atom",
   "scales",
   "road-horizon",
+  "git-merge",
   "android-logo",
   "terminal-window",
   "article",
@@ -374,10 +377,12 @@ export interface Dictionary {
     colModel: string;
     colScore: string;
     colPass: string;
+    colFlagRate: string;
     colCi: string;
     colVotes: string;
     colPrice: string;
     colRunCost: string;
+    colCostRollout: string;
     colContext: string;
     colAgent: string;
     colEffort: string;
@@ -387,6 +392,7 @@ export interface Dictionary {
     colAgentOrg: string;
     colModelOrg: string;
     colTokens: string;
+    colOutputTokens: string;
     colCompletion: string;
     colLatency: string;
     colCost: string;
