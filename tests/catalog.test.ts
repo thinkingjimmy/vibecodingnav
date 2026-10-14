@@ -76,7 +76,7 @@ describe("picks", () => {
   it("resolves the web frontend board", () => {
     const picks = resolvePicks("web-frontend");
     expect(picks.top?.modelSlug).toBe("claude-opus-5-5");
-    expect(picks.top?.score).toBe(1813);
+    expect(picks.top?.score).toBe(1811);
     expect(picks.value?.modelSlug).toBe("claude-sonnet-5-5");
     expect(picks.value?.score).toBe(1774);
     expect(picks.open?.modelSlug).toBe("mimo-v2-6-flash");
@@ -149,10 +149,11 @@ describe("picks", () => {
 
   it("keeps each public board complete and in source order", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.boards[0]?.rows).toHaveLength(142);
-    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1813" });
-    expect(web?.boards[0]?.rows[15]).toMatchObject({ name: "mimo-v2.6-flash", rank: 16, score: "1637" });
-    expect(web?.boards[0]?.rows[21]).toMatchObject({ name: "glm-5.3-max", rank: 22, score: "1622" });
+    expect(web?.boards[0]?.rows).toHaveLength(143);
+    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1811" });
+    expect(web?.boards[0]?.rows[14]).toMatchObject({ name: "muse-wonder-max", rank: 15, score: "1651" });
+    expect(web?.boards[0]?.rows[16]).toMatchObject({ name: "mimo-v2.6-flash", rank: 17, score: "1635" });
+    expect(web?.boards[0]?.rows[22]).toMatchObject({ name: "glm-5.3-max", rank: 23, score: "1621" });
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
@@ -198,7 +199,7 @@ describe("picks", () => {
     expect(creative?.leaderboard?.[0]).toMatchObject({ name: "gpt-6-astra", rank: 1, score: "2173.3" });
     expect(creative?.leaderboard?.[4]).toMatchObject({ name: "kimi-k3", rank: 5, score: "2082.3" });
     expect(creative?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(142);
+    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(143);
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
     expect(androidBench?.versions?.[0]?.current).toBe(true);
@@ -288,7 +289,7 @@ describe("picks", () => {
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1, 1, null]);
     expect(opus).toMatchObject({ compositeLabel: "97", count: 5, total: 7 });
-    expect(opus?.cells[0]?.tip).toContain("1813");
+    expect(opus?.cells[0]?.tip).toContain("1811");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");

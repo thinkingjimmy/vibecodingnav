@@ -143,8 +143,8 @@ export const scenarios: Scenario[] = [
       point(
         "新、快、样本大",
         "New, fast, and large",
-        "85 万票、142 个模型，新模型通常几天内上榜，是挑前端模型最新鲜的信号。",
-        "852,934 votes and 142 models. New models usually show up within days, so this is the freshest frontend signal.",
+        "87 万票、143 个模型，新模型通常几天内上榜，是挑前端模型最新鲜的信号。",
+        "878,407 votes and 143 models. New models usually show up within days, so this is the freshest frontend signal.",
       ),
       point(
         "把价格一起看",

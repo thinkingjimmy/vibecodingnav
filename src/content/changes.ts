@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-14",
+    kind: "board",
+    source: "lmarena.ai",
+    text: tx(
+      "**LMArena WebDev**：同步至 2026-10-13 榜（878,407 票、143 行）。Claude Opus 5.5（max）`1811` 仍居首；新增 Meta **muse-wonder-max** 第 15（`1651`）。",
+      "**LMArena WebDev**: synced to the 2026-10-13 board (878,407 votes, 143 rows). Claude Opus 5.5 (max) still leads at `1811`; new Meta **muse-wonder-max** at #15 (`1651`).",
+    ),
+  },
+  {
     date: "10-13",
     kind: "board",
     source: "cognition.com/frontiercode",

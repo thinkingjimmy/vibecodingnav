@@ -95,7 +95,7 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await page.goto("/zh/benchmarks/lmarena-webdev/");
   await expect(page.getByText("前端 Web 开发")).toBeVisible();
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
-  await expect(page.getByText("1813").first()).toBeVisible();
+  await expect(page.getByText("1811").first()).toBeVisible();
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("devstral-medium-2507")).toBeVisible();
@@ -104,7 +104,7 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "mimo-v2.6-flash" })).toBeVisible();
   const mimo = page.getByRole("row").filter({ hasText: "mimo-v2.6-flash" });
-  await expect(mimo.getByText("16", { exact: true })).toBeVisible();
+  await expect(mimo.getByText("17", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("granite-4.1-8b")).toBeVisible();
 });

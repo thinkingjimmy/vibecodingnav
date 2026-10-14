@@ -76,9 +76,9 @@ export const benchmarks: Benchmark[] = [
     shortName: "WebDev",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-10-08",
-    votes: "852,934",
-    trackedCount: 142,
+    asOf: "2026-10-13",
+    votes: "878,407",
+    trackedCount: 143,
     table: "webdev",
     sourceFilter: "license",
     domain: tx("前端", "Frontend"),
@@ -99,8 +99,8 @@ export const benchmarks: Benchmark[] = [
       "It measures human preference (does it look right, does it run), not test pass rate. Briefs are mostly single-page demos, so it says little about large codebases or long refactors. Effort tiers of the same model are ranked separately. Preliminary rows have few votes and can move.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期 2026-10-08，2026-10-10 同步；每周同步一次，变化写入首页「最新变化」。",
-      "Updated continuously. This page's board date is 2026-10-08, synced 2026-10-10. We sync weekly and write changes on the home page.",
+      "持续更新。本页榜单日期 2026-10-13，2026-10-14 同步；每周同步一次，变化写入首页「最新变化」。",
+      "Updated continuously. This page's board date is 2026-10-13, synced 2026-10-14. We sync weekly and write changes on the home page.",
     ),
     links: [
       { label: "lmarena.ai/leaderboard/webdev", href: "https://lmarena.ai/leaderboard/webdev" },

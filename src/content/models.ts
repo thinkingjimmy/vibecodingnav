@@ -21,6 +21,7 @@ function model(input: {
   context?: string;
   priceLabel?: string;
   agents?: string[];
+  fetchedAt?: string;
   summary: LText;
   why: LText[];
   whyNot: LText[];
@@ -90,12 +91,12 @@ export const models: Model[] = [
     priceLabel: "$10 / $50",
     headlines: ["eqbench-creative-writing", "lmarena-webdev"],
     summary: tx(
-      "EQ-Bench Creative Writing v3 第 1（Elo 2173.3）。WebDev 第二，1786 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第三，32.2%。",
-      "First on EQ-Bench Creative Writing v3 (Elo 2173.3). Second on WebDev at 1786. Tied at 58.2% on Terminal-Bench. Third on sudo L7 at 32.2%.",
+      "EQ-Bench Creative Writing v3 第 1（Elo 2173.3）。WebDev 第二，1780 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第三，32.2%。",
+      "First on EQ-Bench Creative Writing v3 (Elo 2173.3). Second on WebDev at 1780. Tied at 58.2% on Terminal-Bench. Third on sudo L7 at 32.2%.",
     ),
     why: [
       tx("写文档和文案场景综合分居首：Creative Writing Elo 榜首，并上过 Slop Index。", "Leads the docs-and-copy composite: first on Creative Writing Elo and present on Slop Index."),
-      tx("WebDev 只比第一名低 27 分。", "27 points behind first on WebDev."),
+      tx("WebDev 只比第一名低 31 分。", "31 points behind first on WebDev."),
     ],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
   }),
@@ -259,6 +260,20 @@ export const models: Model[] = [
     whyNot: [tx("WebDev 两行都标 Proprietary，也仍是初步。", "Both WebDev rows are marked Proprietary, and both are still preliminary.")],
   }),
   model({
+    slug: "muse-wonder",
+    name: "Muse Wonder",
+    vendor: "meta",
+    vendorName: "Meta",
+    license: "proprietary",
+    licenseLabel: prop,
+    context: "1M",
+    priceLabel: "$4 / $20",
+    fetchedAt: "2026-10-14",
+    summary: tx("WebDev 第十五，max 档 1651 分；票数仍少，名次区间 9–20。", "15th on WebDev at max with 1651; still low votes, rank band 9–20."),
+    why: [tx("新上 WebDev，价位与 Opus 5.5 同档（$4 / $20）。", "New on WebDev, same token price tier as Opus 5.5 ($4 / $20).")],
+    whyNot: [tx("票数约 1.2k，区间宽，且未上本站其他主榜。", "About 1.2k votes, a wide band, and not yet on this site's other primary boards.")],
+  }),
+  model({
     slug: "muse-spark-1-3",
     name: "Muse Spark 1.3",
     vendor: "meta",
@@ -267,7 +282,7 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1M",
     priceLabel: "$1.25 / $4.25",
-    summary: tx("WebDev 有 max 与 xhigh 两行，1657 与 1626。token 价格是闭源前排里较低的一档。", "Two WebDev rows, 1657 at max and 1626 at xhigh. A lower token price among the proprietary front."),
+    summary: tx("WebDev 有 max 与 xhigh 两行，1659 与 1622。token 价格是闭源前排里较低的一档。", "Two WebDev rows, 1659 at max and 1622 at xhigh. A lower token price among the proprietary front."),
     why: [tx("输出 $4.25 / 百万 tokens。", "Output is $4.25 per million tokens.")],
     whyNot: [tx("名次在第十名上下，不是场景首选。", "It sits around tenth. It is not a scenario primary.")],
   }),
@@ -303,8 +318,8 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$3 / $15",
     summary: tx(
-      "Android Bench 1.0 第四，90.2%，成本 $112.9，但平均耗时 29.6 小时。WebDev 第十四，1654 分。",
-      "Fourth on Android Bench 1.0 at 90.2% and $112.9, with a 29.6 hour average. Fourteenth on WebDev at 1654.",
+      "Android Bench 1.0 第四，90.2%，成本 $112.9，但平均耗时 29.6 小时。WebDev 第十四，1655 分。",
+      "Fourth on Android Bench 1.0 at 90.2% and $112.9, with a 29.6 hour average. Fourteenth on WebDev at 1655.",
     ),
     why: [tx("标准 Android 任务与头部几乎打平，成本低约三分之一。", "Nearly tied with the Android leaders, at about a third less cost.")],
     whyNot: [tx("29.6 小时约为 Claude Opus 5 的两倍多，不适合交互式开发。许可不是常见开源许可。", "29.6 hours is more than double Claude Opus 5, a poor fit for interactive work. The license is not a common open-source license.")],

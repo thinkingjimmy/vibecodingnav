@@ -9,6 +9,12 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-10-14
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步：143 行，榜单日期 2026-10-13，878,407 票。Claude Opus 5.5（max）仍第 1（1811）；新增 Meta muse-wonder-max 第 15（1651），并加入模型页对齐。Web 前端综合分随主榜重算。
+
 ## 2026-10-13
 
 ### 新增

@@ -3,7 +3,7 @@
 > L2 | 父级: ../README.md
 
 成员清单
-webdev.json: LMArena WebDev 142 行，2026-10-10 从 arena.ai/leaderboard/code/webdev 解析
+webdev.json: LMArena WebDev 143 行，2026-10-14 从 lmarena.ai/leaderboard/webdev 解析（榜单日期 2026-10-13）
 image-to-webdev.json: LMArena Image-to-WebDev 64 行，2026-10-11 从 arena.ai/leaderboard/code/image-to-webdev 解析，榜单日期 2026-10-09。pareto 与 paretoPrice 只属于帕累托页列出的 6 个最优点，blend 是 (输入 + 3×输出) / 4
 android-1.json: Android Bench 历史版本 1.0 的 32 行，基准 slug 是 android-bench
 android-long.json: Android Bench 当前版本 2.0 长程的 10 行，同一基准 slug

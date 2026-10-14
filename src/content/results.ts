@@ -168,7 +168,7 @@ function reactBench(): Result[] {
 }
 
 export const results: Result[] = [
-  ...board("lmarena-webdev", "2026-10-08", webdevRows as BoardJson[]),
+  ...board("lmarena-webdev", "2026-10-13", webdevRows as BoardJson[]),
   ...board("lmarena-image-to-webdev", "2026-10-09", imageToWebdevRows as BoardJson[]),
   ...board("terminal-bench-4", "2026-10-06", terminalRows as BoardJson[]),
   ...board("slop-index", "2026-10-11", slopIndexRows as BoardJson[]),

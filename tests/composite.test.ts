@@ -38,8 +38,8 @@ function scenarioBoards(slug: string): CompositeBoardSpec[] {
 
 describe("composite method C", () => {
   it("normalizes arena boards by win probability and rate boards by leader ratio", () => {
-    expect(normalizeToLeader("arena", 1813, 1813)).toBeCloseTo(100, 5);
-    expect(normalizeToLeader("arena", 1786, 1813)).toBeCloseTo(92.2, 1);
+    expect(normalizeToLeader("arena", 1811, 1811)).toBeCloseTo(100, 5);
+    expect(normalizeToLeader("arena", 1780, 1811)).toBeCloseTo(91.1, 1);
     expect(normalizeToLeader("rate", 32.7, 32.7)).toBe(100);
     expect(normalizeToLeader("rate", 28.0, 32.7)).toBeCloseTo(85.6, 1);
   });
