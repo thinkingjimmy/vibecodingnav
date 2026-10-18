@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-18",
+    kind: "pick",
+    source: "reactbits.dev",
+    text: tx(
+      "**React Bits**：按官网重写动效分类一句话说明（免费开源动画 React 组件，可复制源码），并补全仓库与 shadcn 安装示例。",
+      "**React Bits**: refreshed the Motion one-liner from the site (free open-source animated React components, copyable source), plus repo and a shadcn install example.",
+    ),
+  },
+  {
     date: "10-14",
     kind: "board",
     source: "lmarena.ai",

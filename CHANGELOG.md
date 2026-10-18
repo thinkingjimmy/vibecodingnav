@@ -9,6 +9,12 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-10-18
+
+### 变更
+
+- 工具箱「动效」中的 React Bits（https://reactbits.dev/）：按官网重写中英一句话说明（免费开源动画 React 组件：文字特效、背景、交互卡片与微交互，可看演示并复制源码），补全 GitHub 仓库与 `npx shadcn@latest add @react-bits/…` 安装示例，并更新分类选用提示。
+
 ## 2026-10-14
 
 ### 变更
