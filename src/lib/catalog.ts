@@ -1080,6 +1080,7 @@ function frameworkEval(locale: Locale, benchmarkSlug: string, mode: "board" | "u
     version: benchmark.version,
     mode,
     rows: mode === "unverified" ? [] : rows,
+    showAssisted: mode === "board" && assisted.size > 0 && Boolean(benchmark.assistedLabel),
     showWeb: mode === "board" && web.size > 0,
     assistedLabel: benchmark.assistedLabel ? t(locale, benchmark.assistedLabel) : dict.item.evalUplift,
     webLabel: benchmark.webLabel ? t(locale, benchmark.webLabel) : "",

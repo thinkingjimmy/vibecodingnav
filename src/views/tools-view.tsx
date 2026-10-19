@@ -146,7 +146,7 @@ export async function ItemView({ locale, type, params }: { locale: Locale; type:
             </p>
             <p className="mt-3 max-w-[760px] text-[14px] leading-relaxed text-mfg">{item.evalView.note}</p>
           </header>
-          <EvalTable rows={item.evalView.rows} dict={dict} mode={item.evalView.mode} assistedLabel={item.evalView.assistedLabel} webLabel={item.evalView.webLabel} showWeb={item.evalView.showWeb} />
+          <EvalTable rows={item.evalView.rows} dict={dict} mode={item.evalView.mode} assistedLabel={item.evalView.assistedLabel} webLabel={item.evalView.webLabel} showAssisted={item.evalView.showAssisted} showWeb={item.evalView.showWeb} />
         </section>
       ) : null}
       {item.visual === "phosphor-weights" ? <section className="px-4 pt-14"><PhosphorWeights /></section> : null}

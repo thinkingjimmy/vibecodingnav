@@ -9,6 +9,14 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-10-19
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步：146 行，榜单日期 2026-10-19，900,155 票。Claude Opus 5.5（max）第 1（1806）；新增 DeepSeek-V4.1-Flash-20261017（max）第 12（1670），与 20260910 档一并映射到 `deepseek-v4-1-flash`。
+- ReactBench 从 https://www.reactbench.com/data 同步 v1.2：85 个配置，站内映射 44 行。Claude Opus 5.5（max）54.4% 居首。
+- Convex Evals 从 fabulous-panther-525.convex.cloud 同步 No Guidelines / With Guidelines（默认查询，对照页面）/ No Guidelines + Web；框架页展示三列，`convex-ai-rules` 改为 uplift。Web 前端综合分随 WebDev 与 ReactBench 重算。
+
 ## 2026-10-18
 
 ### 变更

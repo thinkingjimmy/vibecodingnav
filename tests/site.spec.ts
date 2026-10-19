@@ -13,7 +13,7 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
   await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
   await expect(page.getByRole("link", { name: /写文档和文案/ })).toBeVisible();
-  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("97").first()).toBeVisible();
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("99").first()).toBeVisible();
   await expect(page.getByText("#1 · #1 · #1 · —")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
@@ -95,16 +95,16 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await page.goto("/zh/benchmarks/lmarena-webdev/");
   await expect(page.getByText("前端 Web 开发")).toBeVisible();
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
-  await expect(page.getByText("1811").first()).toBeVisible();
+  await expect(page.getByText("1806").first()).toBeVisible();
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("devstral-medium-2507")).toBeVisible();
   await page.getByRole("button", { name: "开源权重" }).click();
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toHaveCount(0);
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "mimo-v2.6-flash" })).toBeVisible();
-  const mimo = page.getByRole("row").filter({ hasText: "mimo-v2.6-flash" });
-  await expect(mimo.getByText("17", { exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "deepseek-v4.1-flash-20261017-max" })).toBeVisible();
+  const deepseek = page.getByRole("row").filter({ hasText: "deepseek-v4.1-flash-20261017-max" });
+  await expect(deepseek.getByText("12", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("granite-4.1-8b")).toBeVisible();
 });
@@ -329,7 +329,7 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   await expect(scoringDialog.getByText("综合分怎么算")).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "公式" })).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "一个例子" })).toBeVisible();
-  await expect(scoringDialog.getByText(/GPT-6 Astra 的综合分是 90/)).toBeVisible();
+  await expect(scoringDialog.getByText(/GPT-6 Astra 的综合分是 91/)).toBeVisible();
   await expect(scoringDialog.getByText(/拿下 DeepSWE v1\.1 第 1/)).toBeVisible();
   await expect(scoringDialog.getByText("Esc 关闭")).toHaveCount(0);
   const scoringClose = scoringDialog.getByRole("button", { name: "关闭" });
@@ -376,7 +376,7 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   await page.setViewportSize({ width: 1280, height: 800 });
   const opus = page.getByRole("row").filter({ hasText: "Claude Opus 5.5" }).first();
   await expect(opus).toContainText("—");
-  await expect(opus).toContainText("5/7");
+  await expect(opus).toContainText("6/7");
   const firstName = () => page.locator("tbody tr").first().locator("td").first().innerText();
   const before = await firstName();
   await page.getByRole("button", { name: "按模型排序" }).click();
@@ -559,15 +559,15 @@ test("framework evals stay on separate boards", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/zh/libraries/convex/");
   await expect(page.getByText("90.18").first()).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: "有指南" })).toBeVisible();
   await expect(page.getByText("无指南 + 网页")).toBeVisible();
-  await expect(page.getByText("With Guidelines 没有收录")).toBeVisible();
   const convexOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(convexOverflow).toBeLessThanOrEqual(1);
   await page.setViewportSize({ width: 1280, height: 800 });
 
   await page.goto("/zh/prompts/convex-ai-rules/");
-  await expect(page.getByRole("heading", { name: "对照臂未核实" })).toBeVisible();
-  await expect(page.locator("table")).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "有材料相对基线的变化" })).toBeVisible();
+  await expect(page.getByText("+8.34").first()).toBeVisible();
 
   await page.goto("/zh/prompts/nextjs-agents-md/");
   await expect(page.getByText("+13.0").first()).toBeVisible();

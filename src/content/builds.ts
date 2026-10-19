@@ -112,7 +112,7 @@ npm i @phosphor-icons/react motion geist`,
     notFor: [
       { title: tx("移动端原生", "Native mobile"), body: tx("Kotlin / Compose 项目看「做一个 Android App」，模型排名不同。", "For Kotlin / Compose, open “Build an Android app”. The model order is different."), href: "/build/android-app" },
       { title: tx("后端与脚本为主", "Mostly backend and scripts"), body: tx("界面只是薄薄一层时，按 Terminal-Bench 选模型更准。", "When the interface is a thin layer, pick the model from Terminal-Bench."), href: "/build/cli-devops" },
-      { title: tx("预算紧", "A tight budget"), body: tx("把模型换成 Claude Sonnet 5.5（价格减半，分数低 39）或开源的 MiMo V2.6 Flash，其余不变。", "Swap the model for Claude Sonnet 5.5 (half the price, 39 points lower) or open-weight MiMo V2.6 Flash. Leave the rest.") },
+      { title: tx("预算紧", "A tight budget"), body: tx("把模型换成 Claude Sonnet 5.5（价格减半，分数低 38）或开源的 DeepSeek V4.1 Flash，其余不变。", "Swap the model for Claude Sonnet 5.5 (half the price, 38 points lower) or open-weight DeepSeek V4.1 Flash. Leave the rest.") },
     ],
   },
   {
@@ -271,7 +271,7 @@ npm i @supabase/supabase-js`,
     notFor: [
       { title: tx("只做界面", "Interface only"), body: tx("页面质量看 Web 前端那一套。", "Page quality belongs on the web frontend set."), href: "/build/web-frontend" },
       { title: tx("把评测加总", "Adding the evals"), body: tx("每张框架评测测的是模型加上这一套框架。样本不大，前排又接近满分，不能合成一个排名。", "Each framework eval measures a model together with that framework. The samples are small and the front is near the ceiling, so they do not become one ranking.") },
-      { title: tx("用未核实的指南分", "An unverified guidelines score"), body: tx("Convex With Guidelines 的公开查询没有返回分数。规则可以装，变化量不要写。", "The public Convex With Guidelines query did not return scores. The rules can still be installed. Do not write a change figure.") },
+      { title: tx("把有指南当成基线", "Treat with-guidelines as the baseline"), body: tx("有指南列是另一臂。名次仍看无指南；变化量在 Convex AI rules 页。", "With Guidelines is another arm. Rank still follows no-guidelines; the change lives on the Convex AI rules page.") },
     ],
   },
 ];

@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-19",
+    kind: "board",
+    source: "lmarena.ai / reactbench.com / convex.dev",
+    text: tx(
+      "**三榜同步**：LMArena WebDev 至 2026-10-19（900,155 票、146 行），Opus 5.5（max）`1806` 居首，新增 DeepSeek-V4.1-Flash-20261017（max）第 12（`1670`）。ReactBench v1.2 重同步（85 配置），Opus 5.5（max）`54.4%` 第 1。Convex 补上 With Guidelines，并刷新 No Guidelines / Web。",
+      "**Three-board sync**: LMArena WebDev to 2026-10-19 (900,155 votes, 146 rows); Opus 5.5 (max) leads at `1806`; new DeepSeek-V4.1-Flash-20261017 (max) at #12 (`1670`). ReactBench v1.2 resynced (85 configs) with Opus 5.5 (max) `54.4%` at #1. Convex adds With Guidelines and refreshes No Guidelines / Web.",
+    ),
+  },
+  {
     date: "10-18",
     kind: "pick",
     source: "reactbits.dev",

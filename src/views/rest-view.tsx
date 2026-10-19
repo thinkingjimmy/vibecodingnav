@@ -117,7 +117,7 @@ export async function BenchmarkView({ locale, params }: { locale: Locale; params
       {benchmark.board ? (
         <section className="pt-16">
           <header className="px-4 pb-4"><h2 className="pt">{dict.benchmark.board}</h2></header>
-          <EvalTable rows={benchmark.board.rows} dict={dict} mode="board" assistedLabel={benchmark.board.assistedLabel} webLabel={benchmark.board.webLabel} showWeb={benchmark.board.showWeb} />
+          <EvalTable rows={benchmark.board.rows} dict={dict} mode="board" assistedLabel={benchmark.board.assistedLabel} webLabel={benchmark.board.webLabel} showAssisted={benchmark.board.showAssisted} showWeb={benchmark.board.showWeb} />
         </section>
       ) : null}
       {benchmark.scenarios.length ? (

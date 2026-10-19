@@ -50,9 +50,9 @@ describe("composite method C", () => {
     // Web top-5 after FrontierCode 1.1 (weight 0.6, rate → ratio to leader)
     console.log("Web top-5 composite:", rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display]));
     expect(rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
-      [1, "claude-opus-5-5", 97],
+      [1, "claude-opus-5-5", 99],
       [2, "claude-sonnet-5-5", 92],
-      [3, "gpt-6-astra", 90],
+      [3, "gpt-6-astra", 91],
       [4, "claude-fable-5-1", 85],
       [5, "gpt-6-1-sol", 83],
     ]);
@@ -60,7 +60,7 @@ describe("composite method C", () => {
       [1, 100],
       [1, 100],
       [1, 100],
-      null,
+      [1, 100],
       [1, 100],
       null,
       [1, 100],
@@ -171,13 +171,13 @@ describe("composite method C", () => {
       }
     }
     const web = getScenario("zh", "web-frontend")!.scoring.worked!;
-    expect(web).toMatchObject({ key: "model:gpt-6-astra", composite: 90 });
-    expect(Math.round(web.numerator / web.denominator)).toBe(90);
+    expect(web).toMatchObject({ key: "model:gpt-6-astra", composite: 91 });
+    expect(Math.round(web.numerator / web.denominator)).toBe(91);
   });
 
   it("wires composite into fused tables and home cards", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.fusion.rows[0]).toMatchObject({ slug: "claude-opus-5-5", compositeLabel: "97" });
+    expect(web?.fusion.rows[0]).toMatchObject({ slug: "claude-opus-5-5", compositeLabel: "99" });
     expect(web?.fusion.rows.map((row) => row.slug).slice(0, 5)).toEqual([
       "claude-opus-5-5",
       "claude-sonnet-5-5",
@@ -186,14 +186,14 @@ describe("composite method C", () => {
       "gpt-6-1-sol",
     ]);
     expect(web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([
-      1, 1, 1, null, 1, 1, null,
+      1, 1, 1, null, 1, 1, 1,
     ]);
 
     const home = getHome("zh").cards;
     expect(home[0]?.rows.map((row) => [row.name, row.score])).toEqual([
-      ["Claude Opus 5.5", "97"],
+      ["Claude Opus 5.5", "99"],
       ["Claude Sonnet 5.5", "92"],
-      ["GPT-6 Astra", "90"],
+      ["GPT-6 Astra", "91"],
       ["Claude Fable 5.1", "85"],
       ["GPT-6.1 Sol", "83"],
     ]);
@@ -204,7 +204,7 @@ describe("composite method C", () => {
       "—",
       "#1 · 100",
       "#1 · 100",
-      "—",
+      "#1 · 100",
     ]);
 
     expect(home[0]?.rows.every((row) => !("boards" in row && row.boards))).toBe(true);

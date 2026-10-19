@@ -76,10 +76,10 @@ describe("picks", () => {
   it("resolves the web frontend board", () => {
     const picks = resolvePicks("web-frontend");
     expect(picks.top?.modelSlug).toBe("claude-opus-5-5");
-    expect(picks.top?.score).toBe(1811);
+    expect(picks.top?.score).toBe(1806);
     expect(picks.value?.modelSlug).toBe("claude-sonnet-5-5");
-    expect(picks.value?.score).toBe(1774);
-    expect(picks.open?.modelSlug).toBe("mimo-v2-6-flash");
+    expect(picks.value?.score).toBe(1768);
+    expect(picks.open?.modelSlug).toBe("deepseek-v4-1-flash");
   });
 
   it("resolves cheaper terminal and android rows", () => {
@@ -149,11 +149,12 @@ describe("picks", () => {
 
   it("keeps each public board complete and in source order", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.boards[0]?.rows).toHaveLength(143);
-    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1811" });
-    expect(web?.boards[0]?.rows[14]).toMatchObject({ name: "muse-wonder-max", rank: 15, score: "1651" });
-    expect(web?.boards[0]?.rows[16]).toMatchObject({ name: "mimo-v2.6-flash", rank: 17, score: "1635" });
-    expect(web?.boards[0]?.rows[22]).toMatchObject({ name: "glm-5.3-max", rank: 23, score: "1621" });
+    expect(web?.boards[0]?.rows).toHaveLength(146);
+    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1806" });
+    expect(web?.boards[0]?.rows[11]).toMatchObject({ name: "deepseek-v4.1-flash-20261017-max", rank: 12, score: "1670" });
+    expect(web?.boards[0]?.rows[15]).toMatchObject({ name: "muse-wonder-max", rank: 16, score: "1650" });
+    expect(web?.boards[0]?.rows[17]).toMatchObject({ name: "mimo-v2.6-flash", rank: 18, score: "1633" });
+    expect(web?.boards[0]?.rows[22]).toMatchObject({ name: "glm-5.3-max", rank: 23, score: "1622" });
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
@@ -199,7 +200,7 @@ describe("picks", () => {
     expect(creative?.leaderboard?.[0]).toMatchObject({ name: "gpt-6-astra", rank: 1, score: "2173.3" });
     expect(creative?.leaderboard?.[4]).toMatchObject({ name: "kimi-k3", rank: 5, score: "2082.3" });
     expect(creative?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(143);
+    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(146);
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
     expect(androidBench?.versions?.[0]?.current).toBe(true);
@@ -274,7 +275,7 @@ describe("picks", () => {
     expect(web?.scoring.worked).toMatchObject({
       key: "model:gpt-6-astra",
       name: "GPT-6 Astra",
-      composite: 90,
+      composite: 91,
     });
     expect(web?.scoring.worked?.rows.map((row) => row.board)).toEqual([
       "盲测投票",
@@ -287,13 +288,13 @@ describe("picks", () => {
     ]);
     expect(web?.scoring.worked?.rows).toHaveLength(7);
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
-    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1, 1, null]);
-    expect(opus).toMatchObject({ compositeLabel: "97", count: 5, total: 7 });
-    expect(opus?.cells[0]?.tip).toContain("1811");
+    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1, 1, 1]);
+    expect(opus).toMatchObject({ compositeLabel: "99", count: 6, total: 7 });
+    expect(opus?.cells[0]?.tip).toContain("1806");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 5, null, 6, 3, 1]);
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 5, null, 6, 3, 3]);
     expect(fable).toMatchObject({ compositeLabel: "85", count: 6 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
@@ -402,8 +403,8 @@ describe("picks", () => {
       "ReactBench",
     ]);
     expect(home[0]?.rows).toHaveLength(5);
-    expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "97" });
-    expect(home[0]?.rows[0]?.detail?.title).toContain("综合 97");
+    expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "99" });
+    expect(home[0]?.rows[0]?.detail?.title).toContain("综合 99");
     expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench", "sudo L7", "DeepSWE v1.1", "FrontierCode 1.1"]);
     expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "98" });
     expect(home[1]?.rows.map((row) => [row.name, row.score])).toEqual([
@@ -435,10 +436,12 @@ describe("picks", () => {
     expect(uplift.find((row) => row.name === "Grok 4.7")?.delta).toBe("+11.6");
 
     const convex = getItem("en", "library", "convex")?.evalView;
-    expect(convex?.rows[0]).toMatchObject({ baseline: "90.18", web: "96.43" });
+    expect(convex?.rows[0]).toMatchObject({ name: "GPT-6 Astra", baseline: "90.18", assisted: "97.77", web: "91.07", rank: 1 });
     expect(convex?.rows.find((row) => row.name === "Gemini 3.1 Pro Preview")?.web).toBeUndefined();
-    expect(getItem("zh", "prompt", "convex-ai-rules")?.evalView?.rows).toEqual([]);
-    expect(getItem("zh", "prompt", "convex-ai-rules")?.evalView?.mode).toBe("unverified");
+    expect(convex?.showAssisted).toBe(true);
+    const rules = getItem("zh", "prompt", "convex-ai-rules")?.evalView;
+    expect(rules?.mode).toBe("uplift");
+    expect(rules?.rows.find((row) => row.name === "Claude Opus 5.5")).toMatchObject({ baseline: "89.58", assisted: "97.92", delta: "+8.34" });
 
     const next = getItem("en", "prompt", "nextjs-agents-md")?.evalView?.rows ?? [];
     expect(next.find((row) => row.name === "Claude Opus 5.5")?.delta).toBe("0");
@@ -446,11 +449,11 @@ describe("picks", () => {
 
     const react = getItem("zh", "library", "react")?.evalView;
     expect(react?.kindLabel).toBe("生态评测");
-    expect(react?.rows[0]).toMatchObject({ name: "Claude Fable 5.1", rank: 1, baseline: "49.2" });
-    expect(react?.rows.some((row) => row.rank === 17)).toBe(false);
+    expect(react?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rank: 1, baseline: "54.4" });
+    expect(react?.rows.some((row) => row.rank === 17)).toBe(true);
 
     const scores = getModel("zh", "claude-opus-5-5")?.scoreRows.filter((row) => row.name === "Supabase Evals" || row.name === "Convex Evals") ?? [];
-    expect(scores.map((row) => row.score)).toEqual(["91.3", "90.18"]);
+    expect(scores.map((row) => row.score)).toEqual(["91.3", "89.58"]);
     expect(getBenchmark("en", "convex-evals")?.version).toBe("92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb");
     expect(getBenchmark("en", "reactbench")?.domain).toBe("Ecosystem eval");
   });
@@ -483,7 +486,7 @@ describe("backlinks", () => {
     const build = getBuild("zh", "web-frontend");
     expect(build?.roles[0]?.primary.name).toBe("Claude Opus 5.5");
     expect(build?.roles[0]?.alternative).toContain("Claude Sonnet 5.5");
-    expect(build?.roles[0]?.alternative).toContain("MiMo V2.6 Flash");
+    expect(build?.roles[0]?.alternative).toContain("DeepSeek V4.1 Flash");
     expect(build?.agentsMd).toContain("frontend-design");
   });
 });

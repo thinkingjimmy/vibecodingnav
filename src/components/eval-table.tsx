@@ -34,6 +34,7 @@ export function EvalTable({
   mode,
   assistedLabel,
   webLabel,
+  showAssisted = false,
   showWeb,
 }: {
   rows: EvalTableRow[];
@@ -41,11 +42,13 @@ export function EvalTable({
   mode: "board" | "uplift" | "unverified";
   assistedLabel: string;
   webLabel: string;
+  showAssisted?: boolean;
   showWeb: boolean;
 }) {
   const [expanded, setExpanded] = useState(false);
   if (mode === "unverified" || rows.length === 0) return null;
   const uplift = mode === "uplift";
+  const assistedCol = uplift || showAssisted;
   const showCost = !uplift && rows.some((row) => row.cost);
   const shown = expanded ? rows : rows.slice(0, PAGE);
   return (
@@ -57,7 +60,7 @@ export function EvalTable({
               <th className="px-4 py-2 font-normal">#</th>
               <th className="px-4 py-2 font-normal">{dict.scenario.colModel}</th>
               <th className="px-4 py-2 text-right font-normal">{dict.item.evalBaseline}</th>
-              {uplift ? <th className="px-4 py-2 text-right font-normal">{assistedLabel}</th> : null}
+              {assistedCol ? <th className="px-4 py-2 text-right font-normal">{assistedLabel}</th> : null}
               {uplift ? <th className="px-4 py-2 text-right font-normal">{dict.item.evalDelta}</th> : null}
               {showWeb ? <th className="px-4 py-2 text-right font-normal">{webLabel}</th> : null}
               {showCost ? <th className="px-4 py-2 text-right font-normal">{dict.item.evalCost}</th> : null}
@@ -75,7 +78,7 @@ export function EvalTable({
                   {row.setting ? <div className="num mt-1 text-[11px] text-faint">{row.setting}</div> : null}
                 </td>
                 <td className="num px-4 py-3 text-right">{row.baseline}</td>
-                {uplift ? <td className="num px-4 py-3 text-right">{row.assisted}</td> : null}
+                {assistedCol ? <td className="num px-4 py-3 text-right">{row.assisted ?? "—"}</td> : null}
                 {uplift ? <td className="num px-4 py-3 text-right">{row.delta}</td> : null}
                 {showWeb ? <td className="num px-4 py-3 text-right text-mfg">{row.web ?? "—"}</td> : null}
                 {showCost ? <td className="num px-4 py-3 text-right text-mfg">{row.cost ?? "—"}</td> : null}
