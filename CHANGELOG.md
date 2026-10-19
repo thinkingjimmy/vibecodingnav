@@ -13,6 +13,7 @@
 
 ### 变更
 
+- 首页 Hero 与站点默认 `<title>` / meta description / Open Graph / Twitter 文案更新：中文「每一项编程任务，都有最懂它的 AI。」／「真实评测排名，契合工具随心搭。」；英文「The best AI for every coding task.」／「Ranked by real benchmarks, paired with the tools that fit。」标题后缀改为 `| VibeCodingNav`。
 - LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步：146 行，榜单日期 2026-10-19，900,155 票。Claude Opus 5.5（max）第 1（1806）；新增 DeepSeek-V4.1-Flash-20261017（max）第 12（1670），与 20260910 档一并映射到 `deepseek-v4-1-flash`。
 - ReactBench 从 https://www.reactbench.com/data 同步 v1.2：85 个配置，站内映射 44 行。Claude Opus 5.5（max）54.4% 居首。
 - Convex Evals 从 fabulous-panther-525.convex.cloud 同步 No Guidelines / With Guidelines（默认查询，对照页面）/ No Guidelines + Web；框架页展示三列，`convex-ai-rules` 改为 uplift。Web 前端综合分随 WebDev 与 ReactBench 重算。

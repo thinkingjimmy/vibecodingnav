@@ -8,8 +8,8 @@ import type { Dictionary } from "@/lib/contracts";
 
 const en = {
   meta: {
-    title: "Pick the model and the stack for the job",
-    description: "Models, frameworks, prompts, and tools for AI coding, arranged by the job. Every recommendation has a source, a date, and a reason to skip it.",
+    title: "The best AI for every coding task.",
+    description: "Ranked by real benchmarks, paired with the tools that fit.",
   },
   nav: {
     scenarios: "Scenarios",
@@ -22,8 +22,8 @@ const en = {
     primary: "Primary",
   },
   home: {
-    heroTitle: "Pick the model and the stack for the job",
-    heroBody: "Models, frameworks, prompts, and tools for AI coding, arranged by the job you are doing. Every recommendation has a source and a date, and says when not to use it.",
+    heroTitle: "The best AI for every coding task.",
+    heroBody: "Ranked by real benchmarks, paired with the tools that fit.",
     boards: "Scenario boards",
     viewMore: "View More",
     toolbox: "Toolbox",

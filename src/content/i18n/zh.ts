@@ -8,8 +8,8 @@ import type { Dictionary } from "@/lib/contracts";
 
 const zh = {
   meta: {
-    title: "按场景，选对模型与框架",
-    description: "AI 编程的模型、框架、Prompt 与工具，按你要做的事排好。每条推荐都有出处和日期，也写清楚什么时候别用。",
+    title: "每一项编程任务，都有最懂它的 AI。",
+    description: "真实评测排名，契合工具随心搭。",
   },
   nav: {
     scenarios: "场景",
@@ -22,8 +22,8 @@ const zh = {
     primary: "主导航",
   },
   home: {
-    heroTitle: "按场景，选对模型与框架",
-    heroBody: "AI 编程的模型、框架、Prompt 与工具，按你要做的事排好。每条推荐都有出处和日期，也写清楚什么时候别用。",
+    heroTitle: "每一项编程任务，都有最懂它的 AI。",
+    heroBody: "真实评测排名，契合工具随心搭。",
     boards: "场景榜单",
     viewMore: "查看更多",
     toolbox: "工具箱",

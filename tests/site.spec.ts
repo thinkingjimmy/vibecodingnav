@@ -9,7 +9,7 @@ function clippedNow(page: Page) {
 test("chinese home shows the scenario boards", async ({ page }) => {
   await page.goto("/zh/");
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("按场景，选对模型与框架");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("每一项编程任务，都有最懂它的 AI。");
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
   await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
   await expect(page.getByRole("link", { name: /写文档和文案/ })).toBeVisible();
@@ -86,7 +86,7 @@ test("view more opens every scenario as a board card", async ({ page }) => {
 test("english home is unprefixed", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Pick the model and the stack for the job");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("The best AI for every coding task.");
   await expect(page.getByRole("link", { name: /View More/ }).first()).toBeVisible();
   await expect(page.getByText("View the full board")).toHaveCount(0);
 });

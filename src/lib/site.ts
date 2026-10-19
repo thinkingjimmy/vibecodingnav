@@ -9,7 +9,7 @@ import type { Locale } from "./contracts";
 import { localePath } from "./locale";
 
 export const SITE_URL = "https://vibecodingnav.com";
-export const SITE_NAME = "vibecodingnav";
+export const SITE_NAME = "VibeCodingNav";
 export const GA_MEASUREMENT_ID = "G-ZBKDEBT9C6";
 export const CONTENT_CLOCK = "2026-10-10";
 export const SITE_SYNC = "2026-10-10";
@@ -33,6 +33,7 @@ export function isStale(asOf: string, clock = siteClock()): boolean {
 
 export function pageMetadata(locale: Locale, path: string, title: string, description: string): Metadata {
   const canonical = `${SITE_URL}${localePath(locale, path)}`;
+  const brandedTitle = `${title} | ${SITE_NAME}`;
   return {
     title,
     description,
@@ -44,6 +45,7 @@ export function pageMetadata(locale: Locale, path: string, title: string, descri
         "x-default": `${SITE_URL}${localePath("en", path)}`,
       },
     },
-    openGraph: { title, description, url: canonical, siteName: SITE_NAME, locale: locale === "zh" ? "zh_CN" : "en_US" },
+    openGraph: { title: brandedTitle, description, url: canonical, siteName: SITE_NAME, locale: locale === "zh" ? "zh_CN" : "en_US" },
+    twitter: { card: "summary", title: brandedTitle, description },
   };
 }

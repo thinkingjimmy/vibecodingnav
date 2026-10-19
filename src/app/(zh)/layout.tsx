@@ -14,7 +14,7 @@ const dict = getDictionary("zh");
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: `${dict.meta.title} · ${SITE_NAME}`, template: `%s · ${SITE_NAME}` },
+  title: { default: `${dict.meta.title} | ${SITE_NAME}`, template: `%s | ${SITE_NAME}` },
   description: dict.meta.description,
   icons: { icon: "/favicon.svg" },
 };
