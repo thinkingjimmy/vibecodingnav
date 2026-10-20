@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-20",
+    kind: "board",
+    source: "lmarena.ai / convex.dev",
+    text: tx(
+      "**四榜同步**：LMArena WebDev 至 2026-10-19（903,893 票、149 行），Opus 5.5（max）`1807` 居首，新增 Muse Wonder Full（max）第 6（`1726`）。Image-to-WebDev 至 2026-10-19（191,568 票、65 行），Opus 5.5（max）`1753` 居首，DeepSeek-V4.1-Flash-20260910（max）第 13（`1606`）。Convex No / With Guidelines 各 38 个模型，新增 GPT-5.5 第 14（`77.68%`）／第 17（`89.29%`）。",
+      "**Four-board sync**: LMArena WebDev to 2026-10-19 (903,893 votes, 149 rows); Opus 5.5 (max) leads at `1807`; new Muse Wonder Full (max) at #6 (`1726`). Image-to-WebDev to 2026-10-19 (191,568 votes, 65 rows); Opus 5.5 (max) leads at `1753`; DeepSeek-V4.1-Flash-20260910 (max) at #13 (`1606`). Convex No / With Guidelines have 38 models each; new GPT-5.5 at #14 (`77.68%`) / #17 (`89.29%`).",
+    ),
+  },
+  {
     date: "10-19",
     kind: "board",
     source: "lmarena.ai / reactbench.com / convex.dev",

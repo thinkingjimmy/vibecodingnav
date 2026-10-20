@@ -52,8 +52,8 @@ describe("composite method C", () => {
     expect(rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
       [1, "claude-opus-5-5", 99],
       [2, "claude-sonnet-5-5", 92],
-      [3, "gpt-6-astra", 91],
-      [4, "claude-fable-5-1", 85],
+      [3, "gpt-6-astra", 90],
+      [4, "claude-fable-5-1", 84],
       [5, "gpt-6-1-sol", 83],
     ]);
     expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
@@ -171,8 +171,8 @@ describe("composite method C", () => {
       }
     }
     const web = getScenario("zh", "web-frontend")!.scoring.worked!;
-    expect(web).toMatchObject({ key: "model:gpt-6-astra", composite: 91 });
-    expect(Math.round(web.numerator / web.denominator)).toBe(91);
+    expect(web).toMatchObject({ key: "model:gpt-6-astra", composite: 90 });
+    expect(Math.round(web.numerator / web.denominator)).toBe(90);
   });
 
   it("wires composite into fused tables and home cards", () => {
@@ -193,8 +193,8 @@ describe("composite method C", () => {
     expect(home[0]?.rows.map((row) => [row.name, row.score])).toEqual([
       ["Claude Opus 5.5", "99"],
       ["Claude Sonnet 5.5", "92"],
-      ["GPT-6 Astra", "91"],
-      ["Claude Fable 5.1", "85"],
+      ["GPT-6 Astra", "90"],
+      ["Claude Fable 5.1", "84"],
       ["GPT-6.1 Sol", "83"],
     ]);
     expect(home[0]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual([

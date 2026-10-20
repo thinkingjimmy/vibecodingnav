@@ -76,7 +76,7 @@ describe("picks", () => {
   it("resolves the web frontend board", () => {
     const picks = resolvePicks("web-frontend");
     expect(picks.top?.modelSlug).toBe("claude-opus-5-5");
-    expect(picks.top?.score).toBe(1806);
+    expect(picks.top?.score).toBe(1807);
     expect(picks.value?.modelSlug).toBe("claude-sonnet-5-5");
     expect(picks.value?.score).toBe(1768);
     expect(picks.open?.modelSlug).toBe("deepseek-v4-1-flash");
@@ -149,12 +149,13 @@ describe("picks", () => {
 
   it("keeps each public board complete and in source order", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.boards[0]?.rows).toHaveLength(146);
-    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1806" });
-    expect(web?.boards[0]?.rows[11]).toMatchObject({ name: "deepseek-v4.1-flash-20261017-max", rank: 12, score: "1670" });
-    expect(web?.boards[0]?.rows[15]).toMatchObject({ name: "muse-wonder-max", rank: 16, score: "1650" });
-    expect(web?.boards[0]?.rows[17]).toMatchObject({ name: "mimo-v2.6-flash", rank: 18, score: "1633" });
-    expect(web?.boards[0]?.rows[22]).toMatchObject({ name: "glm-5.3-max", rank: 23, score: "1622" });
+    expect(web?.boards[0]?.rows).toHaveLength(149);
+    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1807" });
+    expect(web?.boards[0]?.rows[5]).toMatchObject({ name: "muse-wonder-full-max", rank: 6, score: "1726" });
+    expect(web?.boards[0]?.rows[12]).toMatchObject({ name: "deepseek-v4.1-flash-20261017-max", rank: 13, score: "1664" });
+    expect(web?.boards[0]?.rows[16]).toMatchObject({ name: "muse-wonder-max", rank: 17, score: "1652" });
+    expect(web?.boards[0]?.rows[18]).toMatchObject({ name: "mimo-v2.6-flash", rank: 19, score: "1634" });
+    expect(web?.boards[0]?.rows[24]).toMatchObject({ name: "glm-5.3-max", rank: 25, score: "1621" });
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
@@ -200,7 +201,7 @@ describe("picks", () => {
     expect(creative?.leaderboard?.[0]).toMatchObject({ name: "gpt-6-astra", rank: 1, score: "2173.3" });
     expect(creative?.leaderboard?.[4]).toMatchObject({ name: "kimi-k3", rank: 5, score: "2082.3" });
     expect(creative?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(146);
+    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(149);
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
     expect(androidBench?.versions?.[0]?.current).toBe(true);
@@ -275,7 +276,7 @@ describe("picks", () => {
     expect(web?.scoring.worked).toMatchObject({
       key: "model:gpt-6-astra",
       name: "GPT-6 Astra",
-      composite: 91,
+      composite: 90,
     });
     expect(web?.scoring.worked?.rows.map((row) => row.board)).toEqual([
       "盲测投票",
@@ -290,12 +291,12 @@ describe("picks", () => {
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1, 1, 1]);
     expect(opus).toMatchObject({ compositeLabel: "99", count: 6, total: 7 });
-    expect(opus?.cells[0]?.tip).toContain("1806");
+    expect(opus?.cells[0]?.tip).toContain("1807");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
     expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 5, null, 6, 3, 3]);
-    expect(fable).toMatchObject({ compositeLabel: "85", count: 6 });
+    expect(fable).toMatchObject({ compositeLabel: "84", count: 6 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
     expect(web?.fusion.rows[2]?.slug).toBe("gpt-6-astra");
@@ -374,17 +375,19 @@ describe("picks", () => {
     expect(getBenchmark("zh", "supabase-evals")?.scenarios).toEqual([]);
     expect(getBenchmark("zh", "convex-evals")?.scenarios).toEqual([]);
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
-    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard).toHaveLength(64);
-    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1749", ci: "+30/-30" });
-    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[63]).toMatchObject({ name: "gemini-2.5-pro", rank: 64, score: "1285" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard).toHaveLength(65);
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1753", ci: "+24/-24" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[12]).toMatchObject({ name: "deepseek-v4.1-flash-20260910-max", rank: 13, score: "1606" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[64]).toMatchObject({ name: "gemini-2.5-pro", rank: 65, score: "1285" });
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.chart?.points).toHaveLength(64);
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.chart?.points.filter((point) => point.pareto).map((point) => [point.name, point.priceLabel])).toEqual([
       ["claude-opus-5.5-max", "16"],
       ["claude-sonnet-5.5-xhigh", "8"],
       ["muse-spark-1.3-max", "3.50"],
-      ["deepseek-v4.1-flash-max", "0.97"],
+      ["deepseek-v4.1-flash-20260910-max", "0.97"],
+      ["mimo-v2.6-pro", "0.76"],
       ["mimo-v2.6-flash", "0.25"],
-      ["glm-5.3-flash", "0.17"],
+      ["glm-5.3-flash", "0.15"],
     ]);
     expect(getBenchmark("zh", "nextjs-evals")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
     expect(getBenchmark("zh", "reactbench")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);

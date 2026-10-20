@@ -9,6 +9,14 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-10-20
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步：149 行，榜单日期 2026-10-19，903,893 票。Claude Opus 5.5（max）第 1（1807）；新增 Muse Wonder Full（max）第 6（1726），与 Muse Wonder 统一到同一模型。
+- LMArena Image-to-WebDev 从 https://lmarena.ai/leaderboard/image-to-webdev 全量同步：65 行，榜单日期 2026-10-19，191,568 票。Claude Opus 5.5（max）第 1（1753）；DeepSeek-V4.1-Flash-20260910（max）第 13（1606），与 DeepSeek V4.1 Flash 统一。帕累托最优点增至 7 个（新增 MiMo-V2.6-Pro）。
+- Convex Evals 从 fabulous-panther-525.convex.cloud 同步 No Guidelines 与 With Guidelines（各 38 个模型，同模型多档保留最佳一行）：新增 GPT-5.5 无指南第 14（77.68%）、有指南第 17（89.29%）；No Guidelines + Web 未在本轮刷新。Web 前端综合分随两张 LMArena 榜重算（榜首 Claude Opus 5.5，99 分）。
+
 ## 2026-10-19
 
 ### 变更

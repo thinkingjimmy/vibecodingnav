@@ -95,7 +95,7 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await page.goto("/zh/benchmarks/lmarena-webdev/");
   await expect(page.getByText("前端 Web 开发")).toBeVisible();
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
-  await expect(page.getByText("1806").first()).toBeVisible();
+  await expect(page.getByText("1807").first()).toBeVisible();
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("devstral-medium-2507")).toBeVisible();
@@ -104,7 +104,7 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "deepseek-v4.1-flash-20261017-max" })).toBeVisible();
   const deepseek = page.getByRole("row").filter({ hasText: "deepseek-v4.1-flash-20261017-max" });
-  await expect(deepseek.getByText("12", { exact: true })).toBeVisible();
+  await expect(deepseek.getByText("13", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("granite-4.1-8b")).toBeVisible();
 });
@@ -115,17 +115,17 @@ test("image-to-webdev shows the full board and the price chart", async ({ page }
   await expect(page.getByText("看一张图或截图，生成对应的网页")).toBeVisible();
   await expect(page.getByText("这张榜不是文字需求的 WebDev")).toBeVisible();
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
-  await expect(page.getByText("1749").first()).toBeVisible();
+  await expect(page.getByText("1753").first()).toBeVisible();
   await expect(page.getByText("+30/-30").first()).toBeVisible();
   await expect(page.getByText("gemini-2.5-pro")).toHaveCount(0);
   await page.getByRole("button", { name: /显示全部/ }).click();
   const last = page.getByRole("row").filter({ hasText: "gemini-2.5-pro" });
-  await expect(last.getByText("64", { exact: true })).toBeVisible();
+  await expect(last.getByText("65", { exact: true })).toBeVisible();
   await expect(last.getByText("1285")).toBeVisible();
   await expect(page.getByRole("heading", { name: "分数与价格" })).toBeVisible();
   await expect(page.getByRole("link", { name: "arena.ai/leaderboard/code/image-to-webdev/pareto" })).toHaveAttribute("href", "https://arena.ai/leaderboard/code/image-to-webdev/pareto");
-  await expect(page.getByText("1749 · $16/M")).toBeVisible();
-  await expect(page.getByText("1581 · $0.17/M")).toBeVisible();
+  await expect(page.getByText("1753 · $16/M")).toBeVisible();
+  await expect(page.getByText("1578 · $0.15/M")).toBeVisible();
 });
 
 test("source board filter and header stay under the nav while scrolling", async ({ page }) => {
@@ -329,7 +329,7 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   await expect(scoringDialog.getByText("综合分怎么算")).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "公式" })).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "一个例子" })).toBeVisible();
-  await expect(scoringDialog.getByText(/GPT-6 Astra 的综合分是 91/)).toBeVisible();
+  await expect(scoringDialog.getByText(/GPT-6 Astra 的综合分是 90/)).toBeVisible();
   await expect(scoringDialog.getByText(/拿下 DeepSWE v1\.1 第 1/)).toBeVisible();
   await expect(scoringDialog.getByText("Esc 关闭")).toHaveCount(0);
   const scoringClose = scoringDialog.getByRole("button", { name: "关闭" });

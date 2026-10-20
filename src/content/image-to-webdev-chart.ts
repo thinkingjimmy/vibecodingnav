@@ -28,8 +28,8 @@ export function imageToWebdevChart(locale: Locale) {
   return {
     title: locale === "zh" ? "分数与价格" : "Score and price",
     note: locale === "zh"
-      ? "横轴是帕累托页的混合价格 (输入 + 3×输出) / 4，单位 $/M。纵轴是榜上的分数。实心点是该页列出的 6 个最优点，价格用页面上的写法。"
-      : "The horizontal axis is the Pareto page’s blended price, (input + 3×output) / 4, in $/M. The vertical axis is the board score. Filled points are the six models that page lists, with the prices printed there.",
+      ? "横轴是帕累托页的混合价格 (输入 + 3×输出) / 4，单位 $/M。纵轴是榜上的分数。实心点是该页列出的 7 个最优点，价格用页面上的写法。"
+      : "The horizontal axis is the Pareto page’s blended price, (input + 3×output) / 4, in $/M. The vertical axis is the board score. Filled points are the seven models that page lists, with the prices printed there.",
     href: "https://arena.ai/leaderboard/code/image-to-webdev/pareto",
     hrefLabel: "arena.ai/leaderboard/code/image-to-webdev/pareto",
     points,
