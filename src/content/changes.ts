@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-26",
+    kind: "board",
+    source: "lmarena.ai / theslopindex.com / eqbench.com / convex.dev",
+    text: tx(
+      "**四榜同步**：LMArena WebDev 至 2026-10-22（923,854 票、151 行），新增 Moonshot **Kimi K3.1 Pro（max）** 第 8（`1692`，初步）。Slop Index 扩至 58 行（2,091 票），反转后 **Haiku 5.5** 第 1（100−17=83）。EQ Creative Writing 145 行，Meta **muse-wonder** 第 9（Elo `2007.0`）。Convex With Guidelines 刷新，Claude Opus 5 第 9（`94.64%`）。",
+      "**Four-board sync**: LMArena WebDev to 2026-10-22 (923,854 votes, 151 rows); new Moonshot **Kimi K3.1 Pro (max)** at #8 (`1692`, preliminary). Slop Index expands to 58 rows (2,091 votes); after inversion **Haiku 5.5** leads (100−17=83). EQ Creative Writing 145 rows; Meta **muse-wonder** at #9 (Elo `2007.0`). Convex With Guidelines refreshed; Claude Opus 5 at #9 (`94.64%`).",
+    ),
+  },
+  {
     date: "10-20",
     kind: "board",
     source: "lmarena.ai / convex.dev",

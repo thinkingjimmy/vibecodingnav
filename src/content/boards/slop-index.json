@@ -1,132 +1,198 @@
 [
   {
     "rank": 1,
-    "label": "GPT-5.6 Luna",
-    "org": "OpenAI",
-    "score": 74,
-    "scoreText": "74",
-    "tokenPrice": "$3.5",
-    "vendor": "openai",
-    "modelSlug": "gpt-5-6-luna"
+    "label": "Haiku 5.5",
+    "org": "Anthropic",
+    "score": 83,
+    "scoreText": "83",
+    "tokenPrice": "$0.3",
+    "vendor": "anthropic",
+    "modelSlug": "claude-haiku-5-5"
   },
   {
     "rank": 2,
-    "label": "DeepSeek V4",
-    "org": "DeepSeek",
-    "score": 72,
-    "scoreText": "72",
-    "tokenPrice": "$2.61",
-    "vendor": "deepseek"
+    "label": "GLM-5.3 Prime",
+    "org": "Zhipu",
+    "score": 79,
+    "scoreText": "79",
+    "tokenPrice": "$5.8",
+    "vendor": "zhipu"
   },
   {
     "rank": 3,
-    "label": "GPT-5.6 Sol",
-    "org": "OpenAI",
-    "score": 68,
-    "scoreText": "68",
-    "tokenPrice": "$17.5",
-    "vendor": "openai",
-    "modelSlug": "gpt-5-6-sol"
+    "label": "Inkling Small",
+    "org": "Thinking Machines",
+    "score": 75,
+    "scoreText": "75",
+    "tokenPrice": "$0.82",
+    "letter": "I"
   },
   {
     "rank": 4,
-    "label": "DeepSeek V4.1 Flash",
-    "org": "DeepSeek",
-    "score": 67,
-    "scoreText": "67",
-    "tokenPrice": "$0.38",
-    "vendor": "deepseek",
-    "modelSlug": "deepseek-v4-1-flash"
+    "label": "GPT-6 Sol Pro",
+    "org": "OpenAI",
+    "score": 72,
+    "scoreText": "72",
+    "tokenPrice": "$6",
+    "vendor": "openai"
   },
   {
     "rank": 5,
-    "label": "Inkling Small",
-    "org": "Thinking Machines",
-    "score": 66,
-    "scoreText": "66",
-    "tokenPrice": "$0.82",
-    "letter": "T"
-  },
-  {
-    "rank": 6,
     "label": "Gemini 3.1 Pro",
     "org": "Google",
-    "score": 66,
-    "scoreText": "66",
+    "score": 72,
+    "scoreText": "72",
     "tokenPrice": "$7",
     "vendor": "google",
     "modelSlug": "gemini-3-1-pro"
   },
   {
-    "rank": 7,
-    "label": "GPT-6 Astra Pro",
+    "rank": 6,
+    "label": "GPT-6 Sol",
     "org": "OpenAI",
-    "score": 66,
-    "scoreText": "66",
-    "tokenPrice": "$30",
-    "vendor": "openai"
+    "score": 72,
+    "scoreText": "72",
+    "tokenPrice": "$6",
+    "vendor": "openai",
+    "modelSlug": "gpt-6-sol"
+  },
+  {
+    "rank": 7,
+    "label": "DeepSeek V4",
+    "org": "DeepSeek",
+    "score": 71,
+    "scoreText": "71",
+    "tokenPrice": "$2.61",
+    "vendor": "deepseek"
   },
   {
     "rank": 8,
-    "label": "GPT-5.6 Terra",
+    "label": "GPT-5.6 Sol",
     "org": "OpenAI",
-    "score": 65,
-    "scoreText": "65",
-    "tokenPrice": "$8.75",
+    "score": 71,
+    "scoreText": "71",
+    "tokenPrice": "$17.5",
     "vendor": "openai",
-    "modelSlug": "gpt-5-6-terra"
+    "modelSlug": "gpt-5-6-sol"
   },
   {
     "rank": 9,
     "label": "Grok 4.5",
     "org": "xAI",
-    "score": 65,
-    "scoreText": "65",
+    "score": 71,
+    "scoreText": "71",
     "tokenPrice": "$4",
     "vendor": "xai",
     "modelSlug": "grok-4-5"
   },
   {
     "rank": 10,
-    "label": "Muse Spark 1.1",
-    "org": "Meta",
-    "score": 65,
-    "scoreText": "65",
-    "tokenPrice": "$2.75",
-    "vendor": "meta",
-    "modelSlug": "muse-spark-1-1"
+    "label": "GPT-6.1 Sol Pro",
+    "org": "OpenAI",
+    "score": 70,
+    "scoreText": "70",
+    "tokenPrice": "$6",
+    "vendor": "openai"
   },
   {
     "rank": 11,
-    "label": "Qwen3.8 Max",
-    "org": "Alibaba",
-    "score": 64,
-    "scoreText": "64",
-    "tokenPrice": "$4",
-    "vendor": "qwen",
-    "modelSlug": "qwen3-8-max"
+    "label": "GPT-6.1 Sol",
+    "org": "OpenAI",
+    "score": 69,
+    "scoreText": "69",
+    "tokenPrice": "$6",
+    "vendor": "openai",
+    "modelSlug": "gpt-6-1-sol"
   },
   {
     "rank": 12,
-    "label": "Hunyuan 4 Preview",
-    "org": "Tencent",
-    "score": 63,
-    "scoreText": "63",
-    "tokenPrice": "$1.67",
-    "vendor": "tencent",
-    "modelSlug": "hy4-preview"
+    "label": "Grok 4.6",
+    "org": "xAI",
+    "score": 68,
+    "scoreText": "68",
+    "tokenPrice": "$4",
+    "vendor": "xai",
+    "modelSlug": "grok-4-6"
   },
   {
     "rank": 13,
-    "label": "Qwen3.8 Flash",
-    "org": "Alibaba",
-    "score": 61,
-    "scoreText": "61",
-    "tokenPrice": "$0.31",
-    "vendor": "qwen"
+    "label": "Mercury 2.5",
+    "org": "Inception",
+    "score": 67,
+    "scoreText": "67",
+    "tokenPrice": "$0.1",
+    "letter": "M"
   },
   {
     "rank": 14,
+    "label": "Sonnet 5.5",
+    "org": "Anthropic",
+    "score": 66,
+    "scoreText": "66",
+    "tokenPrice": "$6",
+    "vendor": "anthropic",
+    "modelSlug": "claude-sonnet-5-5"
+  },
+  {
+    "rank": 15,
+    "label": "GPT-6 Luna",
+    "org": "OpenAI",
+    "score": 66,
+    "scoreText": "66",
+    "tokenPrice": "$0.3",
+    "vendor": "openai",
+    "modelSlug": "gpt-6-luna"
+  },
+  {
+    "rank": 16,
+    "label": "GPT-5.6 Terra",
+    "org": "OpenAI",
+    "score": 66,
+    "scoreText": "66",
+    "tokenPrice": "$8.75",
+    "vendor": "openai",
+    "modelSlug": "gpt-5-6-terra"
+  },
+  {
+    "rank": 17,
+    "label": "GPT-5.6 Luna",
+    "org": "OpenAI",
+    "score": 65,
+    "scoreText": "65",
+    "tokenPrice": "$3.5",
+    "vendor": "openai",
+    "modelSlug": "gpt-5-6-luna"
+  },
+  {
+    "rank": 18,
+    "label": "DeepSeek V4 (0813)",
+    "org": "DeepSeek",
+    "score": 65,
+    "scoreText": "65",
+    "tokenPrice": "$1.16",
+    "vendor": "deepseek"
+  },
+  {
+    "rank": 19,
+    "label": "MiniMax M3",
+    "org": "MiniMax",
+    "score": 62,
+    "scoreText": "62",
+    "tokenPrice": "$0.75",
+    "vendor": "minimax",
+    "modelSlug": "minimax-m3"
+  },
+  {
+    "rank": 20,
+    "label": "Kimi K2.6",
+    "org": "Moonshot",
+    "score": 61,
+    "scoreText": "61",
+    "tokenPrice": "$2.48",
+    "vendor": "kimi"
+  },
+  {
+    "rank": 21,
     "label": "GLM-5.3",
     "org": "Zhipu",
     "score": 61,
@@ -136,168 +202,228 @@
     "modelSlug": "glm-5-3"
   },
   {
-    "rank": 15,
-    "label": "DeepSeek V4 (0813)",
-    "org": "DeepSeek",
-    "score": 60,
-    "scoreText": "60",
-    "tokenPrice": "$1.16",
-    "vendor": "deepseek"
+    "rank": 22,
+    "label": "Qwen3.7 Max",
+    "org": "Alibaba",
+    "score": 61,
+    "scoreText": "61",
+    "tokenPrice": "$5",
+    "vendor": "qwen"
   },
   {
-    "rank": 16,
-    "label": "Grok 4.6",
+    "rank": 23,
+    "label": "Grok 4.7",
     "org": "xAI",
     "score": 60,
     "scoreText": "60",
     "tokenPrice": "$4",
     "vendor": "xai",
-    "modelSlug": "grok-4-6"
-  },
-  {
-    "rank": 17,
-    "label": "Qwen3.7 Flash",
-    "org": "Alibaba",
-    "score": 60,
-    "scoreText": "60",
-    "tokenPrice": "$0.08",
-    "vendor": "qwen"
-  },
-  {
-    "rank": 18,
-    "label": "Qwen3.7 Max",
-    "org": "Alibaba",
-    "score": 59,
-    "scoreText": "59",
-    "tokenPrice": "$5",
-    "vendor": "qwen"
-  },
-  {
-    "rank": 19,
-    "label": "Haiku 4.5",
-    "org": "Anthropic",
-    "score": 59,
-    "scoreText": "59",
-    "tokenPrice": "$3",
-    "vendor": "anthropic"
-  },
-  {
-    "rank": 20,
-    "label": "Kimi K2.6",
-    "org": "Moonshot",
-    "score": 57,
-    "scoreText": "57",
-    "tokenPrice": "$2.48",
-    "vendor": "kimi"
-  },
-  {
-    "rank": 21,
-    "label": "Mercury 2.5",
-    "org": "Inception",
-    "score": 56,
-    "scoreText": "56",
-    "tokenPrice": "$0.1",
-    "letter": "I"
-  },
-  {
-    "rank": 22,
-    "label": "GPT-6 Astra",
-    "org": "OpenAI",
-    "score": 56,
-    "scoreText": "56",
-    "tokenPrice": "$30",
-    "vendor": "openai",
-    "modelSlug": "gpt-6-astra"
-  },
-  {
-    "rank": 23,
-    "label": "Muse Spark 1.3",
-    "org": "Meta",
-    "score": 55,
-    "scoreText": "55",
-    "tokenPrice": "$2.75",
-    "vendor": "meta",
-    "modelSlug": "muse-spark-1-3"
+    "modelSlug": "grok-4-7"
   },
   {
     "rank": 24,
-    "label": "Fable 5.1",
-    "org": "Anthropic",
-    "score": 55,
-    "scoreText": "55",
-    "tokenPrice": "$30",
-    "vendor": "anthropic",
-    "modelSlug": "claude-fable-5-1"
+    "label": "Nemotron 3.5 Lightning",
+    "org": "Nvidia",
+    "score": 60,
+    "scoreText": "60",
+    "tokenPrice": "$0.14",
+    "letter": "N"
   },
   {
     "rank": 25,
-    "label": "MiniMax M3",
-    "org": "MiniMax",
-    "score": 54,
-    "scoreText": "54",
-    "tokenPrice": "$0.75",
-    "vendor": "minimax",
-    "modelSlug": "minimax-m3"
+    "label": "Fable 5",
+    "org": "Anthropic",
+    "score": 58,
+    "scoreText": "58",
+    "tokenPrice": "$30",
+    "vendor": "anthropic",
+    "modelSlug": "claude-fable-5"
   },
   {
     "rank": 26,
-    "label": "Gemini 3.7 Flash",
-    "org": "Google",
-    "score": 53,
-    "scoreText": "53",
-    "tokenPrice": "$2.25",
-    "vendor": "google",
-    "modelSlug": "gemini-3-7-flash"
+    "label": "GPT-6 Luna Pro",
+    "org": "OpenAI",
+    "score": 58,
+    "scoreText": "58",
+    "tokenPrice": "$0.3",
+    "vendor": "openai"
   },
   {
     "rank": 27,
-    "label": "GPT-5.4 Mini",
-    "org": "OpenAI",
-    "score": 53,
-    "scoreText": "53",
-    "tokenPrice": "$2.62",
-    "vendor": "openai"
+    "label": "Muse Spark 1.1",
+    "org": "Meta",
+    "score": 57,
+    "scoreText": "57",
+    "tokenPrice": "$2.75",
+    "vendor": "meta",
+    "modelSlug": "muse-spark-1-1"
   },
   {
     "rank": 28,
     "label": "GLM-5.2",
     "org": "Zhipu",
-    "score": 52,
-    "scoreText": "52",
+    "score": 57,
+    "scoreText": "57",
     "tokenPrice": "$2.9",
     "vendor": "zhipu",
     "modelSlug": "glm-5-2"
   },
   {
     "rank": 29,
-    "label": "Fable 5",
-    "org": "Anthropic",
-    "score": 52,
-    "scoreText": "52",
-    "tokenPrice": "$30",
-    "vendor": "anthropic",
-    "modelSlug": "claude-fable-5"
+    "label": "Qwen3.8 Max",
+    "org": "Alibaba",
+    "score": 56,
+    "scoreText": "56",
+    "tokenPrice": "$4",
+    "vendor": "qwen",
+    "modelSlug": "qwen3-8-max"
   },
   {
     "rank": 30,
-    "label": "Seed 2.1 Turbo",
-    "org": "ByteDance",
-    "score": 51,
-    "scoreText": "51",
-    "tokenPrice": "$1.5",
-    "letter": "B"
+    "label": "Haiku 4.5",
+    "org": "Anthropic",
+    "score": 56,
+    "scoreText": "56",
+    "tokenPrice": "$3",
+    "vendor": "anthropic"
   },
   {
     "rank": 31,
-    "label": "Nemotron 3.5 Lightning",
-    "org": "Nvidia",
-    "score": 51,
-    "scoreText": "51",
-    "tokenPrice": "$0.14",
-    "letter": "N"
+    "label": "Muse Spark 1.3",
+    "org": "Meta",
+    "score": 56,
+    "scoreText": "56",
+    "tokenPrice": "$2.75",
+    "vendor": "meta",
+    "modelSlug": "muse-spark-1-3"
   },
   {
     "rank": 32,
+    "label": "GPT-6 Astra",
+    "org": "OpenAI",
+    "score": 55,
+    "scoreText": "55",
+    "tokenPrice": "$30",
+    "vendor": "openai",
+    "modelSlug": "gpt-6-astra"
+  },
+  {
+    "rank": 33,
+    "label": "Opus 5.5",
+    "org": "Anthropic",
+    "score": 55,
+    "scoreText": "55",
+    "tokenPrice": "$12",
+    "vendor": "anthropic",
+    "modelSlug": "claude-opus-5-5"
+  },
+  {
+    "rank": 34,
+    "label": "Gemini 3.7 Flash",
+    "org": "Google",
+    "score": 55,
+    "scoreText": "55",
+    "tokenPrice": "$2.25",
+    "vendor": "google",
+    "modelSlug": "gemini-3-7-flash"
+  },
+  {
+    "rank": 35,
+    "label": "GPT-5.4 Mini",
+    "org": "OpenAI",
+    "score": 55,
+    "scoreText": "55",
+    "tokenPrice": "$2.62",
+    "vendor": "openai"
+  },
+  {
+    "rank": 36,
+    "label": "Mercury 3",
+    "org": "Inception",
+    "score": 55,
+    "scoreText": "55",
+    "tokenPrice": "$0.22",
+    "letter": "M"
+  },
+  {
+    "rank": 37,
+    "label": "Gemini 4 Argon",
+    "org": "Google",
+    "score": 54,
+    "scoreText": "54",
+    "tokenPrice": "$6",
+    "vendor": "google",
+    "modelSlug": "gemini-4-argon"
+  },
+  {
+    "rank": 38,
+    "label": "Hunyuan 4 Preview",
+    "org": "Tencent",
+    "score": 54,
+    "scoreText": "54",
+    "tokenPrice": "$1.67",
+    "vendor": "tencent",
+    "modelSlug": "hy4-preview"
+  },
+  {
+    "rank": 39,
+    "label": "Muse Wonder",
+    "org": "Meta",
+    "score": 54,
+    "scoreText": "54",
+    "tokenPrice": "$12",
+    "vendor": "meta",
+    "modelSlug": "muse-wonder"
+  },
+  {
+    "rank": 40,
+    "label": "Muse Spark Open",
+    "org": "Meta",
+    "score": 52,
+    "scoreText": "52",
+    "tokenPrice": "$2.75",
+    "vendor": "meta"
+  },
+  {
+    "rank": 41,
+    "label": "Qwen3.7 Flash",
+    "org": "Alibaba",
+    "score": 52,
+    "scoreText": "52",
+    "tokenPrice": "$0.08",
+    "vendor": "qwen"
+  },
+  {
+    "rank": 42,
+    "label": "Opus 5",
+    "org": "Anthropic",
+    "score": 51,
+    "scoreText": "51",
+    "tokenPrice": "$15",
+    "vendor": "anthropic",
+    "modelSlug": "claude-opus-5"
+  },
+  {
+    "rank": 43,
+    "label": "DeepSeek V4.1 Flash",
+    "org": "DeepSeek",
+    "score": 51,
+    "scoreText": "51",
+    "tokenPrice": "$0.38",
+    "vendor": "deepseek",
+    "modelSlug": "deepseek-v4-1-flash"
+  },
+  {
+    "rank": 44,
+    "label": "MiniMax M3.1 Flash",
+    "org": "MiniMax",
+    "score": 51,
+    "scoreText": "51",
+    "tokenPrice": "$0.38",
+    "vendor": "minimax"
+  },
+  {
+    "rank": 45,
     "label": "Kimi K3",
     "org": "Moonshot",
     "score": 50,
@@ -307,57 +433,112 @@
     "modelSlug": "kimi-k3"
   },
   {
-    "rank": 33,
+    "rank": 46,
     "label": "Sonnet 5",
     "org": "Anthropic",
-    "score": 49,
-    "scoreText": "49",
+    "score": 50,
+    "scoreText": "50",
     "tokenPrice": "$6",
     "vendor": "anthropic",
     "modelSlug": "claude-sonnet-5"
   },
   {
-    "rank": 34,
-    "label": "Gemini 3.6 Flash",
-    "org": "Google",
+    "rank": 47,
+    "label": "DeepSeek V4.1 Flash (1017)",
+    "org": "DeepSeek",
     "score": 49,
     "scoreText": "49",
+    "tokenPrice": "$0.75",
+    "vendor": "deepseek",
+    "modelSlug": "deepseek-v4-1-flash"
+  },
+  {
+    "rank": 48,
+    "label": "GPT-6 Astra Pro",
+    "org": "OpenAI",
+    "score": 49,
+    "scoreText": "49",
+    "tokenPrice": "$30",
+    "vendor": "openai"
+  },
+  {
+    "rank": 49,
+    "label": "Gemini 3.6 Flash",
+    "org": "Google",
+    "score": 46,
+    "scoreText": "46",
     "tokenPrice": "$4.5",
     "vendor": "google",
     "modelSlug": "gemini-3-6-flash"
   },
   {
-    "rank": 35,
-    "label": "Gemini 3.8 Flash",
-    "org": "Google",
-    "score": 48,
-    "scoreText": "48",
-    "tokenPrice": "$2.25",
-    "vendor": "google",
-    "modelSlug": "gemini-3-8-flash"
+    "rank": 50,
+    "label": "Qwen3.8 Flash",
+    "org": "Alibaba",
+    "score": 46,
+    "scoreText": "46",
+    "tokenPrice": "$0.31",
+    "vendor": "qwen"
   },
   {
-    "rank": 36,
-    "label": "Opus 5",
-    "org": "Anthropic",
+    "rank": 51,
+    "label": "Mistral Large 4",
+    "org": "Mistral",
     "score": 44,
     "scoreText": "44",
-    "tokenPrice": "$15",
-    "vendor": "anthropic",
-    "modelSlug": "claude-opus-5"
+    "tokenPrice": "$2.77",
+    "letter": "M"
   },
   {
-    "rank": 37,
+    "rank": 52,
+    "label": "Gemini 3.5 Flash",
+    "org": "Google",
+    "score": 43,
+    "scoreText": "43",
+    "tokenPrice": "$5.25",
+    "vendor": "google",
+    "modelSlug": "gemini-3-5-flash"
+  },
+  {
+    "rank": 53,
+    "label": "Seed 2.1 Turbo",
+    "org": "ByteDance",
+    "score": 43,
+    "scoreText": "43",
+    "tokenPrice": "$1.5",
+    "letter": "S"
+  },
+  {
+    "rank": 54,
+    "label": "Fable 5.1",
+    "org": "Anthropic",
+    "score": 42,
+    "scoreText": "42",
+    "tokenPrice": "$30",
+    "vendor": "anthropic",
+    "modelSlug": "claude-fable-5-1"
+  },
+  {
+    "rank": 55,
     "label": "Opus 4.8",
     "org": "Anthropic",
-    "score": 39,
-    "scoreText": "39",
+    "score": 42,
+    "scoreText": "42",
     "tokenPrice": "$15",
     "vendor": "anthropic",
     "modelSlug": "claude-opus-4-8"
   },
   {
-    "rank": 38,
+    "rank": 56,
+    "label": "Qwen3.8 Max Prime",
+    "org": "Alibaba",
+    "score": 40,
+    "scoreText": "40",
+    "tokenPrice": "$8",
+    "vendor": "qwen"
+  },
+  {
+    "rank": 57,
     "label": "Mistral Large",
     "org": "Mistral",
     "score": 39,
@@ -366,14 +547,13 @@
     "letter": "M"
   },
   {
-    "rank": 39,
-    "label": "Gemini 3.5 Flash",
+    "rank": 58,
+    "label": "Gemini 3.8 Flash",
     "org": "Google",
-    "score": 35,
-    "scoreText": "35",
-    "tokenPrice": "$5.25",
+    "score": 33,
+    "scoreText": "33",
+    "tokenPrice": "$2.25",
     "vendor": "google",
-    "letter": "G",
-    "modelSlug": "gemini-3-5-flash"
+    "modelSlug": "gemini-3-8-flash"
   }
 ]

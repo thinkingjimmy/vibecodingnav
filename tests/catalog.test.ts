@@ -78,7 +78,7 @@ describe("picks", () => {
     expect(picks.top?.modelSlug).toBe("claude-opus-5-5");
     expect(picks.top?.score).toBe(1807);
     expect(picks.value?.modelSlug).toBe("claude-sonnet-5-5");
-    expect(picks.value?.score).toBe(1768);
+    expect(picks.value?.score).toBe(1769);
     expect(picks.open?.modelSlug).toBe("deepseek-v4-1-flash");
   });
 
@@ -129,7 +129,7 @@ describe("picks", () => {
     ]);
     expect(all).toEqual(home);
     expect(getBenchmark("zh", "slop-index")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(resolvePicks("write-docs").top?.modelSlug).toBe("gpt-5-6-luna");
+    expect(resolvePicks("write-docs").top?.modelSlug).toBe("claude-haiku-5-5");
     expect(getScenario("zh", "refactor")).toBeUndefined();
     expect(getScenario("zh", "open-frontend")).toBeUndefined();
     expect(getScenario("zh", "saas")).toBeUndefined();
@@ -149,13 +149,14 @@ describe("picks", () => {
 
   it("keeps each public board complete and in source order", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.boards[0]?.rows).toHaveLength(149);
+    expect(web?.boards[0]?.rows).toHaveLength(151);
     expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1807" });
     expect(web?.boards[0]?.rows[5]).toMatchObject({ name: "muse-wonder-full-max", rank: 6, score: "1726" });
-    expect(web?.boards[0]?.rows[12]).toMatchObject({ name: "deepseek-v4.1-flash-20261017-max", rank: 13, score: "1664" });
-    expect(web?.boards[0]?.rows[16]).toMatchObject({ name: "muse-wonder-max", rank: 17, score: "1652" });
-    expect(web?.boards[0]?.rows[18]).toMatchObject({ name: "mimo-v2.6-flash", rank: 19, score: "1634" });
-    expect(web?.boards[0]?.rows[24]).toMatchObject({ name: "glm-5.3-max", rank: 25, score: "1621" });
+    expect(web?.boards[0]?.rows[7]).toMatchObject({ name: "kimi-k3.1-pro-max", rank: 8, score: "1692" });
+    expect(web?.boards[0]?.rows[13]).toMatchObject({ name: "deepseek-v4.1-flash-20261017-max", rank: 14, score: "1665" });
+    expect(web?.boards[0]?.rows[17]).toMatchObject({ name: "muse-wonder-max", rank: 18, score: "1651" });
+    expect(web?.boards[0]?.rows[19]).toMatchObject({ name: "mimo-v2.6-flash", rank: 20, score: "1635" });
+    expect(web?.boards[0]?.rows[24]).toMatchObject({ name: "glm-5.3-max", rank: 25, score: "1623" });
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
@@ -189,19 +190,20 @@ describe("picks", () => {
     expect(terminal[20]).toMatchObject({ name: "Grok 4.7", rank: 21, price: "$3.68k (partial: 324/330)" });
     const writeDocs = getScenario("zh", "write-docs");
     expect(writeDocs?.boards.map((board) => [board.id, board.rows.length])).toEqual([
-      ["slop", 39],
-      ["creative", 140],
+      ["slop", 58],
+      ["creative", 145],
     ]);
     const slop = writeDocs?.boards[0]?.rows ?? [];
-    expect(slop[0]).toMatchObject({ name: "GPT-5.6 Luna", rank: 1, score: "74", price: "$3.5" });
-    expect(slop[38]).toMatchObject({ name: "Gemini 3.5 Flash", rank: 39, score: "35" });
-    expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(39);
+    expect(slop[0]).toMatchObject({ name: "Haiku 5.5", rank: 1, score: "83", price: "$0.3" });
+    expect(slop[57]).toMatchObject({ name: "Gemini 3.8 Flash", rank: 58, score: "33" });
+    expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(58);
     const creative = getBenchmark("zh", "eqbench-creative-writing");
-    expect(creative?.leaderboard).toHaveLength(140);
-    expect(creative?.leaderboard?.[0]).toMatchObject({ name: "gpt-6-astra", rank: 1, score: "2173.3" });
-    expect(creative?.leaderboard?.[4]).toMatchObject({ name: "kimi-k3", rank: 5, score: "2082.3" });
+    expect(creative?.leaderboard).toHaveLength(145);
+    expect(creative?.leaderboard?.[0]).toMatchObject({ name: "gpt-6-astra", rank: 1, score: "2174.0" });
+    expect(creative?.leaderboard?.[4]).toMatchObject({ name: "kimi-k3", rank: 5, score: "2083.5" });
+    expect(creative?.leaderboard?.[8]).toMatchObject({ name: "muse-wonder", rank: 9, score: "2007.0" });
     expect(creative?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(149);
+    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(151);
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
     expect(androidBench?.versions?.[0]?.current).toBe(true);
@@ -223,7 +225,7 @@ describe("picks", () => {
       ["slop-index", "像真人", "article", 1],
       ["eqbench-creative-writing", "创意写作", "pen-nib", 0.6],
     ]);
-    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT-6 Astra/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT 6 Sol/);
     expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/2/);
     expect(getScenario("en", "web-frontend")?.takeaway?.sentence).toMatch(/first on/i);
     expect(web?.fusion.columns.map((column) => [column.id, column.weight])).toEqual([
@@ -421,11 +423,11 @@ describe("picks", () => {
     expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1", "FrontierCode 1.1"]);
     expect(home[3]?.title).toBe("写文档和文案");
     expect(home[3]?.sources?.map((source) => source.name)).toEqual(["The Slop Index", "EQ-Bench Creative Writing v3"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT-6 Astra", rankLabel: "1" });
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 6 Sol", rankLabel: "1" });
     expect(home[3]?.rows.map((row) => row.name).slice(0, 3)).toEqual([
+      "GPT 6 Sol",
+      "Claude Haiku 5.5",
       "GPT-6 Astra",
-      "Claude Fable 5.1",
-      "GLM-5.3",
     ]);
     expect(home).toHaveLength(4);
   });
@@ -444,7 +446,7 @@ describe("picks", () => {
     expect(convex?.showAssisted).toBe(true);
     const rules = getItem("zh", "prompt", "convex-ai-rules")?.evalView;
     expect(rules?.mode).toBe("uplift");
-    expect(rules?.rows.find((row) => row.name === "Claude Opus 5.5")).toMatchObject({ baseline: "89.58", assisted: "97.92", delta: "+8.34" });
+    expect(rules?.rows.find((row) => row.name === "Claude Opus 5.5")).toMatchObject({ baseline: "89.58", assisted: "97.77", delta: "+8.19" });
 
     const next = getItem("en", "prompt", "nextjs-agents-md")?.evalView?.rows ?? [];
     expect(next.find((row) => row.name === "Claude Opus 5.5")?.delta).toBe("0");

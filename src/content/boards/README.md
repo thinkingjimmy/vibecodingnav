@@ -11,8 +11,8 @@ terminal.json: Terminal-Bench 4.0 的 35 行 display
 sudo.json: sudo L7 的 12 行，按页面顺序
 deepswe.json: DeepSWE v1.1 的 28 行 Best 配置，2026-10-11 从 https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json 抓取（generated_at 2026-09-22）；每模型只保留 Pass@1 最高的一档推理配置
 frontiercode.json: FrontierCode 1.1 Main 的 130 行（43 模型 × 全部推理档），2026-10-13 从 https://cognition.com/data/frontiercode-leaderboard/data.json 的 v1_1 抓取；与页面 All reasoning levels 一致，# 为最佳推理档名次
-slop-index.json: The Slop Index 39 行，2026-10-11 从 theslopindex.com/leaderboard 抓取；来源是 slop 越高越差、#1 最渣，本站反转为最少 slop 为 #1，score 存 100 − Slop Score
-eqbench-creative-writing.json: EQ-Bench Creative Writing v3 140 行，2026-10-12 从 eqbench.com/creative_writing.html 的 creative_writing.js（v=1.0.91）嵌入 CSV 抓取；主指标归一化 Elo（越高越好）
+slop-index.json: The Slop Index 58 行，2026-10-26 从 theslopindex.com/leaderboard 抓取；来源是 slop 越高越差、#1 最渣，本站反转为最少 slop 为 #1，score 存 100 − Slop Score
+eqbench-creative-writing.json: EQ-Bench Creative Writing v3 145 行，2026-10-26 从 eqbench.com/creative_writing.html 的 creative_writing.js（v=1.0.91）嵌入 CSV 抓取；主指标归一化 Elo（越高越好）
 
 这些文件是来源页的逐行副本。`results.ts` 只做模型页映射，不删行、不重排。框架评测的行写在 `results.ts`，不进这些 JSON。Slop Index 是唯一在入库前反转名次与分数方向的榜，说明写在基准与场景文案里。
 

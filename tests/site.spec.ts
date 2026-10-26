@@ -104,7 +104,7 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "deepseek-v4.1-flash-20261017-max" })).toBeVisible();
   const deepseek = page.getByRole("row").filter({ hasText: "deepseek-v4.1-flash-20261017-max" });
-  await expect(deepseek.getByText("13", { exact: true })).toBeVisible();
+  await expect(deepseek.getByText("14", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("granite-4.1-8b")).toBeVisible();
 });
@@ -567,7 +567,7 @@ test("framework evals stay on separate boards", async ({ page }) => {
 
   await page.goto("/zh/prompts/convex-ai-rules/");
   await expect(page.getByRole("heading", { name: "有材料相对基线的变化" })).toBeVisible();
-  await expect(page.getByText("+8.34").first()).toBeVisible();
+  await expect(page.getByText("+8.19").first()).toBeVisible();
 
   await page.goto("/zh/prompts/nextjs-agents-md/");
   await expect(page.getByText("+13.0").first()).toBeVisible();

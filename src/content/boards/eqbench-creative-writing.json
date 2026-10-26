@@ -2,8 +2,8 @@
   {
     "rank": 1,
     "label": "gpt-6-astra",
-    "score": 2173.3,
-    "scoreText": "2173.3",
+    "score": 2174.0,
+    "scoreText": "2174.0",
     "modelSlug": "gpt-6-astra",
     "vendor": "openai",
     "org": "OpenAI"
@@ -11,8 +11,8 @@
   {
     "rank": 2,
     "label": "claude-fable-5-1",
-    "score": 2162.0,
-    "scoreText": "2162.0",
+    "score": 2162.7,
+    "scoreText": "2162.7",
     "modelSlug": "claude-fable-5-1",
     "vendor": "anthropic",
     "org": "Anthropic"
@@ -20,8 +20,8 @@
   {
     "rank": 3,
     "label": "claude-opus-5",
-    "score": 2132.6,
-    "scoreText": "2132.6",
+    "score": 2133.5,
+    "scoreText": "2133.5",
     "modelSlug": "claude-opus-5",
     "vendor": "anthropic",
     "org": "Anthropic"
@@ -29,8 +29,8 @@
   {
     "rank": 4,
     "label": "gpt-6-sol",
-    "score": 2124.7,
-    "scoreText": "2124.7",
+    "score": 2124.6,
+    "scoreText": "2124.6",
     "modelSlug": "gpt-6-sol",
     "vendor": "openai",
     "org": "OpenAI"
@@ -38,8 +38,8 @@
   {
     "rank": 5,
     "label": "kimi-k3",
-    "score": 2082.3,
-    "scoreText": "2082.3",
+    "score": 2083.5,
+    "scoreText": "2083.5",
     "modelSlug": "kimi-k3",
     "vendor": "kimi",
     "org": "Moonshot"
@@ -47,8 +47,8 @@
   {
     "rank": 6,
     "label": "GLM-5.3",
-    "score": 2075.0,
-    "scoreText": "2075.0",
+    "score": 2076.7,
+    "scoreText": "2076.7",
     "modelSlug": "glm-5-3",
     "vendor": "zhipu",
     "org": "Zhipu"
@@ -56,8 +56,8 @@
   {
     "rank": 7,
     "label": "claude-opus-5-5",
-    "score": 2050.1,
-    "scoreText": "2050.1",
+    "score": 2050.8,
+    "scoreText": "2050.8",
     "modelSlug": "claude-opus-5-5",
     "vendor": "anthropic",
     "org": "Anthropic"
@@ -65,865 +65,1001 @@
   {
     "rank": 8,
     "label": "grok-4.7",
-    "score": 2006.7,
-    "scoreText": "2006.7",
+    "score": 2012.2,
+    "scoreText": "2012.2",
     "modelSlug": "grok-4-7",
     "vendor": "xai",
     "org": "xAI"
   },
   {
     "rank": 9,
-    "label": "ox-alpha",
-    "score": 1971.7,
-    "scoreText": "1971.7"
+    "label": "muse-wonder",
+    "score": 2007.0,
+    "scoreText": "2007.0",
+    "modelSlug": "muse-wonder",
+    "vendor": "meta",
+    "org": "Meta"
   },
   {
     "rank": 10,
+    "label": "ox-alpha",
+    "score": 1973.6,
+    "scoreText": "1973.6",
+    "letter": "O"
+  },
+  {
+    "rank": 11,
     "label": "gpt-5.6-sol",
-    "score": 1971.6,
-    "scoreText": "1971.6",
+    "score": 1973.5,
+    "scoreText": "1973.5",
     "modelSlug": "gpt-5-6-sol",
     "vendor": "openai",
     "org": "OpenAI"
   },
   {
-    "rank": 11,
+    "rank": 12,
     "label": "claude-fable-5",
-    "score": 1943.1,
-    "scoreText": "1943.1",
+    "score": 1943.6,
+    "scoreText": "1943.6",
     "modelSlug": "claude-fable-5",
     "vendor": "anthropic",
     "org": "Anthropic"
   },
   {
-    "rank": 12,
+    "rank": 13,
     "label": "aion-3.5",
-    "score": 1929.3,
-    "scoreText": "1929.3"
+    "score": 1930.6,
+    "scoreText": "1930.6",
+    "letter": "A"
   },
   {
-    "rank": 13,
+    "rank": 14,
     "label": "muse-spark-1.1",
-    "score": 1927.1,
-    "scoreText": "1927.1",
+    "score": 1928.2,
+    "scoreText": "1928.2",
     "modelSlug": "muse-spark-1-1",
     "vendor": "meta",
     "org": "Meta"
   },
   {
-    "rank": 14,
-    "label": "claude-opus-4-7",
-    "score": 1914.3,
-    "scoreText": "1914.3"
-  },
-  {
     "rank": 15,
-    "label": "Hemmingway-1",
-    "score": 1906.4,
-    "scoreText": "1906.4"
+    "label": "claude-opus-4-7",
+    "score": 1915.0,
+    "scoreText": "1915.0",
+    "letter": "C"
   },
   {
     "rank": 16,
+    "label": "Altworld/Hemmingway-1",
+    "score": 1907.4,
+    "scoreText": "1907.4",
+    "letter": "A"
+  },
+  {
+    "rank": 17,
     "label": "muse-spark-1.3",
-    "score": 1905.9,
-    "scoreText": "1905.9",
+    "score": 1907.0,
+    "scoreText": "1907.0",
     "modelSlug": "muse-spark-1-3",
     "vendor": "meta",
     "org": "Meta"
   },
   {
-    "rank": 17,
+    "rank": 18,
     "label": "gpt-5.6-terra",
-    "score": 1854.9,
-    "scoreText": "1854.9",
+    "score": 1856.3,
+    "scoreText": "1856.3",
     "modelSlug": "gpt-5-6-terra",
     "vendor": "openai",
     "org": "OpenAI"
   },
   {
-    "rank": 18,
+    "rank": 19,
     "label": "gpt-5.5",
-    "score": 1843.9,
-    "scoreText": "1843.9",
+    "score": 1844.6,
+    "scoreText": "1844.6",
     "modelSlug": "gpt-5-5",
     "vendor": "openai",
     "org": "OpenAI"
   },
   {
-    "rank": 19,
-    "label": "Qwen3.8-2.4T-A95B",
-    "score": 1842.5,
-    "scoreText": "1842.5"
+    "rank": 20,
+    "label": "Qwen/Qwen3.8-2.4T-A95B",
+    "score": 1843.9,
+    "scoreText": "1843.9",
+    "letter": "Q"
   },
   {
-    "rank": 20,
+    "rank": 21,
     "label": "muse-spark-1.2",
-    "score": 1840.4,
-    "scoreText": "1840.4",
+    "score": 1842.3,
+    "scoreText": "1842.3",
     "modelSlug": "muse-spark-1-2",
     "vendor": "meta",
     "org": "Meta"
   },
   {
-    "rank": 21,
+    "rank": 22,
+    "label": "gpt-5.4",
+    "score": 1840.9,
+    "scoreText": "1840.9",
+    "modelSlug": "gpt-5-4"
+  },
+  {
+    "rank": 23,
     "label": "claude-opus-4-8",
-    "score": 1839.8,
-    "scoreText": "1839.8",
+    "score": 1840.2,
+    "scoreText": "1840.2",
     "modelSlug": "claude-opus-4-8",
     "vendor": "anthropic",
     "org": "Anthropic"
   },
   {
-    "rank": 22,
-    "label": "gpt-5.4",
-    "score": 1839.7,
-    "scoreText": "1839.7",
-    "modelSlug": "gpt-5-4",
-    "vendor": "openai",
-    "org": "OpenAI"
-  },
-  {
-    "rank": 23,
+    "rank": 24,
     "label": "gpt-5.6-luna",
-    "score": 1828.7,
-    "scoreText": "1828.7",
+    "score": 1831.7,
+    "scoreText": "1831.7",
     "modelSlug": "gpt-5-6-luna",
     "vendor": "openai",
     "org": "OpenAI"
   },
   {
-    "rank": 24,
+    "rank": 25,
     "label": "claude-sonnet-4-6",
-    "score": 1810.4,
-    "scoreText": "1810.4",
+    "score": 1811.2,
+    "scoreText": "1811.2",
     "modelSlug": "claude-sonnet-4-6",
     "vendor": "anthropic",
     "org": "Anthropic"
   },
   {
-    "rank": 25,
-    "label": "claude-opus-4-6",
-    "score": 1809.1,
-    "scoreText": "1809.1"
-  },
-  {
     "rank": 26,
-    "label": "Muse-Glimmer-30B",
-    "score": 1798.3,
-    "scoreText": "1798.3"
+    "label": "claude-opus-4-6",
+    "score": 1810.4,
+    "scoreText": "1810.4",
+    "letter": "C"
   },
   {
     "rank": 27,
+    "label": "meta-models/Muse-Glimmer-30B",
+    "score": 1804.5,
+    "scoreText": "1804.5",
+    "letter": "M"
+  },
+  {
+    "rank": 28,
     "label": "claude-sonnet-5",
-    "score": 1794.0,
-    "scoreText": "1794.0",
+    "score": 1798.0,
+    "scoreText": "1798.0",
     "modelSlug": "claude-sonnet-5",
     "vendor": "anthropic",
     "org": "Anthropic"
   },
   {
-    "rank": 28,
-    "label": "space-bunny-alpha",
-    "score": 1784.3,
-    "scoreText": "1784.3"
-  },
-  {
     "rank": 29,
-    "label": "GLM-5.2",
-    "score": 1756.5,
-    "scoreText": "1756.5",
-    "modelSlug": "glm-5-2",
-    "vendor": "zhipu",
-    "org": "Zhipu"
+    "label": "space-bunny-alpha",
+    "score": 1789.0,
+    "scoreText": "1789.0",
+    "letter": "S"
   },
   {
     "rank": 30,
+    "label": "zai-org/GLM-5.2",
+    "score": 1759.3,
+    "scoreText": "1759.3",
+    "letter": "Z"
+  },
+  {
+    "rank": 31,
+    "label": "gemini-4-argon",
+    "score": 1758.0,
+    "scoreText": "1758.0",
+    "modelSlug": "gemini-4-argon",
+    "vendor": "google",
+    "org": "Google"
+  },
+  {
+    "rank": 32,
     "label": "gemini-3.8-flash",
-    "score": 1747.9,
-    "scoreText": "1747.9",
+    "score": 1744.5,
+    "scoreText": "1744.5",
     "modelSlug": "gemini-3-8-flash",
     "vendor": "google",
     "org": "Google"
   },
   {
-    "rank": 31,
-    "label": "Kimi-K2.6",
-    "score": 1724.5,
-    "scoreText": "1724.5"
-  },
-  {
-    "rank": 32,
-    "label": "gemini-3.7-flash",
-    "score": 1723.2,
-    "scoreText": "1723.2",
-    "modelSlug": "gemini-3-7-flash",
-    "vendor": "google",
-    "org": "Google"
-  },
-  {
     "rank": 33,
-    "label": "gpt-5.2",
-    "score": 1702.9,
-    "scoreText": "1702.9"
+    "label": "moonshotai/Kimi-K2.6",
+    "score": 1721.1,
+    "scoreText": "1721.1",
+    "letter": "M"
   },
   {
     "rank": 34,
-    "label": "NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4",
-    "score": 1692.4,
-    "scoreText": "1692.4"
+    "label": "gemini-3.7-flash",
+    "score": 1719.6,
+    "scoreText": "1719.6",
+    "modelSlug": "gemini-3-7-flash"
   },
   {
     "rank": 35,
-    "label": "gpt-5.3-chat",
-    "score": 1689.9,
-    "scoreText": "1689.9"
+    "label": "gpt-5.2",
+    "score": 1703.0,
+    "scoreText": "1703.0",
+    "letter": "G"
   },
   {
     "rank": 36,
-    "label": "claude-opus-4-5-20251101",
-    "score": 1686.7,
-    "scoreText": "1686.7"
+    "label": "nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-NVFP4",
+    "score": 1691.7,
+    "scoreText": "1691.7",
+    "letter": "N"
   },
   {
     "rank": 37,
-    "label": "claude-sonnet-4.5",
-    "score": 1677.6,
-    "scoreText": "1677.6"
+    "label": "gpt-5.3-chat",
+    "score": 1689.5,
+    "scoreText": "1689.5",
+    "letter": "G"
   },
   {
     "rank": 38,
-    "label": "o3",
-    "score": 1675.6,
-    "scoreText": "1675.6"
+    "label": "claude-opus-4-5-20251101",
+    "score": 1686.5,
+    "scoreText": "1686.5",
+    "letter": "C"
   },
   {
     "rank": 39,
-    "label": "Qwen3.8-27B",
-    "score": 1671.3,
-    "scoreText": "1671.3"
+    "label": "claude-sonnet-4.5",
+    "score": 1677.2,
+    "scoreText": "1677.2",
+    "letter": "C"
   },
   {
     "rank": 40,
-    "label": "Kimi-K2-Instruct",
-    "score": 1665.7,
-    "scoreText": "1665.7"
+    "label": "o3",
+    "score": 1675.2,
+    "scoreText": "1675.2",
+    "letter": "O"
   },
   {
     "rank": 41,
-    "label": "gpt-5.4-mini",
-    "score": 1665.0,
-    "scoreText": "1665.0"
+    "label": "Qwen/Qwen3.8-27B",
+    "score": 1670.5,
+    "scoreText": "1670.5",
+    "letter": "Q"
   },
   {
     "rank": 42,
-    "label": "Kimi-K2-Thinking",
-    "score": 1630.9,
-    "scoreText": "1630.9"
+    "label": "moonshotai/Kimi-K2-Instruct",
+    "score": 1665.5,
+    "scoreText": "1665.5",
+    "letter": "M"
   },
   {
     "rank": 43,
-    "label": "horizon-beta",
-    "score": 1627.3,
-    "scoreText": "1627.3"
+    "label": "gpt-5.4-mini",
+    "score": 1664.5,
+    "scoreText": "1664.5",
+    "letter": "G"
   },
   {
     "rank": 44,
-    "label": "gpt-5-2025-08-07",
-    "score": 1626.6,
-    "scoreText": "1626.6"
+    "label": "moonshotai/Kimi-K2-Thinking",
+    "score": 1630.6,
+    "scoreText": "1630.6",
+    "letter": "M"
   },
   {
     "rank": 45,
-    "label": "horizon-alpha",
-    "score": 1622.7,
-    "scoreText": "1622.7"
+    "label": "openrouter/horizon-beta",
+    "score": 1627.0,
+    "scoreText": "1627.0",
+    "letter": "O"
   },
   {
     "rank": 46,
-    "label": "pony-alpha",
-    "score": 1616.7,
-    "scoreText": "1616.7"
+    "label": "gpt-5-2025-08-07",
+    "score": 1626.4,
+    "scoreText": "1626.4",
+    "letter": "G"
   },
   {
     "rank": 47,
-    "label": "Inkling",
-    "score": 1610.8,
-    "scoreText": "1610.8"
+    "label": "openrouter/horizon-alpha",
+    "score": 1622.9,
+    "scoreText": "1622.9",
+    "letter": "O"
   },
   {
     "rank": 48,
-    "label": "gemini-3.6-flash",
-    "score": 1603.5,
-    "scoreText": "1603.5",
-    "modelSlug": "gemini-3-6-flash",
-    "vendor": "google",
-    "org": "Google"
+    "label": "openrouter/pony-alpha",
+    "score": 1616.3,
+    "scoreText": "1616.3",
+    "letter": "O"
   },
   {
     "rank": 49,
-    "label": "GLM-5",
-    "score": 1600.6,
-    "scoreText": "1600.6"
+    "label": "thinkingmachines/Inkling",
+    "score": 1609.1,
+    "scoreText": "1609.1",
+    "letter": "T"
   },
   {
     "rank": 50,
-    "label": "GLM-5.1",
-    "score": 1592.2,
-    "scoreText": "1592.2"
+    "label": "gemini-3.6-flash",
+    "score": 1602.4,
+    "scoreText": "1602.4",
+    "modelSlug": "gemini-3-6-flash"
   },
   {
     "rank": 51,
-    "label": "claude-opus-4",
-    "score": 1579.7,
-    "scoreText": "1579.7"
+    "label": "zai-org/GLM-5",
+    "score": 1600.6,
+    "scoreText": "1600.6",
+    "letter": "Z"
   },
   {
     "rank": 52,
-    "label": "grok-4.5",
-    "score": 1578.8,
-    "scoreText": "1578.8",
-    "modelSlug": "grok-4-5",
-    "vendor": "xai",
-    "org": "xAI"
+    "label": "zai-org/GLM-5.1",
+    "score": 1593.9,
+    "scoreText": "1593.9",
+    "letter": "Z"
   },
   {
     "rank": 53,
-    "label": "Kimi-K2.5",
-    "score": 1578.6,
-    "scoreText": "1578.6"
+    "label": "AlexWortega/Qwen3.8-27B-antislop",
+    "score": 1592.9,
+    "scoreText": "1592.9",
+    "letter": "A"
   },
   {
     "rank": 54,
-    "label": "grok-4.20-beta",
-    "score": 1573.6,
-    "scoreText": "1573.6"
+    "label": "moonshotai/Kimi-K2.5",
+    "score": 1578.8,
+    "scoreText": "1578.8",
+    "letter": "M"
   },
   {
     "rank": 55,
-    "label": "DeepSeek-V4-Flash",
-    "score": 1559.1,
-    "scoreText": "1559.1",
-    "modelSlug": "deepseek-v4-flash",
-    "vendor": "deepseek",
-    "org": "DeepSeek"
+    "label": "claude-opus-4",
+    "score": 1578.0,
+    "scoreText": "1578.0",
+    "letter": "C"
   },
   {
     "rank": 56,
-    "label": "gemini-3.5-flash-lite",
-    "score": 1559.1,
-    "scoreText": "1559.1"
+    "label": "grok-4.5",
+    "score": 1575.7,
+    "scoreText": "1575.7",
+    "modelSlug": "grok-4-5"
   },
   {
     "rank": 57,
-    "label": "DeepSeek-V4-Pro",
-    "score": 1553.2,
-    "scoreText": "1553.2",
-    "modelSlug": "deepseek-v4-pro",
-    "vendor": "deepseek",
-    "org": "DeepSeek"
+    "label": "grok-4.20-beta",
+    "score": 1573.5,
+    "scoreText": "1573.5",
+    "letter": "G"
   },
   {
     "rank": 58,
+    "label": "deepseek-ai/DeepSeek-V4-Flash",
+    "score": 1559.4,
+    "scoreText": "1559.4",
+    "letter": "D"
+  },
+  {
+    "rank": 59,
+    "label": "gemini-3.5-flash-lite",
+    "score": 1559.3,
+    "scoreText": "1559.3",
+    "letter": "G"
+  },
+  {
+    "rank": 60,
+    "label": "deepseek-ai/DeepSeek-V4-Pro",
+    "score": 1552.6,
+    "scoreText": "1552.6",
+    "letter": "D"
+  },
+  {
+    "rank": 61,
     "label": "deepseek-v4.1-flash",
-    "score": 1540.1,
-    "scoreText": "1540.1",
+    "score": 1539.9,
+    "scoreText": "1539.9",
     "modelSlug": "deepseek-v4-1-flash",
     "vendor": "deepseek",
     "org": "DeepSeek"
   },
   {
-    "rank": 59,
-    "label": "gemini-3-pro-preview",
-    "score": 1524.5,
-    "scoreText": "1524.5"
-  },
-  {
-    "rank": 60,
-    "label": "DeepSeek-V3.2",
-    "score": 1515.0,
-    "scoreText": "1515.0"
-  },
-  {
-    "rank": 61,
-    "label": "chatgpt-4o-latest-2025-03-27",
-    "score": 1501.2,
-    "scoreText": "1501.2"
-  },
-  {
     "rank": 62,
-    "label": "DeepSeek-R1",
-    "score": 1500.0,
-    "scoreText": "1500.0"
+    "label": "gemini-3-pro-preview",
+    "score": 1524.3,
+    "scoreText": "1524.3",
+    "letter": "G"
   },
   {
     "rank": 63,
-    "label": "MiMo-V2.5-Pro",
-    "score": 1493.4,
-    "scoreText": "1493.4"
+    "label": "deepseek-ai/DeepSeek-V3.2",
+    "score": 1514.9,
+    "scoreText": "1514.9",
+    "letter": "D"
   },
   {
     "rank": 64,
-    "label": "Inkling-Small",
-    "score": 1491.4,
-    "scoreText": "1491.4"
+    "label": "chatgpt-4o-latest-2025-03-27",
+    "score": 1500.9,
+    "scoreText": "1500.9",
+    "letter": "C"
   },
   {
     "rank": 65,
+    "label": "deepseek-ai/DeepSeek-R1",
+    "score": 1500.0,
+    "scoreText": "1500.0",
+    "letter": "D"
+  },
+  {
+    "rank": 66,
+    "label": "XiaomiMiMo/MiMo-V2.5-Pro",
+    "score": 1493.1,
+    "scoreText": "1493.1",
+    "letter": "X"
+  },
+  {
+    "rank": 67,
+    "label": "thinkingmachines/Inkling-Small",
+    "score": 1491.4,
+    "scoreText": "1491.4",
+    "letter": "T"
+  },
+  {
+    "rank": 68,
     "label": "gemini-3.1-pro-preview",
-    "score": 1491.3,
-    "scoreText": "1491.3",
+    "score": 1491.2,
+    "scoreText": "1491.2",
     "modelSlug": "gemini-3-1-pro",
     "vendor": "google",
     "org": "Google"
   },
   {
-    "rank": 66,
-    "label": "hunter-alpha",
-    "score": 1483.9,
-    "scoreText": "1483.9"
-  },
-  {
-    "rank": 67,
-    "label": "claude-sonnet-4",
-    "score": 1482.8,
-    "scoreText": "1482.8"
-  },
-  {
-    "rank": 68,
-    "label": "Qwen3.5-397B-A17B",
-    "score": 1478.2,
-    "scoreText": "1478.2"
-  },
-  {
     "rank": 69,
-    "label": "mistral-medium-3.1",
-    "score": 1475.7,
-    "scoreText": "1475.7"
+    "label": "hunter-alpha",
+    "score": 1483.8,
+    "scoreText": "1483.8",
+    "letter": "H"
   },
   {
     "rank": 70,
-    "label": "DeepSeek-V3-0324",
-    "score": 1472.3,
-    "scoreText": "1472.3"
+    "label": "claude-sonnet-4",
+    "score": 1482.7,
+    "scoreText": "1482.7",
+    "letter": "C"
   },
   {
     "rank": 71,
-    "label": "claude-3-5-sonnet-20241022",
-    "score": 1450.8,
-    "scoreText": "1450.8"
+    "label": "Qwen/Qwen3.5-397B-A17B",
+    "score": 1478.3,
+    "scoreText": "1478.3",
+    "letter": "Q"
   },
   {
     "rank": 72,
-    "label": "DeepSeek-V4-Flash-0731",
-    "score": 1441.1,
-    "scoreText": "1441.1"
+    "label": "mistral-medium-3.1",
+    "score": 1475.4,
+    "scoreText": "1475.4",
+    "letter": "M"
   },
   {
     "rank": 73,
-    "label": "DeepSeek-V3.1",
-    "score": 1435.9,
-    "scoreText": "1435.9"
+    "label": "deepseek-ai/DeepSeek-V3-0324",
+    "score": 1472.2,
+    "scoreText": "1472.2",
+    "letter": "D"
   },
   {
     "rank": 74,
-    "label": "gemini-2.5-pro-preview-06-05",
-    "score": 1421.2,
-    "scoreText": "1421.2"
+    "label": "claude-3-5-sonnet-20241022",
+    "score": 1450.9,
+    "scoreText": "1450.9",
+    "letter": "C"
   },
   {
     "rank": 75,
-    "label": "DeepSeek-R1-0528",
-    "score": 1421.1,
-    "scoreText": "1421.1"
+    "label": "deepseek-ai/DeepSeek-V4-Flash-0731",
+    "score": 1441.3,
+    "scoreText": "1441.3",
+    "letter": "D"
   },
   {
     "rank": 76,
-    "label": "Hermes-4-405B",
-    "score": 1420.8,
-    "scoreText": "1420.8"
+    "label": "deepseek-ai/DeepSeek-V3.1",
+    "score": 1436.1,
+    "scoreText": "1436.1",
+    "letter": "D"
   },
   {
     "rank": 77,
-    "label": "gpt-4.1",
-    "score": 1419.7,
-    "scoreText": "1419.7"
+    "label": "gemini-2.5-pro-preview-06-05",
+    "score": 1421.6,
+    "scoreText": "1421.6",
+    "letter": "G"
   },
   {
     "rank": 78,
-    "label": "optimus-alpha",
-    "score": 1417.4,
-    "scoreText": "1417.4"
+    "label": "deepseek-ai/DeepSeek-R1-0528",
+    "score": 1421.5,
+    "scoreText": "1421.5",
+    "letter": "D"
   },
   {
     "rank": 79,
-    "label": "GLM-4.7",
-    "score": 1413.3,
-    "scoreText": "1413.3"
+    "label": "NousResearch/Hermes-4-405B",
+    "score": 1421.1,
+    "scoreText": "1421.1",
+    "letter": "N"
   },
   {
     "rank": 80,
-    "label": "Mistral-Large-3-675B-Instruct-2512",
-    "score": 1412.2,
-    "scoreText": "1412.2"
+    "label": "gpt-4.1",
+    "score": 1420.0,
+    "scoreText": "1420.0",
+    "letter": "G"
   },
   {
     "rank": 81,
-    "label": "claude-3-7-sonnet-20250219",
-    "score": 1411.7,
-    "scoreText": "1411.7"
+    "label": "optimus-alpha",
+    "score": 1417.7,
+    "scoreText": "1417.7",
+    "letter": "O"
   },
   {
     "rank": 82,
-    "label": "GLM-4.6",
-    "score": 1411.1,
-    "scoreText": "1411.1"
+    "label": "zai-org/GLM-4.7",
+    "score": 1413.6,
+    "scoreText": "1413.6",
+    "letter": "Z"
   },
   {
     "rank": 83,
-    "label": "gemini-2.5-pro-exp-03-25",
-    "score": 1396.1,
-    "scoreText": "1396.1"
+    "label": "mistralai/Mistral-Large-3-675B-Instruct-2512",
+    "score": 1412.5,
+    "scoreText": "1412.5",
+    "letter": "M"
   },
   {
     "rank": 84,
-    "label": "mistral-small-creative",
-    "score": 1369.4,
-    "scoreText": "1369.4"
+    "label": "claude-3-7-sonnet-20250219",
+    "score": 1412.0,
+    "scoreText": "1412.0",
+    "letter": "C"
   },
   {
     "rank": 85,
-    "label": "gemma-4-31B-it",
-    "score": 1368.2,
-    "scoreText": "1368.2"
+    "label": "zai-org/GLM-4.6",
+    "score": 1411.4,
+    "scoreText": "1411.4",
+    "letter": "Z"
   },
   {
     "rank": 86,
-    "label": "qwen3-235b-a22b:thinking",
-    "score": 1365.8,
-    "scoreText": "1365.8"
+    "label": "gemini-2.5-pro-exp-03-25",
+    "score": 1396.3,
+    "scoreText": "1396.3",
+    "letter": "G"
   },
   {
     "rank": 87,
-    "label": "minimax-m2.5",
-    "score": 1361.0,
-    "scoreText": "1361.0"
+    "label": "mistral-small-creative",
+    "score": 1369.7,
+    "scoreText": "1369.7",
+    "letter": "M"
   },
   {
     "rank": 88,
-    "label": "quasar-alpha",
-    "score": 1351.0,
-    "scoreText": "1351.0"
+    "label": "google/gemma-4-31B-it",
+    "score": 1368.5,
+    "scoreText": "1368.5",
+    "letter": "G"
   },
   {
     "rank": 89,
-    "label": "chatgpt-4o-latest-2025-01-29",
-    "score": 1346.4,
-    "scoreText": "1346.4"
+    "label": "qwen/qwen3-235b-a22b:thinking",
+    "score": 1366.2,
+    "scoreText": "1366.2",
+    "letter": "Q"
   },
   {
     "rank": 90,
-    "label": "GLM-4.5",
-    "score": 1343.3,
-    "scoreText": "1343.3"
+    "label": "minimax/minimax-m2.5",
+    "score": 1361.5,
+    "scoreText": "1361.5",
+    "letter": "M"
   },
   {
     "rank": 91,
-    "label": "sherlock-dash-alpha",
-    "score": 1332.7,
-    "scoreText": "1332.7"
+    "label": "quasar-alpha",
+    "score": 1351.2,
+    "scoreText": "1351.2",
+    "letter": "Q"
   },
   {
     "rank": 92,
-    "label": "grok-4.1-fast",
-    "score": 1327.4,
-    "scoreText": "1327.4"
+    "label": "chatgpt-4o-latest-2025-01-29",
+    "score": 1346.8,
+    "scoreText": "1346.8",
+    "letter": "C"
   },
   {
     "rank": 93,
-    "label": "gpt-5-mini-2025-08-07",
-    "score": 1313.0,
-    "scoreText": "1313.0"
+    "label": "zai-org/GLM-4.5",
+    "score": 1343.9,
+    "scoreText": "1343.9",
+    "letter": "Z"
   },
   {
     "rank": 94,
-    "label": "gemma-4-26B-A4B-it",
-    "score": 1304.6,
-    "scoreText": "1304.6"
+    "label": "openrouter/sherlock-dash-alpha",
+    "score": 1333.0,
+    "scoreText": "1333.0",
+    "letter": "O"
   },
   {
     "rank": 95,
-    "label": "gemma-4-12B-it",
-    "score": 1288.9,
-    "scoreText": "1288.9"
+    "label": "grok-4.1-fast",
+    "score": 1327.8,
+    "scoreText": "1327.8",
+    "letter": "G"
   },
   {
     "rank": 96,
-    "label": "NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
-    "score": 1280.3,
-    "scoreText": "1280.3"
+    "label": "gpt-5-mini-2025-08-07",
+    "score": 1313.5,
+    "scoreText": "1313.5",
+    "letter": "G"
   },
   {
     "rank": 97,
-    "label": "DeepSeek-V3.2-Speciale",
-    "score": 1276.3,
-    "scoreText": "1276.3"
+    "label": "google/gemma-4-26B-A4B-it",
+    "score": 1305.0,
+    "scoreText": "1305.0",
+    "letter": "G"
   },
   {
     "rank": 98,
-    "label": "gemma-3-27b-it",
-    "score": 1265.7,
-    "scoreText": "1265.7"
+    "label": "google/gemma-4-12B-it",
+    "score": 1289.4,
+    "scoreText": "1289.4",
+    "letter": "G"
   },
   {
     "rank": 99,
-    "label": "gpt-4.5-preview",
-    "score": 1258.0,
-    "scoreText": "1258.0"
+    "label": "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4",
+    "score": 1280.8,
+    "scoreText": "1280.8",
+    "letter": "N"
   },
   {
     "rank": 100,
-    "label": "qwq-32b",
-    "score": 1257.2,
-    "scoreText": "1257.2"
+    "label": "deepseek-ai/DeepSeek-V3.2-Speciale",
+    "score": 1276.8,
+    "scoreText": "1276.8",
+    "letter": "D"
   },
   {
     "rank": 101,
-    "label": "Mistral-Small-3.2-24B-Instruct-2506",
-    "score": 1255.4,
-    "scoreText": "1255.4"
+    "label": "google/gemma-3-27b-it",
+    "score": 1266.3,
+    "scoreText": "1266.3",
+    "letter": "G"
   },
   {
     "rank": 102,
-    "label": "reka-flash-3",
-    "score": 1227.8,
-    "scoreText": "1227.8"
+    "label": "gpt-4.5-preview",
+    "score": 1258.7,
+    "scoreText": "1258.7",
+    "letter": "G"
   },
   {
     "rank": 103,
-    "label": "grok-3-beta",
-    "score": 1185.8,
-    "scoreText": "1185.8"
+    "label": "qwen/qwq-32b",
+    "score": 1258.1,
+    "scoreText": "1258.1",
+    "letter": "Q"
   },
   {
     "rank": 104,
-    "label": "gpt-4.1-mini",
-    "score": 1147.0,
-    "scoreText": "1147.0"
+    "label": "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+    "score": 1256.1,
+    "scoreText": "1256.1",
+    "letter": "M"
   },
   {
     "rank": 105,
-    "label": "claude-3.5-haiku-20241022",
-    "score": 1145.7,
-    "scoreText": "1145.7"
+    "label": "RekaAI/reka-flash-3",
+    "score": 1228.7,
+    "scoreText": "1228.7",
+    "letter": "R"
   },
   {
     "rank": 106,
-    "label": "c4ai-command-a-03-2025",
-    "score": 1145.1,
-    "scoreText": "1145.1"
+    "label": "grok-3-beta",
+    "score": 1186.2,
+    "scoreText": "1186.2",
+    "letter": "G"
   },
   {
     "rank": 107,
-    "label": "gemini-2.5-flash-preview",
-    "score": 1136.9,
-    "scoreText": "1136.9"
+    "label": "gpt-4.1-mini",
+    "score": 1145.3,
+    "scoreText": "1145.3",
+    "letter": "G"
   },
   {
     "rank": 108,
-    "label": "gemini-2.0-flash-001",
-    "score": 1127.5,
-    "scoreText": "1127.5"
+    "label": "CohereForAI/c4ai-command-a-03-2025",
+    "score": 1144.6,
+    "scoreText": "1144.6",
+    "letter": "C"
   },
   {
     "rank": 109,
-    "label": "gemma-3-12b-it",
-    "score": 1125.5,
-    "scoreText": "1125.5"
+    "label": "anthropic/claude-3.5-haiku-20241022",
+    "score": 1143.7,
+    "scoreText": "1143.7",
+    "letter": "A"
   },
   {
     "rank": 110,
-    "label": "GLM-4.7-Flash",
-    "score": 1124.7,
-    "scoreText": "1124.7"
+    "label": "zai-org/GLM-4.7-Flash",
+    "score": 1138.5,
+    "scoreText": "1138.5",
+    "letter": "Z"
   },
   {
     "rank": 111,
-    "label": "Gemma-3-Glitter-12B",
-    "score": 1118.4,
-    "scoreText": "1118.4"
+    "label": "gemini-2.5-flash-preview",
+    "score": 1134.1,
+    "scoreText": "1134.1",
+    "letter": "G"
   },
   {
     "rank": 112,
-    "label": "Darkest-muse-v1",
-    "score": 1104.2,
-    "scoreText": "1104.2"
+    "label": "allura-org/Gemma-3-Glitter-12B",
+    "score": 1133.9,
+    "scoreText": "1133.9",
+    "letter": "A"
   },
   {
     "rank": 113,
-    "label": "GLM-4-32B-0414",
-    "score": 1068.1,
-    "scoreText": "1068.1"
+    "label": "google/gemma-3-12b-it",
+    "score": 1131.1,
+    "scoreText": "1131.1",
+    "letter": "G"
   },
   {
     "rank": 114,
-    "label": "gemma-3-4b-it",
-    "score": 1068.0,
-    "scoreText": "1068.0"
+    "label": "gemini-2.0-flash-001",
+    "score": 1131.0,
+    "scoreText": "1131.0",
+    "letter": "G"
   },
   {
     "rank": 115,
-    "label": "gemma-2-Ifable-9B",
-    "score": 1002.4,
-    "scoreText": "1002.4"
+    "label": "google/gemma-4-E4B-it",
+    "score": 1092.7,
+    "scoreText": "1092.7",
+    "letter": "G"
   },
   {
     "rank": 116,
-    "label": "Pixtral-Large-Instruct-2411",
-    "score": 987.7,
-    "scoreText": "987.7"
+    "label": "nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB-BF16",
+    "score": 1090.3,
+    "scoreText": "1090.3",
+    "letter": "N"
   },
   {
     "rank": 117,
-    "label": "mistral-large-2411",
-    "score": 984.9,
-    "scoreText": "984.9"
+    "label": "sam-paech/Darkest-muse-v1",
+    "score": 1088.4,
+    "scoreText": "1088.4",
+    "letter": "S"
   },
   {
     "rank": 118,
-    "label": "gpt-oss-120b",
-    "score": 961.0,
-    "scoreText": "961.0"
+    "label": "THUDM/GLM-4-32B-0414",
+    "score": 1066.6,
+    "scoreText": "1066.6",
+    "letter": "T"
   },
   {
     "rank": 119,
-    "label": "gpt-4.1-nano",
-    "score": 945.8,
-    "scoreText": "945.8"
+    "label": "google/gemma-3-4b-it",
+    "score": 1065.6,
+    "scoreText": "1065.6",
+    "letter": "G"
   },
   {
     "rank": 120,
-    "label": "Gemma-3-Starshine-12B",
-    "score": 885.6,
-    "scoreText": "885.6"
+    "label": "mistralai/Pixtral-Large-Instruct-2411",
+    "score": 985.8,
+    "scoreText": "985.8",
+    "letter": "M"
   },
   {
     "rank": 121,
-    "label": "Mistral-Nemo-Instruct-2407",
-    "score": 880.9,
-    "scoreText": "880.9"
+    "label": "ifable/gemma-2-Ifable-9B",
+    "score": 983.1,
+    "scoreText": "983.1",
+    "letter": "I"
   },
   {
     "rank": 122,
-    "label": "gpt-4o-mini",
-    "score": 872.8,
-    "scoreText": "872.8"
+    "label": "mistralai/mistral-large-2411",
+    "score": 982.0,
+    "scoreText": "982.0",
+    "letter": "M"
   },
   {
     "rank": 123,
-    "label": "llama-3.1-405b-instruct",
-    "score": 870.1,
-    "scoreText": "870.1"
+    "label": "openai/gpt-oss-120b",
+    "score": 955.9,
+    "scoreText": "955.9",
+    "letter": "O"
   },
   {
     "rank": 124,
-    "label": "Llama-4-Maverick-17B-128E-Instruct",
-    "score": 860.1,
-    "scoreText": "860.1"
+    "label": "gpt-4.1-nano",
+    "score": 938.6,
+    "scoreText": "938.6",
+    "letter": "G"
   },
   {
     "rank": 125,
-    "label": "gemma-2-9b-it",
-    "score": 841.4,
-    "scoreText": "841.4"
+    "label": "ToastyPigeon/Gemma-3-Starshine-12B",
+    "score": 881.0,
+    "scoreText": "881.0",
+    "letter": "T"
   },
   {
     "rank": 126,
-    "label": "Nanbeige4-3B-Thinking-2511",
-    "score": 841.2,
-    "scoreText": "841.2"
+    "label": "mistralai/Mistral-Nemo-Instruct-2407",
+    "score": 877.4,
+    "scoreText": "877.4",
+    "letter": "M"
   },
   {
     "rank": 127,
-    "label": "llama-3.1-70b-instruct",
-    "score": 783.6,
-    "scoreText": "783.6"
+    "label": "gpt-4o-mini",
+    "score": 870.7,
+    "scoreText": "870.7",
+    "letter": "G"
   },
   {
     "rank": 128,
-    "label": "Llama-4-Scout-17B-16E-Instruct",
-    "score": 783.1,
-    "scoreText": "783.1"
+    "label": "meta-llama/llama-3.1-405b-instruct",
+    "score": 868.0,
+    "scoreText": "868.0",
+    "letter": "M"
   },
   {
     "rank": 129,
-    "label": "cypher-alpha",
-    "score": 776.9,
-    "scoreText": "776.9"
+    "label": "meta-llama/Llama-4-Maverick-17B-128E-Instruct",
+    "score": 858.0,
+    "scoreText": "858.0",
+    "letter": "M"
   },
   {
     "rank": 130,
-    "label": "mistral-small-3.1-24b-instruct-2503",
-    "score": 760.9,
-    "scoreText": "760.9"
+    "label": "google/gemma-2-9b-it",
+    "score": 839.7,
+    "scoreText": "839.7",
+    "letter": "G"
   },
   {
     "rank": 131,
-    "label": "gpt-4-0314",
-    "score": 752.2,
-    "scoreText": "752.2"
+    "label": "Nanbeige/Nanbeige4-3B-Thinking-2511",
+    "score": 837.4,
+    "scoreText": "837.4",
+    "letter": "N"
   },
   {
     "rank": 132,
-    "label": "lfm-7b",
-    "score": 751.7,
-    "scoreText": "751.7"
+    "label": "meta-llama/llama-3.1-70b-instruct",
+    "score": 781.6,
+    "scoreText": "781.6",
+    "letter": "M"
   },
   {
     "rank": 133,
-    "label": "claude-3-haiku",
-    "score": 717.3,
-    "scoreText": "717.3"
+    "label": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+    "score": 781.1,
+    "scoreText": "781.1",
+    "letter": "M"
   },
   {
     "rank": 134,
-    "label": "llama-3.1-8b-instruct",
-    "score": 713.0,
-    "scoreText": "713.0"
+    "label": "openrouter/cypher-alpha",
+    "score": 774.8,
+    "scoreText": "774.8",
+    "letter": "O"
   },
   {
     "rank": 135,
-    "label": "Mistral-Small-24B-Instruct-2501",
-    "score": 706.5,
-    "scoreText": "706.5"
+    "label": "mistralai/mistral-small-3.1-24b-instruct-2503",
+    "score": 758.9,
+    "scoreText": "758.9",
+    "letter": "M"
   },
   {
     "rank": 136,
-    "label": "gpt-5-nano-2025-08-07",
-    "score": 704.9,
-    "scoreText": "704.9"
+    "label": "openai/gpt-4-0314",
+    "score": 750.3,
+    "scoreText": "750.3",
+    "letter": "O"
   },
   {
     "rank": 137,
-    "label": "gpt-oss-20b",
-    "score": 665.6,
-    "scoreText": "665.6"
+    "label": "liquid/lfm-7b",
+    "score": 749.9,
+    "scoreText": "749.9",
+    "letter": "L"
   },
   {
     "rank": 138,
-    "label": "llama-3.2-3b-instruct",
-    "score": 595.3,
-    "scoreText": "595.3"
+    "label": "anthropic/claude-3-haiku",
+    "score": 715.7,
+    "scoreText": "715.7",
+    "letter": "A"
   },
   {
     "rank": 139,
-    "label": "gpt-3.5-turbo-0613",
-    "score": 450.9,
-    "scoreText": "450.9"
+    "label": "meta-llama/llama-3.1-8b-instruct",
+    "score": 711.2,
+    "scoreText": "711.2",
+    "letter": "M"
   },
   {
     "rank": 140,
-    "label": "llama-3.2-1b-instruct",
+    "label": "mistralai/Mistral-Small-24B-Instruct-2501",
+    "score": 704.9,
+    "scoreText": "704.9",
+    "letter": "M"
+  },
+  {
+    "rank": 141,
+    "label": "gpt-5-nano-2025-08-07",
+    "score": 703.3,
+    "scoreText": "703.3",
+    "letter": "G"
+  },
+  {
+    "rank": 142,
+    "label": "openai/gpt-oss-20b",
+    "score": 664.4,
+    "scoreText": "664.4",
+    "letter": "O"
+  },
+  {
+    "rank": 143,
+    "label": "meta-llama/llama-3.2-3b-instruct",
+    "score": 594.1,
+    "scoreText": "594.1",
+    "letter": "M"
+  },
+  {
+    "rank": 144,
+    "label": "openai/gpt-3.5-turbo-0613",
+    "score": 450.2,
+    "scoreText": "450.2",
+    "letter": "O"
+  },
+  {
+    "rank": 145,
+    "label": "meta-llama/llama-3.2-1b-instruct",
     "score": 200.0,
-    "scoreText": "200.0"
+    "scoreText": "200.0",
+    "letter": "M"
   }
 ]

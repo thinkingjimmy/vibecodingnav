@@ -9,6 +9,15 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-10-26
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步：151 行，榜单日期 2026-10-22，923,854 票。Claude Opus 5.5（max）第 1（1807）；新增 Moonshot Kimi K3.1 Pro（max）第 8（1692，初步），模型 slug `kimi-k3-1-pro`，与 Kimi K3 分开。
+- The Slop Index 从 https://www.theslopindex.com/leaderboard 全量同步：58 行（2,091 票）。来源 Slop Score 越高越差；本站反转后 Haiku 5.5 第 1（100 − 17 = 83）。DeepSeek V4（0813）仍在源榜第 41，未消失。
+- EQ-Bench Creative Writing v3 从 creative_writing.js 嵌入 CSV 全量同步：145 行。榜首 GPT-6 Astra（Elo 2174.0）；新增 Meta muse-wonder 第 9（Elo 2007.0）。
+- Convex Evals 从 fabulous-panther-525.convex.cloud 同步 No Guidelines（39）/ With Guidelines（38）/ No Guidelines + Web（28）；有指南臂 Claude Opus 5 第 9（94.64%）。写文档与 Web 前端综合分随榜重算。
+
 ## 2026-10-20
 
 ### 变更

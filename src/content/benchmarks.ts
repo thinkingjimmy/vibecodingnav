@@ -76,9 +76,9 @@ export const benchmarks: Benchmark[] = [
     shortName: "WebDev",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-10-19",
-    votes: "903,893",
-    trackedCount: 149,
+    asOf: "2026-10-22",
+    votes: "923,854",
+    trackedCount: 151,
     table: "webdev",
     sourceFilter: "license",
     domain: tx("前端", "Frontend"),
@@ -99,8 +99,8 @@ export const benchmarks: Benchmark[] = [
       "It measures human preference (does it look right, does it run), not test pass rate. Briefs are mostly single-page demos, so it says little about large codebases or long refactors. Effort tiers of the same model are ranked separately. Preliminary rows have few votes and can move.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期 2026-10-19，2026-10-20 同步；每周同步一次，变化写入首页「最新变化」。",
-      "Updated continuously. This page's board date is 2026-10-19, synced 2026-10-20. We sync weekly and write changes on the home page.",
+      "持续更新。本页榜单日期 2026-10-22，2026-10-26 同步；每周同步一次，变化写入首页「最新变化」。",
+      "Updated continuously. This page's board date is 2026-10-22, synced 2026-10-26. We sync weekly and write changes on the home page.",
     ),
     links: [
       { label: "lmarena.ai/leaderboard/webdev", href: "https://lmarena.ai/leaderboard/webdev" },
@@ -193,9 +193,9 @@ export const benchmarks: Benchmark[] = [
     shortName: "Slop Index",
     scoreUnit: "",
     compositeKind: "rate",
-    asOf: "2026-10-11",
-    votes: "1,795",
-    trackedCount: 39,
+    asOf: "2026-10-26",
+    votes: "2,091",
+    trackedCount: 58,
     table: "score",
     domain: tx("文档与文案", "Docs and copy"),
     measures: tx(
@@ -203,8 +203,8 @@ export const benchmarks: Benchmark[] = [
       "How chatbot-like a model's writing is across email, blog/essays, tweets, and Discord chat. Higher scores mean less chatbot-like writing.",
     ),
     method: tx(
-      "Slashy 的 The Slop Index。对 39 个前沿模型在 4 个领域、112 个场景上各采多样本，对照 2022 年前真人写作基线。综合分为现场盲测竞技场（40%）加上简洁、模板化、节奏、AI 套话四条机械轴（各 15%）。来源榜 Slop Score 0–100，越高越渣，#1 最渣；本站已反转为最少 slop 为 #1，分数用 100 − Slop Score。开放数据在 GitHub。",
-      "Slashy's The Slop Index. Thirty-nine frontier models, 112 scenarios in four domains, compared with pre-2022 human writing. The blend is a live blind arena (40%) plus conciseness, templating, rhythm, and AI tells (15% each). The source Slop Score is 0–100, higher = worse, #1 = sloppiest; this site inverts so least slop is #1 and stores 100 − Slop Score. Open data is on GitHub.",
+      "Slashy 的 The Slop Index。对 58 个前沿模型在 4 个领域、112 个场景上各采多样本，对照 2022 年前真人写作基线。综合分为现场盲测竞技场（40%）加上简洁、模板化、节奏、AI 套话四条机械轴（各 15%）。来源榜 Slop Score 0–100，越高越渣，#1 最渣；本站已反转为最少 slop 为 #1，分数用 100 − Slop Score。开放数据在 GitHub。",
+      "Slashy's The Slop Index. Fifty-eight frontier models, 112 scenarios in four domains, compared with pre-2022 human writing. The blend is a live blind arena (40%) plus conciseness, templating, rhythm, and AI tells (15% each). The source Slop Score is 0–100, higher = worse, #1 = sloppiest; this site inverts so least slop is #1 and stores 100 − Slop Score. Open data is on GitHub.",
     ),
     scoreMeaning: tx(
       "本站分数 = 100 − 来源 Slop Score，越高越像真人。来源榜把最高 slop 排第 1；这里已反转，最少 slop 为第 1。综合分按通过率比值相对榜首归一化。",
@@ -215,8 +215,8 @@ export const benchmarks: Benchmark[] = [
       "Arena votes are still accumulating, so the live Elo moves. Mechanical axes are normalized within this board. It does not measure code or UI quality.",
     ),
     updateCadence: tx(
-      "来源 https://theslopindex.com/leaderboard ，开放数据 https://github.com/hgaddipati1118/slop-index 。本页于 2026-10-11 抓取全部 39 行（当时 1,795 票）。",
-      "Source https://theslopindex.com/leaderboard ; open data https://github.com/hgaddipati1118/slop-index . This page fetched all 39 rows on 2026-10-11 (1,795 votes then).",
+      "来源 https://theslopindex.com/leaderboard ，开放数据 https://github.com/hgaddipati1118/slop-index 。本页于 2026-10-26 抓取全部 58 行（当时 2,091 票）。",
+      "Source https://theslopindex.com/leaderboard ; open data https://github.com/hgaddipati1118/slop-index . This page fetched all 58 rows on 2026-10-26 (2,091 votes then).",
     ),
     links: [
       { label: "theslopindex.com/leaderboard", href: "https://theslopindex.com/leaderboard" },
@@ -229,8 +229,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Creative Writing",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-10-12",
-    trackedCount: 140,
+    asOf: "2026-10-26",
+    trackedCount: 145,
     table: "score",
     domain: tx("文档与文案", "Docs and copy"),
     measures: tx(
@@ -250,8 +250,8 @@ export const benchmarks: Benchmark[] = [
       "An LLM judge has self-preference and taste bias; the authors say this is not a roleplay eval and does not match your taste. English only. Source 🆕 marks newly added models, not this site's preliminary half-weight flag.",
     ),
     updateCadence: tx(
-      "来源 https://eqbench.com/creative_writing.html ；方法说明 https://eqbench.com/about.html#creative-writing-v3 ；评测代码 https://github.com/EQ-bench/creative-writing-bench 。本页于 2026-10-12 从来源页 creative_writing.js（v=1.0.91）嵌入的榜单 CSV 抓取全部 140 行，按 Elo 降序。",
-      "Source https://eqbench.com/creative_writing.html ; methodology https://eqbench.com/about.html#creative-writing-v3 ; harness https://github.com/EQ-bench/creative-writing-bench . This page fetched all 140 rows on 2026-10-12 from the CSV embedded in creative_writing.js (v=1.0.91), ordered by Elo descending.",
+      "来源 https://eqbench.com/creative_writing.html ；方法说明 https://eqbench.com/about.html#creative-writing-v3 ；评测代码 https://github.com/EQ-bench/creative-writing-bench 。本页于 2026-10-26 从来源页 creative_writing.js（v=1.0.91）嵌入的榜单 CSV 抓取全部 145 行，按 Elo 降序。",
+      "Source https://eqbench.com/creative_writing.html ; methodology https://eqbench.com/about.html#creative-writing-v3 ; harness https://github.com/EQ-bench/creative-writing-bench . This page fetched all 145 rows on 2026-10-26 from the CSV embedded in creative_writing.js (v=1.0.91), ordered by Elo descending.",
     ),
     links: [
       { label: "eqbench.com/creative_writing.html", href: "https://eqbench.com/creative_writing.html" },
@@ -373,7 +373,7 @@ export const benchmarks: Benchmark[] = [
     scoreUnit: "%",
     compositeKind: "rate",
     asOf: "2026-10-08",
-    trackedCount: 38,
+    trackedCount: 39,
     kind: "framework",
     version: "92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb",
     domain: tx("框架官方评测", "Framework eval"),
@@ -396,8 +396,8 @@ export const benchmarks: Benchmark[] = [
       "Convex writes the tasks and grades them. This measures a model together with Convex, not one framework against another. The front is near the ceiling. With Guidelines comes from the unscoped runs:leaderboardScores query; it matches the With Guidelines tab on the page. The experiment=with_guidelines parameter still returns a server error.",
     ),
     updateCadence: tx(
-      "版本 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb，铸造时间 2026-10-08。本页于 2026-10-20 从 fabulous-panther-525.convex.cloud 同步 No Guidelines（38 个模型）与 With Guidelines（38 个模型），同模型多档只保留最佳一行；No Guidelines + Web 仍为 2026-10-19 同步的 26 个模型。表中只列能对应到站内模型的行。",
-      "Version 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb, minted 2026-10-08. This page synced No Guidelines (38 models) and With Guidelines (38 models) from fabulous-panther-525.convex.cloud on 2026-10-20, keeping only the best row per model; No Guidelines + Web remains the 26-model sync from 2026-10-19. The table only lists rows that map to models on this site.",
+      "版本 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb，铸造时间 2026-10-08。本页于 2026-10-26 从 fabulous-panther-525.convex.cloud 同步 No Guidelines（39 个模型）、With Guidelines（38 个模型）与 No Guidelines + Web（28 个模型），同模型多档只保留最佳一行。表中只列能对应到站内模型的行。",
+      "Version 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb, minted 2026-10-08. This page synced No Guidelines (39 models), With Guidelines (38 models), and No Guidelines + Web (28 models) from fabulous-panther-525.convex.cloud on 2026-10-26, keeping only the best row per model. The table only lists rows that map to models on this site.",
     ),
     links: [
       { label: "convex.dev/evals", href: "https://www.convex.dev/evals" },
