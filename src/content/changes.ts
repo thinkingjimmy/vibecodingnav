@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-28",
+    kind: "board",
+    source: "surgehq.ai / lmarena.ai / theslopindex.com / developer.android.com / cognition.com / convex.dev",
+    text: tx(
+      "**六榜同步**：sudo L7 16 行，Sonnet 5.5 `50.6%` 居首；Kimi K3.1 Pro 与 Qwen 并列第 6。WebDev 至 10-27（950,329 票、152 行），Opus Max 仍第 1；新增 **GPT-6.1 Terra** 第 14。Slop 反转后 **Inkling Small** 第 1（76），Haiku 约第 4（旧「Haiku #1」过时）。Android Bench 2.0 11 行，Sonnet max `40.0%` 居首。FrontierCode 升级 **2.0**（102 行／26 模型；完整 JSON 含 Obsidian 3）。Convex No/With Guidelines 刷新，有指南 Argon ~98.7%。",
+      "**Six-board sync**: sudo L7 16 rows, Sonnet 5.5 leads at `50.6%`; Kimi K3.1 Pro ties Qwen at #6. WebDev to Oct 27 (950,329 votes, 152 rows); Opus Max still #1; new **GPT-6.1 Terra** at #14. After Slop inversion **Inkling Small** leads (76); Haiku about #4 (old “Haiku #1” stale). Android Bench 2.0 11 rows, Sonnet max `40.0%` leads. FrontierCode upgraded to **2.0** (102 rows / 26 models; complete JSON includes Obsidian 3). Convex No/With Guidelines refreshed; With Guidelines Argon ~98.7%.",
+    ),
+  },
+  {
     date: "10-26",
     kind: "board",
     source: "lmarena.ai / theslopindex.com / eqbench.com / convex.dev",

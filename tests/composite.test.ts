@@ -47,54 +47,54 @@ describe("composite method C", () => {
   it("matches the doc top-5 for Web frontend", () => {
     const all = computeComposite(scenarioBoards("web-frontend"));
     const rows = all.slice(0, 5);
-    // Web top-5 after FrontierCode 1.1 (weight 0.6, rate → ratio to leader)
+    // Web top-5 after FrontierCode 2.0 (weight 0.6, rate → ratio to leader)
     console.log("Web top-5 composite:", rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display]));
     expect(rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
-      [1, "claude-opus-5-5", 99],
-      [2, "claude-sonnet-5-5", 92],
-      [3, "gpt-6-astra", 90],
-      [4, "claude-fable-5-1", 84],
-      [5, "gpt-6-1-sol", 83],
+      [1, "claude-opus-5-5", 97],
+      [2, "claude-sonnet-5-5", 90],
+      [3, "gpt-6-astra", 87],
+      [4, "gpt-6-1-sol", 81],
+      [4, "claude-fable-5-1", 81],
     ]);
     expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
       [1, 100],
       [1, 100],
       [1, 100],
       [1, 100],
-      [1, 100],
+      [2, 90],
       null,
-      [1, 100],
+      [2, 97],
     ]);
-    expect(rows[3]?.coverage).toBeCloseTo(6 / 7, 5);
-    expect(all.find((row) => row.key === "model:gemini-4-argon")?.homeEligible).toBe(false);
+    expect(rows[3]?.coverage).toBeCloseTo(2 / 3, 5);
+    expect(all.find((row) => row.key === "model:gemini-4-argon")?.homeEligible).toBe(true);
   });
 
   it("matches the doc top-5 for Android with sudo L7, DeepSWE, and FrontierCode", () => {
     const rows = computeComposite(scenarioBoards("android-app")).slice(0, 5);
     console.log("Android top-5 composite:", rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display]));
     expect(rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
-      [1, "claude-opus-5-5", 98],
-      [2, "gpt-6-astra", 88],
-      [3, "claude-fable-5-1", 75],
-      [4, "gpt-6-sol", 65],
-      [5, "kimi-k3", 57],
+      [1, "claude-sonnet-5-5", 95],
+      [2, "claude-opus-5-5", 92],
+      [3, "gpt-6-astra", 79],
+      [4, "gpt-6-1-sol", 75],
+      [5, "claude-fable-5-1", 64],
     ]);
     expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
       [1, 100],
       [1, 100],
       null,
-      [1, 100],
+      [4, 88],
     ]);
   });
 
   it("matches the doc top-5 for CLI with DeepSWE and FrontierCode", () => {
     const cli = computeComposite(scenarioBoards("cli-devops")).slice(0, 5);
     expect(cli.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
-      [1, "claude-opus-5-5", 97],
-      [2, "gpt-6-astra", 95],
-      [3, "claude-sonnet-5-5", 93],
-      [4, "claude-opus-5", 92],
-      [5, "gpt-6-1-sol", 89],
+      [1, "claude-opus-5-5", 96],
+      [2, "gpt-6-astra", 93],
+      [3, "claude-sonnet-5-5", 91],
+      [4, "gpt-6-1-sol", 87],
+      [5, "claude-fable-5-1", 82],
     ]);
   });
 
@@ -106,19 +106,19 @@ describe("composite method C", () => {
     ]);
     const rows = computeComposite(boards);
     expect(rows.slice(0, 3).map((row) => [row.rank, row.key.replace(/^(model:|label:)/, ""), row.display])).toEqual([
-      [1, "gpt-6-sol", 86],
-      [2, "claude-haiku-5-5", 83],
-      [3, "GLM-5.3 Prime", 79],
+      [1, "gpt-6-astra", 85],
+      [2, "gpt-6-sol", 84],
+      [3, "Inkling Small", 83],
     ]);
     const astra = rows.find((row) => row.key === "model:gpt-6-astra")!;
     expect(astra.homeEligible).toBe(true);
-    expect(astra.cells[0]?.rank).toBe(32);
+    expect(astra.cells[0]?.rank).toBe(29);
     expect(astra.cells[1]?.rank).toBe(1);
     const luna = rows.find((row) => row.key === "model:gpt-5-6-luna")!;
-    expect(luna.cells[0]?.rank).toBe(17);
+    expect(luna.cells[0]?.rank).toBe(19);
     expect(luna.display).toBeLessThan(astra.display);
     const haiku = rows.find((row) => row.key === "model:claude-haiku-5-5")!;
-    expect(haiku.cells[0]?.rank).toBe(1);
+    expect(haiku.cells[0]?.rank).toBe(4);
   });
 
   it("halves weight for preliminary rows and missing boards", () => {
@@ -173,58 +173,58 @@ describe("composite method C", () => {
       }
     }
     const web = getScenario("zh", "web-frontend")!.scoring.worked!;
-    expect(web).toMatchObject({ key: "model:gpt-6-astra", composite: 90 });
+    expect(web).toMatchObject({ key: "model:claude-sonnet-5-5", composite: 90 });
     expect(Math.round(web.numerator / web.denominator)).toBe(90);
   });
 
   it("wires composite into fused tables and home cards", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.fusion.rows[0]).toMatchObject({ slug: "claude-opus-5-5", compositeLabel: "99" });
+    expect(web?.fusion.rows[0]).toMatchObject({ slug: "claude-opus-5-5", compositeLabel: "97" });
     expect(web?.fusion.rows.map((row) => row.slug).slice(0, 5)).toEqual([
       "claude-opus-5-5",
       "claude-sonnet-5-5",
       "gpt-6-astra",
-      "claude-fable-5-1",
       "gpt-6-1-sol",
+      "claude-fable-5-1",
     ]);
     expect(web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([
-      1, 1, 1, null, 1, 1, 1,
+      1, 1, 2, null, 2, 1, 1,
     ]);
 
     const home = getHome("zh").cards;
     expect(home[0]?.rows.map((row) => [row.name, row.score])).toEqual([
-      ["Claude Opus 5.5", "99"],
-      ["Claude Sonnet 5.5", "92"],
-      ["GPT-6 Astra", "90"],
-      ["Claude Fable 5.1", "84"],
-      ["GPT-6.1 Sol", "83"],
+      ["Claude Opus 5.5", "97"],
+      ["Claude Sonnet 5.5", "90"],
+      ["GPT-6 Astra", "87"],
+      ["GPT-6.1 Sol", "81"],
+      ["Claude Fable 5.1", "81"],
     ]);
     expect(home[0]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual([
       "#1 · 100",
       "#1 · 100",
-      "#1 · 100",
+      "#2 · 90",
       "—",
-      "#1 · 100",
+      "#2 · 97",
       "#1 · 100",
       "#1 · 100",
     ]);
 
     expect(home[0]?.rows.every((row) => !("boards" in row && row.boards))).toBe(true);
     expect(home[1]?.rows.map((row) => [row.name, row.score])).toEqual([
-      ["Claude Opus 5.5", "98"],
-      ["GPT-6 Astra", "88"],
-      ["Claude Fable 5.1", "75"],
-      ["GPT 6 Sol", "65"],
-      ["Kimi K3", "57"],
+      ["Claude Sonnet 5.5", "95"],
+      ["Claude Opus 5.5", "92"],
+      ["GPT-6 Astra", "79"],
+      ["GPT-6.1 Sol", "75"],
+      ["Claude Fable 5.1", "64"],
     ]);
     expect(home[1]?.rows[0]?.unit).toBeUndefined();
-    expect(home[1]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "—", "#1 · 100"]);
-    expect(home[2]?.rows.map((row) => row.score)).toEqual(["97", "95", "93", "92", "89"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 6 Sol", score: "86" });
+    expect(home[1]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#1 · 100", "—", "#4 · 88"]);
+    expect(home[2]?.rows.map((row) => row.score)).toEqual(["96", "93", "91", "87", "82"]);
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT-6 Astra", score: "85" });
     expect(home[3]?.rows.map((row) => [row.name, row.score]).slice(0, 3)).toEqual([
-      ["GPT 6 Sol", "86"],
-      ["Claude Haiku 5.5", "83"],
-      ["GPT-6 Astra", "79"],
+      ["GPT-6 Astra", "85"],
+      ["GPT 6 Sol", "84"],
+      ["Claude Haiku 5.5", "79"],
     ]);
     expect(home).toHaveLength(4);
   });

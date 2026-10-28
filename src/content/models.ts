@@ -54,13 +54,13 @@ export const models: Model[] = [
       slugs: ["claude-sonnet-5-5", "gpt-6-astra", "gpt-6-1-sol", "glm-5-3"],
     },
     summary: tx(
-      "Terminal-Bench、WebDev 和 Android 长程仍排第一。sudo L7 与 Sonnet 5.5 同分 45%，页面先列 Opus。对成本敏感的批量任务，有便宜得多的选择。",
-      "Still first on Terminal-Bench, WebDev, and the Android long board. On sudo L7 it ties Sonnet 5.5 at 45%, and the page lists Opus first. Cheaper models fit batch jobs.",
+      "Terminal-Bench 与 WebDev 仍排第一。Android Bench 2.0 长程现为第 2（37.3%）；sudo L7 第 2（45.6%），Sonnet 5.5 以 50.6% 居首。对成本敏感的批量任务，有便宜得多的选择。",
+      "Still first on Terminal-Bench and WebDev. Second on Android Bench 2.0 long-horizon at 37.3%; second on sudo L7 at 45.6%, with Sonnet 5.5 leading at 50.6%. Cheaper models fit batch jobs.",
     ),
     why: [
       tx(
-        "Terminal-Bench、LMArena WebDev、Android Bench 长程任务三项第一，覆盖终端、前端、移动端。",
-        "First on Terminal-Bench, LMArena WebDev, and the Android Bench long-horizon board.",
+        "Terminal-Bench 与 LMArena WebDev 两项第一，覆盖终端与前端。",
+        "First on Terminal-Bench and LMArena WebDev, covering terminal and frontend.",
       ),
       tx(
         "Terminal-Bench 领先第二名 Sonnet 5.5 三个百分点（64.8% vs 61.8%），单次跑分成本更低（$4.7k vs $7.3k）。",
@@ -76,8 +76,8 @@ export const models: Model[] = [
         "只做前端：Claude Sonnet 5.5 WebDev 1769 分，价格只有一半（$2 / $10）。",
         "For frontend only, Claude Sonnet 5.5 scores 1769 on WebDev at half the token price ($2 / $10).",
       ),
-      tx("对延迟敏感：Android Bench 长程任务平均耗时 15.2 小时。", "Latency: the Android Bench long run averages 15.2 hours."),
-      tx("生产级判断：sudo L7 上与 Sonnet 同分，博客单任务约 $10，Sonnet 约 $14。", "Production judgment: tied with Sonnet on sudo L7. The blog puts a task at about $10, and Sonnet at about $14."),
+      tx("对延迟敏感：Android Bench 长程任务平均耗时 56.6 小时。", "Latency: the Android Bench long run averages 56.6 hours."),
+      tx("生产级判断：sudo L7 上落后 Sonnet 5.5（50.6% vs 45.6%）。", "Production judgment: trails Sonnet 5.5 on sudo L7 (50.6% vs 45.6%)."),
     ],
   }),
   model({
@@ -91,12 +91,12 @@ export const models: Model[] = [
     priceLabel: "$10 / $50",
     headlines: ["eqbench-creative-writing", "lmarena-webdev"],
     summary: tx(
-      "EQ-Bench Creative Writing v3 第 1（Elo 2174.0）。WebDev 第二，1774 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第三，32.2%。",
-      "First on EQ-Bench Creative Writing v3 (Elo 2174.0). Second on WebDev at 1774. Tied at 58.2% on Terminal-Bench. Third on sudo L7 at 32.2%.",
+      "EQ-Bench Creative Writing v3 第 1（Elo 2174.0）。WebDev 第二，1774 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第五，31.1%。",
+      "First on EQ-Bench Creative Writing v3 (Elo 2174.0). Second on WebDev at 1774. Tied at 58.2% on Terminal-Bench. Fifth on sudo L7 at 31.1%.",
     ),
     why: [
-      tx("EQ-Bench Creative Writing Elo 仍居首；写文档综合分现由 GPT 6 Sol / Haiku 5.5 领先。", "Still first on Creative Writing Elo; the docs composite is now led by GPT 6 Sol / Haiku 5.5."),
-      tx("WebDev 只比第一名低 33 分。", "33 points behind first on WebDev."),
+      tx("EQ-Bench Creative Writing Elo 仍居首；写文档主榜 Slop 反转后由 Inkling Small / Haiku 一带领先。", "Still first on Creative Writing Elo; after Slop inversion the docs primary board is led by Inkling Small / the Haiku band."),
+      tx("WebDev 只比第一名低 35 分。", "35 points behind first on WebDev."),
     ],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
   }),
@@ -109,12 +109,18 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1M",
     priceLabel: "$2 / $10",
+    headlines: ["android-bench", "sudo-l7", "lmarena-webdev"],
     summary: tx(
-      "WebDev 第三，1769 分。sudo L7 与 Opus 5.5 同分 45%，排在 Opus 后面。博客单任务约 $14，高于 Opus 的约 $10。",
-      "Third on WebDev at 1769. Tied with Opus 5.5 at 45% on sudo L7, listed after Opus. The blog puts a task at about $14, above Opus at about $10.",
+      "Android Bench 2.0 长程第 1（40.0%，claude-code）。sudo L7 第 1（50.6% Adaptive/Max）。WebDev 第三，1769 分。",
+      "First on Android Bench 2.0 long-horizon at 40.0% (claude-code). First on sudo L7 at 50.6% Adaptive/Max. Third on WebDev at 1769.",
     ),
-    why: [tx("做前端时，少 38 分换一半价格。", "For frontend work, 38 fewer points for half the price.")],
-    whyNot: [tx("Terminal-Bench 单次跑分 $7.3k，比第一名的 $4.7k 还贵。", "A Terminal-Bench run costs $7.3k, more than the leader's $4.7k.")],
+    why: [
+      tx("Android 长程与 sudo L7 双第一；做前端时比 Opus 少约 40 分换一半价格。", "Leads Android long-horizon and sudo L7; for frontend, about 40 fewer WebDev points than Opus at half the price."),
+    ],
+    whyNot: [
+      tx("Android 长程平均耗时 70.7 小时、成本约 $1575。", "Android long-horizon averages 70.7 hours and about $1575."),
+      tx("Terminal-Bench 单次跑分 $7.3k，比第一名的 $4.7k 还贵。", "A Terminal-Bench run costs $7.3k, more than the leader's $4.7k."),
+    ],
   }),
   model({
     slug: "gpt-6-1-sol",
@@ -125,12 +131,31 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1.1M",
     priceLabel: "$2 / $10",
+    headlines: ["android-bench", "sudo-l7"],
     summary: tx(
-      "Terminal-Bench 并列第 3，58.2%，跑分成本 $634.24。sudo L7 第四，31.7%，博客写单任务略高于 $1。",
-      "Ties for 3rd on Terminal-Bench at 58.2% and $634.24 a run. Fourth on sudo L7 at 31.7%. The blog puts a task at just over $1.",
+      "Terminal-Bench 并列第 3，58.2%，跑分成本 $634.24。sudo L7 第三，33.9%。Android Bench 2.0 长程第三，29.3%（codex）。",
+      "Ties for 3rd on Terminal-Bench at 58.2% and $634.24 a run. Third on sudo L7 at 33.9%. Third on Android Bench 2.0 long-horizon at 29.3% (codex).",
     ),
-    why: [tx("全栈和脚本更看成本时，它是 Terminal-Bench 上更划算的一档。", "When a full-stack or scripting job cares about cost, this is the cheaper Terminal-Bench tier.")],
+    why: [tx("全栈、脚本和 Android 长程更看成本时，它是更划算的一档。", "When full-stack, scripting, or Android long-horizon work cares about cost, this is the cheaper tier.")],
     whyNot: [tx("不是任何一张活跃榜的第一名。纯前端 Opus 与 Sonnet 仍然更高。", "It is not first on an active board. Opus and Sonnet still score higher for frontend.")],
+  }),
+  model({
+    slug: "gpt-6-1-terra",
+    name: "GPT-6.1 Terra",
+    vendor: "openai",
+    vendorName: "OpenAI",
+    license: "proprietary",
+    licenseLabel: prop,
+    context: "1.1M",
+    priceLabel: "$1 / $5",
+    fetchedAt: "2026-10-28",
+    headlines: ["lmarena-webdev"],
+    summary: tx(
+      "WebDev 新增第 14（max）1671 分；token 价格 $1 / $5。与 GPT-6.1 Sol 不是同一行。",
+      "New 14th on WebDev at max with 1671; token price $1 / $5. A different row from GPT-6.1 Sol.",
+    ),
+    why: [tx("WebDev 已进前十五，输出价格低于同系列 Sol。", "Inside the WebDev top fifteen, cheaper output than Sol in the same series.")],
+    whyNot: [tx("票数约 1.6k，名次区间 8–19 仍宽；不要和 Sol / Astra 合成一个分。", "About 1.6k votes and a wide 8–19 rank band. Do not merge this with Sol / Astra into one score.")],
   }),
   model({
     slug: "claude-fable-5-1",
@@ -319,11 +344,11 @@ export const models: Model[] = [
     priceLabel: "$2 / $10",
     fetchedAt: "2026-10-26",
     summary: tx(
-      "WebDev 新增第 8（max）1692 分，标记为初步；与 Kimi K3 不是同一行。",
-      "New 8th on WebDev at max with 1692, marked preliminary. A different row from Kimi K3.",
+      "WebDev 第 8（max）；sudo L7 与 Qwen 3.8 Max 并列第 6（16.7%）。与 Kimi K3 不是同一行。",
+      "8th on WebDev at max; ties Qwen 3.8 Max at #6 on sudo L7 (16.7%). A different row from Kimi K3.",
     ),
-    why: [tx("WebDev 已进前十，token 价格 $2 / $10。", "Inside the WebDev top ten, priced $2 / $10.")],
-    whyNot: [tx("仍标初步，票数约 2.5k；不要和 Kimi K3 的其他榜合成一个分。", "Still preliminary, about 2.5k votes. Do not merge this with Kimi K3's other boards into one score.")],
+    why: [tx("WebDev 前十，且已出现在 sudo L7 公开榜。", "Inside the WebDev top ten, and now on the public sudo L7 board.")],
+    whyNot: [tx("不要和 Kimi K3 的其他榜合成一个分。", "Do not merge this with Kimi K3's other boards into one score.")],
   }),
   model({
     slug: "kimi-k3",
@@ -614,14 +639,16 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["slop-index"],
     summary: tx(
-      "The Slop Index 反转后第 1（100 − Slop = 83）。Convex No Guidelines 第 16，75.00%，八次运行；有指南 89.62%；无指南加网页仍在表上。",
-      "First on The Slop Index after inversion (100 − Slop = 83). 16th on Convex No Guidelines at 75.00%, eight runs; With Guidelines is 89.62%; No Guidelines + Web remains on the table.",
+      "The Slop Index 反转后约第 4（100 − 28 = 72；来源 #55）。Inkling Small 以 76 居首。Convex 基线仍是低成本前排之一。",
+      "About 4th on The Slop Index after inversion (100 − 28 = 72; source #55). Inkling Small leads at 76. Still among the low-cost Convex baseline front.",
     ),
     why: [
-      tx("写文档和文案场景主榜（Slop Index）最少 AI slop。", "Least AI slop on the docs-and-copy primary board (Slop Index)."),
+      tx("写文档主榜反转后仍在低 slop 前五；token 价格 $0.3。", "Still inside the inverted docs primary top five for low slop; token price $0.3."),
       tx("Convex 基线上成本仍是前排里最低的一档之一。", "Still among the lowest costs on the Convex baseline."),
     ],
-    whyNot: [tx("无指南 75.00% 低于 GPT-6 Astra 的 90.18%。有指南列另看，不要和基线合成一个分。", "No Guidelines 75.00% is behind GPT-6 Astra at 90.18%. Read the with-guidelines column separately; do not merge it with the baseline.")],
+    whyNot: [
+      tx("不再是反转后的唯一榜首（Oct 27「Haiku #1」预期已过时）。有指南列另看，不要和基线合成一个分。", "No longer the sole inverted leader (the Oct 27 “Haiku #1” expect is stale). Read the with-guidelines column separately; do not merge it with the baseline."),
+    ],
   }),
   model({
     slug: "gemini-3-1-pro",

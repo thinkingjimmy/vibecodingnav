@@ -11,12 +11,12 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 const androidCurrent: BenchmarkVersion = {
   id: "2.0",
   label: tx("2.0 长程", "2.0 long-horizon"),
-  asOf: "2026-10-06",
+  asOf: "2026-10-26",
   current: true,
   aliases: ["long", "2"],
   table: "android-long",
   sourceFilter: "weights",
-  trackedCount: 10,
+  trackedCount: 11,
   measures: tx("跨模块、耗时很长的 Android 改造：完整功能，而不是单点修改。", "Long Android changes across modules: a whole feature, not a single edit."),
   method: tx(
     "developer.android.com/bench 的 Long-horizon task results。每一行是模型加 agent harness。列是通过率、CI、完成度、平均耗时和平均成本。",
@@ -27,12 +27,12 @@ const androidCurrent: BenchmarkVersion = {
     "The percent is the average pass rate across 30 tasks. Completion is how close a failed run got. Latency is in hours. Cost is one full run.",
   ),
   caveats: tx(
-    "整体通过率不高，置信区间很宽，第一名 18.7–47.3 和第二名 13.3–42.0 重叠。1.0 仍完整保留在本页，作为历史版本，不再作为场景的当前列。",
-    "Pass rates are low and intervals are wide. First place, 18.7–47.3, overlaps second place, 13.3–42.0. Version 1.0 stays complete on this page as an archived version, and is no longer the scenario's current column.",
+    "整体通过率不高，置信区间很宽，第一名 24.0–56.0 和第二名 22.0–52.0 重叠。1.0 仍完整保留在本页，作为历史版本，不再作为场景的当前列。",
+    "Pass rates are low and intervals are wide. First place, 24.0–56.0, overlaps second place, 22.0–52.0. Version 1.0 stays complete on this page as an archived version, and is no longer the scenario's current column.",
   ),
   updateCadence: tx(
-    "页面最新的 agent 结果写着 2026-10-06。本页于 2026-10-10 与 #long-horizon-task-results 逐行核对，10 行全部收录。",
-    "The page's newest agent results are dated 2026-10-06. This page checked all 10 rows against #long-horizon-task-results on 2026-10-10.",
+    "页面写着 Latest results as of October 26th。本页于 2026-10-28 与 #long-horizon-task-results 逐行核对，11 行全部收录。",
+    "The page says Latest results as of October 26th. This page checked all 11 rows against #long-horizon-task-results on 2026-10-28.",
   ),
   links: [{ label: "developer.android.com/bench", href: "https://developer.android.com/bench" }],
 };
@@ -69,6 +69,76 @@ const androidArchived: BenchmarkVersion = {
   ],
 };
 
+const frontiercodeCurrent: BenchmarkVersion = {
+  id: "2.0",
+  label: tx("2.0", "2.0"),
+  asOf: "2026-10-27",
+  current: true,
+  aliases: ["2", "frontiercode-2-0"],
+  table: "frontiercode",
+  trackedCount: 102,
+  measures: tx(
+    "通用可合并性：维护者会不会合并这份 PR。2.0 为 132 题套件。任务由维护者编写，用单元测试、评分细则与验证器打分。不公平的联网使用会被清零。在本站作为 general 榜，同时出现在 Web 前端、Android 与 CLI / DevOps 场景。",
+    "General mergeability: would the maintainer actually merge this PR? 2.0 is a 132-task suite. Maintainer-crafted tasks, graded by unit tests, rubrics, and verifiers. Runs flagged for unfair internet use are zeroed. On this site it is a general board and appears in the Web frontend, Android, and CLI / DevOps scenarios.",
+  ),
+  method: tx(
+    "Cognition 的 FrontierCode 2.0（当前修订）。公开页默认 Main 集；本站按「All reasoning levels」收录全部（模型 × 推理档）行，不截断。名次 # 按该模型在 Main 上最高分推理档排序。完整 JSON 含 Obsidian 3（公开 HTML 表省略该行）；本站按完整 JSON 收录。Score 是 rubric 加权聚合；Pass rate、Flag rate、Cost / rollout、Output tokens 与来源列一致。",
+    "Cognition's FrontierCode 2.0 (current revision). The public page defaults to the Main set; this site imports every (model × reasoning effort) row from All reasoning levels, untruncated. The # column ranks models by their best Main effort. The complete JSON includes Obsidian 3 (omitted from the public HTML table); this site keeps the complete JSON. Score is the weighted rubric aggregate; Pass rate, Flag rate, Cost / rollout, and Output tokens match the source columns.",
+  ),
+  scoreMeaning: tx(
+    "百分比是可合并性 Score（越高越好）。不公平联网被标记的 run 记 0。综合分按通过率口径：相对榜首比值归一化。",
+    "The percent is the mergeability Score (higher is better). Runs flagged for unfair internet use score 0. Composite treats it as a rate board: ratio to the leader.",
+  ),
+  caveats: tx(
+    "Main 与 Extended 是两套任务集；本站只收录默认 Main。公开 HTML 榜省略 Obsidian 3，完整 data.json 以 Obsidian 3 high ~46.8% 居首，其次 Claude Opus 5.5 max ~45.5%。SWE-* / Beam / Obsidian / Inkling / Mistral 等没有站内模型页时只保留来源名。1.1 仍完整保留为历史版本。",
+    "Main and Extended are separate task sets; this page keeps the default Main board only. The public HTML table omits Obsidian 3; the complete data.json leads with Obsidian 3 high ~46.8%, then Claude Opus 5.5 max ~45.5%. Rows such as SWE-* / Beam / Obsidian / Inkling / Mistral without a model page keep the source label only. Version 1.1 stays complete as an archived revision.",
+  ),
+  updateCadence: tx(
+    "修订 2.0 为当前版本（changelog 2026-10-27）。本页于 2026-10-28 从 https://cognition.com/data/frontier-code-2.0/data.json 同步 102 行（26 个模型的全部推理档）。旧 frontiercode-leaderboard/data.json 仍只有 v1/v1_1，不作当前源。",
+    "Revision 2.0 is current (changelog 2026-10-27). This page synced 102 rows (all reasoning levels for 26 models) from https://cognition.com/data/frontier-code-2.0/data.json on 2026-10-28. The older frontiercode-leaderboard/data.json still only has v1/v1_1 and is not treated as current.",
+  ),
+  links: [
+    { label: "cognition.com/frontiercode", href: "https://cognition.com/frontiercode" },
+    { label: "cognition.com/blog/frontier-code-2.0", href: "https://cognition.com/blog/frontier-code-2.0" },
+    { label: "data/frontier-code-2.0/data.json", href: "https://cognition.com/data/frontier-code-2.0/data.json" },
+  ],
+};
+
+const frontiercodeArchived: BenchmarkVersion = {
+  id: "1.1",
+  label: tx("1.1", "1.1"),
+  asOf: "2026-10-13",
+  archived: true,
+  aliases: ["1", "frontiercode-1-1"],
+  table: "frontiercode",
+  trackedCount: 130,
+  measures: tx(
+    "通用可合并性：维护者会不会合并这份 PR。1.1 历史修订。任务由维护者编写，用单元测试、评分细则与验证器打分。",
+    "General mergeability: would the maintainer actually merge this PR? Archived 1.1 revision. Maintainer-crafted tasks, graded by unit tests, rubrics, and verifiers.",
+  ),
+  method: tx(
+    "Cognition 的 FrontierCode 1.1。公开页当时默认 Main 集；本站按「All reasoning levels」收录全部（模型 × 推理档）行。名次 # 按该模型在 Main 上最高分推理档排序。",
+    "Cognition's FrontierCode 1.1. The public page then defaulted to the Main set; this site imports every (model × reasoning effort) row from All reasoning levels. The # column ranks models by their best Main effort.",
+  ),
+  scoreMeaning: tx(
+    "百分比是可合并性 Score（越高越好）。不公平联网被标记的 run 记 0。",
+    "The percent is the mergeability Score (higher is better). Runs flagged for unfair internet use score 0.",
+  ),
+  caveats: tx(
+    "这是历史版本；场景页使用当前的 2.0。Score (pre-flag) 与 Flag rate (1.0) 在 1.1 Main 数据里为空。",
+    "This is an archived version; scenarios use current 2.0. Score (pre-flag) and Flag rate (1.0) are null in the 1.1 Main payload.",
+  ),
+  updateCadence: tx(
+    "本页于 2026-10-13 从 https://cognition.com/data/frontiercode-leaderboard/data.json 的 v1_1.main 同步 130 行；现作为归档保留。",
+    "Synced 130 rows from https://cognition.com/data/frontiercode-leaderboard/data.json key v1_1 Main on 2026-10-13; kept here as an archive.",
+  ),
+  links: [
+    { label: "cognition.com/frontiercode", href: "https://cognition.com/frontiercode" },
+    { label: "cognition.com/blog/frontier-code-1.1", href: "https://cognition.com/blog/frontier-code-1.1" },
+    { label: "data/frontiercode-leaderboard/data.json", href: "https://cognition.com/data/frontiercode-leaderboard/data.json" },
+  ],
+};
+
 export const benchmarks: Benchmark[] = [
   {
     slug: "lmarena-webdev",
@@ -76,9 +146,9 @@ export const benchmarks: Benchmark[] = [
     shortName: "WebDev",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-10-22",
-    votes: "923,854",
-    trackedCount: 151,
+    asOf: "2026-10-27",
+    votes: "950,329",
+    trackedCount: 152,
     table: "webdev",
     sourceFilter: "license",
     domain: tx("前端", "Frontend"),
@@ -99,8 +169,8 @@ export const benchmarks: Benchmark[] = [
       "It measures human preference (does it look right, does it run), not test pass rate. Briefs are mostly single-page demos, so it says little about large codebases or long refactors. Effort tiers of the same model are ranked separately. Preliminary rows have few votes and can move.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期 2026-10-22，2026-10-26 同步；每周同步一次，变化写入首页「最新变化」。",
-      "Updated continuously. This page's board date is 2026-10-22, synced 2026-10-26. We sync weekly and write changes on the home page.",
+      "持续更新。本页榜单日期 2026-10-27，2026-10-28 同步；每周同步一次，变化写入首页「最新变化」。",
+      "Updated continuously. This page's board date is 2026-10-27, synced 2026-10-28. We sync weekly and write changes on the home page.",
     ),
     links: [
       { label: "lmarena.ai/leaderboard/webdev", href: "https://lmarena.ai/leaderboard/webdev" },
@@ -193,8 +263,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Slop Index",
     scoreUnit: "",
     compositeKind: "rate",
-    asOf: "2026-10-26",
-    votes: "2,091",
+    asOf: "2026-10-28",
+    votes: "2,170",
     trackedCount: 58,
     table: "score",
     domain: tx("文档与文案", "Docs and copy"),
@@ -215,8 +285,8 @@ export const benchmarks: Benchmark[] = [
       "Arena votes are still accumulating, so the live Elo moves. Mechanical axes are normalized within this board. It does not measure code or UI quality.",
     ),
     updateCadence: tx(
-      "来源 https://theslopindex.com/leaderboard ，开放数据 https://github.com/hgaddipati1118/slop-index 。本页于 2026-10-26 抓取全部 58 行（当时 2,091 票）。",
-      "Source https://theslopindex.com/leaderboard ; open data https://github.com/hgaddipati1118/slop-index . This page fetched all 58 rows on 2026-10-26 (2,091 votes then).",
+      "来源 https://theslopindex.com/leaderboard ，开放数据 https://github.com/hgaddipati1118/slop-index 。本页于 2026-10-28 抓取全部 58 行（当时 2,170 票）。反转后 Inkling Small 第 1（100 − 24 = 76）；Haiku 5.5 约第 4（同分带）。",
+      "Source https://theslopindex.com/leaderboard ; open data https://github.com/hgaddipati1118/slop-index . This page fetched all 58 rows on 2026-10-28 (2,170 votes then). After inversion Inkling Small leads (100 − 24 = 76); Haiku 5.5 is about 4th in a tied band.",
     ),
     links: [
       { label: "theslopindex.com/leaderboard", href: "https://theslopindex.com/leaderboard" },
@@ -266,8 +336,8 @@ export const benchmarks: Benchmark[] = [
     scoreUnit: "%",
     compositeKind: "rate",
     scope: "general",
-    asOf: "2026-10-09",
-    trackedCount: 12,
+    asOf: "2026-10-28",
+    trackedCount: 16,
     table: "score",
     domain: tx("通用编码能力", "General coding ability"),
     measures: tx(
@@ -287,8 +357,8 @@ export const benchmarks: Benchmark[] = [
       "The board is new, the set is 60 tasks, and the tasks stay private. Models grade against expert rubrics. Surge is an AI data vendor. Per-task costs in the blog are approximate; the leaderboard page has no cost column.",
     ),
     updateCadence: tx(
-      "博客发布于 2026-10-08，榜单页最后发布于 2026-10-09。本页于 2026-10-10 同步公开榜上的 12 行。",
-      "The blog was published on 2026-10-08. The leaderboard page was last published on 2026-10-09. This page synced the 12 public rows on 2026-10-10.",
+      "博客发布于 2026-10-08。本页于 2026-10-28 同步公开 sudo L7 表全部 16 行（不含同页 DAYJOB / GDP.xlsx 侧榜）。Sonnet 5.5 Adaptive/Max 50.6% 居首；Kimi K3.1 Pro 与 Qwen 3.8 Max 并列第 6（16.7%）。",
+      "The blog was published on 2026-10-08. This page synced all 16 public sudo L7 rows on 2026-10-28 (not the DAYJOB / GDP.xlsx side boards on the same page). Sonnet 5.5 Adaptive/Max leads at 50.6%; Kimi K3.1 Pro ties Qwen 3.8 Max at #6 (16.7%).",
     ),
     links: [
       { label: "surgehq.ai/benchmarks/sudo-l7", href: "https://surgehq.ai/benchmarks/sudo-l7" },
@@ -372,8 +442,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Convex",
     scoreUnit: "%",
     compositeKind: "rate",
-    asOf: "2026-10-08",
-    trackedCount: 39,
+    asOf: "2026-10-28",
+    trackedCount: 41,
     kind: "framework",
     version: "92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb",
     domain: tx("框架官方评测", "Framework eval"),
@@ -396,8 +466,8 @@ export const benchmarks: Benchmark[] = [
       "Convex writes the tasks and grades them. This measures a model together with Convex, not one framework against another. The front is near the ceiling. With Guidelines comes from the unscoped runs:leaderboardScores query; it matches the With Guidelines tab on the page. The experiment=with_guidelines parameter still returns a server error.",
     ),
     updateCadence: tx(
-      "版本 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb，铸造时间 2026-10-08。本页于 2026-10-26 从 fabulous-panther-525.convex.cloud 同步 No Guidelines（39 个模型）、With Guidelines（38 个模型）与 No Guidelines + Web（28 个模型），同模型多档只保留最佳一行。表中只列能对应到站内模型的行。",
-      "Version 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb, minted 2026-10-08. This page synced No Guidelines (39 models), With Guidelines (38 models), and No Guidelines + Web (28 models) from fabulous-panther-525.convex.cloud on 2026-10-26, keeping only the best row per model. The table only lists rows that map to models on this site.",
+      "版本 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb。本页于 2026-10-28 从 fabulous-panther-525.convex.cloud 同步 No Guidelines（41→35 映射）与 With Guidelines（40→35 映射，空 args 默认查询；experiment=with_guidelines 仍 500），同模型多档只保留最佳一行；No Guidelines + Web 本轮未刷新。有指南臂 Gemini 4 Argon 约 98.7% 居首，GPT-5.6 Sol 约 98.2% 第 2，GPT-6 Astra 约第 7。",
+      "Version 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb. This page synced No Guidelines (41→35 mapped) and With Guidelines (40→35 mapped via empty-args default query; experiment=with_guidelines still 500s) from fabulous-panther-525.convex.cloud on 2026-10-28, keeping the best row per model; No Guidelines + Web was not refreshed this round. On With Guidelines, Gemini 4 Argon leads near 98.7%, GPT-5.6 Sol is about 98.2% at #2, and GPT-6 Astra is about #7.",
     ),
     links: [
       { label: "convex.dev/evals", href: "https://www.convex.dev/evals" },
@@ -437,41 +507,23 @@ export const benchmarks: Benchmark[] = [
     links: [{ label: "reactbench.com/data", href: "https://www.reactbench.com/data" }],
   },
   {
-    slug: "frontiercode-1-1",
-    name: "FrontierCode 1.1",
+    slug: "frontiercode",
+    name: "FrontierCode",
     shortName: "FrontierCode",
     scoreUnit: "%",
     compositeKind: "rate",
     scope: "general",
-    asOf: "2026-10-13",
-    trackedCount: 130,
-    table: "frontiercode",
+    asOf: frontiercodeCurrent.asOf,
+    trackedCount: frontiercodeCurrent.trackedCount,
+    table: frontiercodeCurrent.table,
     domain: tx("通用可合并性", "General mergeability"),
-    measures: tx(
-      "通用可合并性：维护者会不会合并这份 PR。任务由维护者编写，用单元测试、评分细则与验证器打分。不公平的联网使用会被清零。在本站作为 general 榜，同时出现在 Web 前端、Android 与 CLI / DevOps 场景。",
-      "General mergeability: would the maintainer actually merge this PR? Maintainer-crafted tasks, graded by unit tests, rubrics, and verifiers. Runs flagged for unfair internet use are zeroed. On this site it is a general board and appears in the Web frontend, Android, and CLI / DevOps scenarios.",
-    ),
-    method: tx(
-      "Cognition 的 FrontierCode 1.1（当前修订）。公开页默认 Main 集；本站按「All reasoning levels」收录全部（模型 × 推理档）行，不截断。名次 # 按该模型在 Main 上最高分推理档排序，与来源表一致。Score 是 rubric 加权聚合；Pass rate、Flag rate、Cost / rollout、Output tokens 与来源列一致。",
-      "Cognition's FrontierCode 1.1 (current revision). The public page defaults to the Main set; this site imports every (model × reasoning effort) row from All reasoning levels, untruncated. The # column ranks models by their best Main effort, matching the source table. Score is the weighted rubric aggregate; Pass rate, Flag rate, Cost / rollout, and Output tokens match the source columns.",
-    ),
-    scoreMeaning: tx(
-      "百分比是可合并性 Score（越高越好）。不公平联网被标记的 run 记 0。综合分按通过率口径：相对榜首比值归一化。",
-      "The percent is the mergeability Score (higher is better). Runs flagged for unfair internet use score 0. Composite treats it as a rate board: ratio to the leader.",
-    ),
-    caveats: tx(
-      "Main 与 Extended 是两套任务集；本站只收录默认 Main。Score (pre-flag) 与 Flag rate (1.0) 在 1.1 Main 数据里为空，来源页也不显示这两列。SWE-* 等行没有站内模型页时只保留来源名。",
-      "Main and Extended are separate task sets; this page keeps the default Main board only. Score (pre-flag) and Flag rate (1.0) are null in the 1.1 Main payload, so the source page omits those columns. Rows such as SWE-* without a model page keep the source label only.",
-    ),
-    updateCadence: tx(
-      "修订 1.1 为当前版本；不公平联网使用的 run 清零。本页于 2026-10-13 从 https://cognition.com/data/frontiercode-leaderboard/data.json 的 v1_1.main 同步 130 行（43 个模型的全部推理档），与页面 All reasoning levels 一致。",
-      "Revision 1.1 is current; unfair-internet runs are zeroed. This page synced 130 rows (all reasoning levels for 43 models) from https://cognition.com/data/frontiercode-leaderboard/data.json key v1_1 Main on 2026-10-13, matching the page's All reasoning levels view.",
-    ),
-    links: [
-      { label: "cognition.com/frontiercode", href: "https://cognition.com/frontiercode" },
-      { label: "cognition.com/blog/frontier-code-1.1", href: "https://cognition.com/blog/frontier-code-1.1" },
-      { label: "data/frontiercode-leaderboard/data.json", href: "https://cognition.com/data/frontiercode-leaderboard/data.json" },
-    ],
+    measures: frontiercodeCurrent.measures,
+    method: frontiercodeCurrent.method,
+    scoreMeaning: frontiercodeCurrent.scoreMeaning,
+    caveats: frontiercodeCurrent.caveats,
+    updateCadence: frontiercodeCurrent.updateCadence,
+    links: frontiercodeCurrent.links ?? [],
+    versions: [frontiercodeCurrent, frontiercodeArchived],
   },
   {
     slug: "deepswe-v1-1",

@@ -40,7 +40,7 @@ describe("content", () => {
   it("allows a general benchmark in multiple scenarios", () => {
     expect(content.benchmarks.find((benchmark) => benchmark.slug === "sudo-l7")?.scope).toBe("general");
     expect(content.benchmarks.find((benchmark) => benchmark.slug === "deepswe-v1-1")?.scope).toBe("general");
-    expect(content.benchmarks.find((benchmark) => benchmark.slug === "frontiercode-1-1")?.scope).toBe("general");
+    expect(content.benchmarks.find((benchmark) => benchmark.slug === "frontiercode")?.scope).toBe("general");
     expect(validateContent(content)).toEqual([]);
     const sudoOwners = content.scenarios
       .filter((scenario) => scenario.boards?.some((board) => board.benchmark === "sudo-l7") || scenario.benchmark === "sudo-l7")
@@ -51,7 +51,7 @@ describe("content", () => {
       .map((scenario) => scenario.slug);
     expect(deepsweOwners).toEqual(["web-frontend", "android-app", "cli-devops"]);
     const frontierOwners = content.scenarios
-      .filter((scenario) => scenario.boards?.some((board) => board.benchmark === "frontiercode-1-1") || scenario.benchmark === "frontiercode-1-1")
+      .filter((scenario) => scenario.boards?.some((board) => board.benchmark === "frontiercode") || scenario.benchmark === "frontiercode")
       .map((scenario) => scenario.slug);
     expect(frontierOwners).toEqual(["web-frontend", "android-app", "cli-devops"]);
   });
@@ -76,7 +76,7 @@ describe("picks", () => {
   it("resolves the web frontend board", () => {
     const picks = resolvePicks("web-frontend");
     expect(picks.top?.modelSlug).toBe("claude-opus-5-5");
-    expect(picks.top?.score).toBe(1807);
+    expect(picks.top?.score).toBe(1809);
     expect(picks.value?.modelSlug).toBe("claude-sonnet-5-5");
     expect(picks.value?.score).toBe(1769);
     expect(picks.open?.modelSlug).toBe("deepseek-v4-1-flash");
@@ -85,8 +85,8 @@ describe("picks", () => {
   it("resolves cheaper terminal and android rows", () => {
     expect(resolvePicks("cli-devops").value?.modelSlug).toBe("gpt-6-1-sol");
     expect(resolvePicks("cli-devops").open?.modelSlug).toBe("glm-5-3");
-    expect(resolvePicks("android-app").top?.modelSlug).toBe("claude-opus-5-5");
-    expect(resolvePicks("android-app").value?.modelSlug).toBe("gpt-6-sol");
+    expect(resolvePicks("android-app").top?.modelSlug).toBe("claude-sonnet-5-5");
+    expect(resolvePicks("android-app").value?.modelSlug).toBe("gpt-6-1-sol");
   });
 
   it("keeps sudo L7 on the Web frontend and Android scenarios", () => {
@@ -100,18 +100,22 @@ describe("picks", () => {
       "https://surgehq.ai/blog/sudo-l7",
     ]);
     expect(getBenchmark("zh", "sudo-l7")?.leaderboard?.map((row) => [row.name, row.scoreNumber])).toEqual([
-      ["Claude Opus 5.5", 45],
-      ["Claude Sonnet 5.5", 45],
-      ["GPT 6 Astra", 32.2],
-      ["GPT 6.1 Sol", 31.7],
-      ["Claude Fable 5.1", 27.2],
-      ["Qwen 3.8 Max", 15.6],
-      ["GLM 5.3", 15],
-      ["Kimi K3", 13.9],
-      ["Muse Spark 1.3", 12.2],
-      ["Hy4 Preview", 11.1],
-      ["Grok 4.7", 10.6],
+      ["Claude Sonnet 5.5", 50.6],
+      ["Claude Opus 5.5", 45.6],
+      ["GPT 6.1 Sol", 33.9],
+      ["Claude Fable 5.1", 32.2],
+      ["GPT 6 Astra", 31.1],
+      ["Qwen 3.8 Max", 16.7],
+      ["Kimi K3.1 Pro", 16.7],
+      ["Gemini 4 Argon", 16.1],
+      ["Muse Wonder", 16.1],
+      ["Hy4 Preview", 15.6],
+      ["Mistral Large 4", 13.9],
+      ["Muse Spark 1.3", 12.8],
+      ["Kimi K3", 12.2],
+      ["Grok 4.7", 12.2],
       ["Gemini 3.8 Flash", 10.6],
+      ["GLM 5.3", 9.4],
     ]);
     expect(getModel("en", "claude-sonnet-5-5")?.appearances.some((row) => row.href === "/scenarios/web-frontend/")).toBe(true);
     expect(getModel("en", "claude-opus-5-5")?.appearances.some((row) => row.href === "/scenarios/android-app/")).toBe(true);
@@ -129,7 +133,7 @@ describe("picks", () => {
     ]);
     expect(all).toEqual(home);
     expect(getBenchmark("zh", "slop-index")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(resolvePicks("write-docs").top?.modelSlug).toBe("claude-haiku-5-5");
+    expect(resolvePicks("write-docs").top?.modelSlug).toBe("grok-4-5");
     expect(getScenario("zh", "refactor")).toBeUndefined();
     expect(getScenario("zh", "open-frontend")).toBeUndefined();
     expect(getScenario("zh", "saas")).toBeUndefined();
@@ -149,34 +153,35 @@ describe("picks", () => {
 
   it("keeps each public board complete and in source order", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.boards[0]?.rows).toHaveLength(151);
-    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1807" });
+    expect(web?.boards[0]?.rows).toHaveLength(152);
+    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1809" });
     expect(web?.boards[0]?.rows[5]).toMatchObject({ name: "muse-wonder-full-max", rank: 6, score: "1726" });
-    expect(web?.boards[0]?.rows[7]).toMatchObject({ name: "kimi-k3.1-pro-max", rank: 8, score: "1692" });
-    expect(web?.boards[0]?.rows[13]).toMatchObject({ name: "deepseek-v4.1-flash-20261017-max", rank: 14, score: "1665" });
-    expect(web?.boards[0]?.rows[17]).toMatchObject({ name: "muse-wonder-max", rank: 18, score: "1651" });
-    expect(web?.boards[0]?.rows[19]).toMatchObject({ name: "mimo-v2.6-flash", rank: 20, score: "1635" });
-    expect(web?.boards[0]?.rows[24]).toMatchObject({ name: "glm-5.3-max", rank: 25, score: "1623" });
+    expect(web?.boards[0]?.rows[7]).toMatchObject({ name: "kimi-k3.1-pro-max", rank: 8, score: "1695" });
+    expect(web?.boards[0]?.rows[13]).toMatchObject({ name: "gpt-6.1-terra-max", rank: 14, score: "1671" });
+    expect(web?.boards[0]?.rows[17]).toMatchObject({ name: "muse-spark-1.3-max", rank: 18, score: "1656" });
+    expect(web?.boards[0]?.rows[19]).toMatchObject({ name: "mimo-v2.6-flash", rank: 20, score: "1638" });
+    expect(web?.boards[0]?.rows[24]).toMatchObject({ name: "claude-fable-5-high", rank: 25, score: "1624" });
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
     expect(android?.boards.map((board) => [board.id, board.rows.length])).toEqual([
-      ["current", 10],
-      ["sudo", 12],
+      ["current", 11],
+      ["sudo", 16],
       ["deepswe", 28],
-      ["frontiercode", 130],
+      ["frontiercode", 102],
     ]);
     expect(android?.boards[0]?.rows.map((row) => [row.rank, row.name, row.agent, row.score, row.ci, row.completion, row.latency, row.price])).toEqual([
-      [1, "Claude Opus 5.5", "claude-code", "32.7", "18.7–47.3", "84.7", "15.2", "$215.4"],
-      [2, "GPT 6 Astra", "codex", "28.0", "13.3–42.0", "82.2", "7.9", "$375.7"],
-      [3, "Claude Fable 5.1", "claude-code", "22.7", "10.7–36.0", "82.4", "22.2", "$492.6"],
-      [4, "GPT 6 Sol", "codex", "18.0", "7.3–29.3", "70.2", "6.0", "$93.4"],
-      [5, "Qwen3.8 Max", "qwen-coder", "14.0", "4.7–24.0", "74.3", "47.2", "$260.2"],
-      [6, "Kimi K3", "kimi-code", "12.0", "3.3–22.0", "72.8", "66.2", "$418.3"],
-      [7, "GPT 6 Luna", "codex", "10.7", "4.0–17.3", "53.2", "6.2", "$5.3"],
-      [8, "Gemini 3.8 Flash", "antigravity-sdk", "8.0", "3.3–13.3", "47.4", "12.1", "$34.5"],
-      [9, "Gemini 3.7 Flash", "antigravity-sdk", "7.3", "1.3–14.7", "50.1", "9.9", "$26.0"],
-      [10, "Claude Sonnet 5", "claude-code", "6.7", "1.3–13.3", "59.8", "14.7", "$283.7"],
+      [1, "Claude Sonnet 5.5", "claude-code", "40.0", "24.0–56.0", "80.9", "70.7", "$1574.9"],
+      [2, "Claude Opus 5.5", "claude-code", "37.3", "22.0–52.0", "85.6", "56.6", "$1150.3"],
+      [3, "GPT 6.1 Sol", "codex", "29.3", "15.3–42.7", "82.8", "26.6", "$99.5"],
+      [4, "GPT 6 Astra", "codex", "28.0", "13.3–42.0", "82.2", "7.9", "$375.7"],
+      [5, "Claude Fable 5.1", "claude-code", "22.7", "10.7–36.0", "82.4", "22.2", "$492.6"],
+      [6, "Gemini 4 Argon", "antigravity-sdk", "21.3", "10.0–33.3", "81.8", "52.8", "$267.6"],
+      [7, "Qwen3.8 Max", "qwen-coder", "12.5", "4.2–21.7", "75.0", "45.4", "$258.4"],
+      [8, "Kimi K3", "kimi-code", "12.0", "3.3–22.0", "72.8", "66.2", "$418.3"],
+      [9, "GPT 6 Luna", "codex", "10.7", "4.0–17.3", "53.2", "6.2", "$5.3"],
+      [10, "Gemini 3.8 Flash", "antigravity-sdk", "8.0", "3.3–13.3", "47.4", "12.1", "$34.5"],
+      [11, "Gemini 3.7 Flash", "antigravity-sdk", "7.3", "1.3–14.7", "50.1", "9.9", "$26.0"],
     ]);
     const archived = getBenchmark("zh", "android-bench")?.versions?.find((version) => version.id === "1.0");
     expect(archived?.archived).toBe(true);
@@ -194,8 +199,8 @@ describe("picks", () => {
       ["creative", 145],
     ]);
     const slop = writeDocs?.boards[0]?.rows ?? [];
-    expect(slop[0]).toMatchObject({ name: "Haiku 5.5", rank: 1, score: "83", price: "$0.3" });
-    expect(slop[57]).toMatchObject({ name: "Gemini 3.8 Flash", rank: 58, score: "33" });
+    expect(slop[0]).toMatchObject({ name: "Inkling Small", rank: 1, score: "76", price: "$0.82" });
+    expect(slop[57]).toMatchObject({ name: "Gemini 3.8 Flash", rank: 58, score: "35" });
     expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(58);
     const creative = getBenchmark("zh", "eqbench-creative-writing");
     expect(creative?.leaderboard).toHaveLength(145);
@@ -203,12 +208,12 @@ describe("picks", () => {
     expect(creative?.leaderboard?.[4]).toMatchObject({ name: "kimi-k3", rank: 5, score: "2083.5" });
     expect(creative?.leaderboard?.[8]).toMatchObject({ name: "muse-wonder", rank: 9, score: "2007.0" });
     expect(creative?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(151);
+    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(152);
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
     expect(androidBench?.versions?.[0]?.current).toBe(true);
-    expect(androidBench?.leaderboard).toHaveLength(10);
-    expect(androidBench?.leaderboard?.[0]).toMatchObject({ name: "Claude Opus 5.5", agent: "claude-code", score: "32.7" });
+    expect(androidBench?.leaderboard).toHaveLength(11);
+    expect(androidBench?.leaderboard?.[0]).toMatchObject({ name: "Claude Sonnet 5.5", agent: "claude-code", score: "40.0" });
     expect(getBenchmark("en", "android-bench")?.versions?.[1]?.label).toBe("1.0");
   });
 
@@ -225,15 +230,15 @@ describe("picks", () => {
       ["slop-index", "像真人", "article", 1],
       ["eqbench-creative-writing", "创意写作", "pen-nib", 0.6],
     ]);
-    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT 6 Sol/);
-    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/2/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT-6 Astra/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/1/);
     expect(getScenario("en", "web-frontend")?.takeaway?.sentence).toMatch(/first on/i);
     expect(web?.fusion.columns.map((column) => [column.id, column.weight])).toEqual([
       ["lmarena-webdev", 1],
       ["lmarena-image-to-webdev", 0.6],
       ["sudo-l7", 0.6],
       ["deepswe-v1-1", 0.6],
-      ["frontiercode-1-1", 0.6],
+      ["frontiercode", 0.6],
       ["nextjs-evals", 0.4],
       ["reactbench", 0.4],
     ]);
@@ -260,7 +265,7 @@ describe("picks", () => {
       "LMArena Image-to-WebDev",
       "sudo L7",
       "DeepSWE v1.1",
-      "FrontierCode 1.1",
+      "FrontierCode",
       "Next.js Agent Evals",
       "ReactBench",
     ]);
@@ -273,11 +278,11 @@ describe("picks", () => {
       "Next.js 任务",
       "React 任务",
     ]);
-    expect(web?.scoring.chart?.caption).toContain("DeepSWE");
-    expect(web?.scoring.chart?.caption).toContain("第 3");
+    expect(web?.scoring.chart?.caption).toContain("sudo L7");
+    expect(web?.scoring.chart?.caption).toContain("第 2");
     expect(web?.scoring.worked).toMatchObject({
-      key: "model:gpt-6-astra",
-      name: "GPT-6 Astra",
+      key: "model:claude-sonnet-5-5",
+      name: "Claude Sonnet 5.5",
       composite: 90,
     });
     expect(web?.scoring.worked?.rows.map((row) => row.board)).toEqual([
@@ -291,14 +296,14 @@ describe("picks", () => {
     ]);
     expect(web?.scoring.worked?.rows).toHaveLength(7);
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
-    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 1, null, 1, 1, 1]);
-    expect(opus).toMatchObject({ compositeLabel: "99", count: 6, total: 7 });
-    expect(opus?.cells[0]?.tip).toContain("1807");
+    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 2, null, 2, 1, 1]);
+    expect(opus).toMatchObject({ compositeLabel: "97", count: 6, total: 7 });
+    expect(opus?.cells[0]?.tip).toContain("1809");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 5, null, 6, 3, 3]);
-    expect(fable).toMatchObject({ compositeLabel: "84", count: 6 });
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 4, 4, null, 7, 3, 3]);
+    expect(fable).toMatchObject({ compositeLabel: "81", count: 6 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
     expect(web?.fusion.rows[2]?.slug).toBe("gpt-6-astra");
@@ -308,42 +313,42 @@ describe("picks", () => {
       ["android-bench", "安卓开发", 1],
       ["sudo-l7", "工程判断", 0.6],
       ["deepswe-v1-1", "长程工程", 0.6],
-      ["frontiercode-1-1", "能否合并", 0.6],
+      ["frontiercode", "能否合并", 0.6],
     ]);
     expect(android?.fusion.columns.map((column) => column.icon)).toEqual(["android-logo", "scales", "road-horizon", "git-merge"]);
     expect(android?.scoring.chart?.caption).toContain("DeepSWE");
-    expect(android?.scoring.worked?.composite).toBe(88);
+    expect(android?.scoring.worked?.composite).toBe(79);
     expect(android?.scoring.worked?.rows).toHaveLength(4);
     const opus55 = android?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(android?.fusion.rows.find((row) => row.slug === "claude-opus-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([
       null,
       null,
       3,
-      3,
+      11,
     ]);
-    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, null, 1]);
-    expect(opus55).toMatchObject({ compositeLabel: "98", count: 3, total: 4 });
+    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([2, 2, null, 2]);
+    expect(opus55).toMatchObject({ compositeLabel: "92", count: 3, total: 4 });
     expect(opus55?.cells[0]?.tip).toContain("claude-code");
-    expect(opus55?.cells[0]?.tip).toContain("32.7");
-    expect(android?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
+    expect(opus55?.cells[0]?.tip).toContain("37.3");
+    expect(android?.fusion.rows[0]?.slug).toBe("claude-sonnet-5-5");
     expect(android?.fusion.rows.map((row) => [row.slug, row.compositeLabel]).slice(0, 5)).toEqual([
-      ["claude-opus-5-5", "98"],
-      ["gpt-6-astra", "88"],
-      ["claude-fable-5-1", "75"],
-      ["gpt-6-sol", "65"],
-      ["kimi-k3", "57"],
+      ["claude-sonnet-5-5", "95"],
+      ["claude-opus-5-5", "92"],
+      ["gpt-6-astra", "79"],
+      ["gpt-6-1-sol", "75"],
+      ["claude-fable-5-1", "64"],
     ]);
 
     const cli = getScenario("zh", "cli-devops");
     expect(cli?.fusion.columns.map((column) => [column.id, column.label, column.icon, column.weight])).toEqual([
       ["terminal-bench-4", "终端任务", "terminal-window", 1],
       ["deepswe-v1-1", "长程工程", "road-horizon", 0.6],
-      ["frontiercode-1-1", "能否合并", "git-merge", 0.6],
+      ["frontiercode", "能否合并", "git-merge", 0.6],
     ]);
     expect(cli?.fusion.rows.map((row) => [row.slug, row.compositeLabel]).slice(0, 3)).toEqual([
-      ["claude-opus-5-5", "97"],
-      ["gpt-6-astra", "95"],
-      ["claude-sonnet-5-5", "93"],
+      ["claude-opus-5-5", "96"],
+      ["gpt-6-astra", "93"],
+      ["claude-sonnet-5-5", "91"],
     ]);
     expect(getBenchmark("zh", "deepswe-v1-1")?.scenarios.map((row) => row.href)).toEqual([
       "/zh/scenarios/web-frontend/",
@@ -356,21 +361,27 @@ describe("picks", () => {
       rank: 1,
       score: "74.1",
     });
-    expect(getBenchmark("zh", "frontiercode-1-1")?.scenarios.map((row) => row.href)).toEqual([
+    expect(getBenchmark("zh", "frontiercode")?.scenarios.map((row) => row.href)).toEqual([
       "/zh/scenarios/web-frontend/",
       "/zh/scenarios/android-app/",
       "/zh/scenarios/cli-devops/",
     ]);
-    expect(getBenchmark("zh", "frontiercode-1-1")?.leaderboard).toHaveLength(130);
-    expect(getBenchmark("zh", "frontiercode-1-1")?.leaderboard?.[0]).toMatchObject({
-      name: "Claude Opus 5.5",
+    expect(getBenchmark("zh", "frontiercode")?.leaderboard).toHaveLength(102);
+    expect(getBenchmark("zh", "frontiercode")?.versions?.map((version) => version.id)).toEqual(["2.0", "1.1"]);
+    expect(getBenchmark("zh", "frontiercode")?.versions?.[1]?.leaderboard).toHaveLength(130);
+    expect(getBenchmark("zh", "frontiercode")?.leaderboard?.[0]).toMatchObject({
+      name: "Obsidian 3",
       rank: 1,
-      score: "54.6%",
-      passRate: "59.6%",
-      flagRate: "0.0%",
-      price: "$0.80",
-      tokens: "18.5k",
-      effort: "medium",
+      score: "39.2%",
+      passRate: "43.1%",
+      flagRate: "1.5%",
+      price: "$2.20",
+      effort: "low",
+      agent: "claude-code",
+    });
+    expect(getBenchmark("zh", "frontiercode")?.leaderboard?.find((row) => row.name === "Claude Opus 5.5" && row.effort === "max")).toMatchObject({
+      rank: 2,
+      score: "45.5%",
       agent: "claude-code",
     });
 
@@ -403,31 +414,31 @@ describe("picks", () => {
       "LMArena Image-to-WebDev",
       "sudo L7",
       "DeepSWE v1.1",
-      "FrontierCode 1.1",
+      "FrontierCode",
       "Next.js Agent Evals",
       "ReactBench",
     ]);
     expect(home[0]?.rows).toHaveLength(5);
-    expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "99" });
-    expect(home[0]?.rows[0]?.detail?.title).toContain("综合 99");
-    expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench", "sudo L7", "DeepSWE v1.1", "FrontierCode 1.1"]);
-    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "98" });
+    expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "97" });
+    expect(home[0]?.rows[0]?.detail?.title).toContain("综合 97");
+    expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench", "sudo L7", "DeepSWE v1.1", "FrontierCode"]);
+    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Sonnet 5.5", rankLabel: "1", score: "95" });
     expect(home[1]?.rows.map((row) => [row.name, row.score])).toEqual([
-      ["Claude Opus 5.5", "98"],
-      ["GPT-6 Astra", "88"],
-      ["Claude Fable 5.1", "75"],
-      ["GPT 6 Sol", "65"],
-      ["Kimi K3", "57"],
+      ["Claude Sonnet 5.5", "95"],
+      ["Claude Opus 5.5", "92"],
+      ["GPT-6 Astra", "79"],
+      ["GPT-6.1 Sol", "75"],
+      ["Claude Fable 5.1", "64"],
     ]);
-    expect(home[2]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "97" });
-    expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1", "FrontierCode 1.1"]);
+    expect(home[2]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", score: "96" });
+    expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1", "FrontierCode"]);
     expect(home[3]?.title).toBe("写文档和文案");
     expect(home[3]?.sources?.map((source) => source.name)).toEqual(["The Slop Index", "EQ-Bench Creative Writing v3"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 6 Sol", rankLabel: "1" });
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT-6 Astra", rankLabel: "1" });
     expect(home[3]?.rows.map((row) => row.name).slice(0, 3)).toEqual([
+      "GPT-6 Astra",
       "GPT 6 Sol",
       "Claude Haiku 5.5",
-      "GPT-6 Astra",
     ]);
     expect(home).toHaveLength(4);
   });
@@ -441,7 +452,7 @@ describe("picks", () => {
     expect(uplift.find((row) => row.name === "Grok 4.7")?.delta).toBe("+11.6");
 
     const convex = getItem("en", "library", "convex")?.evalView;
-    expect(convex?.rows[0]).toMatchObject({ name: "GPT-6 Astra", baseline: "90.18", assisted: "97.77", web: "91.07", rank: 1 });
+    expect(convex?.rows[0]).toMatchObject({ name: "GPT-6 Astra", baseline: "89.88", assisted: "97.02", web: "91.07", rank: 1 });
     expect(convex?.rows.find((row) => row.name === "Gemini 3.1 Pro Preview")?.web).toBeUndefined();
     expect(convex?.showAssisted).toBe(true);
     const rules = getItem("zh", "prompt", "convex-ai-rules")?.evalView;
@@ -498,15 +509,15 @@ describe("backlinks", () => {
 
 describe("stale picks", () => {
   it("withholds the android model once the board is past 90 days", () => {
-    expect(resolvePicks("android-app", "2027-01-04").top?.modelSlug).toBe("claude-opus-5-5");
+    expect(resolvePicks("android-app", "2027-01-24").top?.modelSlug).toBe("claude-sonnet-5-5");
     const live = getBuild("zh", "android-app");
-    expect(live?.roles[0]?.primary.name).toBe("Claude Opus 5.5");
-    expect(live?.roles[0]?.alternative).toContain("GPT 6 Sol");
+    expect(live?.roles[0]?.primary.name).toBe("Claude Sonnet 5.5");
+    expect(live?.roles[0]?.alternative).toContain("GPT-6.1 Sol");
     expect(live?.roles[0]?.alternative).toContain("不到一半");
-    expect(resolvePicks("android-app", "2027-01-05").top).toBeUndefined();
-    expect(resolvePicks("android-app", "2027-01-05").stale).toBe(true);
+    expect(resolvePicks("android-app", "2027-01-25").top).toBeUndefined();
+    expect(resolvePicks("android-app", "2027-01-25").stale).toBe(true);
 
-    const build = getBuild("zh", "android-app", "2027-01-05");
+    const build = getBuild("zh", "android-app", "2027-01-25");
     expect(build?.stale).toBe(true);
     expect(build?.roles[0]?.primary.stale).toBe(true);
     expect(build?.roles[0]?.primary.name).toBe("模型推荐已撤下");

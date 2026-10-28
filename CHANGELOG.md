@@ -9,6 +9,17 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-10-28
+
+### 变更
+
+- sudo L7 从 https://surgehq.ai/benchmarks/sudo-l7 全量同步：16 行。Claude Sonnet 5.5 Adaptive/Max 第 1（50.6%）；Opus 5.5 第 2（45.6%）；GPT 6.1 Sol 第 3（33.9%）。Kimi K3.1 Pro 与 Qwen 3.8 Max 并列第 6（16.7%），不是独占第 7。
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步：152 行，榜单日期 2026-10-27，950,329 票。Claude Opus 5.5（max）第 1（1809）；Gemini 4 Argon（high）第 10（1680）；新增 GPT-6.1 Terra（max）第 14（1671），模型 slug `gpt-6-1-terra`。
+- The Slop Index 从 https://www.theslopindex.com/leaderboard 全量同步：58 行（2,170 票）。反转后 Inkling Small 第 1（100 − 24 = 76）；Haiku 5.5 约第 4（100 − 28 = 72）。此前「Haiku 仍第 1」预期已过时。
+- Android Bench 2.0 长程从 https://developer.android.com/bench 同步：11 行（as of Oct 26）。Claude Sonnet 5.5（max）claude-code 第 1（40.0%）；Opus 5.5 第 2（37.3%）；GPT 6.1 Sol（max）第 3（29.3%）；Gemini 4 Argon（high）第 6（21.3%）。
+- FrontierCode 升级为 **2.0**（稳定 slug `frontiercode`，`versions` 含当前 2.0 与归档 1.1）。从 https://cognition.com/data/frontier-code-2.0/data.json 同步 102 行（26 模型 × 全部推理档）。完整 JSON 榜首 Obsidian 3 high ~46.8%（公开 HTML 表省略该行）；Opus 5.5 max ~45.5% 次之。旧预期 GPT-6.1 Terra #14 46.66 不在 2.0 数据中。`frontiercode-1-1` 旧址跳转到 `?v=1.1`。
+- Convex Evals 刷新 No Guidelines（41→35 映射）与 With Guidelines（40→35 映射；空 args 默认查询）。有指南臂 Gemini 4 Argon ~98.72% 第 1，GPT-5.6 Sol ~98.21% 第 2，GPT-6 Astra ~97.02% 第 7。Web 臂本轮未刷新。
+
 ## 2026-10-26
 
 ### 变更

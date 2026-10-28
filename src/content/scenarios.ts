@@ -27,8 +27,8 @@ export const scenarios: Scenario[] = [
     slug: "web-frontend",
     title: tx("做 Web 前端", "Build a Web frontend"),
     summary: tx(
-      "落地页、交互组件、React / Next.js 页面。这一页把 LMArena WebDev、Image-to-WebDev、Next.js Agent Evals、生态评测 ReactBench，以及通用榜 sudo L7、DeepSWE v1.1 与 FrontierCode 1.1 按模型对齐，格子里是名次。完整原榜在各基准页。",
-      "Landing pages, interactive components, and React / Next.js screens. This page lines up LMArena WebDev, Image-to-WebDev, Next.js Agent Evals, the ReactBench ecosystem eval, and the general boards sudo L7, DeepSWE v1.1, and FrontierCode 1.1 by model. Cells are ranks. The full source boards live on the benchmark pages.",
+      "落地页、交互组件、React / Next.js 页面。这一页把 LMArena WebDev、Image-to-WebDev、Next.js Agent Evals、生态评测 ReactBench，以及通用榜 sudo L7、DeepSWE v1.1 与 FrontierCode（当前 2.0）按模型对齐，格子里是名次。完整原榜在各基准页。",
+      "Landing pages, interactive components, and React / Next.js screens. This page lines up LMArena WebDev, Image-to-WebDev, Next.js Agent Evals, the ReactBench ecosystem eval, and the general boards sudo L7, DeepSWE v1.1, and FrontierCode (current 2.0) by model. Cells are ranks. The full source boards live on the benchmark pages.",
     ),
     thesis: tx(
       "按真人盲测、设计还原、框架任务、工程判断、长程工程和能否合并，挑出写前端最合适的模型。",
@@ -110,7 +110,7 @@ export const scenarios: Scenario[] = [
       ),
       board(
         "frontiercode",
-        "frontiercode-1-1",
+        "frontiercode",
         tx("FrontierCode", "FrontierCode"),
         tx("能否合并", "Mergeability"),
         "git-merge",
@@ -159,8 +159,8 @@ export const scenarios: Scenario[] = [
     slug: "android-app",
     title: tx("做一个 Android App", "Build an Android app"),
     summary: tx(
-      "Kotlin + Compose。这一页把 Android Bench 当前版本（2.0 长程）与通用榜 sudo L7、DeepSWE v1.1、FrontierCode 1.1 按模型对齐，格子是名次。1.0 的完整原榜在基准页，标为历史版本。",
-      "Kotlin and Compose. This page lines up the current Android Bench version, 2.0 long-horizon, with the general boards sudo L7, DeepSWE v1.1, and FrontierCode 1.1 by model. Cells are ranks. The full 1.0 board stays on the benchmark page as an archived version.",
+      "Kotlin + Compose。这一页把 Android Bench 当前版本（2.0 长程）与通用榜 sudo L7、DeepSWE v1.1、FrontierCode（当前 2.0）按模型对齐，格子是名次。1.0 的完整原榜在基准页，标为历史版本。",
+      "Kotlin and Compose. This page lines up the current Android Bench version, 2.0 long-horizon, with the general boards sudo L7, DeepSWE v1.1, and FrontierCode (current 2.0) by model. Cells are ranks. The full 1.0 board stays on the benchmark page as an archived version.",
     ),
     thesis: tx(
       "按长程 Android 改造任务、工程判断、通用长程工程和能否合并，挑出做 App 最合适的模型。",
@@ -206,7 +206,7 @@ export const scenarios: Scenario[] = [
       ),
       board(
         "frontiercode",
-        "frontiercode-1-1",
+        "frontiercode",
         tx("FrontierCode", "FrontierCode"),
         tx("能否合并", "Mergeability"),
         "git-merge",
@@ -254,8 +254,8 @@ export const scenarios: Scenario[] = [
     slug: "cli-devops",
     title: tx("写 CLI、脚本与 DevOps", "Write CLI, scripts, and DevOps"),
     summary: tx(
-      "终端里的 Agent 任务与自动化。这一页把 Terminal-Bench 4.0 与通用榜 DeepSWE v1.1、FrontierCode 1.1 按模型对齐，格子是名次，同时看单次跑分成本。",
-      "Agent tasks and automation in a terminal. This page lines up Terminal-Bench 4.0 with the general boards DeepSWE v1.1 and FrontierCode 1.1 by model. Cells are ranks, with the cost of one run beside the score.",
+      "终端里的 Agent 任务与自动化。这一页把 Terminal-Bench 4.0 与通用榜 DeepSWE v1.1、FrontierCode（当前 2.0）按模型对齐，格子是名次，同时看单次跑分成本。",
+      "Agent tasks and automation in a terminal. This page lines up Terminal-Bench 4.0 with the general boards DeepSWE v1.1 and FrontierCode (current 2.0) by model. Cells are ranks, with the cost of one run beside the score.",
     ),
     thesis: tx(
       "按终端 Agent 任务、通用长程工程和能否合并，挑出写脚本与 DevOps 最合适的模型。",
@@ -289,7 +289,7 @@ export const scenarios: Scenario[] = [
       ),
       board(
         "frontiercode",
-        "frontiercode-1-1",
+        "frontiercode",
         tx("FrontierCode", "FrontierCode"),
         tx("能否合并", "Mergeability"),
         "git-merge",
