@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "10-29",
+    kind: "board",
+    source: "lmarena.ai / eqbench.com",
+    text: tx(
+      "**两榜同步**：LMArena WebDev 至 10-27（952,039 票、153 行），Opus Max 仍第 1（1810）；新增 **Gemini 4 Carbon（high）** 第 4（1768，初步）。EQ Creative Writing 146 行，Astra 仍第 1（Elo 2176.9）；**Kimi K3.1 Pro** 新进第 2（2172.6）。",
+      "**Two-board sync**: LMArena WebDev to Oct 27 (952,039 votes, 153 rows); Opus Max still #1 (1810); new **Gemini 4 Carbon (high)** at #4 (1768, preliminary). EQ Creative Writing 146 rows; Astra still #1 (Elo 2176.9); **Kimi K3.1 Pro** enters at #2 (2172.6).",
+    ),
+  },
+  {
     date: "10-28",
     kind: "board",
     source: "surgehq.ai / lmarena.ai / theslopindex.com / developer.android.com / cognition.com / convex.dev",

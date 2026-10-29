@@ -147,8 +147,8 @@ export const benchmarks: Benchmark[] = [
     scoreUnit: "",
     compositeKind: "arena",
     asOf: "2026-10-27",
-    votes: "950,329",
-    trackedCount: 152,
+    votes: "952,039",
+    trackedCount: 153,
     table: "webdev",
     sourceFilter: "license",
     domain: tx("前端", "Frontend"),
@@ -169,8 +169,8 @@ export const benchmarks: Benchmark[] = [
       "It measures human preference (does it look right, does it run), not test pass rate. Briefs are mostly single-page demos, so it says little about large codebases or long refactors. Effort tiers of the same model are ranked separately. Preliminary rows have few votes and can move.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期 2026-10-27，2026-10-28 同步；每周同步一次，变化写入首页「最新变化」。",
-      "Updated continuously. This page's board date is 2026-10-27, synced 2026-10-28. We sync weekly and write changes on the home page.",
+      "持续更新。本页榜单日期 2026-10-27，2026-10-29 同步；每周同步一次，变化写入首页「最新变化」。",
+      "Updated continuously. This page's board date is 2026-10-27, synced 2026-10-29. We sync weekly and write changes on the home page.",
     ),
     links: [
       { label: "lmarena.ai/leaderboard/webdev", href: "https://lmarena.ai/leaderboard/webdev" },
@@ -299,8 +299,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Creative Writing",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-10-26",
-    trackedCount: 145,
+    asOf: "2026-10-29",
+    trackedCount: 146,
     table: "score",
     domain: tx("文档与文案", "Docs and copy"),
     measures: tx(
@@ -320,8 +320,8 @@ export const benchmarks: Benchmark[] = [
       "An LLM judge has self-preference and taste bias; the authors say this is not a roleplay eval and does not match your taste. English only. Source 🆕 marks newly added models, not this site's preliminary half-weight flag.",
     ),
     updateCadence: tx(
-      "来源 https://eqbench.com/creative_writing.html ；方法说明 https://eqbench.com/about.html#creative-writing-v3 ；评测代码 https://github.com/EQ-bench/creative-writing-bench 。本页于 2026-10-26 从来源页 creative_writing.js（v=1.0.91）嵌入的榜单 CSV 抓取全部 145 行，按 Elo 降序。",
-      "Source https://eqbench.com/creative_writing.html ; methodology https://eqbench.com/about.html#creative-writing-v3 ; harness https://github.com/EQ-bench/creative-writing-bench . This page fetched all 145 rows on 2026-10-26 from the CSV embedded in creative_writing.js (v=1.0.91), ordered by Elo descending.",
+      "来源 https://eqbench.com/creative_writing.html ；方法说明 https://eqbench.com/about.html#creative-writing-v3 ；评测代码 https://github.com/EQ-bench/creative-writing-bench 。本页于 2026-10-29 从来源页 creative_writing.js（v=1.0.91）嵌入的榜单 CSV 抓取全部 146 行，按 Elo 降序。",
+      "Source https://eqbench.com/creative_writing.html ; methodology https://eqbench.com/about.html#creative-writing-v3 ; harness https://github.com/EQ-bench/creative-writing-bench . This page fetched all 146 rows on 2026-10-29 from the CSV embedded in creative_writing.js (v=1.0.91), ordered by Elo descending.",
     ),
     links: [
       { label: "eqbench.com/creative_writing.html", href: "https://eqbench.com/creative_writing.html" },

@@ -9,6 +9,13 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-10-29
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步：153 行，榜单日期 2026-10-27，952,039 票。Claude Opus 5.5（max）第 1（1810）；GPT-6 Astra（max）第 2（1773）；Claude Sonnet 5.5（xHigh）第 3（1770）。新增 **Gemini 4 Carbon（high）** 第 4（1768，初步），模型 slug `gemini-4-carbon`，与 Argon 分开。
+- EQ-Bench Creative Writing v3 从 creative_writing.js 嵌入 CSV 全量同步：146 行。榜首 GPT-6 Astra（Elo 2176.9）；新增 Moonshot **Kimi K3.1 Pro** 第 2（Elo 2172.6），映射到既有 slug `kimi-k3-1-pro`。Web 前端与写文档综合分随榜重算。
+
 ## 2026-10-28
 
 ### 变更

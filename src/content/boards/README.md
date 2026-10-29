@@ -3,7 +3,7 @@
 > L2 | 父级: ../README.md
 
 成员清单
-webdev.json: LMArena WebDev 152 行，2026-10-28 从 lmarena.ai/leaderboard/webdev 解析（榜单日期 2026-10-27，950,329 票）
+webdev.json: LMArena WebDev 153 行，2026-10-29 从 lmarena.ai/leaderboard/webdev 解析（榜单日期 2026-10-27，952,039 票）
 image-to-webdev.json: LMArena Image-to-WebDev 65 行，2026-10-20 从 lmarena.ai/leaderboard/image-to-webdev 解析，榜单日期 2026-10-19。pareto 与 paretoPrice 只属于帕累托页列出的 7 个最优点，blend 是 (输入 + 3×输出) / 4
 android-1.json: Android Bench 历史版本 1.0 的 32 行，基准 slug 是 android-bench
 android-long.json: Android Bench 当前版本 2.0 长程的 11 行，同一基准 slug
@@ -13,7 +13,7 @@ deepswe.json: DeepSWE v1.1 的 28 行 Best 配置，2026-10-11 从 https://deeps
 frontiercode.json: FrontierCode 2.0 Main 的 102 行（26 模型 × 全部推理档），2026-10-28 从 https://cognition.com/data/frontier-code-2.0/data.json 抓取；# 为最佳推理档名次；完整 JSON 含 Obsidian 3（公开 HTML 表省略）
 frontiercode-1.json: FrontierCode 1.1 Main 的 130 行归档，2026-10-13 从旧 data.json 的 v1_1 抓取
 slop-index.json: The Slop Index 58 行，2026-10-28 从 theslopindex.com/leaderboard 抓取（2,170 票）；来源是 slop 越高越差、#1 最渣，本站反转为最少 slop 为 #1，score 存 100 − Slop Score
-eqbench-creative-writing.json: EQ-Bench Creative Writing v3 145 行，2026-10-26 从 eqbench.com/creative_writing.html 的 creative_writing.js（v=1.0.91）嵌入 CSV 抓取；主指标归一化 Elo（越高越好）
+eqbench-creative-writing.json: EQ-Bench Creative Writing v3 146 行，2026-10-29 从 eqbench.com/creative_writing.html 的 creative_writing.js（v=1.0.91）嵌入 CSV 抓取；主指标归一化 Elo（越高越好）
 
 这些文件是来源页的逐行副本。`results.ts` 只做模型页映射，不删行、不重排。框架评测的行写在 `results.ts`，不进这些 JSON。Slop Index 是唯一在入库前反转名次与分数方向的榜，说明写在基准与场景文案里。
 
