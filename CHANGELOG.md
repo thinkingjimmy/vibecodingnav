@@ -9,6 +9,13 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-02
+
+### 变更
+
+- Next.js Agent Evals 从 https://nextjs.org/evals 同步当前榜（Last run 2026-10-30）：15 个可映射模型（来源 16 行，Pixel Canary 仍无模型页）。97% 第一档现为 Opus 5.5 / GPT 6 Sol / Gemini 4 Argon / Fable 5.1 / GPT 6.1 Terra；Luna high 81%（#14）。Web 前端综合分随 Next.js 权重 0.4 重算。
+- Supabase Evals 从 https://supabase.com/evals 同步 Experiment suite：Without skills 为基线（Opus 5.5 medium 90% 第 1），Benchmark 为有 Skills 对照臂（Opus 93%）。Sonnet 5 → Sonnet 5.5；GPT-6 sol → GPT-6.1 Sol。仅框架页 / 工具箱条目，不进场景融合表。
+
 ## 2026-10-29
 
 ### 变更

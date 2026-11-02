@@ -283,7 +283,7 @@ describe("picks", () => {
     expect(web?.scoring.worked).toMatchObject({
       key: "model:claude-sonnet-5-5",
       name: "Claude Sonnet 5.5",
-      composite: 90,
+      composite: 91,
     });
     expect(web?.scoring.worked?.rows.map((row) => row.board)).toEqual([
       "盲测投票",
@@ -302,7 +302,7 @@ describe("picks", () => {
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([6, 4, 4, null, 7, 3, 3]);
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([6, 4, 4, null, 7, 4, 3]);
     expect(fable).toMatchObject({ compositeLabel: "81", count: 6 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
@@ -445,11 +445,12 @@ describe("picks", () => {
 
   it("keeps framework eval arms as separate scores", () => {
     const board = getItem("zh", "library", "supabase")?.evalView;
-    expect(board?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", baseline: "91.3", rank: 1 });
+    expect(board?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", baseline: "90.0", rank: 1 });
     const uplift = getItem("zh", "skill", "supabase-skills")?.evalView?.rows ?? [];
-    expect(uplift.find((row) => row.name === "Claude Opus 5.5")?.delta).toBe("−1.4");
-    expect(uplift.find((row) => row.name === "GPT 6 Sol")?.delta).toBe("0");
-    expect(uplift.find((row) => row.name === "Grok 4.7")?.delta).toBe("+11.6");
+    expect(uplift.find((row) => row.name === "Claude Opus 5.5")?.delta).toBe("+3.0");
+    expect(uplift.find((row) => row.name === "GPT-6.1 Sol")?.delta).toBe("+3.0");
+    expect(uplift.find((row) => row.name === "Grok 4.7")?.delta).toBe("−1.0");
+    expect(uplift.find((row) => row.name === "Claude Sonnet 5.5")?.delta).toBe("+9.0");
 
     const convex = getItem("en", "library", "convex")?.evalView;
     expect(convex?.rows[0]).toMatchObject({ name: "GPT-6 Astra", baseline: "89.88", assisted: "97.02", web: "91.07", rank: 1 });
@@ -469,7 +470,7 @@ describe("picks", () => {
     expect(react?.rows.some((row) => row.rank === 17)).toBe(true);
 
     const scores = getModel("zh", "claude-opus-5-5")?.scoreRows.filter((row) => row.name === "Supabase Evals" || row.name === "Convex Evals") ?? [];
-    expect(scores.map((row) => row.score)).toEqual(["91.3", "89.58"]);
+    expect(scores.map((row) => row.score)).toEqual(["90.0", "89.58"]);
     expect(getBenchmark("en", "convex-evals")?.version).toBe("92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb");
     expect(getBenchmark("en", "reactbench")?.domain).toBe("Ecosystem eval");
   });

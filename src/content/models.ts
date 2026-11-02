@@ -111,8 +111,8 @@ export const models: Model[] = [
     priceLabel: "$2 / $10",
     headlines: ["android-bench", "sudo-l7", "lmarena-webdev"],
     summary: tx(
-      "Android Bench 2.0 长程第 1（40.0%，claude-code）。sudo L7 第 1（50.6% Adaptive/Max）。WebDev 第三，1770 分。",
-      "First on Android Bench 2.0 long-horizon at 40.0% (claude-code). First on sudo L7 at 50.6% Adaptive/Max. Third on WebDev at 1770.",
+      "Android Bench 2.0 长程第 1（40.0%，claude-code）。sudo L7 第 1（50.6% Adaptive/Max）。WebDev 第三，1770 分。Supabase 无 Skills 第 5（77%），有 Skills 86%。",
+      "First on Android Bench 2.0 long-horizon at 40.0% (claude-code). First on sudo L7 at 50.6% Adaptive/Max. Third on WebDev at 1770. 5th on Supabase without skills at 77%, 86% with skills.",
     ),
     why: [
       tx("Android 长程与 sudo L7 双第一；做前端时比 Opus 少约 40 分换一半价格。", "Leads Android long-horizon and sudo L7; for frontend, about 40 fewer WebDev points than Opus at half the price."),
@@ -120,6 +120,7 @@ export const models: Model[] = [
     whyNot: [
       tx("Android 长程平均耗时 70.7 小时、成本约 $1575。", "Android long-horizon averages 70.7 hours and about $1575."),
       tx("Terminal-Bench 单次跑分 $7.3k，比第一名的 $4.7k 还贵。", "A Terminal-Bench run costs $7.3k, more than the leader's $4.7k."),
+      tx("Supabase 无 Skills 基线落后 Opus（77% vs 90%）。", "Trails Opus on the Supabase no-skills baseline (77% vs 90%)."),
     ],
   }),
   model({
@@ -133,8 +134,8 @@ export const models: Model[] = [
     priceLabel: "$2 / $10",
     headlines: ["android-bench", "sudo-l7"],
     summary: tx(
-      "Terminal-Bench 并列第 3，58.2%，跑分成本 $634.24。sudo L7 第三，33.9%。Android Bench 2.0 长程第三，29.3%（codex）。",
-      "Ties for 3rd on Terminal-Bench at 58.2% and $634.24 a run. Third on sudo L7 at 33.9%. Third on Android Bench 2.0 long-horizon at 29.3% (codex).",
+      "Terminal-Bench 并列第 3，58.2%，跑分成本 $634.24。sudo L7 第三，33.9%。Android Bench 2.0 长程第三，29.3%（codex）。Supabase 无 Skills 第 4（78%），有 Skills 81%。",
+      "Ties for 3rd on Terminal-Bench at 58.2% and $634.24 a run. Third on sudo L7 at 33.9%. Third on Android Bench 2.0 long-horizon at 29.3% (codex). 4th on Supabase without skills at 78%, 81% with skills.",
     ),
     why: [tx("全栈、脚本和 Android 长程更看成本时，它是更划算的一档。", "When full-stack, scripting, or Android long-horizon work cares about cost, this is the cheaper tier.")],
     whyNot: [tx("不是任何一张活跃榜的第一名。纯前端 Opus 与 Sonnet 仍然更高。", "It is not first on an active board. Opus and Sonnet still score higher for frontend.")],
@@ -151,11 +152,14 @@ export const models: Model[] = [
     fetchedAt: "2026-10-28",
     headlines: ["lmarena-webdev"],
     summary: tx(
-      "WebDev 新增第 14（max）1671 分；token 价格 $1 / $5。与 GPT-6.1 Sol 不是同一行。",
-      "New 14th on WebDev at max with 1671; token price $1 / $5. A different row from GPT-6.1 Sol.",
+      "Next.js 当前榜第 5（high）97%，有 AGENTS.md 为 94%，成本 $0.083。WebDev 第 14（max）1671 分；token 价格 $1 / $5。与 GPT-6.1 Sol 不是同一行。",
+      "5th on the current Next.js board at high with 97% (94% with AGENTS.md) and $0.083. 14th on WebDev at max with 1671; token price $1 / $5. A different row from GPT-6.1 Sol.",
     ),
-    why: [tx("WebDev 已进前十五，输出价格低于同系列 Sol。", "Inside the WebDev top fifteen, cheaper output than Sol in the same series.")],
-    whyNot: [tx("票数约 1.6k，名次区间 8–19 仍宽；不要和 Sol / Astra 合成一个分。", "About 1.6k votes and a wide 8–19 rank band. Do not merge this with Sol / Astra into one score.")],
+    why: [
+      tx("Next.js 已进入 97% 第一档，单次成本低于同档 Sol / Fable。", "Joins the Next.js 97% first tier at a lower run cost than Sol / Fable in that band."),
+      tx("WebDev 已进前十五，输出价格低于同系列 Sol。", "Inside the WebDev top fifteen, cheaper output than Sol in the same series."),
+    ],
+    whyNot: [tx("票数约 1.6k，名次区间 8–19 仍宽；不要和 Sol / Astra 合成一个分。有 AGENTS.md 时 Next.js 略降到 94%。", "About 1.6k votes and a wide 8–19 rank band. Do not merge this with Sol / Astra into one score. With AGENTS.md, Next.js dips to 94%.")],
   }),
   model({
     slug: "claude-fable-5-1",
@@ -220,8 +224,14 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1M",
     priceLabel: "$2 / $10",
-    summary: tx("WebDev high 档第 11，1679 分。与 Gemini 4 Carbon 不是同一行。", "11th on WebDev at high effort, 1679. A different row from Gemini 4 Carbon."),
-    why: [tx("价格与 Sonnet 同档，仍在 WebDev 前段。", "Same token price band as Sonnet, still in the WebDev front.")],
+    summary: tx(
+      "Next.js 当前榜第 3，基线与有 AGENTS.md 均为 97%。WebDev high 档第 11，1679 分。与 Gemini 4 Carbon 不是同一行。",
+      "3rd on the current Next.js board at 97% with or without AGENTS.md. 11th on WebDev at high effort, 1679. A different row from Gemini 4 Carbon.",
+    ),
+    why: [
+      tx("Next.js 与 Opus / Sol / Fable 同处 97% 第一档。", "Shares the Next.js 97% first tier with Opus / Sol / Fable."),
+      tx("价格与 Sonnet 同档，仍在 WebDev 前段。", "Same token price band as Sonnet, still in the WebDev front."),
+    ],
     whyNot: [tx("同系列 Carbon（high）已到第 4（1768，初步），不要把两行合成一个分。", "Same-family Carbon (high) is already 4th at 1768 (preliminary); do not merge the two into one score.")],
   }),
   model({
@@ -626,9 +636,15 @@ export const models: Model[] = [
     vendorName: "OpenAI",
     license: "proprietary",
     licenseLabel: prop,
-    summary: tx("Android 长程第七，10.7%，跑分成本 $5.3。便宜，但通过率最低的一档。", "Seventh on the Android long board at 10.7%, run cost $5.3. Cheap, and at the bottom of the listed pass rates."),
-    why: [tx("长程跑分成本 $5.3，是这张榜上最低的一档。", "A $5.3 long-horizon run, the lowest cost on this board.")],
-    whyNot: [tx("通过率 10.7%。复杂多模块工作不要让它单挑。", "10.7% pass rate. Do not leave multi-module work to it alone.")],
+    summary: tx(
+      "Next.js 当前榜第 14（high）81%，有 AGENTS.md 为 90%。Supabase 无 Skills 第 6（70%），有 Skills 77%。Android 长程第七，10.7%，跑分成本 $5.3。",
+      "14th on the current Next.js board at high with 81% (90% with AGENTS.md). 6th on Supabase without skills at 70%, 77% with skills. Seventh on the Android long board at 10.7%, run cost $5.3.",
+    ),
+    why: [
+      tx("Next.js 基线从 77% 升到 81%，成本约 $0.012。", "Next.js baseline moved from 77% to 81% at about $0.012."),
+      tx("长程跑分成本 $5.3，是 Android 这张榜上最低的一档。", "A $5.3 long-horizon run, the lowest cost on the Android board."),
+    ],
+    whyNot: [tx("Android 通过率 10.7%；Supabase 无 Skills 仍是公开榜最后。复杂多模块工作不要让它单挑。", "Android pass rate 10.7%; still last on the public Supabase no-skills board. Do not leave multi-module work to it alone.")],
   }),
   model({
     slug: "claude-sonnet-5",
@@ -638,11 +654,11 @@ export const models: Model[] = [
     license: "proprietary",
     licenseLabel: prop,
     summary: tx(
-      "和 Sonnet 5.5 不是同一行。Supabase 无 Skills 75.4%，有 Skills 79.7%。Next.js 无 AGENTS.md 81%，有则为 97%。DeepSWE v1.1 Best（max）第 18，53.8%。",
-      "A different row from Sonnet 5.5. Supabase is 75.4% without skills and 79.7% with them. Next.js is 81% without AGENTS.md and 97% with it. 18th on DeepSWE v1.1 Best (max) at 53.8%.",
+      "和 Sonnet 5.5 不是同一行。当前 Supabase 公开榜已换成 Sonnet 5.5；这一行仍以 Next.js 为主：无 AGENTS.md 81%，有则为 97%。DeepSWE v1.1 Best（max）第 18，53.8%。",
+      "A different row from Sonnet 5.5. The current public Supabase board lists Sonnet 5.5 instead. This row is still led by Next.js: 81% without AGENTS.md and 97% with it. 18th on DeepSWE v1.1 Best (max) at 53.8%.",
     ),
     why: [tx("Next.js 加上 AGENTS.md 之后，pass@4 从 81% 到 97%。", "On Next.js, pass@4 moves from 81% to 97% once AGENTS.md is available.")],
-    whyNot: [tx("Supabase 基线 75.4%，低于 Opus 5.5 的 91.3%。不要把它和 Sonnet 5.5 的其他榜混成一个分。", "The Supabase baseline is 75.4%, behind Opus 5.5 at 91.3%. Do not merge this with Sonnet 5.5's other boards into one score.")],
+    whyNot: [tx("不要把它和 Sonnet 5.5 的 Supabase / sudo / Android 成绩混成一个分。", "Do not merge this with Sonnet 5.5's Supabase / sudo / Android scores into one score.")],
   }),
   model({
     slug: "claude-sonnet-4-6",
@@ -711,8 +727,8 @@ export const models: Model[] = [
     license: "proprietary",
     licenseLabel: prop,
     summary: tx(
-      "Next.js 当前榜第 14，无 AGENTS.md 74%，有则为 90%。ReactBench v1.2 第 59，23.6%。",
-      "14th on the current Next.js board, 74% without AGENTS.md and 90% with it. 59th on ReactBench v1.2 at 23.6%.",
+      "Next.js 当前榜第 16，无 AGENTS.md 74%，有则为 90%。ReactBench v1.2 第 59，23.6%。",
+      "16th on the current Next.js board, 74% without AGENTS.md and 90% with it. 59th on ReactBench v1.2 at 23.6%.",
     ),
     why: [tx("Next.js 文档把 pass@4 从 74% 抬到 90%。", "The Next.js docs move pass@4 from 74% to 90%.")],
     whyNot: [tx("基线是当前榜最后一名。两张评测不要合成一个分。", "The baseline is last on the current board. Do not merge the two evals into one score.")],
@@ -725,8 +741,8 @@ export const models: Model[] = [
     license: "proprietary",
     licenseLabel: prop,
     summary: tx(
-      "Next.js 当前榜第 11，Cursor agent，无 AGENTS.md 81%，有则为 94%，单次成本 $0.062。",
-      "11th on the current Next.js board, via the Cursor agent. 81% without AGENTS.md, 94% with it, at $0.062 a run.",
+      "Next.js 当前榜第 13，Cursor agent，无 AGENTS.md 81%，有则为 94%，单次成本 $0.062。",
+      "13th on the current Next.js board, via the Cursor agent. 81% without AGENTS.md, 94% with it, at $0.062 a run.",
     ),
     why: [tx("Next.js 这张榜上列出的成本是 $0.062。", "The listed Next.js cost is $0.062.")],
     whyNot: [tx("ReactBench v1.2 第 72，17.4%。不要用 Next.js 的 81% 代替它。", "72nd on ReactBench v1.2 at 17.4%. Do not substitute the Next.js 81% for that.")],
@@ -739,8 +755,8 @@ export const models: Model[] = [
     license: "proprietary",
     licenseLabel: prop,
     summary: tx(
-      "Next.js 当前榜第 12，OpenCode，无 AGENTS.md 81%，有则为 90%，单次成本 $0.053。",
-      "12th on the current Next.js board, via OpenCode. 81% without AGENTS.md, 90% with it, at $0.053 a run.",
+      "Next.js 当前榜第 15，OpenCode，无 AGENTS.md 81%，有则为 90%，单次成本 $0.053。",
+      "15th on the current Next.js board, via OpenCode. 81% without AGENTS.md, 90% with it, at $0.053 a run.",
     ),
     why: [tx("有 AGENTS.md 时升到 90%，成本是这张当前榜上较低的一档。", "With AGENTS.md it reaches 90%, at a lower cost on the current board.")],
     whyNot: [tx("基线 81%，和好几行并列。提升不是每一行都有，这一行是 +9 个点。", "The baseline is 81%, tied with several rows. Not every row moves. This one is +9 points.")],

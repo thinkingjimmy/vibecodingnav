@@ -329,7 +329,7 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   await expect(scoringDialog.getByText("综合分怎么算")).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "公式" })).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "一个例子" })).toBeVisible();
-  await expect(scoringDialog.getByText(/Claude Sonnet 5\.5 的综合分是 90/)).toBeVisible();
+  await expect(scoringDialog.getByText(/Claude Sonnet 5\.5 的综合分是 91/)).toBeVisible();
   await expect(scoringDialog.getByText(/拿下 sudo L7 第 1/)).toBeVisible();
   await expect(scoringDialog.getByText("Esc 关闭")).toHaveCount(0);
   const scoringClose = scoringDialog.getByRole("button", { name: "关闭" });
@@ -555,12 +555,12 @@ test("theme toggle persists the dark class", async ({ page }) => {
 test("framework evals stay on separate boards", async ({ page }) => {
   await page.goto("/zh/libraries/supabase/");
   await expect(page.getByRole("heading", { name: "框架评测" })).toBeVisible();
-  await expect(page.getByText("91.3").first()).toBeVisible();
+  await expect(page.getByText("90.0").first()).toBeVisible();
 
   await page.goto("/zh/skills/supabase-skills/");
   await expect(page.getByRole("heading", { name: "有材料相对基线的变化" })).toBeVisible();
-  await expect(page.getByText("−1.4")).toBeVisible();
-  await expect(page.getByText("0", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("+3.0").first()).toBeVisible();
+  await expect(page.getByText("−1.0").first()).toBeVisible();
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/zh/libraries/convex/");
