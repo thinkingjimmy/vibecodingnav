@@ -59,7 +59,7 @@ describe("composite method C", () => {
     expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
       [1, 100],
       [1, 100],
-      [1, 100],
+      [2, 100],
       [1, 100],
       [2, 90],
       null,
@@ -188,7 +188,7 @@ describe("composite method C", () => {
       "claude-fable-5-1",
     ]);
     expect(web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([
-      1, 1, 2, null, 2, 1, 1,
+      1, 1, 2, null, 2, 2, 1,
     ]);
 
     const home = getHome("zh").cards;
@@ -205,7 +205,7 @@ describe("composite method C", () => {
       "#2 · 90",
       "—",
       "#2 · 97",
-      "#1 · 100",
+      "#2 · 100",
       "#1 · 100",
     ]);
 

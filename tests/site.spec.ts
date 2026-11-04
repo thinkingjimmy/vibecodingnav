@@ -576,7 +576,7 @@ test("framework evals stay on separate boards", async ({ page }) => {
   await expect(page.getByText("+8.19").first()).toBeVisible();
 
   await page.goto("/zh/prompts/nextjs-agents-md/");
-  await expect(page.getByText("+13.0").first()).toBeVisible();
+  await expect(page.getByText("+14.0").first()).toBeVisible();
 
   await page.goto("/zh/libraries/react/");
   await expect(page.getByRole("heading", { name: "生态评测" })).toBeVisible();

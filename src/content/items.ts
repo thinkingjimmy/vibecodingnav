@@ -515,7 +515,7 @@ export const items: Item[] = [
     oneLiner: tx("评测里打包的 Next.js 文档。每个模型的变化量单独列出，包括没有变化的 0。", "The bundled Next.js docs in the eval. Each model's change is listed on its own, including zeros."),
     fitFor: tx("仓库用 Next.js，希望 Agent 读到一份官方文档而不是凭记忆写 App Router。", "The repo uses Next.js and the agent should read official docs instead of writing the App Router from memory."),
     whyPick: tx("同一套 pass@4 上，能看见文档把哪些模型抬上去，哪些原地不动。", "On the same pass@4 set, you can see which models the docs move and which stay put."),
-    whenNot: tx("前排已经是 97% 的模型，这份文档没有再抬分。不要把它当成普遍加成。", "Models already at 97% do not move. Do not treat the file as a universal bonus."),
+    whenNot: tx("前排已经是 100% 的模型，这份文档没有再抬分。不要把它当成普遍加成。", "Models already at 100% do not move. Do not treat the file as a universal bonus."),
     peers: ["nextjs", "agents-md", "supabase-skills"],
     relatedItem: "nextjs",
     eval: { benchmark: "nextjs-evals", mode: "uplift" },

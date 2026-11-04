@@ -9,6 +9,12 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-04
+
+### 变更
+
+- Next.js Agent Evals 从 https://nextjs.org/evals 再同步当前榜（Last run 仍 2026-10-30，分数/成本/顺序已变）：15 个可映射模型（来源 16 行，Pixel Canary 仍无模型页）。第一档升至 **100%**，**GPT 6.1 Terra（high）** 居首，其后 Opus 5.5 / GPT 6 Sol / Gemini 4 Argon / Fable 5.1；Luna high 升至 #11（86%）。Web 前端综合分随 Next.js 权重 0.4 重算（top 5 未变）。
+
 ## 2026-11-02
 
 ### 变更

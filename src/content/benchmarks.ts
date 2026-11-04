@@ -427,12 +427,12 @@ export const benchmarks: Benchmark[] = [
       "The percent is pass@4 on one task set. Rank follows the no-AGENTS.md baseline and keeps the source page's order. The change is with AGENTS.md minus baseline.",
     ),
     caveats: tx(
-      "Vercel 自己出题、自己评分。测的是模型加上 Next.js，不是框架之间的高低。前排多在 90% 以上，贴近天花板。Gemini 4 Argon 与 GPT 6.1 Terra（high）进入 97% 第一档。Pixel Canary（OpenCode）在来源页排第 9，基线 90%，有 AGENTS.md 为 97%，成本 N/A。本站没有这个模型的厂商身份，所以没有单独模型页，名次仍按来源页保留（映射行会空出第 9）。",
-      "Vercel writes the tasks and grades them. This measures a model together with Next.js, not one framework against another. The front sits above 90%, near the ceiling. Gemini 4 Argon and GPT 6.1 Terra (high) join the 97% first tier. Pixel Canary (OpenCode) is 9th on the source page, 90% baseline and 97% with AGENTS.md, cost N/A. This site has no vendor identity for that model, so it has no model page. Its rank stays the source rank (mapped rows leave a gap at #9).",
+      "Vercel 自己出题、自己评分。测的是模型加上 Next.js，不是框架之间的高低。前排多在 90% 以上，贴近天花板。第一档现为 100%：GPT 6.1 Terra（high）居首，其后是 Claude Opus 5.5（high）、GPT 6 Sol（high）、Gemini 4 Argon、Claude Fable 5.1（high）。Pixel Canary（OpenCode）在来源页排第 9，基线 93%，有 AGENTS.md 为 100%，成本 N/A。本站没有这个模型的厂商身份，所以没有单独模型页，名次仍按来源页保留（映射行会空出第 9）。",
+      "Vercel writes the tasks and grades them. This measures a model together with Next.js, not one framework against another. The front sits above 90%, near the ceiling. The first tier is now 100%: GPT 6.1 Terra (high) leads, then Claude Opus 5.5 (high), GPT 6 Sol (high), Gemini 4 Argon, and Claude Fable 5.1 (high). Pixel Canary (OpenCode) is 9th on the source page, 93% baseline and 100% with AGENTS.md, cost N/A. This site has no vendor identity for that model, so it has no model page. Its rank stays the source rank (mapped rows leave a gap at #9).",
     ),
     updateCadence: tx(
-      "来源页写明最后一次运行是 2026-10-30。本页于 2026-11-02 同步当前榜 16 行中的 15 个可映射模型，不含 Previously measured。",
-      "The source page dates the last run 2026-10-30. This page synced 15 mappable models from the 16-row current board on 2026-11-02 and left out Previously measured.",
+      "来源页写明最后一次运行是 2026-10-30。本页于 2026-11-04 同步当前榜 16 行中的 15 个可映射模型，不含 Previously measured。",
+      "The source page dates the last run 2026-10-30. This page synced 15 mappable models from the 16-row current board on 2026-11-04 and left out Previously measured.",
     ),
     links: [{ label: "nextjs.org/evals", href: "https://nextjs.org/evals" }],
   },

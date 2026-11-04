@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-04",
+    kind: "board",
+    source: "nextjs.org/evals",
+    text: tx(
+      "**Next.js Agent Evals**：Last run 仍写 10-30，但分数重算。第一档升至 **100%**，**GPT-6.1 Terra（high）** 居首；Luna high 升至第 11（86%）。Web 前端综合分 top 未变。",
+      "**Next.js Agent Evals**: page still says last run Oct 30, but scores moved. First tier now **100%**, **GPT-6.1 Terra (high)** leads; Luna high up to #11 (86%). Web frontend composite top unchanged.",
+    ),
+  },
+  {
     date: "10-29",
     kind: "board",
     source: "lmarena.ai / eqbench.com",

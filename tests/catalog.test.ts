@@ -296,13 +296,13 @@ describe("picks", () => {
     ]);
     expect(web?.scoring.worked?.rows).toHaveLength(7);
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
-    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 2, null, 2, 1, 1]);
+    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 2, null, 2, 2, 1]);
     expect(opus).toMatchObject({ compositeLabel: "97", count: 6, total: 7 });
     expect(opus?.cells[0]?.tip).toContain("1810");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([6, 4, 4, null, 7, 4, 3]);
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([6, 4, 4, null, 7, 5, 3]);
     expect(fable).toMatchObject({ compositeLabel: "81", count: 6 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
@@ -462,7 +462,7 @@ describe("picks", () => {
 
     const next = getItem("en", "prompt", "nextjs-agents-md")?.evalView?.rows ?? [];
     expect(next.find((row) => row.name === "Claude Opus 5.5")?.delta).toBe("0");
-    expect(next.find((row) => row.name === "Kimi K3")?.delta).toBe("+13.0");
+    expect(next.find((row) => row.name === "Kimi K3")?.delta).toBe("+14.0");
 
     const react = getItem("zh", "library", "react")?.evalView;
     expect(react?.kindLabel).toBe("生态评测");

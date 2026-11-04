@@ -123,7 +123,7 @@ export const scenarios: Scenario[] = [
     ],
     scoringCaveats: [
       tx("四舍五入后同分算并列，再比 WebDev 名次。", "After rounding, ties share a rank; WebDev rank breaks ties."),
-      tx("Next.js 前排接近 97% 天花板，区分度低。", "Next.js leaders sit near a 97% ceiling, so separation is weak."),
+      tx("Next.js 前排已到 100% 天花板，区分度低。", "Next.js leaders sit at a 100% ceiling, so separation is weak."),
       tx("ReactBench 是第三方生态评测，不是 React 官方。", "ReactBench is a third-party ecosystem eval, not official React."),
       tx("sudo L7 任务不公开，按专家评分细则打分。", "sudo L7 tasks are private and graded against expert rubrics."),
       tx("DeepSWE 每模型只取 Best 推理档，统一 mini-swe-agent。", "DeepSWE keeps one Best reasoning tier per model, all on mini-swe-agent."),
