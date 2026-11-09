@@ -52,9 +52,9 @@ describe("composite method C", () => {
     expect(rows.map((row) => [row.rank, row.key.replace(/^model:/, ""), row.display])).toEqual([
       [1, "claude-opus-5-5", 97],
       [2, "claude-sonnet-5-5", 91],
-      [3, "gpt-6-astra", 87],
-      [4, "gpt-6-1-sol", 81],
+      [3, "gpt-6-astra", 86],
       [4, "claude-fable-5-1", 81],
+      [5, "gpt-6-1-sol", 80],
     ]);
     expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
       [1, 100],
@@ -65,7 +65,7 @@ describe("composite method C", () => {
       null,
       [2, 97],
     ]);
-    expect(rows[3]?.coverage).toBeCloseTo(2 / 3, 5);
+    expect(rows[3]?.coverage).toBeCloseTo(6 / 7, 5);
     expect(all.find((row) => row.key === "model:gemini-4-argon")?.homeEligible).toBe(true);
   });
 
@@ -77,7 +77,7 @@ describe("composite method C", () => {
       [2, "claude-opus-5-5", 92],
       [3, "gpt-6-astra", 79],
       [4, "gpt-6-1-sol", 75],
-      [5, "claude-fable-5-1", 64],
+      [5, "gpt-6-1-terra", 65],
     ]);
     expect(rows[0]?.cells.map((cell) => cell ? [cell.rank, Math.round(cell.normalized)] : null)).toEqual([
       [1, 100],
@@ -184,8 +184,8 @@ describe("composite method C", () => {
       "claude-opus-5-5",
       "claude-sonnet-5-5",
       "gpt-6-astra",
-      "gpt-6-1-sol",
       "claude-fable-5-1",
+      "gpt-6-1-sol",
     ]);
     expect(web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5")?.cells.map((cell) => cell?.rank ?? null)).toEqual([
       1, 1, 2, null, 2, 1, 1,
@@ -195,9 +195,9 @@ describe("composite method C", () => {
     expect(home[0]?.rows.map((row) => [row.name, row.score])).toEqual([
       ["Claude Opus 5.5", "97"],
       ["Claude Sonnet 5.5", "91"],
-      ["GPT-6 Astra", "87"],
-      ["GPT-6.1 Sol", "81"],
+      ["GPT-6 Astra", "86"],
       ["Claude Fable 5.1", "81"],
+      ["GPT-6.1 Sol", "80"],
     ]);
     expect(home[0]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual([
       "#1 · 100",

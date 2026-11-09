@@ -76,9 +76,9 @@ describe("picks", () => {
   it("resolves the web frontend board", () => {
     const picks = resolvePicks("web-frontend");
     expect(picks.top?.modelSlug).toBe("claude-opus-5-5");
-    expect(picks.top?.score).toBe(1810);
+    expect(picks.top?.score).toBe(1818);
     expect(picks.value?.modelSlug).toBe("claude-sonnet-5-5");
-    expect(picks.value?.score).toBe(1770);
+    expect(picks.value?.score).toBe(1773);
     expect(picks.open?.modelSlug).toBe("deepseek-v4-1-flash");
   });
 
@@ -153,35 +153,39 @@ describe("picks", () => {
 
   it("keeps each public board complete and in source order", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.boards[0]?.rows).toHaveLength(153);
-    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1810" });
-    expect(web?.boards[0]?.rows[3]).toMatchObject({ name: "gemini-4-carbon-high", rank: 4, score: "1768" });
-    expect(web?.boards[0]?.rows[5]).toMatchObject({ name: "claude-fable-5.1-max", rank: 6, score: "1746" });
-    expect(web?.boards[0]?.rows[8]).toMatchObject({ name: "kimi-k3.1-pro-max", rank: 9, score: "1695" });
-    expect(web?.boards[0]?.rows[13]).toMatchObject({ name: "gpt-6.1-terra-max", rank: 14, score: "1673" });
-    expect(web?.boards[0]?.rows[17]).toMatchObject({ name: "kimi-k3-max", rank: 18, score: "1656" });
-    expect(web?.boards[0]?.rows[19]).toMatchObject({ name: "muse-wonder-max", rank: 20, score: "1652" });
+    expect(web?.boards[0]?.rows).toHaveLength(154);
+    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1818" });
+    expect(web?.boards[0]?.rows[2]).toMatchObject({ name: "gemini-4-carbon-high", rank: 3, score: "1768" });
+    expect(web?.boards[0]?.rows[4]).toMatchObject({ name: "claude-fable-5.1-max", rank: 5, score: "1744" });
+    expect(web?.boards[0]?.rows[9]).toMatchObject({ name: "kimi-k3.1-pro-max", rank: 10, score: "1687" });
+    expect(web?.boards[0]?.rows[11]).toMatchObject({ name: "gpt-6.1-terra-max", rank: 12, score: "1678" });
+    expect(web?.boards[0]?.rows[20]).toMatchObject({ name: "inkling-2-small", rank: 21, score: "1649" });
+    expect(web?.boards[0]?.rows[16]).toMatchObject({ name: "kimi-k3-max", rank: 17, score: "1657" });
+    expect(web?.boards[0]?.rows[19]).toMatchObject({ name: "muse-wonder-max", rank: 20, score: "1650" });
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
     expect(android?.boards.map((board) => [board.id, board.rows.length])).toEqual([
-      ["current", 11],
+      ["current", 14],
       ["sudo", 16],
       ["deepswe", 28],
       ["frontiercode", 102],
     ]);
-    expect(android?.boards[0]?.rows.map((row) => [row.rank, row.name, row.agent, row.score, row.ci, row.completion, row.latency, row.price])).toEqual([
-      [1, "Claude Sonnet 5.5", "claude-code", "40.0", "24.0–56.0", "80.9", "70.7", "$1574.9"],
-      [2, "Claude Opus 5.5", "claude-code", "37.3", "22.0–52.0", "85.6", "56.6", "$1150.3"],
-      [3, "GPT 6.1 Sol", "codex", "29.3", "15.3–42.7", "82.8", "26.6", "$99.5"],
-      [4, "GPT 6 Astra", "codex", "28.0", "13.3–42.0", "82.2", "7.9", "$375.7"],
-      [5, "Claude Fable 5.1", "claude-code", "22.7", "10.7–36.0", "82.4", "22.2", "$492.6"],
-      [6, "Gemini 4 Argon", "antigravity-sdk", "21.3", "10.0–33.3", "81.8", "52.8", "$267.6"],
-      [7, "Qwen3.8 Max", "qwen-coder", "12.5", "4.2–21.7", "75.0", "45.4", "$258.4"],
-      [8, "Kimi K3", "kimi-code", "12.0", "3.3–22.0", "72.8", "66.2", "$418.3"],
-      [9, "GPT 6 Luna", "codex", "10.7", "4.0–17.3", "53.2", "6.2", "$5.3"],
-      [10, "Gemini 3.8 Flash", "antigravity-sdk", "8.0", "3.3–13.3", "47.4", "12.1", "$34.5"],
-      [11, "Gemini 3.7 Flash", "antigravity-sdk", "7.3", "1.3–14.7", "50.1", "9.9", "$26.0"],
+    expect(android?.boards[0]?.rows.map((row) => [row.rank, row.name, row.agent, row.effort, row.score, row.ci, row.completion, row.latency, row.price])).toEqual([
+      [1, "Claude Sonnet 5.5", "claude-code", "max", "40.0", "24.0–56.0", "80.9", "70.7", "$1574.9"],
+      [2, "Claude Opus 5.5", "claude-code", "max", "37.3", "22.0–52.0", "85.6", "56.6", "$1150.3"],
+      [3, "GPT 6.1 Sol", "codex", "max", "29.3", "15.3–42.7", "82.8", "26.6", "$99.5"],
+      [4, "GPT 6.1 Terra", "codex", "max", "28.7", "14.0–42.7", "81.1", "18.7", "$178.3"],
+      [5, "GPT 6 Astra", "codex", "high", "28.0", "13.3–42.0", "82.2", "7.9", "$375.7"],
+      [6, "Kimi K3.1 Pro", "kimi-code", "max", "24.0", "12.0–37.3", "82.3", "27.4", "$317.4"],
+      [7, "Claude Fable 5.1", "claude-code", "high", "22.7", "10.7–36.0", "82.4", "22.2", "$492.6"],
+      [8, "Gemini 4 Argon", "antigravity-sdk", "high", "21.3", "10.0–33.3", "81.8", "52.8", "$267.6"],
+      [9, "Deepseek V4.1 Flash 1017", "opencode", "high", "17.3", "6.7–28.7", "71.2", "12.0", "$9.9"],
+      [10, "Qwen3.8 Max", "qwen-coder", "default", "12.5", "4.2–21.7", "75.0", "45.4", "$258.4"],
+      [11, "Kimi K3", "kimi-code", "max", "12.0", "3.3–22.0", "72.8", "66.2", "$418.3"],
+      [12, "GPT 6 Luna", "codex", "default", "10.7", "4.0–17.3", "53.2", "6.2", "$5.3"],
+      [13, "Gemini 3.8 Flash", "antigravity-sdk", "default", "8.0", "3.3–13.3", "47.4", "12.1", "$34.5"],
+      [14, "Gemini 3.7 Flash", "antigravity-sdk", "default", "7.3", "1.3–14.7", "50.1", "9.9", "$26.0"],
     ]);
     const archived = getBenchmark("zh", "android-bench")?.versions?.find((version) => version.id === "1.0");
     expect(archived?.archived).toBe(true);
@@ -208,11 +212,11 @@ describe("picks", () => {
     expect(creative?.leaderboard?.[1]).toMatchObject({ name: "kimi-k3.1-pro", rank: 2, score: "2172.6" });
     expect(creative?.leaderboard?.[9]).toMatchObject({ name: "muse-wonder", rank: 10, score: "2007.0" });
     expect(creative?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(153);
+    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(154);
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
     expect(androidBench?.versions?.[0]?.current).toBe(true);
-    expect(androidBench?.leaderboard).toHaveLength(11);
+    expect(androidBench?.leaderboard).toHaveLength(14);
     expect(androidBench?.leaderboard?.[0]).toMatchObject({ name: "Claude Sonnet 5.5", agent: "claude-code", score: "40.0" });
     expect(getBenchmark("en", "android-bench")?.versions?.[1]?.label).toBe("1.0");
   });
@@ -298,11 +302,11 @@ describe("picks", () => {
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 2, null, 2, 1, 1]);
     expect(opus).toMatchObject({ compositeLabel: "97", count: 6, total: 7 });
-    expect(opus?.cells[0]?.tip).toContain("1810");
+    expect(opus?.cells[0]?.tip).toContain("1818");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([6, 4, 4, null, 7, 4, 3]);
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 3, 4, null, 7, 4, 3]);
     expect(fable).toMatchObject({ compositeLabel: "81", count: 6 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
@@ -336,7 +340,7 @@ describe("picks", () => {
       ["claude-opus-5-5", "92"],
       ["gpt-6-astra", "79"],
       ["gpt-6-1-sol", "75"],
-      ["claude-fable-5-1", "64"],
+      ["gpt-6-1-terra", "65"],
     ]);
 
     const cli = getScenario("zh", "cli-devops");
@@ -389,18 +393,17 @@ describe("picks", () => {
     expect(getBenchmark("zh", "convex-evals")?.scenarios).toEqual([]);
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard).toHaveLength(65);
-    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1753", ci: "+24/-24" });
-    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[12]).toMatchObject({ name: "deepseek-v4.1-flash-20260910-max", rank: 13, score: "1606" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1751", ci: "+20/-20" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[11]).toMatchObject({ name: "deepseek-v4.1-flash-20260910-max", rank: 12, score: "1610" });
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[64]).toMatchObject({ name: "gemini-2.5-pro", rank: 65, score: "1285" });
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.chart?.points).toHaveLength(64);
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.chart?.points.filter((point) => point.pareto).map((point) => [point.name, point.priceLabel])).toEqual([
       ["claude-opus-5.5-max", "16"],
       ["claude-sonnet-5.5-xhigh", "8"],
-      ["muse-spark-1.3-max", "3.50"],
-      ["deepseek-v4.1-flash-20260910-max", "0.97"],
-      ["mimo-v2.6-pro", "0.76"],
-      ["mimo-v2.6-flash", "0.25"],
-      ["glm-5.3-flash", "0.15"],
+      ["gpt-6-sol-max", "8"],
+      ["muse-spark-1.3-max", "3.5"],
+      ["deepseek-v4.1-flash-20260910-max", "0.975"],
+      ["mimo-v2.6-flash", "0.245"],
     ]);
     expect(getBenchmark("zh", "nextjs-evals")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
     expect(getBenchmark("zh", "reactbench")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
@@ -510,15 +513,15 @@ describe("backlinks", () => {
 
 describe("stale picks", () => {
   it("withholds the android model once the board is past 90 days", () => {
-    expect(resolvePicks("android-app", "2027-01-24").top?.modelSlug).toBe("claude-sonnet-5-5");
+    expect(resolvePicks("android-app", "2027-02-02").top?.modelSlug).toBe("claude-sonnet-5-5");
     const live = getBuild("zh", "android-app");
     expect(live?.roles[0]?.primary.name).toBe("Claude Sonnet 5.5");
     expect(live?.roles[0]?.alternative).toContain("GPT-6.1 Sol");
     expect(live?.roles[0]?.alternative).toContain("不到一半");
-    expect(resolvePicks("android-app", "2027-01-25").top).toBeUndefined();
-    expect(resolvePicks("android-app", "2027-01-25").stale).toBe(true);
+    expect(resolvePicks("android-app", "2027-02-03").top).toBeUndefined();
+    expect(resolvePicks("android-app", "2027-02-03").stale).toBe(true);
 
-    const build = getBuild("zh", "android-app", "2027-01-25");
+    const build = getBuild("zh", "android-app", "2027-02-03");
     expect(build?.stale).toBe(true);
     expect(build?.roles[0]?.primary.stale).toBe(true);
     expect(build?.roles[0]?.primary.name).toBe("模型推荐已撤下");

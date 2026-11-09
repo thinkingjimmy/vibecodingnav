@@ -166,8 +166,8 @@ function reactBench(): Result[] {
 }
 
 export const results: Result[] = [
-  ...board("lmarena-webdev", "2026-10-27", webdevRows as BoardJson[]),
-  ...board("lmarena-image-to-webdev", "2026-10-19", imageToWebdevRows as BoardJson[]),
+  ...board("lmarena-webdev", "2026-11-08", webdevRows as BoardJson[]),
+  ...board("lmarena-image-to-webdev", "2026-11-08", imageToWebdevRows as BoardJson[]),
   ...board("terminal-bench-4", "2026-10-06", terminalRows as BoardJson[]),
   ...board("slop-index", "2026-10-28", slopIndexRows as BoardJson[]),
   ...board("eqbench-creative-writing", "2026-10-29", eqbenchCreativeWritingRows as BoardJson[]),
@@ -175,7 +175,7 @@ export const results: Result[] = [
   ...board("deepswe-v1-1", "2026-09-22", deepsweRows as BoardJson[]),
   ...board("frontiercode", "2026-10-27", frontiercodeRows as BoardJson[], "2.0"),
   ...board("frontiercode", "2026-10-13", frontiercode1Rows as BoardJson[], "1.1"),
-  ...board("android-bench", "2026-10-26", androidLong as BoardJson[], "2.0"),
+  ...board("android-bench", "2026-11-04", androidLong as BoardJson[], "2.0"),
   ...board("android-bench", "2026-10-06", android1 as BoardJson[], "1.0"),
   fw("supabase-evals", "2026-10-30", "claude-opus-5-5", 90, { rank: 1, effort: "medium", setting: "medium · Claude Code" }),
   fw("supabase-evals", "2026-10-30", "kimi-k3", 88, { rank: 2, setting: "OpenCode" }),

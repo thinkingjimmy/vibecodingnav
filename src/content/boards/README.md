@@ -3,10 +3,10 @@
 > L2 | 父级: ../README.md
 
 成员清单
-webdev.json: LMArena WebDev 153 行，2026-10-29 从 lmarena.ai/leaderboard/webdev 解析（榜单日期 2026-10-27，952,039 票）
-image-to-webdev.json: LMArena Image-to-WebDev 65 行，2026-10-20 从 lmarena.ai/leaderboard/image-to-webdev 解析，榜单日期 2026-10-19。pareto 与 paretoPrice 只属于帕累托页列出的 7 个最优点，blend 是 (输入 + 3×输出) / 4
-android-1.json: Android Bench 历史版本 1.0 的 32 行，基准 slug 是 android-bench
-android-long.json: Android Bench 当前版本 2.0 长程的 11 行，同一基准 slug
+webdev.json: LMArena WebDev 154 行，2026-11-09 从 lmarena.ai/leaderboard/webdev 的公开榜解析（榜单日期 2026-11-08，985,908 票）。主榜 Cost/Task (P50) 列在可读抓取中为空，未入库。直接请求与 Playwright 被 Cloudflare 拦截，没有绕过
+image-to-webdev.json: LMArena Image-to-WebDev 65 行，2026-11-09 从 lmarena.ai/leaderboard/image-to-webdev 解析，榜单日期 2026-11-08，208,770 票。pareto 只属于帕累托页列出的 6 个模型；paretoTaskCost 是该页印出的单任务成本；paretoPrice 与 blend 仍是榜上 token 价的 (输入 + 3×输出) / 4，因为主榜没有单任务成本数值
+android-1.json: Android Bench 历史版本 1.0 的 32 行，基准 slug 是 android-bench。2026-11-09 与页面 August 11th 表逐格核对，32 行一致，未改
+android-long.json: Android Bench 当前版本 2.0 长程的 14 行，同一基准 slug。2026-11-09 从 developer.android.com/bench 的 #long-horizon-task-results 解析，页面写 Latest results as of November 4th。effort 是来源写在模型名上的推理档
 terminal.json: Terminal-Bench 4.0 的 35 行 display
 sudo.json: sudo L7 的 16 行，按页面顺序（不含同页 DAYJOB / GDP.xlsx）
 deepswe.json: DeepSWE v1.1 的 28 行 Best 配置，2026-10-11 从 https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json 抓取（generated_at 2026-09-22）；每模型只保留 Pass@1 最高的一档推理配置

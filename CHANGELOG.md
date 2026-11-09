@@ -9,6 +9,14 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-09
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步：154 行，榜单日期 2026-11-08，985,908 票。Claude Opus 5.5（max）第 1（1818）；Claude Sonnet 5.5（xHigh）第 2（1773）；Gemini 4 Carbon（high）第 3（1768，初步）。新增 Inkling 2 Small（第 21，初步），不并入 Inkling Small。主榜 Cost/Task (P50) 在可读抓取中没有数值，未入库。
+- LMArena Image-to-WebDev 从 https://lmarena.ai/leaderboard/image-to-webdev 全量同步：65 行，榜单日期 2026-11-08，208,770 票。Opus 5.5（max）第 1（1751）；Sonnet 5.5（xHigh）第 2（1744）；Fable 5.1（max）第 3（1724）。帕累托页现为 6 个模型，并改印单任务成本；散点横轴仍用 token 混合价。
+- Android Bench 2.0 长程从 https://developer.android.com/bench 同步：14 行，页面写 Latest results as of November 4th。新增 GPT 6.1 Terra（max）第 4（28.7）、Kimi K3.1 Pro（max）第 6（24.0，open weights）、Deepseek V4.1 Flash 1017（high）第 9（17.3，该行标记为 closed weights）。1.0 的 32 行与页面 August 11th 表一致，未改。Next.js 数据未改。Web 前端与 Android 综合分随这三张榜重算，权重未改。
+
 ## 2026-11-02
 
 ### 变更

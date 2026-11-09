@@ -11,16 +11,16 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 const androidCurrent: BenchmarkVersion = {
   id: "2.0",
   label: tx("2.0 长程", "2.0 long-horizon"),
-  asOf: "2026-10-26",
+  asOf: "2026-11-04",
   current: true,
   aliases: ["long", "2"],
   table: "android-long",
   sourceFilter: "weights",
-  trackedCount: 11,
+  trackedCount: 14,
   measures: tx("跨模块、耗时很长的 Android 改造：完整功能，而不是单点修改。", "Long Android changes across modules: a whole feature, not a single edit."),
   method: tx(
-    "developer.android.com/bench 的 Long-horizon task results。每一行是模型加 agent harness。列是通过率、CI、完成度、平均耗时和平均成本。",
-    "Long-horizon task results on developer.android.com/bench. Each row is a model plus its agent harness. Columns are pass rate, CI, completion, average latency, and average cost.",
+    "developer.android.com/bench 的 Long-horizon task results。每一行是模型、推理档和 agent harness。列是通过率、CI、完成度、平均耗时和平均成本。",
+    "Long-horizon task results on developer.android.com/bench. Each row is a model, a reasoning effort, and an agent harness. Columns are pass rate, CI, completion, average latency, and average cost.",
   ),
   scoreMeaning: tx(
     "百分比是 30 个任务的平均通过率。完成度是失败时离做完还有多近。耗时单位是小时，成本是一整次跑分。",
@@ -31,8 +31,8 @@ const androidCurrent: BenchmarkVersion = {
     "Pass rates are low and intervals are wide. First place, 24.0–56.0, overlaps second place, 22.0–52.0. Version 1.0 stays complete on this page as an archived version, and is no longer the scenario's current column.",
   ),
   updateCadence: tx(
-    "页面写着 Latest results as of October 26th。本页于 2026-10-28 与 #long-horizon-task-results 逐行核对，11 行全部收录。",
-    "The page says Latest results as of October 26th. This page checked all 11 rows against #long-horizon-task-results on 2026-10-28.",
+    "页面写着 Latest results as of November 4th。本页于 2026-11-09 与 #long-horizon-task-results 逐行核对，14 行全部收录。1.0 表仍是 August 11th 的 32 行，与归档一致，本轮不改。",
+    "The page says Latest results as of November 4th. This page checked all 14 rows against #long-horizon-task-results on 2026-11-09. The 1.0 table is still the August 11th 32-row board and matches the archive, so it was left unchanged.",
   ),
   links: [{ label: "developer.android.com/bench", href: "https://developer.android.com/bench" }],
 };
@@ -146,9 +146,9 @@ export const benchmarks: Benchmark[] = [
     shortName: "WebDev",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-10-27",
-    votes: "952,039",
-    trackedCount: 153,
+    asOf: "2026-11-08",
+    votes: "985,908",
+    trackedCount: 154,
     table: "webdev",
     sourceFilter: "license",
     domain: tx("前端", "Frontend"),
@@ -169,8 +169,8 @@ export const benchmarks: Benchmark[] = [
       "It measures human preference (does it look right, does it run), not test pass rate. Briefs are mostly single-page demos, so it says little about large codebases or long refactors. Effort tiers of the same model are ranked separately. Preliminary rows have few votes and can move.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期 2026-10-27，2026-10-29 同步；每周同步一次，变化写入首页「最新变化」。",
-      "Updated continuously. This page's board date is 2026-10-27, synced 2026-10-29. We sync weekly and write changes on the home page.",
+      "持续更新。本页榜单日期 2026-11-08（985,908 票、154 行），2026-11-09 同步。主榜 Cost/Task (P50) 列在可读抓取里没有数值，未写入。每周同步一次，变化写入首页「最新变化」。",
+      "Updated continuously. This page's board date is 2026-11-08 (985,908 votes, 154 rows), synced 2026-11-09. The Cost/Task (P50) column had no values in the readable fetch, so it is not stored. We sync weekly and write changes on the home page.",
     ),
     links: [
       { label: "lmarena.ai/leaderboard/webdev", href: "https://lmarena.ai/leaderboard/webdev" },
@@ -184,8 +184,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Image-to-WebDev",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-10-19",
-    votes: "191,568",
+    asOf: "2026-11-08",
+    votes: "208,770",
     trackedCount: 65,
     table: "webdev",
     sourceFilter: "license",
@@ -207,8 +207,8 @@ export const benchmarks: Benchmark[] = [
       "It measures whether a person prefers the generated page, not whether tests pass. Effort tiers and harnesses of the same model are ranked separately. Preliminary rows have fewer votes and can move. This is not the text-prompt WebDev board.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期 2026-10-19，2026-10-20 同步；每周同步一次，变化写入首页「最新变化」。",
-      "Updated continuously. This page's board date is 2026-10-19, synced 2026-10-20. We sync weekly and write changes on the home page.",
+      "持续更新。本页榜单日期 2026-11-08（208,770 票、65 行），2026-11-09 同步。帕累托页现列出 6 个最优点，并改印单任务成本。每周同步一次，变化写入首页「最新变化」。",
+      "Updated continuously. This page's board date is 2026-11-08 (208,770 votes, 65 rows), synced 2026-11-09. The Pareto page now lists six models and prints cost per task. We sync weekly and write changes on the home page.",
     ),
     links: [
       { label: "arena.ai/leaderboard/code/image-to-webdev", href: "https://arena.ai/leaderboard/code/image-to-webdev" },

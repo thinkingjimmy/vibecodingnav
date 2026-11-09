@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-09",
+    kind: "board",
+    source: "lmarena.ai / developer.android.com",
+    text: tx(
+      "**三榜同步**：LMArena WebDev 至 11-08（985,908 票、154 行），Opus 5.5 Max 第 1（1818），Sonnet 5.5 xHigh 升至第 2（1773），Carbon High 第 3（1768，初步）。Image-to-WebDev 仍 65 行（208,770 票），Fable 5.1 升至第 3（1724），帕累托页改为 6 个模型并改印单任务成本。Android Bench 2.0 长程 14 行（页面日期 11-04）：新增 GPT 6.1 Terra max 第 4（28.7）、Kimi K3.1 Pro max 第 6（24.0）、Deepseek V4.1 Flash 1017 high 第 9（17.3）。Next.js 未改。",
+      "**Three-board sync**: LMArena WebDev to Nov 8 (985,908 votes, 154 rows); Opus 5.5 Max #1 (1818); Sonnet 5.5 xHigh rises to #2 (1773); Carbon High #3 (1768, preliminary). Image-to-WebDev stays 65 rows (208,770 votes); Fable 5.1 rises to #3 (1724); the Pareto page now lists six models and prints cost per task. Android Bench 2.0 long-horizon is 14 rows (page date Nov 4): new GPT 6.1 Terra max #4 (28.7), Kimi K3.1 Pro max #6 (24.0), Deepseek V4.1 Flash 1017 high #9 (17.3). Next.js was not changed.",
+    ),
+  },
+  {
     date: "10-29",
     kind: "board",
     source: "lmarena.ai / eqbench.com",
