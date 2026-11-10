@@ -9,6 +9,13 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-10
+
+### 变更
+
+- LMArena WebDev 再同步公开榜：页面日期仍是 2026-11-08，984,664 票。来源写 156 个模型，其中 155 行有正式名次，另 1 行是 AutoEval。Claude Fable 5.2（xHigh）1832，名次与票数都是 N/A，单独标成非正式结果，不进入正式名次、综合分、场景结论和首页排名。正式第 1 仍是 Claude Opus 5.5（max）1818。新增正式行 Muse Ember（max）第 34（1608，初步）。
+- Convex Evals 从 fabulous-panther-525.convex.cloud 分开同步两张榜，版本哈希未变。No Guidelines 43 行，Claude Fable 5.2 95.54% 第 1，GPT-6 Astra 89.73% 第 2。With Guidelines 42 行，Claude Fable 5.2 99.11% 第 1，Gemini 4 Argon 98.75% 第 2。两列不合并。仍只在框架页，不进场景。No Guidelines + Web 未刷新。
+
 ## 2026-11-09
 
 ### 变更

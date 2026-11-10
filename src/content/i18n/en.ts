@@ -222,6 +222,8 @@ const en = {
     version: "Version",
     archived: "Archived version, no longer updated",
     board: "Baseline board",
+    autoEvalTitle: "AutoEval, not official",
+    autoEvalNote: "This is a provisional automated result. The source gives it no official rank and no votes. It stays out of the official ranks, the composite, the scenario takeaway, and the home rankings.",
   },
   changes: {
     title: "Latest changes",

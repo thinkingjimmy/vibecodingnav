@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-10",
+    kind: "board",
+    source: "lmarena.ai / convex.dev",
+    text: tx(
+      "**WebDev 与 Convex**：WebDev 页面日期仍是 11-08（984,664 票）。156 个模型里 155 行有正式名次，Opus 5.5 Max 仍第 1（1818）。Claude Fable 5.2 xHigh 1832 是 AutoEval，没有名次和票数，不进综合分。Convex 无指南 43 行，Fable 5.2 95.54% 第 1，Astra 89.73% 第 2；有指南 42 行，Fable 5.2 99.11% 第 1，Argon 98.75% 第 2。两列分开，仍只在框架页。",
+      "**WebDev and Convex**: the WebDev page date is still Nov 8 (984,664 votes). Of 156 models, 155 have official ranks; Opus 5.5 Max is still #1 (1818). Claude Fable 5.2 xHigh at 1832 is AutoEval, with no rank and no votes, and it stays out of the composite. Convex No Guidelines has 43 rows, Fable 5.2 at 95.54% then Astra at 89.73%. With Guidelines has 42 rows, Fable 5.2 at 99.11% then Argon at 98.75%. The columns stay separate and framework-only.",
+    ),
+  },
+  {
     date: "11-09",
     kind: "board",
     source: "lmarena.ai / developer.android.com",

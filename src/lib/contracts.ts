@@ -179,6 +179,8 @@ export interface Result {
   flagRate?: string;
   releaseDate?: string;
   preliminary?: boolean;
+  /** 来源标成非正式结果。AutoEval 没有官方名次，不进综合分。 */
+  provisional?: "autoeval";
   asOf: string;
   /** 多版本基准才填，并且必须对上某个版本 id。 */
   version?: string;
@@ -540,6 +542,8 @@ export interface Dictionary {
     version: string;
     archived: string;
     board: string;
+    autoEvalTitle: string;
+    autoEvalNote: string;
   };
   changes: {
     title: string;

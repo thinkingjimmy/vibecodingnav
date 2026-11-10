@@ -3,7 +3,9 @@
 > L2 | 父级: ../README.md
 
 成员清单
-webdev.json: LMArena WebDev 154 行，2026-11-09 从 lmarena.ai/leaderboard/webdev 的公开榜解析（榜单日期 2026-11-08，985,908 票）。主榜 Cost/Task (P50) 列在可读抓取中为空，未入库。直接请求与 Playwright 被 Cloudflare 拦截，没有绕过
+webdev.json: LMArena WebDev 156 行，2026-11-10 从 lmarena.ai/leaderboard/webdev 的公开榜解析（页面日期仍是 2026-11-08，984,664 票）。155 行有正式名次；1 行 provisional=autoeval（Claude Fable 5.2 xHigh，1832，votes N/A，无 rank），不进综合分。主榜 Cost/Task (P50) 列在可读抓取中为空，未入库
+convex-no.json: Convex No Guidelines 43 行，2026-11-10 从 fabulous-panther-525.convex.cloud runs:leaderboardScores experiment=no_guidelines 抓取。当前版本 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb
+convex-with.json: Convex With Guidelines 42 行，同日同部署的 leaderboardScores 空参数查询。experiment=with_guidelines 仍返回服务器错误。无指南 + 网页没有重抓
 image-to-webdev.json: LMArena Image-to-WebDev 65 行，2026-11-09 从 lmarena.ai/leaderboard/image-to-webdev 解析，榜单日期 2026-11-08，208,770 票。pareto 只属于帕累托页列出的 6 个模型；paretoTaskCost 是该页印出的单任务成本；paretoPrice 与 blend 仍是榜上 token 价的 (输入 + 3×输出) / 4，因为主榜没有单任务成本数值
 android-1.json: Android Bench 历史版本 1.0 的 32 行，基准 slug 是 android-bench。2026-11-09 与页面 August 11th 表逐格核对，32 行一致，未改
 android-long.json: Android Bench 当前版本 2.0 长程的 14 行，同一基准 slug。2026-11-09 从 developer.android.com/bench 的 #long-horizon-task-results 解析，页面写 Latest results as of November 4th。effort 是来源写在模型名上的推理档

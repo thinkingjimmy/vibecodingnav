@@ -143,14 +143,14 @@ export const scenarios: Scenario[] = [
       point(
         "新、快、样本大",
         "New, fast, and large",
-        "985,908 票、154 个模型，新模型通常几天内上榜，是挑前端模型最新鲜的信号。",
-        "985,908 votes and 154 models. New models usually show up within days, so this is the freshest frontend signal.",
+        "984,664 票。正式名次 155 行，另有 1 行 AutoEval 没有名次和票数，不进综合分。",
+        "984,664 votes. 155 rows have official ranks. One AutoEval row has no rank and no votes, and it stays out of the composite.",
       ),
       point(
         "把价格一起看",
         "Read the price with the score",
-        "第 2 名 Claude Sonnet 5.5（xHigh）1773，只比第 1 名 1818 低 45 分，价格是一半。开源的 DeepSeek V4.1 Flash（20261017，max）排第 16，1664，价格 $0.15 / $0.60。",
-        "Second place, Claude Sonnet 5.5 (xHigh), is 1773, 45 points behind 1818 at half the price. Open-weight DeepSeek V4.1 Flash (20261017, max) is 16th at 1664 and $0.15 / $0.60.",
+        "正式第 2 名 Claude Sonnet 5.5（xHigh）1774，只比第 1 名 1818 低 44 分，价格是一半。开源的 DeepSeek V4.1 Flash（20261017，max）排第 16，1664，价格 $0.15 / $0.60。",
+        "Official second place, Claude Sonnet 5.5 (xHigh), is 1774, 44 points behind 1818 at half the price. Open-weight DeepSeek V4.1 Flash (20261017, max) is 16th at 1664 and $0.15 / $0.60.",
       ),
     ],
     related: ["android-app", "cli-devops", "write-docs"],

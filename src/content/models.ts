@@ -73,8 +73,8 @@ export const models: Model[] = [
         "For batch or CI work, GPT-6.1 Sol ties for 3rd on Terminal-Bench at 58.2% and $634.24.",
       ),
       tx(
-        "只做前端：Claude Sonnet 5.5 WebDev 1773 分，价格只有一半（$2 / $10）。",
-        "For frontend only, Claude Sonnet 5.5 scores 1773 on WebDev at half the token price ($2 / $10).",
+        "只做前端：Claude Sonnet 5.5 WebDev 1774 分，价格只有一半（$2 / $10）。",
+        "For frontend only, Claude Sonnet 5.5 scores 1774 on WebDev at half the token price ($2 / $10).",
       ),
       tx("对延迟敏感：Android Bench 长程任务平均耗时 56.6 小时。", "Latency: the Android Bench long run averages 56.6 hours."),
       tx("生产级判断：sudo L7 上落后 Sonnet 5.5（50.6% vs 45.6%）。", "Production judgment: trails Sonnet 5.5 on sudo L7 (50.6% vs 45.6%)."),
@@ -111,8 +111,8 @@ export const models: Model[] = [
     priceLabel: "$2 / $10",
     headlines: ["android-bench", "sudo-l7", "lmarena-webdev"],
     summary: tx(
-      "Android Bench 2.0 长程第 1（40.0%，max，claude-code）。sudo L7 第 1（50.6% Adaptive/Max）。WebDev 第二，1773 分（xHigh）。Supabase 无 Skills 第 5（77%），有 Skills 86%。",
-      "First on Android Bench 2.0 long-horizon at 40.0% (max, claude-code). First on sudo L7 at 50.6% Adaptive/Max. Second on WebDev at 1773 (xHigh). 5th on Supabase without skills at 77%, 86% with skills.",
+      "Android Bench 2.0 长程第 1（40.0%，max，claude-code）。sudo L7 第 1（50.6% Adaptive/Max）。WebDev 第二，1774 分（xHigh）。Supabase 无 Skills 第 5（77%），有 Skills 86%。",
+      "First on Android Bench 2.0 long-horizon at 40.0% (max, claude-code). First on sudo L7 at 50.6% Adaptive/Max. Second on WebDev at 1774 (xHigh). 5th on Supabase without skills at 77%, 86% with skills.",
     ),
     why: [
       tx("Android 长程与 sudo L7 双第一；做前端时比 Opus 少 45 分换一半价格。", "Leads Android long-horizon and sudo L7; for frontend, 45 fewer WebDev points than Opus at half the price."),
@@ -152,8 +152,8 @@ export const models: Model[] = [
     fetchedAt: "2026-10-28",
     headlines: ["lmarena-webdev"],
     summary: tx(
-      "Next.js 当前榜第 5（high）97%，有 AGENTS.md 为 94%，成本 $0.083。WebDev 第 12（max）1678 分；Android Bench 2.0 长程第 4（max）28.7%。token 价格 $1 / $5。与 GPT-6.1 Sol 不是同一行。",
-      "5th on the current Next.js board at high with 97% (94% with AGENTS.md) and $0.083. 12th on WebDev at max with 1678. 4th on Android Bench 2.0 long-horizon at max with 28.7%. Token price $1 / $5. A different row from GPT-6.1 Sol.",
+      "Next.js 当前榜第 5（high）97%，有 AGENTS.md 为 94%，成本 $0.083。WebDev 第 12（max）1679 分；Android Bench 2.0 长程第 4（max）28.7%。token 价格 $1 / $5。与 GPT-6.1 Sol 不是同一行。",
+      "5th on the current Next.js board at high with 97% (94% with AGENTS.md) and $0.083. 12th on WebDev at max with 1679. 4th on Android Bench 2.0 long-horizon at max with 28.7%. Token price $1 / $5. A different row from GPT-6.1 Sol.",
     ),
     why: [
       tx("Next.js 已进入 97% 第一档，单次成本低于同档 Sol / Fable。", "Joins the Next.js 97% first tier at a lower run cost than Sol / Fable in that band."),
@@ -170,9 +170,27 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1M",
     priceLabel: "$10 / $50",
-    summary: tx("WebDev 第五，1744 分。图生网页第三，1724 分。Terminal-Bench 第五，57.9%。token 价格与 Astra 同档。", "Fifth on WebDev at 1744 and third on Image-to-WebDev at 1724. Fifth on Terminal-Bench at 57.9%, at Astra's token price."),
+    summary: tx("WebDev 第五，1745 分。图生网页第三，1724 分。Terminal-Bench 第五，57.9%。token 价格与 Astra 同档。", "Fifth on WebDev at 1745 and third on Image-to-WebDev at 1724. Fifth on Terminal-Bench at 57.9%, at Astra's token price."),
     why: [tx("两张活跃榜都在前五。", "Top five on two active boards.")],
     whyNot: [tx("同价位没有比 Astra 更靠前，半价位有 Sonnet 和 Sol。", "Astra ranks higher at the same price. Sonnet and Sol cost half as much.")],
+  }),
+  model({
+    slug: "claude-fable-5-2",
+    name: "Claude Fable 5.2",
+    vendor: "anthropic",
+    vendorName: "Anthropic",
+    license: "proprietary",
+    licenseLabel: prop,
+    context: "1M",
+    priceLabel: "$8 / $40",
+    fetchedAt: "2026-11-10",
+    headlines: ["convex-evals"],
+    summary: tx(
+      "Convex 无指南第 1（95.54%，1 次），有指南第 1（99.11%）。WebDev 只有 AutoEval 行 1832，来源没有官方名次和票数，不进综合分。和 Fable 5.1 不是同一行。",
+      "First on Convex without guidelines at 95.54% (1 run) and first with guidelines at 99.11%. WebDev only has an AutoEval row at 1832, with no official rank and no votes, so it stays out of the composite. A different row from Fable 5.1.",
+    ),
+    why: [tx("两列 Convex 都是当前来源的第一，而且列与列没有合成一个分。", "It leads both current Convex columns, and the columns stay separate.")],
+    whyNot: [tx("WebDev 的 1832 是 AutoEval，不是正式第 1。正式第 1 仍是 Opus 5.5 Max 1818。", "The WebDev 1832 is AutoEval, not official #1. Official #1 is still Opus 5.5 Max at 1818.")],
   }),
   model({
     slug: "claude-opus-4-8",
@@ -376,8 +394,8 @@ export const models: Model[] = [
     fetchedAt: "2026-11-09",
     headlines: ["eqbench-creative-writing", "lmarena-webdev", "android-bench"],
     summary: tx(
-      "EQ-Bench Creative Writing v3 第 2（Elo 2172.6）。WebDev 第 10（max，1687，初步）。Android Bench 2.0 长程第 6（max，24.0%，kimi-code，open weights）。sudo L7 与 Qwen 3.8 Max 并列第 6（16.7%）。与 Kimi K3 不是同一行。",
-      "2nd on EQ-Bench Creative Writing v3 (Elo 2172.6). 10th on WebDev at max (1687, preliminary). 6th on Android Bench 2.0 long-horizon at max (24.0%, kimi-code, open weights). Ties Qwen 3.8 Max at #6 on sudo L7 (16.7%). A different row from Kimi K3.",
+      "EQ-Bench Creative Writing v3 第 2（Elo 2172.6）。WebDev 第 10（max，1688）。Android Bench 2.0 长程第 6（max，24.0%，kimi-code，open weights）。sudo L7 与 Qwen 3.8 Max 并列第 6（16.7%）。与 Kimi K3 不是同一行。",
+      "2nd on EQ-Bench Creative Writing v3 (Elo 2172.6). 10th on WebDev at max (1688). 6th on Android Bench 2.0 long-horizon at max (24.0%, kimi-code, open weights). Ties Qwen 3.8 Max at #6 on sudo L7 (16.7%). A different row from Kimi K3.",
     ),
     why: [
       tx("创意写作 Elo 紧贴榜首 Astra；WebDev 在第 10，Android 长程第 6。", "Creative Writing Elo sits just behind leader Astra; 10th on WebDev and 6th on Android long-horizon."),

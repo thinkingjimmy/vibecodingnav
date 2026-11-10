@@ -98,6 +98,20 @@ export async function BenchmarkView({ locale, params }: { locale: Locale; params
               <dd className="space-y-1">{benchmark.links.map((link) => <a key={link.href} href={link.href} className="num block text-[13px] link-u">{link.label}</a>)}</dd>
             </div>
           </dl>
+          {benchmark.provisional?.length ? (
+            <section className="px-4 pt-16">
+              <h2 className="pt">{dict.benchmark.autoEvalTitle}</h2>
+              <p className="mt-3 max-w-[760px] text-[14px] leading-relaxed text-mfg">{dict.benchmark.autoEvalNote}</p>
+              <ul className="mt-4 max-w-[760px]">
+                {benchmark.provisional.map((row) => (
+                  <li key={row.name} className="flex items-baseline justify-between gap-4 border-t border-line py-2 text-[14px]">
+                    <span className="min-w-0 truncate">{row.href ? <Link href={row.href} className="link-u">{row.name}</Link> : row.name}</span>
+                    <span className="num shrink-0 text-mfg">{row.score}{row.ci ? ` ${row.ci}` : ""} · {row.votes}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : null}
           {benchmark.leaderboard ? (
             <section className="pt-16">
               <header className="px-4 pb-4">
