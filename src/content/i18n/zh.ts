@@ -1,8 +1,8 @@
 /**
- * [INPUT]: 依赖 Dictionary 契约
- * [OUTPUT]: 对外提供中文 UI 字典
- * [POS]: src/content/i18n 的默认阅读语言文案，页面不内联这些句子
- * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
+ * [INPUT]: Dictionary contract.
+ * [OUTPUT]: Chinese UI copy, including chart controls and rank explanations.
+ * [POS]: Chinese route language content in src/content/i18n.
+ * [PROTOCOL]: Update this header when making changes, then check README.md.
  */
 import type { Dictionary } from "@/lib/contracts";
 
@@ -37,6 +37,21 @@ const zh = {
     stale: "超过 90 天",
   },
   scenario: {
+    comparisonTitle: "能力排名对比",
+    comparisonDescription: "综合分前 {count} 个模型，在各项评测中的相对名次。",
+    comparisonChart: "排名曲线",
+    comparisonTable: "完整表格",
+    comparisonView: "对比视图",
+    comparisonModels: "对比范围",
+    comparisonTop: "前 {count} 个",
+    comparisonHint: "点击模型查看原始成绩。",
+    comparisonNote: "名次仅比较图中模型；同名次为并列，断线表示缺少成绩。",
+    comparisonRank: "组内名次",
+    comparisonSourceRank: "原榜名次",
+    comparisonMissing: "未上榜",
+    comparisonModelLink: "模型详情",
+    comparisonReset: "清除选择",
+    comparisonScroll: "左右滑动，查看全部评测。",
     combo: "推荐组合",
     viewCombo: "查看组合",
     comboFullLink: "完整搭配与理由 →",

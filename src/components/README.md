@@ -5,13 +5,14 @@
 成员清单
 arrow-icon.tsx: 服务端页面使用的 Phosphor 箭头，客户端边界
 site-header.tsx: 置顶导航、语言切换、主题与搜索对话框
-site-footer.tsx: 方法论、数据来源、更新日志与建议链接
+site-footer.tsx: Methodology, sources, changelog, and correction links; wraps navigation on narrow screens
 frame.tsx: 页头、版心与页脚
 leaderboard.tsx: 基准页的完整来源榜，列宽固定，筛选和表头滚动时吸在导航下
 benchmark-versions.tsx: 基准页的版本切换，默认当前版本，历史版本仍展示完整原榜
 price-chart.tsx: Image-to-WebDev 的分数对混合价格散点
 fused-table.tsx: 场景页的融合表（含表上工具栏）；列头单行图标+标签+排序箭头，超出时表内横向滚动，模型/综合分/上榜列 sticky
 scenario-hero.tsx: 场景页头部：介绍句、融合表 takeaway、行内「怎么算的？」评分入口
+scenario-comparison/: Web frontend rank curves, relative-rank layout, source results, and full-table switch
 scenario-combo-grid.tsx: 场景表后的「推荐组合」四列网格与完整搭配入口
 scenario-scoring-modal.tsx: 「怎么算的？」居中模态（目录 + 公式 / 例子 / 小多图 / 权重 / 缺榜 / 注意）
 board-dimension-icon.tsx: 融合表列头的 Phosphor 维度图标
@@ -28,4 +29,4 @@ ui/: 无业务语义 primitive（含 DialogCloseButton）；对话框壳层仍�
 
 法则: Server Component 默认。浏览器状态只在页头、场景头部、来源榜、融合表、榜单卡片悬停提示、评测表、分类筛选、版本切换和复制块里。
 
-[PROTOCOL]: 变更时更新此头部，然后检查 README.md
+[PROTOCOL]: Update this header when making changes, then check README.md.

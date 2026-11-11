@@ -1,8 +1,8 @@
 /**
- * [INPUT]: 依赖场景视图、榜单筛选与页面框架
- * [OUTPUT]: 对外提供场景列表、场景榜单与 metadata
- * [POS]: src/views 的场景页
- * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
+ * [INPUT]: Scenario catalog, comparison chart, fused table, and page frame.
+ * [OUTPUT]: Scenario lists, scenario detail views, and route metadata.
+ * [POS]: Scenario page composition; Web frontend opens with a rank comparison.
+ * [PROTOCOL]: Update this header when making changes, then check README.md.
  */
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -10,6 +10,7 @@ import { BoardCard } from "@/components/board-card";
 import { Frame } from "@/components/frame";
 import { FusedTable } from "@/components/fused-table";
 import { ScenarioComboGrid } from "@/components/scenario-combo-grid";
+import { ScenarioComparison } from "@/components/scenario-comparison";
 import { ScenarioHero } from "@/components/scenario-hero";
 import { VendorMark } from "@/components/vendor-mark";
 import { getScenario, listScenarioCards, slugs } from "@/lib/catalog";
@@ -51,6 +52,7 @@ export async function ScenarioView({ locale, params }: { locale: Locale; params:
   const scenario = getScenario(locale, slug);
   if (!scenario) notFound();
   const dict = getDictionary(locale);
+  const Ranking = slug === "web-frontend" ? ScenarioComparison : FusedTable;
   return (
     <Frame locale={locale} width="home">
       <section className="px-4 pt-10 text-[12px] text-mfg">
@@ -68,7 +70,7 @@ export async function ScenarioView({ locale, params }: { locale: Locale; params:
       />
       {scenario.fusion.rows.length ? (
         <section className="pt-10">
-          <FusedTable
+          <Ranking
             fusion={scenario.fusion}
             dict={dict}
             syncLabel={dict.scenario.synced.replace("{date}", scenario.syncDate)}

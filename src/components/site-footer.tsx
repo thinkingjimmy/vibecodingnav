@@ -1,8 +1,8 @@
 /**
- * [INPUT]: 依赖字典与站点路径
- * [OUTPUT]: 对外提供页脚导航与版权
- * [POS]: src/components 的全站页脚
- * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
+ * [INPUT]: Localized dictionary and site paths.
+ * [OUTPUT]: Footer navigation and copyright, with wrapping links on narrow screens.
+ * [POS]: Shared site footer used by Frame.
+ * [PROTOCOL]: Update this header when making changes, then check README.md.
  */
 import Link from "next/link";
 import type { Dictionary, Locale } from "@/lib/contracts";
@@ -12,7 +12,7 @@ import { SUGGEST_URL } from "@/lib/site";
 export function SiteFooter({ locale, dict, width }: { locale: Locale; dict: Dictionary; width: "home" | "page" }) {
   return (
     <footer className="mt-28 border-t border-line">
-      <div className={`mx-auto flex h-16 w-full items-center gap-5 px-4 text-[12px] text-mfg ${width === "home" ? "max-w-[1200px]" : "max-w-[960px]"}`}>
+      <div className={`mx-auto flex min-h-16 w-full flex-wrap items-center gap-x-5 gap-y-3 px-4 py-4 text-[12px] text-mfg [&>a]:whitespace-nowrap ${width === "home" ? "max-w-[1200px]" : "max-w-[960px]"}`}>
         <Link href={localePath(locale, "/")} className="num text-fg">vibecodingnav</Link>
         <Link href={localePath(locale, "/benchmarks")} className="num hover:text-fg">{dict.footer.method}</Link>
         <Link href={`${localePath(locale, "/")}#sources`} className="num hover:text-fg">{dict.footer.sources}</Link>

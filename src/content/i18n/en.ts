@@ -1,8 +1,8 @@
 /**
- * [INPUT]: 依赖 Dictionary 契约
- * [OUTPUT]: 对外提供英文 UI 字典
- * [POS]: src/content/i18n 的根路径语言文案
- * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
+ * [INPUT]: Dictionary contract.
+ * [OUTPUT]: English UI copy, including chart controls and rank explanations.
+ * [POS]: Root-route language content in src/content/i18n.
+ * [PROTOCOL]: Update this header when making changes, then check README.md.
  */
 import type { Dictionary } from "@/lib/contracts";
 
@@ -37,6 +37,21 @@ const en = {
     stale: "Older than 90 days",
   },
   scenario: {
+    comparisonTitle: "Capability comparison",
+    comparisonDescription: "Rank among the top {count} models by composite, on each benchmark.",
+    comparisonChart: "Rank chart",
+    comparisonTable: "Full table",
+    comparisonView: "Comparison view",
+    comparisonModels: "Compare",
+    comparisonTop: "Top {count}",
+    comparisonHint: "Select a model to see its source results.",
+    comparisonNote: "Ranks are within this group. Ties share a rank. Gaps mean no result.",
+    comparisonRank: "Group rank",
+    comparisonSourceRank: "Source rank",
+    comparisonMissing: "Not on this board",
+    comparisonModelLink: "Model details",
+    comparisonReset: "Clear selection",
+    comparisonScroll: "Scroll sideways to compare all benchmarks.",
     combo: "Suggested build",
     viewCombo: "View build",
     comboFullLink: "Full set and reasons →",

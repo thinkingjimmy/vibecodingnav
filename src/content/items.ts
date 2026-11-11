@@ -1,8 +1,8 @@
 /**
- * [INPUT]: 依赖 Item 契约与设计稿中的工具条目
- * [OUTPUT]: 对外提供库、Skill、插件、Prompt 与工具
- * [POS]: src/content 的工具实体，分类与组合只保存 slug
- * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
+ * [INPUT]: Item contracts and verified official tool sources
+ * [OUTPUT]: Typed libraries, skills, plugins, prompts, and tools
+ * [POS]: Tool entities in src/content, referenced by category and build slugs
+ * [PROTOCOL]: Update this header when making changes, then check README.md.
  */
 import type { Item, LText } from "@/lib/contracts";
 
@@ -137,6 +137,55 @@ export const items: Item[] = [
     whyPick: tx("查找面大。", "The search space is large."),
     whenNot: tx("产品图标要统一时，多图标集会把风格打散。", "When the product icons should match, many sets break the style."),
     peers: ["phosphor-icons", "lucide"],
+  }),
+  item({
+    slug: "not-boring-icons",
+    type: "library",
+    name: "Not Boring Icons",
+    license: "Commercial (Free / Pro)",
+    homepage: "https://www.notboringicons.com/",
+    platforms: "SVG / React / Vue / REST API / MCP",
+    oneLiner: tx(
+      "连续圆角的界面图标，统一 24px 网格；支持 Stroke、Solid、Duotone、Twotone，以及交互动画图标。",
+      "Squircle UI icons on a shared 24px grid, with Stroke, Solid, Duotone, Twotone, and animated icons.",
+    ),
+    fitFor: tx("网站或应用需要柔和、一致的图标，也希望 Agent 直接查找并获取图标代码。", "Websites and apps that need soft, consistent icons and an agent that can find and fetch their code."),
+    whyPick: tx("可从网页复制 SVG、React 或 Vue 代码，也可通过 MCP 和 REST API 获取，复用到项目里。", "Copy SVG, React, or Vue code from the site, or fetch it through MCP and the REST API for reuse in your project."),
+    whenNot: tx("要求开源许可或重新分发整套图标时，选 Phosphor 或 Lucide。", "Choose Phosphor or Lucide when you need an open-source license or want to redistribute an icon set."),
+    caveats: tx(
+      "免费账户提供 Stroke，支持商用且无需署名；其他风格和动画需要 Pro 或 Lifetime。API 与 MCP 需要密钥并有每日额度；不得将图标重新分发为图标集。",
+      "Free accounts include Stroke for commercial use without attribution. Other styles and animations need Pro or Lifetime. API and MCP access require a key and have daily limits. Do not redistribute the icons as an icon set.",
+    ),
+    install: [{ label: tx("Claude Code · MCP", "Claude Code · MCP"), cmd: "claude mcp add --transport http not-boring-icons https://www.notboringicons.com/api/mcp \\\n  --header \"Authorization: Bearer YOUR_API_KEY\"" }],
+    installNote: tx("先注册免费账户并在 Dashboard 创建 API key，再替换 YOUR_API_KEY。也可直接从网页复制图标代码。", "Create a free account and an API key in the dashboard, then replace YOUR_API_KEY. You can also copy icon code from the site."),
+    peers: ["phosphor-icons", "hugeicons", "lucide"],
+    sources: ["https://www.notboringicons.com/docs"],
+    verifiedAt: "2026-11-02",
+  }),
+  item({
+    slug: "hugeicons",
+    type: "library",
+    name: "Hugeicons",
+    license: "MIT (Free) / Commercial (Pro)",
+    homepage: "https://hugeicons.com/",
+    platforms: "SVG / React / React Native / Vue / Angular / Svelte / Flutter / Figma",
+    oneLiner: tx(
+      "覆盖网页、移动端和设计工具的图标库；免费版提供 Stroke Rounded，Pro 扩展到多种线条与填充风格。",
+      "An icon library for web, mobile, and design tools. Free icons use Stroke Rounded; Pro adds more stroke and solid styles.",
+    ),
+    fitFor: tx("设计稿与代码需要同一套图标，或产品同时支持多个前端框架。", "Design files and code need the same icons, or a product spans several frontend frameworks."),
+    whyPick: tx("React 渲染组件与图标数据分包，可调整尺寸、颜色和线宽，并通过 tree-shaking 只打包用到的图标。", "React uses separate renderer and icon packages. Set size, color, and stroke width, and use tree-shaking to include only the icons you import."),
+    whenNot: tx("需要免费使用整套多风格图标时，选 Phosphor；沿用 shadcn/ui 示例时可继续用 Lucide。", "Choose Phosphor when you need several styles for free. Keep Lucide when you want to follow existing shadcn/ui examples."),
+    caveats: tx(
+      "免费图标采用 MIT，仅包含 Stroke Rounded；Pro 风格使用商业授权，按使用图标源文件的人数计席位，不能将 Pro 图标源码放入可下载或开源图标库。",
+      "Free icons use the MIT license and include Stroke Rounded only. Pro styles use a commercial license with a seat for each person who works with the source files. Do not redistribute Pro icon source files in downloadable or open-source icon libraries.",
+    ),
+    install: [{ label: tx("终端", "Terminal"), cmd: "npm i @hugeicons/react @hugeicons/core-free-icons" }],
+    usage: { label: tx("App.tsx", "App.tsx"), cmd: "import { HugeiconsIcon } from \"@hugeicons/react\";\nimport { Notification03Icon } from \"@hugeicons/core-free-icons\";\n\n<HugeiconsIcon icon={Notification03Icon} size={24} color=\"currentColor\" strokeWidth={1.5} />" },
+    installNote: tx("React 需要同时安装渲染组件与图标数据包。以上命令使用免费图标；Pro 需按官方文档启用授权并安装对应风格包。", "React needs both the renderer and the icon package. These commands use free icons. For Pro, follow the official license setup and install the package for your chosen style."),
+    peers: ["phosphor-icons", "not-boring-icons", "lucide"],
+    sources: ["hugeicons.com/docs", "hugeicons.com/license-agreement"],
+    verifiedAt: "2026-11-02",
   }),
   item({
     slug: "motion",

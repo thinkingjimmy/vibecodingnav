@@ -205,6 +205,7 @@ test("source board filter and header stay under the nav while scrolling", async 
 
 test("web scenario fuses ranks and links each board", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
+  await page.getByRole("button", { name: "完整表格", exact: true }).click();
   await expect(page.getByText("按真人盲测、设计还原、框架任务、工程判断、长程工程和能否合并，挑出写前端最合适的模型。")).toBeVisible();
   await expect(page.getByText(/目前.*Claude Opus 5\.5/)).toBeVisible();
   await expect(page.getByRole("button", { name: "怎么算的？" })).toBeVisible();
@@ -241,6 +242,7 @@ test("fused table headers stay single-line and scroll at common widths", async (
     for (const path of ["/zh/scenarios/web-frontend/", "/scenarios/web-frontend/"] as const) {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(path);
+      await page.getByRole("button", { name: path.startsWith("/zh/") ? "完整表格" : "Full table", exact: true }).click();
       const heads = page.locator("[data-fused-head] th");
       await expect(heads).toHaveCount(10);
       const headerMetrics = await heads.evaluateAll((ths) => ths.map((th) => {
@@ -302,6 +304,7 @@ test("fused table headers stay single-line and scroll at common widths", async (
 test("fused table column info popover title link opens the benchmark page", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
   await page.goto("/zh/scenarios/web-frontend/");
+  await page.getByRole("button", { name: "完整表格", exact: true }).click();
   const header = page.getByRole("button", { name: "按盲测投票排序" });
   await header.hover();
   const popup = page.locator("[data-column-info]");
@@ -321,6 +324,7 @@ test("fused table column info popover title link opens the benchmark page", asyn
 
 test("web scenario scoring modal and fused table sticky head", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");
+  await page.getByRole("button", { name: "完整表格", exact: true }).click();
   await expect(page.getByRole("columnheader", { name: /盲测投票/ })).toBeVisible();
   const scoringTrigger = page.getByRole("button", { name: "怎么算的？" });
   await scoringTrigger.click();
@@ -536,6 +540,44 @@ test("model, skill, library, category, and build pages render", async ({ page })
   await expect(page.getByText("AGENTS.md").first()).toBeVisible();
   await expect(page.getByText("frontend-design").first()).toBeVisible();
 });
+
+for (const locale of ["zh", "en"] as const) {
+  test(`icon libraries expose setup and license details in ${locale}`, async ({ page }) => {
+    const prefix = locale === "zh" ? "/zh" : "";
+    const categoryName = locale === "zh" ? "图标" : "Icons";
+    if (locale === "zh") await page.setViewportSize({ width: 390, height: 844 });
+
+    await page.goto(`${prefix}/tools/icons/`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(categoryName);
+    const notBoring = page.getByRole("link", { name: /^Not Boring Icons/ });
+    const hugeicons = page.getByRole("link", { name: /^Hugeicons/ });
+    await expect(notBoring).toHaveAttribute("href", `${prefix}/libraries/not-boring-icons/`);
+    await expect(hugeicons).toHaveAttribute("href", `${prefix}/libraries/hugeicons/`);
+
+    await notBoring.click();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Not Boring Icons");
+    await expect(page.getByRole("link", { name: "www.notboringicons.com/", exact: true }))
+      .toHaveAttribute("href", "https://www.notboringicons.com/");
+    await expect(page.locator("pre").filter({ hasText: "claude mcp add" })).toContainText("https://www.notboringicons.com/api/mcp");
+    await expect(page.getByText(locale === "zh" ? /免费账户提供 Stroke/ : /Free accounts include Stroke/)).toBeVisible();
+    await expect(page.getByRole("link", { name: categoryName, exact: true }).first())
+      .toHaveAttribute("href", `${prefix}/tools/icons/`);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth))
+      .toBeLessThanOrEqual(1);
+
+    await page.getByRole("link", { name: categoryName, exact: true }).first().click();
+    await page.getByRole("link", { name: /^Hugeicons/ }).click();
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Hugeicons");
+    await expect(page.getByRole("link", { name: "hugeicons.com/", exact: true }))
+      .toHaveAttribute("href", "https://hugeicons.com/");
+    await expect(page.locator("pre").filter({ hasText: "npm i" }))
+      .toHaveText("npm i @hugeicons/react @hugeicons/core-free-icons");
+    await expect(page.locator("pre").filter({ hasText: "import" })).toContainText("icon={Notification03Icon}");
+    await expect(page.getByText(locale === "zh" ? /免费图标采用 MIT/ : /Free icons use the MIT license/)).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth))
+      .toBeLessThanOrEqual(1);
+  });
+}
 
 test("language switch keeps the page", async ({ page }) => {
   await page.goto("/zh/scenarios/web-frontend/");

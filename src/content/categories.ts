@@ -1,8 +1,8 @@
 /**
- * [INPUT]: 依赖 ToolCategory 契约，条目 slug 指向 items
- * [OUTPUT]: 对外提供九个工具分类及编辑排序
- * [POS]: src/content 的工具箱目录
- * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
+ * [INPUT]: ToolCategory contracts and item slugs
+ * [OUTPUT]: Toolbox categories, item order, and selection tips
+ * [POS]: Toolbox directory in src/content
+ * [PROTOCOL]: Update this header when making changes, then check README.md.
  */
 import type { LText, ToolCategory } from "@/lib/contracts";
 
@@ -29,12 +29,14 @@ export const categories: ToolCategory[] = [
     slug: "icons",
     title: tx("图标", "Icons"),
     summary: tx("界面图标与品牌 logo 分开选。一个产品只留一套界面图标。", "Pick interface icons and brand marks separately. Keep one interface set per product."),
-    updatedAt: "2026-10-10",
-    items: ["phosphor-icons", "lobehub-icons", "lucide", "iconify"],
+    updatedAt: "2026-11-02",
+    items: ["phosphor-icons", "lobehub-icons", "lucide", "iconify", "not-boring-icons", "hugeicons"],
     howToPick: [
       tip("需要字重", "When you need weights", "用 Phosphor，选中态再换 fill。", "Use Phosphor, and switch the selected state to fill."),
       tip("沿用 shadcn 示例", "When you stay with the shadcn examples", "继续用 Lucide，不必为了换图标重写示例。", "Stay on Lucide. Do not rewrite the examples just to change icons."),
       tip("厂商 logo", "Vendor marks", "AI 品牌标用 LobeHub，不要画进 Phosphor。", "Use LobeHub for AI brand marks. Do not draw them in Phosphor."),
+      tip("连续圆角与动画", "Squircle shapes and animation", "选 Not Boring Icons；Stroke 免费，其他风格和动画需付费，也可让 Agent 通过 MCP 获取代码。", "Choose Not Boring Icons. Stroke is free; other styles and animation are paid. Agents can fetch code through MCP."),
+      tip("设计与多框架共用", "Shared across design and frameworks", "选 Hugeicons；免费版是 MIT 的 Stroke Rounded，多风格需 Pro 授权。", "Choose Hugeicons. Free Stroke Rounded icons use MIT; more styles need a Pro license."),
     ],
   },
   {

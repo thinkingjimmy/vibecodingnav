@@ -1,5 +1,34 @@
 # UI 设计 QA
 
+## Web frontend rank comparison — 2026-11-04
+
+Result: passed. Reference: the user-provided capability rank comparison image.
+
+- Codex built-in Browser: inspected English and Chinese at 1280 px, English at 390 px, light and dark themes, model popovers, curve-node selection, and horizontal scrolling with fixed model labels.
+- Layout: white background, serif section heading, dotted horizontal guides, vendor-colored curves, and numbered markers for the leading models. Missing results break the curve. Equal source ranks retain equal comparison ranks.
+- Interaction: the default view has 15 models; the selector offers 10 / 15 / 20. Model labels and curve nodes open original ranks and scores. The full table keeps sorting, source links, and its sticky header.
+- Mobile: the chart scrolls inside its own region. English footer links wrap to prevent page overflow. A model popover fits within the 390 px viewport.
+- Automated checks: production build generated 279 static pages; lint and TypeScript passed. The focused E2E run passed 9 tests, with no failures, skips, or flaky results.
+
+| Viewport | Chart region | Chart content | Tested scroll | Fixed label x |
+| --- | --- | --- | --- | --- |
+| 390 px | 358 px | 1088 px | 300 px | 16 px |
+| 768 px | 736 px | 1132 px | 300 px | 16 px |
+| 1280 px | 1168 px | 1168 px | 0 px | 56 px |
+
+The metrics match in English and Chinese. The test report includes `rank-source-results.json` and `responsive-layout.json` attachments. No QA screenshot files were generated.
+
+Repeat from the repository root:
+
+```bash
+pnpm build
+PLAYWRIGHT_JSON_OUTPUT_NAME=test-results/rank-comparison-report.json pnpm exec playwright test tests/rank-comparison.spec.ts tests/site.spec.ts --grep 'rank comparison|chart links|web scenario|fused table' --reporter=list,json --trace=off
+```
+
+Report: `test-results/rank-comparison-report.json`. UI visual checks use the Codex built-in Browser.
+
+---
+
 ## Header 模型菜单
 
 - source visual truth: `/var/folders/rk/_1dby6rx6yn5w9_nxbvg42kr0000gn/T/codex-clipboard-e1548cbb-7f3f-4c52-9dd3-8da90a50b722.png`

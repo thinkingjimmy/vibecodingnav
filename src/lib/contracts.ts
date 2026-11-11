@@ -1,8 +1,8 @@
 /**
- * [INPUT]: 无运行时依赖
- * [OUTPUT]: 对外提供 Locale、双语文本、内容实体与 UI 字典类型
- * [POS]: src/lib 的领域契约，内容文件与页面只依赖这里的类型
- * [PROTOCOL]: 变更时更新此头部，然后检查 README.md
+ * [INPUT]: No runtime dependencies.
+ * [OUTPUT]: Locale, bilingual content entities, and UI dictionaries including rank comparison copy.
+ * [POS]: Shared domain contracts for content, catalog, and presentation.
+ * [PROTOCOL]: Update this header when making changes, then check README.md.
  */
 
 export const LOCALES = ["en", "zh"] as const;
@@ -355,6 +355,21 @@ export interface Dictionary {
     stale: string;
   };
   scenario: {
+    comparisonTitle: string;
+    comparisonDescription: string;
+    comparisonChart: string;
+    comparisonTable: string;
+    comparisonView: string;
+    comparisonModels: string;
+    comparisonTop: string;
+    comparisonHint: string;
+    comparisonNote: string;
+    comparisonRank: string;
+    comparisonSourceRank: string;
+    comparisonMissing: string;
+    comparisonModelLink: string;
+    comparisonReset: string;
+    comparisonScroll: string;
     combo: string;
     viewCombo: string;
     comboFullLink: string;

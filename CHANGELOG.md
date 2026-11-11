@@ -2,7 +2,7 @@
 - [INPUT]: 依赖代码、数据、配置与 docs/CURRENT.md 的实际变更
 - [OUTPUT]: 对外提供按时间倒序排列的项目迭代记录
 - [POS]: 项目根目录的版本记忆；docs/CURRENT.md 描述现在，docs/archive/ 保存历史方案，本文件记录演进过程
-- [PROTOCOL]: 变更时更新此头部，然后检查 README.md
+- [PROTOCOL]: Update this header when making changes, then check README.md.
 -->
 
 # Changelog
@@ -13,9 +13,16 @@
 
 ### 变更
 
+- Web frontend now opens with a capability rank chart inspired by the comparison reference: top 10 / 15 / 20 models by composite, vendor colors, relative ranks with ties, and gaps for missing results. Model selection reveals source ranks and scores. The full sortable table remains available in both languages.
+- Fixed narrow-screen overflow from the English footer navigation by allowing links to wrap.
+
 - Next.js Agent Evals 从 https://nextjs.org/evals 再同步当前榜（Last run 仍 2026-10-30，分数/成本/顺序已变）：15 个可映射模型（来源 16 行，Pixel Canary 仍无模型页）。第一档升至 **100%**，**GPT 6.1 Terra（high）** 居首，其后 Opus 5.5 / GPT 6 Sol / Gemini 4 Argon / Fable 5.1；Luna high 升至 #11（86%）。Web 前端综合分随 Next.js 权重 0.4 重算（top 5 未变）。
 
 ## 2026-11-02
+
+### 新增
+
+- 工具箱「图标」加入 Not Boring Icons 与 Hugeicons，提供中英文详情、选型建议、免费与付费授权说明，以及 MCP 或 React 安装示例。
 
 ### 变更
 

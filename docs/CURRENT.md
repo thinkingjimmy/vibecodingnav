@@ -1,10 +1,11 @@
 # 当前开发基线
 
-> 更新日期：2026-10-11
+> 更新日期：2026-11-04
 > 状态：站点已重建为 VibeCodingNav。英文在 `/`，中文在 `/zh/`。未部署，也未改 Vercel 配置。
 
 ## 当前能力
 
+- Web frontend opens with a capability comparison chart in both languages. It compares the top 10 / 15 / 20 models by composite score, preserves ties, leaves gaps for missing results, and shows source results in a model popover. The original sortable table is available through the view switch.
 - 首页、场景榜单、模型、工具箱分类、库 / Skill / 插件 / Prompt / 工具详情、组合页、基准页和更新日志。
 - 内容是类型化 TypeScript 模块。`validateContent` 在导入时检查 slug、引用和双语字段。
 - 榜单挑选（榜首、价格减半、开源许可）和「出现在」反向链接在 `src/lib/catalog.ts` 构建期计算。

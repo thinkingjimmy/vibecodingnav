@@ -1,0 +1,89 @@
+/**
+ * [INPUT]: Shared light and dark theme tokens and chart geometry.
+ * [OUTPUT]: Chart palette, responsive model column, and focusable chart marks.
+ * [POS]: Scoped styles for RankChart.
+ * [PROTOCOL]: Update this header when making changes, then check README.md.
+ */
+.chart {
+  --rank-label-width: 208px;
+  --rank-clay: #ad634b;
+  --rank-label-ink: #fff;
+  --rank-ink: #262629;
+  --rank-green: #32945a;
+  --rank-blue: #1489ce;
+  --rank-indigo: #4d5cd1;
+  --rank-orange: #d48230;
+  --rank-purple: #8870c6;
+}
+
+:global(.dark) .chart {
+  --rank-clay: #e39b80;
+  --rank-label-ink: #09090b;
+  --rank-ink: #e4e4e7;
+  --rank-green: #6ac28a;
+  --rank-blue: #60b5e7;
+  --rank-indigo: #8a96f0;
+  --rank-orange: #e8a75f;
+  --rank-purple: #ad99eb;
+}
+
+.canvas {
+  display: grid;
+  grid-template-columns: var(--rank-label-width) minmax(0, 1fr);
+  min-width: calc(var(--rank-label-width) + var(--rank-plot-width));
+}
+
+.labels {
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  background: var(--background);
+}
+
+.model {
+  position: absolute;
+  left: 0;
+  display: flex;
+  width: calc(100% - 12px);
+  min-height: 32px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 9px;
+  padding: 4px;
+  border-radius: 4px;
+  text-align: right;
+  font-size: 12px;
+  line-height: 16px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.model[aria-pressed="true"] {
+  background: var(--muted);
+}
+
+.model:focus-visible {
+  outline: 1px solid var(--foreground);
+  outline-offset: 1px;
+}
+
+.series {
+  cursor: pointer;
+  transition: opacity 120ms ease;
+}
+
+@media (max-width: 639px) {
+  .chart {
+    --rank-label-width: 164px;
+  }
+  .model {
+    gap: 6px;
+    font-size: 11px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .series {
+    transition: none;
+  }
+}

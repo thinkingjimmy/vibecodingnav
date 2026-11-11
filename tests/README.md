@@ -6,6 +6,7 @@
 
 - catalog.test.ts: 内容校验、90 天过期、榜单挑选、反向链接与语言路径
 - site.spec.ts: 中英首页、开源筛选、模型 / 工具 / 组合页、语言切换、主题与窄屏横向溢出
+- rank-comparison.spec.ts: Web frontend chart, source results, ties, missing data, keyboard selection, responsive layout, and source/model links; JSON attachments provide repeatable evidence
 
 ## 运行
 
