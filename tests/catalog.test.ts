@@ -76,7 +76,7 @@ describe("picks", () => {
   it("resolves the web frontend board", () => {
     const picks = resolvePicks("web-frontend");
     expect(picks.top?.modelSlug).toBe("claude-opus-5-5");
-    expect(picks.top?.score).toBe(1818);
+    expect(picks.top?.score).toBe(1813);
     const auto = content.results.find((row) => row.benchmark === "lmarena-webdev" && row.provisional === "autoeval");
     expect(auto).toMatchObject({ label: "claude-fable-5.2-xhigh", score: 1832, votes: "N/A", modelSlug: "claude-fable-5-2" });
     expect(auto?.rank).toBeUndefined();
@@ -86,7 +86,7 @@ describe("picks", () => {
     expect(getHome("zh").cards[0]?.rows[0]?.name).toBe("Claude Opus 5.5");
     expect(getBenchmark("zh", "lmarena-webdev")?.provisional?.[0]).toMatchObject({ name: "claude-fable-5.2-xhigh", score: "1832", votes: "N/A" });
     expect(picks.value?.modelSlug).toBe("claude-sonnet-5-5");
-    expect(picks.value?.score).toBe(1774);
+    expect(picks.value?.score).toBe(1772);
     expect(picks.open?.modelSlug).toBe("deepseek-v4-1-flash");
   });
 
@@ -161,15 +161,16 @@ describe("picks", () => {
 
   it("keeps each public board complete and in source order", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.boards[0]?.rows).toHaveLength(155);
-    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1818" });
+    expect(web?.boards[0]?.rows).toHaveLength(156);
+    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1813" });
     expect(web?.boards[0]?.rows[2]).toMatchObject({ name: "gemini-4-carbon-high", rank: 3, score: "1768" });
-    expect(web?.boards[0]?.rows[4]).toMatchObject({ name: "claude-fable-5.1-max", rank: 5, score: "1745" });
+    expect(web?.boards[0]?.rows[4]).toMatchObject({ name: "gpt-6.1-sol-max", rank: 5, score: "1743" });
+    expect(web?.boards[0]?.rows[5]).toMatchObject({ name: "claude-fable-5.1-max", rank: 6, score: "1743" });
     expect(web?.boards[0]?.rows[9]).toMatchObject({ name: "kimi-k3.1-pro-max", rank: 10, score: "1688" });
     expect(web?.boards[0]?.rows[11]).toMatchObject({ name: "gpt-6.1-terra-max", rank: 12, score: "1679" });
-    expect(web?.boards[0]?.rows[20]).toMatchObject({ name: "inkling-2-small", rank: 21, score: "1649" });
-    expect(web?.boards[0]?.rows[16]).toMatchObject({ name: "kimi-k3-max", rank: 17, score: "1657" });
-    expect(web?.boards[0]?.rows[19]).toMatchObject({ name: "muse-wonder-max", rank: 20, score: "1650" });
+    expect(web?.boards[0]?.rows[20]).toMatchObject({ name: "inkling-2-small", rank: 21, score: "1646" });
+    expect(web?.boards[0]?.rows[16]).toMatchObject({ name: "kimi-k3-max", rank: 17, score: "1658" });
+    expect(web?.boards[0]?.rows[19]).toMatchObject({ name: "muse-wonder-max", rank: 20, score: "1649" });
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
@@ -220,7 +221,7 @@ describe("picks", () => {
     expect(creative?.leaderboard?.[1]).toMatchObject({ name: "kimi-k3.1-pro", rank: 2, score: "2172.6" });
     expect(creative?.leaderboard?.[9]).toMatchObject({ name: "muse-wonder", rank: 10, score: "2007.0" });
     expect(creative?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(155);
+    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(156);
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
     expect(androidBench?.versions?.[0]?.current).toBe(true);
@@ -310,11 +311,11 @@ describe("picks", () => {
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
     expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([1, 1, 2, null, 2, 1, 1]);
     expect(opus).toMatchObject({ compositeLabel: "97", count: 6, total: 7 });
-    expect(opus?.cells[0]?.tip).toContain("1818");
+    expect(opus?.cells[0]?.tip).toContain("1813");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([5, 3, 4, null, 7, 4, 3]);
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([6, 3, 4, null, 7, 4, 3]);
     expect(fable).toMatchObject({ compositeLabel: "81", count: 6 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
@@ -400,11 +401,12 @@ describe("picks", () => {
     expect(getBenchmark("zh", "supabase-evals")?.scenarios).toEqual([]);
     expect(getBenchmark("zh", "convex-evals")?.scenarios).toEqual([]);
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/web-frontend/"]);
-    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard).toHaveLength(65);
-    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1751", ci: "+20/-20" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard).toHaveLength(66);
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[0]).toMatchObject({ name: "claude-opus-5.5-max", rank: 1, score: "1752", ci: "+19/-19" });
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[11]).toMatchObject({ name: "deepseek-v4.1-flash-20260910-max", rank: 12, score: "1610" });
-    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[64]).toMatchObject({ name: "gemini-2.5-pro", rank: 65, score: "1285" });
-    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.chart?.points).toHaveLength(64);
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[12]).toMatchObject({ name: "deepseek-v4.1-flash-20261017-max", rank: 13, score: "1609" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.leaderboard?.[65]).toMatchObject({ name: "gemini-2.5-pro", rank: 66, score: "1285" });
+    expect(getBenchmark("zh", "lmarena-image-to-webdev")?.chart?.points).toHaveLength(65);
     expect(getBenchmark("zh", "lmarena-image-to-webdev")?.chart?.points.filter((point) => point.pareto).map((point) => [point.name, point.priceLabel])).toEqual([
       ["claude-opus-5.5-max", "16"],
       ["claude-sonnet-5.5-xhigh", "8"],

@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-11",
+    kind: "board",
+    source: "lmarena.ai",
+    text: tx(
+      "**WebDev 与 Image-to-WebDev**：两张榜页面日期都是 11-10。WebDev 994,531 票、157 个模型 = 156 行正式名次 + 1 行 AutoEval。正式第 1 是 Opus 5.5 Max 1813；Sol Max 与 Fable 5.1 Max 都是 1743，名次仍是第 5 和第 6。Fable 5.2 xHigh 1832 仍是 AutoEval，没有名次和票数，不进综合分。Image-to-WebDev 66 行、210,832 票，Opus Max 1752 第 1；DeepSeek-V4.1-Flash-20261017 Max 新进第 13（1609）。",
+      "**WebDev and Image-to-WebDev**: both page dates are Nov 10. WebDev has 994,531 votes and 157 models = 156 official ranks plus 1 AutoEval row. Official #1 is Opus 5.5 Max at 1813. Sol Max and Fable 5.1 Max both score 1743 and stay 5th and 6th. Fable 5.2 xHigh at 1832 is still AutoEval, with no rank and no votes, and it stays out of the composite. Image-to-WebDev has 66 rows and 210,832 votes; Opus Max leads at 1752. DeepSeek-V4.1-Flash-20261017 Max is new at #13 (1609).",
+    ),
+  },
+  {
     date: "11-10",
     kind: "board",
     source: "lmarena.ai / convex.dev",

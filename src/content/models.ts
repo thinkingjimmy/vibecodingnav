@@ -73,8 +73,8 @@ export const models: Model[] = [
         "For batch or CI work, GPT-6.1 Sol ties for 3rd on Terminal-Bench at 58.2% and $634.24.",
       ),
       tx(
-        "只做前端：Claude Sonnet 5.5 WebDev 1774 分，价格只有一半（$2 / $10）。",
-        "For frontend only, Claude Sonnet 5.5 scores 1774 on WebDev at half the token price ($2 / $10).",
+        "只做前端：Claude Sonnet 5.5 WebDev 1772 分，价格只有一半（$2 / $10）。",
+        "For frontend only, Claude Sonnet 5.5 scores 1772 on WebDev at half the token price ($2 / $10).",
       ),
       tx("对延迟敏感：Android Bench 长程任务平均耗时 56.6 小时。", "Latency: the Android Bench long run averages 56.6 hours."),
       tx("生产级判断：sudo L7 上落后 Sonnet 5.5（50.6% vs 45.6%）。", "Production judgment: trails Sonnet 5.5 on sudo L7 (50.6% vs 45.6%)."),
@@ -91,12 +91,12 @@ export const models: Model[] = [
     priceLabel: "$10 / $50",
     headlines: ["eqbench-creative-writing", "lmarena-webdev"],
     summary: tx(
-      "EQ-Bench Creative Writing v3 第 1（Elo 2176.9）。WebDev 第四，1767 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第五，31.1%。",
-      "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fourth on WebDev at 1767. Tied at 58.2% on Terminal-Bench. Fifth on sudo L7 at 31.1%.",
+      "EQ-Bench Creative Writing v3 第 1（Elo 2176.9）。WebDev 第四，1765 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第五，31.1%。",
+      "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fourth on WebDev at 1765. Tied at 58.2% on Terminal-Bench. Fifth on sudo L7 at 31.1%.",
     ),
     why: [
       tx("EQ-Bench Creative Writing Elo 仍居首；写文档主榜 Slop 反转后由 Inkling Small / Haiku 一带领先。", "Still first on Creative Writing Elo; after Slop inversion the docs primary board is led by Inkling Small / the Haiku band."),
-      tx("WebDev 比第一名低 51 分。", "51 points behind first on WebDev."),
+      tx("WebDev 比第一名低 48 分。", "48 points behind first on WebDev."),
     ],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
   }),
@@ -111,11 +111,11 @@ export const models: Model[] = [
     priceLabel: "$2 / $10",
     headlines: ["android-bench", "sudo-l7", "lmarena-webdev"],
     summary: tx(
-      "Android Bench 2.0 长程第 1（40.0%，max，claude-code）。sudo L7 第 1（50.6% Adaptive/Max）。WebDev 第二，1774 分（xHigh）。Supabase 无 Skills 第 5（77%），有 Skills 86%。",
-      "First on Android Bench 2.0 long-horizon at 40.0% (max, claude-code). First on sudo L7 at 50.6% Adaptive/Max. Second on WebDev at 1774 (xHigh). 5th on Supabase without skills at 77%, 86% with skills.",
+      "Android Bench 2.0 长程第 1（40.0%，max，claude-code）。sudo L7 第 1（50.6% Adaptive/Max）。WebDev 第二，1772 分（xHigh）。Supabase 无 Skills 第 5（77%），有 Skills 86%。",
+      "First on Android Bench 2.0 long-horizon at 40.0% (max, claude-code). First on sudo L7 at 50.6% Adaptive/Max. Second on WebDev at 1772 (xHigh). 5th on Supabase without skills at 77%, 86% with skills.",
     ),
     why: [
-      tx("Android 长程与 sudo L7 双第一；做前端时比 Opus 少 45 分换一半价格。", "Leads Android long-horizon and sudo L7; for frontend, 45 fewer WebDev points than Opus at half the price."),
+      tx("Android 长程与 sudo L7 双第一；做前端时比 Opus 少 41 分换一半价格。", "Leads Android long-horizon and sudo L7; for frontend, 41 fewer WebDev points than Opus at half the price."),
     ],
     whyNot: [
       tx("Android 长程平均耗时 70.7 小时、成本约 $1575。", "Android long-horizon averages 70.7 hours and about $1575."),
@@ -170,7 +170,7 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1M",
     priceLabel: "$10 / $50",
-    summary: tx("WebDev 第五，1745 分。图生网页第三，1724 分。Terminal-Bench 第五，57.9%。token 价格与 Astra 同档。", "Fifth on WebDev at 1745 and third on Image-to-WebDev at 1724. Fifth on Terminal-Bench at 57.9%, at Astra's token price."),
+    summary: tx("WebDev 第六，1743 分，与 GPT-6.1 Sol 同分但来源名次仍是第 6。图生网页第三，1724 分。Terminal-Bench 第五，57.9%。", "Sixth on WebDev at 1743, the same score as GPT-6.1 Sol, while the source rank stays 6th. Third on Image-to-WebDev at 1724. Fifth on Terminal-Bench at 57.9%."),
     why: [tx("两张活跃榜都在前五。", "Top five on two active boards.")],
     whyNot: [tx("同价位没有比 Astra 更靠前，半价位有 Sonnet 和 Sol。", "Astra ranks higher at the same price. Sonnet and Sol cost half as much.")],
   }),
@@ -190,7 +190,7 @@ export const models: Model[] = [
       "First on Convex without guidelines at 95.54% (1 run) and first with guidelines at 99.11%. WebDev only has an AutoEval row at 1832, with no official rank and no votes, so it stays out of the composite. A different row from Fable 5.1.",
     ),
     why: [tx("两列 Convex 都是当前来源的第一，而且列与列没有合成一个分。", "It leads both current Convex columns, and the columns stay separate.")],
-    whyNot: [tx("WebDev 的 1832 是 AutoEval，不是正式第 1。正式第 1 仍是 Opus 5.5 Max 1818。", "The WebDev 1832 is AutoEval, not official #1. Official #1 is still Opus 5.5 Max at 1818.")],
+    whyNot: [tx("WebDev 的 1832 是 AutoEval，不是正式第 1。正式第 1 仍是 Opus 5.5 Max 1813。", "The WebDev 1832 is AutoEval, not official #1. Official #1 is still Opus 5.5 Max at 1813.")],
   }),
   model({
     slug: "claude-opus-4-8",

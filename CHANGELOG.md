@@ -9,6 +9,13 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-11
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步：页面日期 2026-11-10，994,531 票。来源 157 个模型 = 156 行正式名次 + 1 行 AutoEval。正式第 1 是 Claude Opus 5.5（max）1813。Claude Sonnet 5.5（xHigh）第 2（1772）；GPT-6 Astra（max）第 4（1765）。GPT-6.1 Sol（max）第 5 与 Claude Fable 5.1（max）第 6 分数同为 1743，来源名次没有并成并列。AutoEval 仍是 Claude Fable 5.2（xHigh）1832，无官方名次、无票数，不进综合分。新增正式行 Unisound U2 Flash 第 34（1608）。
+- LMArena Image-to-WebDev 从 https://lmarena.ai/leaderboard/image-to-webdev 全量同步：66 行，榜单日期 2026-11-10，210,832 票。Opus 5.5（max）第 1（1752）。新增 DeepSeek-V4.1-Flash-20261017（max）第 13（1609），与 20260910 档分开。Grok 4.7（xHigh）落到第 21。帕累托页仍是 6 个模型，单任务成本改为 Opus $7.41、Muse Spark 1.3 $1.20。Web 前端综合分随这两张榜重算，权重未改。
+
 ## 2026-11-10
 
 ### 变更
