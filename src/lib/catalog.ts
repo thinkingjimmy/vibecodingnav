@@ -143,10 +143,15 @@ function isCurrentResult(result: Result) {
   return current ? result.version === current : !result.version;
 }
 
+/** 正式榜行必须有来源名次，且不是 AutoEval 这类临时结果。有临时标记时，即使误填名次也不算正式行。 */
+export function isOfficialBoardRow(result: { rank?: number; provisional?: string }) {
+  return result.rank != null && result.provisional == null;
+}
+
 function rowsFor(benchmark: string, versionId?: string) {
   const selected = versionId ?? currentVersionId(benchmark);
   return results
-    .filter((result) => result.benchmark === benchmark && (result.arm ?? "baseline") === "baseline" && result.rank != null && (selected ? result.version === selected : !result.version))
+    .filter((result) => result.benchmark === benchmark && (result.arm ?? "baseline") === "baseline" && isOfficialBoardRow(result) && (selected ? result.version === selected : !result.version))
     .sort((a, b) => a.rank! - b.rank!);
 }
 
@@ -869,7 +874,7 @@ export function getScenario(locale: Locale, slug: string) {
 }
 
 function bestResult(modelSlug: string, benchmarkSlug: string) {
-  const rows = results.filter((result) => result.modelSlug === modelSlug && result.benchmark === benchmarkSlug && isCurrentResult(result));
+  const rows = results.filter((result) => result.modelSlug === modelSlug && result.benchmark === benchmarkSlug && isCurrentResult(result) && isOfficialBoardRow(result));
   return rows.length ? bestRow(rows) : undefined;
 }
 
@@ -898,7 +903,7 @@ export function getModel(locale: Locale, slug: string) {
       name: benchmark.name,
       setting: result!.setting ?? result!.effort ?? "—",
       score: formatScore(result!.score, benchmark.scoreUnit),
-      width: Math.max(8, Math.round((result!.score / Math.max(...results.filter((row) => row.benchmark === benchmark.slug && isCurrentResult(row)).map((row) => row.score), result!.score)) * 100)),
+      width: Math.max(8, Math.round((result!.score / Math.max(...results.filter((row) => row.benchmark === benchmark.slug && isCurrentResult(row) && isOfficialBoardRow(row)).map((row) => row.score), result!.score)) * 100)),
       ci: formatCi(result!.ci),
       rank: result!.rank ? `#${result!.rank}` : "—",
       cost: result!.runCost ?? "—",
@@ -1109,6 +1114,19 @@ export function getBenchmark(locale: Locale, slug: string) {
     table: benchmark.table,
     filter: (benchmark.sourceFilter ?? "none") as SourceFilter | "none",
     leaderboard: benchmark.table ? toBoardRows(locale, slug) : undefined,
+    provisional: results
+      .filter((result) => result.benchmark === slug && result.provisional && (result.arm ?? "baseline") === "baseline" && isCurrentResult(result))
+      .map((result) => ({
+        name: result.label ?? result.modelSlug ?? "",
+        href: result.modelSlug ? localePath(locale, `/models/${result.modelSlug}`) : undefined,
+        score: result.scoreText ?? formatScore(result.score, benchmark.scoreUnit),
+        ci: result.ciText,
+        votes: result.votes ?? "N/A",
+        price: result.tokenPrice,
+        context: result.context,
+        effort: result.effort,
+        kind: result.provisional,
+      })),
     versions: benchmark.versions?.map((version): VersionBoard => ({
       id: version.id,
       label: t(locale, version.label),

@@ -222,6 +222,8 @@ const zh = {
     version: "版本",
     archived: "历史版本，不再更新",
     board: "基线榜",
+    autoEvalTitle: "AutoEval，非正式",
+    autoEvalNote: "这是自动评测的临时结果，来源没有官方名次，也没有票数。它不进入正式名次、综合分、场景结论或首页排名。",
   },
   changes: {
     title: "最新变化",

@@ -95,7 +95,10 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await page.goto("/zh/benchmarks/lmarena-webdev/");
   await expect(page.getByText("前端 Web 开发")).toBeVisible();
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
-  await expect(page.getByText("1810").first()).toBeVisible();
+  await expect(page.getByText("1813").first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "AutoEval，非正式" })).toBeVisible();
+  await expect(page.getByText("1832").first()).toBeVisible();
+  await expect(page.getByRole("row").filter({ hasText: "claude-opus-5.5-max" }).getByText("1", { exact: true })).toBeVisible();
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("devstral-medium-2507")).toBeVisible();
@@ -115,17 +118,17 @@ test("image-to-webdev shows the full board and the price chart", async ({ page }
   await expect(page.getByText("看一张图或截图，生成对应的网页")).toBeVisible();
   await expect(page.getByText("这张榜不是文字需求的 WebDev")).toBeVisible();
   await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
-  await expect(page.getByText("1753").first()).toBeVisible();
-  await expect(page.getByText("+30/-30").first()).toBeVisible();
+  await expect(page.getByText("1752").first()).toBeVisible();
+  await expect(page.getByText("+19/-19").first()).toBeVisible();
   await expect(page.getByText("gemini-2.5-pro")).toHaveCount(0);
   await page.getByRole("button", { name: /显示全部/ }).click();
   const last = page.getByRole("row").filter({ hasText: "gemini-2.5-pro" });
-  await expect(last.getByText("65", { exact: true })).toBeVisible();
+  await expect(last.getByText("66", { exact: true })).toBeVisible();
   await expect(last.getByText("1285")).toBeVisible();
   await expect(page.getByRole("heading", { name: "分数与价格" })).toBeVisible();
   await expect(page.getByRole("link", { name: "arena.ai/leaderboard/code/image-to-webdev/pareto" })).toHaveAttribute("href", "https://arena.ai/leaderboard/code/image-to-webdev/pareto");
-  await expect(page.getByText("1753 · $16/M")).toBeVisible();
-  await expect(page.getByText("1578 · $0.15/M")).toBeVisible();
+  await expect(page.getByText("1752 · $16/M")).toBeVisible();
+  await expect(page.getByText("1593 · $0.245/M")).toBeVisible();
 });
 
 test("source board filter and header stay under the nav while scrolling", async ({ page }) => {
@@ -422,7 +425,7 @@ test("switching a source filter keeps the table width", async ({ page }) => {
 
   await page.goto("/zh/benchmarks/android-bench/");
   await expect(page.getByRole("columnheader", { name: "Agent" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Claude Sonnet 5.5", exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Claude Sonnet 5.5 max" })).toBeVisible();
   await expect(page.getByText("40.0").first()).toBeVisible();
   await expect(page.getByText("claude-code").first()).toBeVisible();
   await expect(page.getByText("80.9").first()).toBeVisible();
@@ -564,16 +567,16 @@ test("framework evals stay on separate boards", async ({ page }) => {
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/zh/libraries/convex/");
-  await expect(page.getByText("89.88").first()).toBeVisible();
+  await expect(page.getByText("95.54").first()).toBeVisible();
   await expect(page.getByRole("columnheader", { name: "有指南" })).toBeVisible();
-  await expect(page.getByText("无指南 + 网页")).toBeVisible();
+  await expect(page.getByRole("columnheader", { name: "无指南 + 网页" })).toBeVisible();
   const convexOverflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(convexOverflow).toBeLessThanOrEqual(1);
   await page.setViewportSize({ width: 1280, height: 800 });
 
   await page.goto("/zh/prompts/convex-ai-rules/");
   await expect(page.getByRole("heading", { name: "有材料相对基线的变化" })).toBeVisible();
-  await expect(page.getByText("+8.19").first()).toBeVisible();
+  await expect(page.getByText("+7.83").first()).toBeVisible();
 
   await page.goto("/zh/prompts/nextjs-agents-md/");
   await expect(page.getByText("+13.0").first()).toBeVisible();

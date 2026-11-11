@@ -10,6 +10,33 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-11",
+    kind: "board",
+    source: "lmarena.ai",
+    text: tx(
+      "**WebDev 与 Image-to-WebDev**：两张榜页面日期都是 11-10。WebDev 994,531 票、157 个模型 = 156 行正式名次 + 1 行 AutoEval。正式第 1 是 Opus 5.5 Max 1813；Sol Max 与 Fable 5.1 Max 都是 1743，名次仍是第 5 和第 6。Fable 5.2 xHigh 1832 仍是 AutoEval，没有名次和票数，不进综合分。Image-to-WebDev 66 行、210,832 票，Opus Max 1752 第 1；DeepSeek-V4.1-Flash-20261017 Max 新进第 13（1609）。",
+      "**WebDev and Image-to-WebDev**: both page dates are Nov 10. WebDev has 994,531 votes and 157 models = 156 official ranks plus 1 AutoEval row. Official #1 is Opus 5.5 Max at 1813. Sol Max and Fable 5.1 Max both score 1743 and stay 5th and 6th. Fable 5.2 xHigh at 1832 is still AutoEval, with no rank and no votes, and it stays out of the composite. Image-to-WebDev has 66 rows and 210,832 votes; Opus Max leads at 1752. DeepSeek-V4.1-Flash-20261017 Max is new at #13 (1609).",
+    ),
+  },
+  {
+    date: "11-10",
+    kind: "board",
+    source: "lmarena.ai / convex.dev",
+    text: tx(
+      "**WebDev 与 Convex**：WebDev 页面日期仍是 11-08（984,664 票）。156 个模型里 155 行有正式名次，Opus 5.5 Max 仍第 1（1818）。Claude Fable 5.2 xHigh 1832 是 AutoEval，没有名次和票数，不进综合分。Convex 无指南 43 行，Fable 5.2 95.54% 第 1，Astra 89.73% 第 2；有指南 42 行，Fable 5.2 99.11% 第 1，Argon 98.75% 第 2。两列分开，仍只在框架页。",
+      "**WebDev and Convex**: the WebDev page date is still Nov 8 (984,664 votes). Of 156 models, 155 have official ranks; Opus 5.5 Max is still #1 (1818). Claude Fable 5.2 xHigh at 1832 is AutoEval, with no rank and no votes, and it stays out of the composite. Convex No Guidelines has 43 rows, Fable 5.2 at 95.54% then Astra at 89.73%. With Guidelines has 42 rows, Fable 5.2 at 99.11% then Argon at 98.75%. The columns stay separate and framework-only.",
+    ),
+  },
+  {
+    date: "11-09",
+    kind: "board",
+    source: "lmarena.ai / developer.android.com",
+    text: tx(
+      "**三榜同步**：LMArena WebDev 至 11-08（985,908 票、154 行），Opus 5.5 Max 第 1（1818），Sonnet 5.5 xHigh 升至第 2（1773），Carbon High 第 3（1768，初步）。Image-to-WebDev 仍 65 行（208,770 票），Fable 5.1 升至第 3（1724），帕累托页改为 6 个模型并改印单任务成本。Android Bench 2.0 长程 14 行（页面日期 11-04）：新增 GPT 6.1 Terra max 第 4（28.7）、Kimi K3.1 Pro max 第 6（24.0）、Deepseek V4.1 Flash 1017 high 第 9（17.3）。Next.js 未改。",
+      "**Three-board sync**: LMArena WebDev to Nov 8 (985,908 votes, 154 rows); Opus 5.5 Max #1 (1818); Sonnet 5.5 xHigh rises to #2 (1773); Carbon High #3 (1768, preliminary). Image-to-WebDev stays 65 rows (208,770 votes); Fable 5.1 rises to #3 (1724); the Pareto page now lists six models and prints cost per task. Android Bench 2.0 long-horizon is 14 rows (page date Nov 4): new GPT 6.1 Terra max #4 (28.7), Kimi K3.1 Pro max #6 (24.0), Deepseek V4.1 Flash 1017 high #9 (17.3). Next.js was not changed.",
+    ),
+  },
+  {
     date: "10-29",
     kind: "board",
     source: "lmarena.ai / eqbench.com",
