@@ -143,14 +143,14 @@ export const scenarios: Scenario[] = [
       point(
         "新、快、样本大",
         "New, fast, and large",
-        "994,531 票。正式名次 156 行，另有 1 行 AutoEval 没有名次和票数，不进综合分。",
-        "994,531 votes. 156 rows have official ranks. One AutoEval row has no rank and no votes, and it stays out of the composite.",
+        "995,980 票。正式名次 157 行。Fable 5.2 xHigh 已是正式第 1。另有 1 行 AutoEval（Ernie 5.5 Flash Preview）没有名次和票数，不进综合分。",
+        "995,980 votes. 157 rows have official ranks. Fable 5.2 xHigh is official #1. One AutoEval row, Ernie 5.5 Flash Preview, has no rank and no votes, and it stays out of the composite.",
       ),
       point(
         "把价格一起看",
         "Read the price with the score",
-        "正式第 2 名 Claude Sonnet 5.5（xHigh）1772，只比第 1 名 1813 低 41 分，价格是一半。开源的 DeepSeek V4.1 Flash（20261017，max）在 WebDev 排第 16（1664），在图生网页排第 13（1609）。",
-        "Official second place, Claude Sonnet 5.5 (xHigh), is 1772, 41 points behind 1813 at half the price. Open-weight DeepSeek V4.1 Flash (20261017, max) is 16th on WebDev at 1664 and 13th on Image-to-WebDev at 1609.",
+        "正式第 1 是 Claude Fable 5.2（xHigh）1836（994 票）。第 3 名 Claude Sonnet 5.5（xHigh）1773，比第 2 名 Opus 5.5 Max 1814 低 41 分，价格是一半。开源的 DeepSeek V4.1 Flash（20261017，max）在 WebDev 排第 17（1664），在图生网页排第 13（1609）。",
+        "Official #1 is Claude Fable 5.2 (xHigh) at 1836 (994 votes). Third place, Claude Sonnet 5.5 (xHigh), is 1773, 41 points behind #2 Opus 5.5 Max at 1814 and half the price. Open-weight DeepSeek V4.1 Flash (20261017, max) is 17th on WebDev at 1664 and 13th on Image-to-WebDev at 1609.",
       ),
     ],
     related: ["android-app", "cli-devops", "write-docs"],

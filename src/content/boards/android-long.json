@@ -103,6 +103,23 @@
   },
   {
     "rank": 7,
+    "label": "Gemini 4 Carbon",
+    "score": 23.3,
+    "scoreText": "23.3",
+    "ciText": "11.3–36.7",
+    "ciLow": 11.3,
+    "ciHigh": 36.7,
+    "latency": "31.0",
+    "runCost": "$183.6",
+    "weights": "closed",
+    "agent": "antigravity-sdk",
+    "effort": "high",
+    "completion": "83.7",
+    "modelSlug": "gemini-4-carbon",
+    "vendor": "google"
+  },
+  {
+    "rank": 8,
     "label": "Claude Fable 5.1",
     "score": 22.7,
     "scoreText": "22.7",
@@ -119,7 +136,7 @@
     "vendor": "anthropic"
   },
   {
-    "rank": 8,
+    "rank": 9,
     "label": "Gemini 4 Argon",
     "score": 21.3,
     "scoreText": "21.3",
@@ -136,8 +153,25 @@
     "vendor": "google"
   },
   {
-    "rank": 9,
-    "label": "Deepseek V4.1 Flash 1017",
+    "rank": 10,
+    "label": "Claude Haiku 5.5",
+    "score": 20.7,
+    "scoreText": "20.7",
+    "ciText": "8.0–33.3",
+    "ciLow": 8.0,
+    "ciHigh": 33.3,
+    "latency": "22.9",
+    "runCost": "$191.4",
+    "weights": "closed",
+    "agent": "claude-code",
+    "effort": "max",
+    "completion": "74.3",
+    "modelSlug": "claude-haiku-5-5",
+    "vendor": "anthropic"
+  },
+  {
+    "rank": 11,
+    "label": "DeepSeek V4.1 Flash 1017",
     "score": 17.3,
     "scoreText": "17.3",
     "ciText": "6.7–28.7",
@@ -145,7 +179,7 @@
     "ciHigh": 28.7,
     "latency": "12.0",
     "runCost": "$9.9",
-    "weights": "closed",
+    "weights": "open",
     "agent": "opencode",
     "effort": "high",
     "completion": "71.2",
@@ -153,7 +187,24 @@
     "vendor": "deepseek"
   },
   {
-    "rank": 10,
+    "rank": 12,
+    "label": "Muse Wonder",
+    "score": 13.3,
+    "scoreText": "13.3",
+    "ciText": "4.7–22.7",
+    "ciLow": 4.7,
+    "ciHigh": 22.7,
+    "latency": "14.4",
+    "runCost": "$271.9",
+    "weights": "closed",
+    "agent": "muse-code",
+    "effort": "max",
+    "completion": "74.6",
+    "modelSlug": "muse-wonder",
+    "vendor": "meta"
+  },
+  {
+    "rank": 13,
     "label": "Qwen3.8 Max",
     "score": 12.5,
     "scoreText": "12.5",
@@ -170,7 +221,7 @@
     "vendor": "qwen"
   },
   {
-    "rank": 11,
+    "rank": 14,
     "label": "Kimi K3",
     "score": 12.0,
     "scoreText": "12.0",
@@ -187,7 +238,7 @@
     "vendor": "kimi"
   },
   {
-    "rank": 12,
+    "rank": 15,
     "label": "GPT 6 Luna",
     "score": 10.7,
     "scoreText": "10.7",
@@ -204,7 +255,7 @@
     "vendor": "openai"
   },
   {
-    "rank": 13,
+    "rank": 16,
     "label": "Gemini 3.8 Flash",
     "score": 8.0,
     "scoreText": "8.0",
@@ -221,7 +272,7 @@
     "vendor": "google"
   },
   {
-    "rank": 14,
+    "rank": 17,
     "label": "Gemini 3.7 Flash",
     "score": 7.3,
     "scoreText": "7.3",

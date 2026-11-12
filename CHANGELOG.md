@@ -9,6 +9,14 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-12
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步。页面日期仍是 2026-11-10，票数 995,980。来源 158 个模型 = 157 行正式名次 + 1 行 AutoEval。Claude Fable 5.2（xHigh）从上一份的 AutoEval（1832，无票数、无名次）转为正式第 1（1836，994 票）。旧 AutoEval 行删除，没有重复。正式第 2 是 Claude Opus 5.5（max）1814。当前 AutoEval 是 Ernie 5.5 Flash Preview（1668，无官方名次、无票数），不进综合分。
+- Android Bench 2.0 长程从 https://developer.android.com/bench 全量同步：页面日期 November 11th，14 行增至 17 行。新增 Gemini 4 Carbon（high）第 7（23.3）、Claude Haiku 5.5（max）第 10（20.7）、Muse Wonder（max）第 12（13.3）。Sonnet 5.5（max）仍是第 1（40.0）。1.0 的 32 行与 August 11th 页面一致，未改。
+- Convex 两列从 fabulous-panther-525.convex.cloud 的 `runs:leaderboardScores` 分开同步，仍只在框架页。No Guidelines 44 行，Fable 5.2 仍是 95.54%；Gemini 4 Carbon 新进第 6（86.61%）。With Guidelines 44 行，Fable 5.2 仍是 99.11%；Carbon 新进第 10（95.54%）。`experiment=with_guidelines` 仍是服务器错误，有指南列继续用空参数查询。版本哈希未变。Web 前端与 Android 综合分随正式榜重算，权重未改。
+
 ## 2026-11-11
 
 ### 变更

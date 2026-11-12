@@ -130,6 +130,7 @@ const CONVEX_MODEL: Record<string, { slug: string; effort?: string }> = {
   "openai/gpt-5.6-luna": { slug: "gpt-5-6-luna" },
   "openai/gpt-5.5": { slug: "gpt-5-5" },
   "google/gemini-4-argon": { slug: "gemini-4-argon" },
+  "google/gemini-4-carbon": { slug: "gemini-4-carbon" },
   "google/gemini-3.8-flash": { slug: "gemini-3-8-flash" },
   "google/gemini-3.1-pro-preview": { slug: "gemini-3-1-pro" },
   "x-ai/grok-4.7": { slug: "grok-4-7" },
@@ -171,7 +172,7 @@ function convexArm(rows: ConvexSource[], arm: "baseline" | "assisted"): Result[]
     const mapped = CONVEX_MODEL[row.model];
     if (!mapped) return;
     const runs = `${Math.round(row.runCount)} runs`;
-    out.push(fw("convex-evals", "2026-11-10", mapped.slug, Math.round(row.totalScore * 10000) / 100, {
+    out.push(fw("convex-evals", "2026-11-12", mapped.slug, Math.round(row.totalScore * 10000) / 100, {
       arm,
       rank,
       effort: mapped.effort,
@@ -258,7 +259,7 @@ export const results: Result[] = [
   ...board("deepswe-v1-1", "2026-09-22", deepsweRows as BoardJson[]),
   ...board("frontiercode", "2026-10-27", frontiercodeRows as BoardJson[], "2.0"),
   ...board("frontiercode", "2026-10-13", frontiercode1Rows as BoardJson[], "1.1"),
-  ...board("android-bench", "2026-11-04", androidLong as BoardJson[], "2.0"),
+  ...board("android-bench", "2026-11-11", androidLong as BoardJson[], "2.0"),
   ...board("android-bench", "2026-10-06", android1 as BoardJson[], "1.0"),
   fw("supabase-evals", "2026-10-30", "claude-opus-5-5", 90, { rank: 1, effort: "medium", setting: "medium · Claude Code" }),
   fw("supabase-evals", "2026-10-30", "kimi-k3", 88, { rank: 2, setting: "OpenCode" }),

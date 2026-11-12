@@ -13,7 +13,7 @@ test("chinese home shows the scenario boards", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "场景榜单" })).toBeVisible();
   await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article")).toHaveCount(4);
   await expect(page.getByRole("link", { name: /写文档和文案/ })).toBeVisible();
-  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("97").first()).toBeVisible();
+  await expect(page.locator("section", { has: page.getByRole("heading", { name: "场景榜单" }) }).locator("article").first().getByText("95").first()).toBeVisible();
   await expect(page.getByText("#1 · #1 · #1 · —")).toHaveCount(0);
   await expect(page.getByRole("link", { name: /查看更多/ }).first()).toBeVisible();
   await expect(page.getByText("查看完整榜单")).toHaveCount(0);
@@ -94,11 +94,12 @@ test("english home is unprefixed", async ({ page }) => {
 test("web benchmark keeps the full source board", async ({ page }) => {
   await page.goto("/zh/benchmarks/lmarena-webdev/");
   await expect(page.getByText("前端 Web 开发")).toBeVisible();
-  await expect(page.getByRole("link", { name: "claude-opus-5.5-max" })).toBeVisible();
-  await expect(page.getByText("1813").first()).toBeVisible();
+  await expect(page.getByRole("link", { name: "claude-fable-5.2-xhigh" })).toBeVisible();
+  await expect(page.getByText("1836").first()).toBeVisible();
   await expect(page.getByRole("heading", { name: "AutoEval，非正式" })).toBeVisible();
-  await expect(page.getByText("1832").first()).toBeVisible();
-  await expect(page.getByRole("row").filter({ hasText: "claude-opus-5.5-max" }).getByText("1", { exact: true })).toBeVisible();
+  await expect(page.getByText("1668").first()).toBeVisible();
+  await expect(page.getByRole("row").filter({ hasText: "claude-fable-5.2-xhigh" }).getByText("1", { exact: true })).toBeVisible();
+  await expect(page.getByRole("row").filter({ hasText: "claude-opus-5.5-max" }).getByText("2", { exact: true })).toBeVisible();
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("devstral-medium-2507")).toBeVisible();
@@ -107,7 +108,7 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "deepseek-v4.1-flash-20261017-max" })).toBeVisible();
   const deepseek = page.getByRole("row").filter({ hasText: "deepseek-v4.1-flash-20261017-max" });
-  await expect(deepseek.getByText("16", { exact: true })).toBeVisible();
+  await expect(deepseek.getByText("17", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("granite-4.1-8b")).toBeVisible();
 });
@@ -332,7 +333,7 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   await expect(scoringDialog.getByText("综合分怎么算")).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "公式" })).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "一个例子" })).toBeVisible();
-  await expect(scoringDialog.getByText(/Claude Sonnet 5\.5 的综合分是 91/)).toBeVisible();
+  await expect(scoringDialog.getByText(/Claude Sonnet 5\.5 的综合分是 89/)).toBeVisible();
   await expect(scoringDialog.getByText(/拿下 sudo L7 第 1/)).toBeVisible();
   await expect(scoringDialog.getByText("Esc 关闭")).toHaveCount(0);
   const scoringClose = scoringDialog.getByRole("button", { name: "关闭" });
@@ -462,6 +463,7 @@ test("android scenario uses only the current version", async ({ page }) => {
   await expect(page.getByRole("columnheader", { name: /^1\.0/ })).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Claude Sonnet 5.5", exact: true })).toBeVisible();
   await expect(page.getByRole("link", { name: "Claude Opus 5.5", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByRole("link", { name: "Claude Opus 5", exact: true })).toBeVisible();
   const leader = page.getByRole("row").filter({ hasText: "Claude Sonnet 5.5" }).first();
   await expect(leader).toContainText("3/4");

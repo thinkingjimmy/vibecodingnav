@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-12",
+    kind: "board",
+    source: "lmarena.ai",
+    text: tx(
+      "**WebDev、Android 长程与 Convex**：WebDev 页面日期仍是 11-10，票数 995,980。158 个模型 = 157 行正式名次 + 1 行 AutoEval。Fable 5.2 xHigh 从 AutoEval 转为正式第 1（1836，994 票），旧行已删除。Opus 5.5 Max 第 2（1814）。当前 AutoEval 是 Ernie 5.5 Flash Preview（1668，无名次、无票数），不进综合分。Android Bench 2.0 长程页面日期 11-11，17 行；Carbon High 第 7（23.3），Haiku 5.5 Max 第 10（20.7），Muse Wonder Max 第 12（13.3）。Sonnet 5.5 Max 仍是 40.0。Convex 两列各 44 行，Fable 5.2 仍是 99.11% 与 95.54%；Carbon 有指南第 10（95.54%）、无指南第 6（86.61%）。",
+      "**WebDev, Android long-horizon, and Convex**: the WebDev page date is still Nov 10, with 995,980 votes. 158 models = 157 official ranks plus 1 AutoEval row. Fable 5.2 xHigh moved from AutoEval to official #1 (1836, 994 votes), and the old row was removed. Opus 5.5 Max is #2 (1814). The current AutoEval row is Ernie 5.5 Flash Preview (1668, no rank, no votes) and stays out of the composite. Android Bench 2.0 long-horizon is dated Nov 11 and has 17 rows: Carbon High #7 (23.3), Haiku 5.5 Max #10 (20.7), Muse Wonder Max #12 (13.3). Sonnet 5.5 Max is still 40.0. Each Convex column has 44 rows. Fable 5.2 is still 99.11% and 95.54%. Carbon is #10 with guidelines (95.54%) and #6 without (86.61%).",
+    ),
+  },
+  {
     date: "11-11",
     kind: "board",
     source: "lmarena.ai",

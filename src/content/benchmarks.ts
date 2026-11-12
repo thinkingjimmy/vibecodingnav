@@ -11,12 +11,12 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 const androidCurrent: BenchmarkVersion = {
   id: "2.0",
   label: tx("2.0 长程", "2.0 long-horizon"),
-  asOf: "2026-11-04",
+  asOf: "2026-11-11",
   current: true,
   aliases: ["long", "2"],
   table: "android-long",
   sourceFilter: "weights",
-  trackedCount: 14,
+  trackedCount: 17,
   measures: tx("跨模块、耗时很长的 Android 改造：完整功能，而不是单点修改。", "Long Android changes across modules: a whole feature, not a single edit."),
   method: tx(
     "developer.android.com/bench 的 Long-horizon task results。每一行是模型、推理档和 agent harness。列是通过率、CI、完成度、平均耗时和平均成本。",
@@ -31,8 +31,8 @@ const androidCurrent: BenchmarkVersion = {
     "Pass rates are low and intervals are wide. First place, 24.0–56.0, overlaps second place, 22.0–52.0. Version 1.0 stays complete on this page as an archived version, and is no longer the scenario's current column.",
   ),
   updateCadence: tx(
-    "页面写着 Latest results as of November 4th。本页于 2026-11-09 与 #long-horizon-task-results 逐行核对，14 行全部收录。1.0 表仍是 August 11th 的 32 行，与归档一致，本轮不改。",
-    "The page says Latest results as of November 4th. This page checked all 14 rows against #long-horizon-task-results on 2026-11-09. The 1.0 table is still the August 11th 32-row board and matches the archive, so it was left unchanged.",
+    "页面写着 Latest results as of November 11th。本页于 2026-11-12 与 #long-horizon-task-results 逐行核对，17 行全部收录。新增 Gemini 4 Carbon（high）第 7、Claude Haiku 5.5（max）第 10、Muse Wonder（max，对话框 id 为 muse-wonder-1.0）第 12。DeepSeek V4.1 Flash 1017 这一行来源图标改为 open weights。1.0 表仍是 August 11th 的 32 行，逐列核对后未改。",
+    "The page says Latest results as of November 11th. This page checked all 17 rows against #long-horizon-task-results on 2026-11-12. New rows: Gemini 4 Carbon (high) at #7, Claude Haiku 5.5 (max) at #10, and Muse Wonder (max; dialog id muse-wonder-1.0) at #12. The DeepSeek V4.1 Flash 1017 row’s source icon is now open weights. The 1.0 table is still the August 11th 32-row board and matched column for column, so it was left unchanged.",
   ),
   links: [{ label: "developer.android.com/bench", href: "https://developer.android.com/bench" }],
 };
@@ -147,8 +147,8 @@ export const benchmarks: Benchmark[] = [
     scoreUnit: "",
     compositeKind: "arena",
     asOf: "2026-11-10",
-    votes: "994,531",
-    trackedCount: 156,
+    votes: "995,980",
+    trackedCount: 157,
     table: "webdev",
     sourceFilter: "license",
     domain: tx("前端", "Frontend"),
@@ -165,12 +165,12 @@ export const benchmarks: Benchmark[] = [
       "A Bradley-Terry model turns pairwise votes into a strength score, read a bit like chess Elo: 100 points is about a 64% win rate. ± is the 95% interval. The band under the rank is the statistically plausible rank range.",
     ),
     caveats: tx(
-      "衡量的是人类偏好（好不好看、能不能跑），不是测试通过率；需求多是单页 demo，对大型代码库和长程重构参考有限。同一模型不同推理档位（max / high）分开排名。标“初步”的模型票数少，名次可能变动。标 AutoEval 的行没有官方名次和票数，是自动评测的临时结果，不进入正式名次和综合分。",
-      "It measures human preference (does it look right, does it run), not test pass rate. Briefs are mostly single-page demos, so it says little about large codebases or long refactors. Effort tiers of the same model are ranked separately. Preliminary rows have few votes and can move. An AutoEval row has no official rank and no votes. It is a provisional automated result and stays out of the official ranks and the composite.",
+      "衡量的是人类偏好（好不好看、能不能跑），不是测试通过率；需求多是单页 demo，对大型代码库和长程重构参考有限。同一模型不同推理档位（max / high）分开排名。标“初步”的模型票数少，名次可能变动。标 AutoEval 的行没有官方名次和票数，是自动评测的临时结果，不进入正式名次和综合分。来源后来给出名次和票数时，该行改为正式结果，不再因为以前是 AutoEval 而被排除，也不保留旧的重复行。",
+      "It measures human preference (does it look right, does it run), not test pass rate. Briefs are mostly single-page demos, so it says little about large codebases or long refactors. Effort tiers of the same model are ranked separately. Preliminary rows have few votes and can move. An AutoEval row has no official rank and no votes. It is a provisional automated result and stays out of the official ranks and the composite. When the source later assigns a rank and votes, that row becomes official. A past AutoEval label does not keep it out, and the old duplicate row is not kept.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期 2026-11-10（994,531 票）。来源写 157 个模型：156 行有正式名次，另 1 行是 AutoEval（Claude Fable 5.2 xHigh，1832，名次与票数都是 N/A）。2026-11-11 同步。正式第 1 是 Claude Opus 5.5（max）1813。GPT-6.1 Sol（max）与 Claude Fable 5.1（max）分数同为 1743，来源名次仍是第 5 和第 6。主榜 Cost/Task (P50) 列在可读抓取里没有数值，未写入。",
-      "Updated continuously. This page's board date is 2026-11-10 (994,531 votes). The source says 157 models: 156 have official ranks, and one AutoEval row (Claude Fable 5.2 xHigh, 1832, rank and votes both N/A) does not. Synced 2026-11-11. Official #1 is Claude Opus 5.5 (max) at 1813. GPT-6.1 Sol (max) and Claude Fable 5.1 (max) both score 1743, and the source still ranks them 5th and 6th. The Cost/Task (P50) column had no values in the readable fetch, so it is not stored.",
+      "持续更新。本页榜单日期仍是 2026-11-10，票数改为 995,980。来源写 158 个模型：157 行有正式名次，另 1 行是 AutoEval。2026-11-12 同步。Claude Fable 5.2（xHigh）已从上一份抓取的 AutoEval（1832，无名次、无票数）转为正式第 1（1836，994 票，+22/−22）；旧的 AutoEval 行已删除，没有重复。正式第 2 是 Claude Opus 5.5（max）1814。当前 AutoEval 是 Ernie 5.5 Flash Preview（1668，名次与票数都是 N/A，Baidu，价格 $0.28 / $1.13）。主榜 Cost/Task (P50) 列在可读抓取里没有数值，未写入。",
+      "Updated continuously. This page's board date is still 2026-11-10, and the vote total is now 995,980. The source says 158 models: 157 have official ranks, and one AutoEval row does not. Synced 2026-11-12. Claude Fable 5.2 (xHigh) moved from the previous fetch's AutoEval row (1832, no rank, no votes) to official #1 (1836, 994 votes, +22/−22). The old AutoEval row was removed, so it is not stored twice. Official #2 is Claude Opus 5.5 (max) at 1814. The current AutoEval row is Ernie 5.5 Flash Preview (1668, rank and votes both N/A, Baidu, $0.28 / $1.13). The Cost/Task (P50) column had no values in the readable fetch, so it is not stored.",
     ),
     links: [
       { label: "lmarena.ai/leaderboard/webdev", href: "https://lmarena.ai/leaderboard/webdev" },
@@ -442,8 +442,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Convex",
     scoreUnit: "%",
     compositeKind: "rate",
-    asOf: "2026-11-10",
-    trackedCount: 43,
+    asOf: "2026-11-12",
+    trackedCount: 44,
     kind: "framework",
     version: "92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb",
     domain: tx("框架官方评测", "Framework eval"),
@@ -462,12 +462,12 @@ export const benchmarks: Benchmark[] = [
       "The percent is the pass rate on 112 tasks, kept to two decimals. The with-guidelines and web columns appear only when that model has a run. A missing run is not a zero.",
     ),
     caveats: tx(
-      "Convex 自己出题、自己评分。测的是模型加上 Convex，不是框架之间的高低。前排接近满分。无指南与有指南是两次独立查询，不平均、不相加。experiment=with_guidelines 仍返回服务器错误，有指南列用的是同一部署上不带 experiment 的 leaderboardScores，行数与版本列表的 modelCount 一致。无指南 + 网页本轮没有重抓。",
-      "Convex writes the tasks and grades them. This measures a model together with Convex, not one framework against another. The front is near the ceiling. No Guidelines and With Guidelines are separate queries. They are not averaged or added. experiment=with_guidelines still returns a server error, so the With Guidelines column uses leaderboardScores on the same deployment with no experiment argument. Its row count matches that version list's modelCount. No Guidelines + Web was not refetched.",
+      "Convex 自己出题、自己评分。测的是模型加上 Convex，不是框架之间的高低。前排接近满分。无指南与有指南是两次独立查询，不平均、不相加。experiment=with_guidelines 仍返回服务器错误，有指南列用的是同一部署上不带 experiment 的 leaderboardScores。这次无指南和有指南都是 44 行，与当前版本的 modelCount 44 一致。无指南 + 网页本轮没有重抓。",
+      "Convex writes the tasks and grades them. This measures a model together with Convex, not one framework against another. The front is near the ceiling. No Guidelines and With Guidelines are separate queries. They are not averaged or added. experiment=with_guidelines still returns a server error, so the With Guidelines column uses leaderboardScores on the same deployment with no experiment argument. Both arms are 44 rows this time, matching the current version's modelCount of 44. No Guidelines + Web was not refetched.",
     ),
     updateCadence: tx(
-      "版本仍是 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb。2026-11-10 从 fabulous-panther-525.convex.cloud 的 runs:leaderboardScores 同步：No Guidelines 43 行（映射 38），With Guidelines 42 行（映射 37）。未映射的是 Crouton Alpha、Hy3、Step 5 Preview、MiniMax M3.1 Flash、Laguna S 2.1。DeepSeek V4.1 Flash 与 1017、V4 Flash 的 0423 与 0731 分开保留。无指南 + 网页仍是 2026-10-08 的旧列。无指南第一是 Claude Fable 5.2 95.54%，有指南第一是同一模型 99.11%。",
-      "The version is still 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb. On 2026-11-10 this page synced runs:leaderboardScores from fabulous-panther-525.convex.cloud: 43 No Guidelines rows (38 mapped) and 42 With Guidelines rows (37 mapped). Unmapped: Crouton Alpha, Hy3, Step 5 Preview, MiniMax M3.1 Flash, and Laguna S 2.1. DeepSeek V4.1 Flash stays separate from 1017, and V4 Flash 0423 stays separate from 0731. No Guidelines + Web is still the 2026-10-08 column. Claude Fable 5.2 leads No Guidelines at 95.54% and With Guidelines at 99.11%.",
+      "版本哈希仍是 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb（minted 2026-10-08）。2026-11-12 从 fabulous-panther-525.convex.cloud 的 runs:leaderboardScores 同步：No Guidelines 44 行（映射 39），With Guidelines 44 行（映射 39）。两列都新增 Gemini 4 Carbon：无指南第 6，86.61%（1 次）；有指南第 10，95.54%（1 次）。有指南另新增 DeepSeek V4 Flash（0423 档），与 0731 档分开。未映射的仍是 Crouton Alpha、Hy3、Step 5 Preview、MiniMax M3.1 Flash、Laguna S 2.1。无指南 + 网页仍是 2026-10-08 的旧列。无指南第一仍是 Claude Fable 5.2 95.54%，有指南第一仍是同一模型 99.11%。",
+      "The version hash is still 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb (minted 2026-10-08). On 2026-11-12 this page synced runs:leaderboardScores from fabulous-panther-525.convex.cloud: 44 No Guidelines rows (39 mapped) and 44 With Guidelines rows (39 mapped). Gemini 4 Carbon is new on both: 6th without guidelines at 86.61% (1 run) and 10th with guidelines at 95.54% (1 run). With Guidelines also adds DeepSeek V4 Flash (the 0423 tier), kept separate from 0731. Unmapped: Crouton Alpha, Hy3, Step 5 Preview, MiniMax M3.1 Flash, and Laguna S 2.1. No Guidelines + Web is still the 2026-10-08 column. Claude Fable 5.2 still leads No Guidelines at 95.54% and With Guidelines at 99.11%.",
     ),
     links: [
       { label: "convex.dev/evals", href: "https://www.convex.dev/evals" },
