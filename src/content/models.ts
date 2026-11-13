@@ -54,8 +54,8 @@ export const models: Model[] = [
       slugs: ["claude-sonnet-5-5", "gpt-6-astra", "gpt-6-1-sol", "glm-5-3"],
     },
     summary: tx(
-      "Terminal-Bench 仍排第一。WebDev 正式第 2（max，1814），第 1 是 Fable 5.2（xHigh，1836）。Android Bench 2.0 长程第 2（37.3%）；sudo L7 第 2（45.6%），Sonnet 5.5 以 50.6% 居首。",
-      "Still first on Terminal-Bench. Official #2 on WebDev (max, 1814); Fable 5.2 (xHigh, 1836) is #1. Second on Android Bench 2.0 long-horizon at 37.3%; second on sudo L7 at 45.6%, with Sonnet 5.5 leading at 50.6%.",
+      "Terminal-Bench 仍排第一。WebDev 正式第 2（max，1815），第 1 是 Fable 5.2（xHigh，1838）。Android Bench 2.0 长程第 2（37.3%）。sudo L7 第 3（46.1%）；Fable 5.2 以 52.2% 居首，Sonnet 5.5 第 2（50.6%）。",
+      "Still first on Terminal-Bench. Official #2 on WebDev (max, 1815); Fable 5.2 (xHigh, 1838) is #1. Second on Android Bench 2.0 long-horizon at 37.3%. Third on sudo L7 at 46.1%; Fable 5.2 leads at 52.2%, and Sonnet 5.5 is 2nd at 50.6%.",
     ),
     why: [
       tx(
@@ -77,7 +77,7 @@ export const models: Model[] = [
         "For frontend only, Claude Sonnet 5.5 scores 1773 on WebDev at half the token price ($2 / $10).",
       ),
       tx("对延迟敏感：Android Bench 长程任务平均耗时 56.6 小时。", "Latency: the Android Bench long run averages 56.6 hours."),
-      tx("生产级判断：sudo L7 上落后 Sonnet 5.5（50.6% vs 45.6%）。", "Production judgment: trails Sonnet 5.5 on sudo L7 (50.6% vs 45.6%)."),
+      tx("生产级判断：sudo L7 第 3（46.1%），低于 Fable 5.2 的 52.2% 和 Sonnet 5.5 的 50.6%。", "Production judgment: 3rd on sudo L7 at 46.1%, behind Fable 5.2 at 52.2% and Sonnet 5.5 at 50.6%."),
     ],
   }),
   model({
@@ -91,8 +91,8 @@ export const models: Model[] = [
     priceLabel: "$10 / $50",
     headlines: ["eqbench-creative-writing", "lmarena-webdev"],
     summary: tx(
-      "EQ-Bench Creative Writing v3 第 1（Elo 2176.9）。WebDev 第五，1764 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第五，31.1%。",
-      "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fifth on WebDev at 1764. Tied at 58.2% on Terminal-Bench. Fifth on sudo L7 at 31.1%.",
+      "EQ-Bench Creative Writing v3 第 1（Elo 2176.9）。WebDev 第五，1764 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第六，31.1%。",
+      "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fifth on WebDev at 1764. Tied at 58.2% on Terminal-Bench. Sixth on sudo L7 at 31.1%.",
     ),
     why: [
       tx("EQ-Bench Creative Writing Elo 仍居首；写文档主榜 Slop 反转后由 Inkling Small / Haiku 一带领先。", "Still first on Creative Writing Elo; after Slop inversion the docs primary board is led by Inkling Small / the Haiku band."),
@@ -111,11 +111,11 @@ export const models: Model[] = [
     priceLabel: "$2 / $10",
     headlines: ["android-bench", "sudo-l7", "lmarena-webdev"],
     summary: tx(
-      "Android Bench 2.0 长程第 1（40.0%，max，claude-code）。sudo L7 第 1（50.6% Adaptive/Max）。WebDev 第三，1773 分（xHigh）。Supabase 无 Skills 第 5（77%），有 Skills 86%。",
-      "First on Android Bench 2.0 long-horizon at 40.0% (max, claude-code). First on sudo L7 at 50.6% Adaptive/Max. Third on WebDev at 1773 (xHigh). 5th on Supabase without skills at 77%, 86% with skills.",
+      "Android Bench 2.0 长程第 1（40.0%，max，claude-code）。sudo L7 第 2（50.6% Adaptive/Max），Fable 5.2 以 52.2% 居首。WebDev 第三，1772 分（xHigh）。Supabase 无 Skills 第 5（77%），有 Skills 86%。",
+      "First on Android Bench 2.0 long-horizon at 40.0% (max, claude-code). 2nd on sudo L7 at 50.6% Adaptive/Max; Fable 5.2 leads at 52.2%. Third on WebDev at 1772 (xHigh). 5th on Supabase without skills at 77%, 86% with skills.",
     ),
     why: [
-      tx("Android 长程与 sudo L7 双第一；做前端时比 Opus 少 41 分（1773 对 1814），价格是一半。", "Leads Android long-horizon and sudo L7; for frontend, 41 fewer WebDev points than Opus (1773 vs 1814) at half the price."),
+      tx("Android 长程第一；sudo L7 第 2。做前端时比 Opus 少 43 分（1772 对 1815），价格是一半。", "Leads Android long-horizon and is 2nd on sudo L7. For frontend, 43 fewer WebDev points than Opus (1772 vs 1815) at half the price."),
     ],
     whyNot: [
       tx("Android 长程平均耗时 70.7 小时、成本约 $1575。", "Android long-horizon averages 70.7 hours and about $1575."),
@@ -134,8 +134,8 @@ export const models: Model[] = [
     priceLabel: "$2 / $10",
     headlines: ["android-bench", "sudo-l7"],
     summary: tx(
-      "Terminal-Bench 并列第 3，58.2%，跑分成本 $634.24。sudo L7 第三，33.9%。Android Bench 2.0 长程第三，29.3%（codex）。Supabase 无 Skills 第 4（78%），有 Skills 81%。",
-      "Ties for 3rd on Terminal-Bench at 58.2% and $634.24 a run. Third on sudo L7 at 33.9%. Third on Android Bench 2.0 long-horizon at 29.3% (codex). 4th on Supabase without skills at 78%, 81% with skills.",
+      "Terminal-Bench 并列第 3，58.2%，跑分成本 $634.24。sudo L7 第四，33.9%。Android Bench 2.0 长程第三，29.3%（codex）。Supabase 无 Skills 第 4（78%），有 Skills 81%。",
+      "Ties for 3rd on Terminal-Bench at 58.2% and $634.24 a run. Fourth on sudo L7 at 33.9%. Third on Android Bench 2.0 long-horizon at 29.3% (codex). 4th on Supabase without skills at 78%, 81% with skills.",
     ),
     why: [tx("全栈、脚本和 Android 长程更看成本时，它是更划算的一档。", "When full-stack, scripting, or Android long-horizon work cares about cost, this is the cheaper tier.")],
     whyNot: [tx("不是任何一张活跃榜的第一名。纯前端 Opus 与 Sonnet 仍然更高。", "It is not first on an active board. Opus and Sonnet still score higher for frontend.")],
@@ -186,11 +186,11 @@ export const models: Model[] = [
     fetchedAt: "2026-11-12",
     headlines: ["lmarena-webdev", "convex-evals"],
     summary: tx(
-      "WebDev 正式第 1（xHigh，1836，994 票）。上一份抓取里这一行还是 AutoEval 1832、没有名次和票数；来源给出名次后按正式行计入，旧行不保留。Convex 无指南第 1（95.54%，1 次），有指南第 1（99.11%）。和 Fable 5.1 不是同一行。",
-      "Official #1 on WebDev (xHigh, 1836, 994 votes). On the previous fetch this row was AutoEval at 1832 with no rank and no votes; once the source assigned a rank it counts as official, and the old row is not kept. First on Convex without guidelines at 95.54% (1 run) and first with guidelines at 99.11%. A different row from Fable 5.1.",
+      "WebDev 正式第 1（xHigh，1838，1,215 票）。sudo L7 第 1（Adaptive/Max，52.2%）。上一份抓取里 WebDev 这一行还是 AutoEval，来源给出名次后按正式行计入。Convex 无指南第 1（95.54%，1 次），有指南第 1（99.11%）。和 Fable 5.1 不是同一行。",
+      "Official #1 on WebDev (xHigh, 1838, 1,215 votes). First on sudo L7 (Adaptive/Max, 52.2%). On an earlier fetch the WebDev row was AutoEval; once the source assigned a rank it counts as official. First on Convex without guidelines at 95.54% (1 run) and first with guidelines at 99.11%. A different row from Fable 5.1.",
     ),
     why: [tx("WebDev 正式第 1，两列 Convex 也各是当前来源的第一。列与列、榜与榜没有合成一个分。", "Official #1 on WebDev, and first on each current Convex column. Columns and boards are not merged into one score.")],
-    whyNot: [tx("WebDev 只有 994 票，置信区间 +22/−22，名次范围 1–2，和 Opus 5.5 Max 1814 仍可能互换。", "WebDev has only 994 votes, a +22/−22 interval, and a 1–2 rank band, so it can still trade places with Opus 5.5 Max at 1814.")],
+    whyNot: [tx("WebDev 1,215 票，置信区间 +21/−21，名次范围 1–2，和 Opus 5.5 Max 1815 仍可能互换。", "WebDev has 1,215 votes, a +21/−21 interval, and a 1–2 rank band, so it can still trade places with Opus 5.5 Max at 1815.")],
   }),
   model({
     slug: "claude-opus-4-8",
@@ -314,8 +314,8 @@ export const models: Model[] = [
     license: "proprietary",
     licenseLabel: prop,
     summary: tx(
-      "sudo L7 第 11，10.6%（High）。与 Grok 4.7 同分，排在公开榜末段。",
-      "11th on sudo L7 at 10.6% (High). Same score as Grok 4.7, at the back of the public board.",
+      "sudo L7 第 18，10.6%（High）。Grok 4.7 是 12.2%，排在它前面。",
+      "18th on sudo L7 at 10.6% (High). Grok 4.7 is at 12.2%, ahead of this row.",
     ),
     why: [tx("官方 sudo L7 榜收录了这一档。", "The official sudo L7 board includes this tier.")],
     whyNot: [tx("10.6% 离榜首的 45% 很远，不适合当作生产级判断的默认模型。", "10.6% is far from the 45% leaders. A poor default for production judgment.")],
@@ -394,11 +394,11 @@ export const models: Model[] = [
     fetchedAt: "2026-11-09",
     headlines: ["eqbench-creative-writing", "lmarena-webdev", "android-bench"],
     summary: tx(
-      "EQ-Bench Creative Writing v3 第 2（Elo 2172.6）。WebDev 第 11（max，1688）。Android Bench 2.0 长程第 6（max，24.0%，kimi-code，open weights）。sudo L7 与 Qwen 3.8 Max 并列第 6（16.7%）。与 Kimi K3 不是同一行。",
-      "2nd on EQ-Bench Creative Writing v3 (Elo 2172.6). 10th on WebDev at max (1688). 6th on Android Bench 2.0 long-horizon at max (24.0%, kimi-code, open weights). Ties Qwen 3.8 Max at #6 on sudo L7 (16.7%). A different row from Kimi K3.",
+      "EQ-Bench Creative Writing v3 第 2（Elo 2172.6）。WebDev 第 12（max，1687）。Android Bench 2.0 长程第 6（max，24.0%，kimi-code，open weights）。sudo L7 与 Qwen 3.8 Max 并列第 8（16.7%）。与 Kimi K3 不是同一行。",
+      "2nd on EQ-Bench Creative Writing v3 (Elo 2172.6). 12th on WebDev at max (1687). 6th on Android Bench 2.0 long-horizon at max (24.0%, kimi-code, open weights). Ties Qwen 3.8 Max at #8 on sudo L7 (16.7%). A different row from Kimi K3.",
     ),
     why: [
-      tx("创意写作 Elo 紧贴榜首 Astra；WebDev 在第 11，Android 长程第 6。", "Creative Writing Elo sits just behind leader Astra; 11th on WebDev and 6th on Android long-horizon."),
+      tx("创意写作 Elo 紧贴榜首 Astra；WebDev 在第 12，Android 长程第 6。", "Creative Writing Elo sits just behind leader Astra; 12th on WebDev and 6th on Android long-horizon."),
       tx("已出现在 sudo L7 公开榜。", "Already on the public sudo L7 board."),
     ],
     whyNot: [tx("不要和 Kimi K3 的其他榜合成一个分。", "Do not merge this with Kimi K3's other boards into one score.")],
@@ -546,7 +546,7 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$0.30 / $1.20",
     fetchedAt: "2026-10-20",
-    summary: tx("WebDev 20261017（max）第 17，1664；20260910（max）第 30，1621。图生网页 20260910（max）第 12，1610。Android 长程第 11 是 DeepSeek V4.1 Flash 1017（high）17.3%，这一页现在标成 open weights。LMArena 这两档写的是 MIT。", "WebDev 20261017 (max) is #17 at 1664; 20260910 (max) is #30 at 1621. On Image-to-WebDev, 20260910 (max) is #12 at 1610. Android long-horizon #11 is DeepSeek V4.1 Flash 1017 (high) at 17.3%, and that page now marks the row open weights. LMArena lists both dated tiers as MIT."),
+    summary: tx("WebDev 20261017（max）第 18，1664；20260910（max）第 31，1621。图生网页 20260910（max）第 12，1610。Android 长程第 11 是 DeepSeek V4.1 Flash 1017（high）17.3%，这一页现在标成 open weights。LMArena 这两档写的是 MIT。", "WebDev 20261017 (max) is #18 at 1664; 20260910 (max) is #31 at 1621. On Image-to-WebDev, 20260910 (max) is #12 at 1610. Android long-horizon #11 is DeepSeek V4.1 Flash 1017 (high) at 17.3%, and that page now marks the row open weights. LMArena lists both dated tiers as MIT."),
     why: [tx("MIT，20261017 档在 WebDev 第 16。两档日期在原榜上分开保留。", "MIT. The 20261017 tier is 16th on WebDev. The two dated tiers stay separate on the source board.")],
     whyNot: [tx("融合表仍按既有 modelSlug 取这两档里名次更好的一行，没有新合成第三档。Android 那一行的 closed 标记不要改写成 MIT。", "The fused table still keeps the better rank of these two tiers under the existing model slug; no third tier was merged in. Do not rewrite the Android row's closed-weight mark as MIT.")],
   }),

@@ -9,6 +9,14 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-13
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步。页面日期 2026-11-11，997,838 票。来源 159 个模型 = 158 行正式名次 + 1 行 AutoEval。正式第 1 仍是 Claude Fable 5.2（xHigh）1838（1,215 票）。新增正式行 Gemini 4 Hydrogen（High）第 10（1704，初步，1,997 票），没有单独模型页。AutoEval 仍是 Ernie 5.5 Flash Preview 1668，无官方名次和票数。
+- sudo L7 从 https://surgehq.ai/benchmarks/sudo-l7 的公开主榜同步为 19 行（页面 Last Published 2026-11-12）。Claude Fable 5.2（Adaptive/Max）52.2% 居首；Sonnet 5.5 仍是 50.6%，第 2。新增 MiniMax M3.1 Flash 第 7（18.9%）和 Inkling 2 Small 第 13（14.1%），都不建模型页。不含 DAYJOB / GDP.xlsx。
+- The Slop Index 按现场投票重算 58 行（2,456 票）。机械轴未改口径。反转后最少 slop 为第 1：GPT-5.6 Sol（来源 25.9）、GLM-5.3（来源 29.0）、Haiku 5.5、Grok 4.5、Sonnet 5.5（来源 31.3）。Web、Android 和写文档综合分随这三张榜重算，权重未改。
+
 ## 2026-11-12
 
 ### 变更

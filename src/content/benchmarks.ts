@@ -146,9 +146,9 @@ export const benchmarks: Benchmark[] = [
     shortName: "WebDev",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-11-10",
-    votes: "995,980",
-    trackedCount: 157,
+    asOf: "2026-11-11",
+    votes: "997,838",
+    trackedCount: 158,
     table: "webdev",
     sourceFilter: "license",
     domain: tx("前端", "Frontend"),
@@ -169,8 +169,8 @@ export const benchmarks: Benchmark[] = [
       "It measures human preference (does it look right, does it run), not test pass rate. Briefs are mostly single-page demos, so it says little about large codebases or long refactors. Effort tiers of the same model are ranked separately. Preliminary rows have few votes and can move. An AutoEval row has no official rank and no votes. It is a provisional automated result and stays out of the official ranks and the composite. When the source later assigns a rank and votes, that row becomes official. A past AutoEval label does not keep it out, and the old duplicate row is not kept.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期仍是 2026-11-10，票数改为 995,980。来源写 158 个模型：157 行有正式名次，另 1 行是 AutoEval。2026-11-12 同步。Claude Fable 5.2（xHigh）已从上一份抓取的 AutoEval（1832，无名次、无票数）转为正式第 1（1836，994 票，+22/−22）；旧的 AutoEval 行已删除，没有重复。正式第 2 是 Claude Opus 5.5（max）1814。当前 AutoEval 是 Ernie 5.5 Flash Preview（1668，名次与票数都是 N/A，Baidu，价格 $0.28 / $1.13）。主榜 Cost/Task (P50) 列在可读抓取里没有数值，未写入。",
-      "Updated continuously. This page's board date is still 2026-11-10, and the vote total is now 995,980. The source says 158 models: 157 have official ranks, and one AutoEval row does not. Synced 2026-11-12. Claude Fable 5.2 (xHigh) moved from the previous fetch's AutoEval row (1832, no rank, no votes) to official #1 (1836, 994 votes, +22/−22). The old AutoEval row was removed, so it is not stored twice. Official #2 is Claude Opus 5.5 (max) at 1814. The current AutoEval row is Ernie 5.5 Flash Preview (1668, rank and votes both N/A, Baidu, $0.28 / $1.13). The Cost/Task (P50) column had no values in the readable fetch, so it is not stored.",
+      "持续更新。本页榜单日期 2026-11-11，票数 997,838。来源写 159 个模型：158 行有正式名次，另 1 行是 AutoEval。2026-11-13 同步。正式第 1 仍是 Claude Fable 5.2（xHigh）1838（+21/−21，1,215 票）。正式第 2 是 Claude Opus 5.5（max）1815。新增正式行 Gemini 4 Hydrogen（High）第 10（1704，初步，1,997 票，价格 $1.50 / $7.50，context N/A），没有单独模型页。当前 AutoEval 仍是 Ernie 5.5 Flash Preview（1668，名次与票数都是 N/A）。主榜 Cost/Task (P50) 列在可读抓取里没有数值，未写入。",
+      "Updated continuously. This page's board date is 2026-11-11, with 997,838 votes. The source says 159 models: 158 have official ranks, and one AutoEval row does not. Synced 2026-11-13. Official #1 is still Claude Fable 5.2 (xHigh) at 1838 (+21/−21, 1,215 votes). Official #2 is Claude Opus 5.5 (max) at 1815. New official row: Gemini 4 Hydrogen (High) at #10 (1704, preliminary, 1,997 votes, $1.50 / $7.50, context N/A), with no separate model page. The current AutoEval row is still Ernie 5.5 Flash Preview (1668, rank and votes both N/A). The Cost/Task (P50) column had no values in the readable fetch, so it is not stored.",
     ),
     links: [
       { label: "lmarena.ai/leaderboard/webdev", href: "https://lmarena.ai/leaderboard/webdev" },
@@ -263,8 +263,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Slop Index",
     scoreUnit: "",
     compositeKind: "rate",
-    asOf: "2026-10-28",
-    votes: "2,170",
+    asOf: "2026-11-13",
+    votes: "2,456",
     trackedCount: 58,
     table: "score",
     domain: tx("文档与文案", "Docs and copy"),
@@ -285,8 +285,8 @@ export const benchmarks: Benchmark[] = [
       "Arena votes are still accumulating, so the live Elo moves. Mechanical axes are normalized within this board. It does not measure code or UI quality.",
     ),
     updateCadence: tx(
-      "来源 https://theslopindex.com/leaderboard ，开放数据 https://github.com/hgaddipati1118/slop-index 。本页于 2026-10-28 抓取全部 58 行（当时 2,170 票）。反转后 Inkling Small 第 1（100 − 24 = 76）；Haiku 5.5 约第 4（同分带）。",
-      "Source https://theslopindex.com/leaderboard ; open data https://github.com/hgaddipati1118/slop-index . This page fetched all 58 rows on 2026-10-28 (2,170 votes then). After inversion Inkling Small leads (100 − 24 = 76); Haiku 5.5 is about 4th in a tied band.",
+      "来源 https://theslopindex.com/leaderboard 。机械轴来自同站 /bench.json（run full-merged-v5，58 个模型、64,636 条生成）；人群 Elo 来自 /api/leaderboard?mode=v1&domain=all。本页于 2026-11-13 重算全部 58 行，当时 2,456 票。页面把 Slop Score 四舍五入成整数，越高越渣、#1 最渣。本站分数是 100 − 该整数，最少 slop 为第 1。反转后 GPT-5.6 Sol 第 1（来源 25.9，页面显示 26，本站 74）；GLM-5.3 第 2（来源 29.0）；Sonnet 5.5 第 5（来源 31.3）。",
+      "Source https://theslopindex.com/leaderboard . Mechanical axes come from /bench.json on that site (run full-merged-v5, 58 models, 64,636 generations); crowd Elo comes from /api/leaderboard?mode=v1&domain=all. This page recomputed all 58 rows on 2026-11-13, at 2,456 votes. The page rounds Slop Score to an integer; higher is worse and #1 is sloppiest. This site stores 100 − that integer, so least slop is #1. After inversion GPT-5.6 Sol is #1 (source 25.9, page shows 26, this site 74); GLM-5.3 is #2 (source 29.0); Sonnet 5.5 is #5 (source 31.3).",
     ),
     links: [
       { label: "theslopindex.com/leaderboard", href: "https://theslopindex.com/leaderboard" },
@@ -336,8 +336,8 @@ export const benchmarks: Benchmark[] = [
     scoreUnit: "%",
     compositeKind: "rate",
     scope: "general",
-    asOf: "2026-10-28",
-    trackedCount: 16,
+    asOf: "2026-11-12",
+    trackedCount: 19,
     table: "score",
     domain: tx("通用编码能力", "General coding ability"),
     measures: tx(
@@ -357,8 +357,8 @@ export const benchmarks: Benchmark[] = [
       "The board is new, the set is 60 tasks, and the tasks stay private. Models grade against expert rubrics. Surge is an AI data vendor. Per-task costs in the blog are approximate; the leaderboard page has no cost column.",
     ),
     updateCadence: tx(
-      "博客发布于 2026-10-08。本页于 2026-10-28 同步公开 sudo L7 表全部 16 行（不含同页 DAYJOB / GDP.xlsx 侧榜）。Sonnet 5.5 Adaptive/Max 50.6% 居首；Kimi K3.1 Pro 与 Qwen 3.8 Max 并列第 6（16.7%）。",
-      "The blog was published on 2026-10-08. This page synced all 16 public sudo L7 rows on 2026-10-28 (not the DAYJOB / GDP.xlsx side boards on the same page). Sonnet 5.5 Adaptive/Max leads at 50.6%; Kimi K3.1 Pro ties Qwen 3.8 Max at #6 (16.7%).",
+      "博客发布于 2026-10-08。页面 Last Published 2026-11-12。本页于 2026-11-13 同步公开 sudo L7 表全部 19 行（不含同页 DAYJOB / GDP.xlsx 侧榜）。榜单 CMS 的 rank 字段全是 1，名次按分数从高到低、同分并列。Claude Fable 5.2 Adaptive/Max 52.2% 居首；Sonnet 5.5 仍是 50.6%，落到第 2。新增 MiniMax M3.1 Flash（Max）第 7（18.9%）和 Inkling 2 Small（xHigh）第 13（14.1%），都没有单独模型页。Kimi K3.1 Pro 与 Qwen 3.8 Max 并列第 8（16.7%）。",
+      "The blog was published on 2026-10-08. The page's Last Published time is 2026-11-12. This page synced all 19 public sudo L7 rows on 2026-11-13 (not the DAYJOB / GDP.xlsx side boards on the same page). The CMS rank field is 1 on every row, so ranks follow score order, with ties sharing a rank. Claude Fable 5.2 Adaptive/Max leads at 52.2%. Sonnet 5.5 is still 50.6% and is now 2nd. New rows: MiniMax M3.1 Flash (Max) at #7 (18.9%) and Inkling 2 Small (xHigh) at #13 (14.1%), neither with its own model page. Kimi K3.1 Pro ties Qwen 3.8 Max at #8 (16.7%).",
     ),
     links: [
       { label: "surgehq.ai/benchmarks/sudo-l7", href: "https://surgehq.ai/benchmarks/sudo-l7" },

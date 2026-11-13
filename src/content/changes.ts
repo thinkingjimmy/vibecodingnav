@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-13",
+    kind: "board",
+    source: "lmarena.ai",
+    text: tx(
+      "**WebDev、sudo L7 与 Slop Index**：WebDev 页面日期 11-11，997,838 票。159 个模型 = 158 行正式名次 + 1 行 AutoEval。Fable 5.2 xHigh 仍是正式第 1（1838，1,215 票）。新增 Gemini 4 Hydrogen High 第 10（1704，初步）。Ernie 5.5 Flash Preview 1668 仍是 AutoEval，不进综合分。sudo L7 19 行，Fable 5.2 Adaptive/Max 52.2% 第 1，Sonnet 5.5 50.6% 第 2；MiniMax M3.1 Flash 第 7（18.9%）。Slop Index 58 行按现场投票重算，反转后 GPT-5.6 Sol 第 1（来源 slop 25.9），GLM-5.3 第 2（29.0），Sonnet 5.5 第 5（31.3）。",
+      "**WebDev, sudo L7, and the Slop Index**: the WebDev page date is Nov 11, with 997,838 votes. 159 models = 158 official ranks plus 1 AutoEval row. Fable 5.2 xHigh is still official #1 (1838, 1,215 votes). Gemini 4 Hydrogen High is new at #10 (1704, preliminary). Ernie 5.5 Flash Preview at 1668 is still AutoEval and stays out of the composite. sudo L7 has 19 rows. Fable 5.2 Adaptive/Max leads at 52.2%, and Sonnet 5.5 is 2nd at 50.6%. MiniMax M3.1 Flash is #7 (18.9%). The Slop Index recomputed all 58 rows from the live vote. After inversion GPT-5.6 Sol is #1 (source slop 25.9), GLM-5.3 is #2 (29.0), and Sonnet 5.5 is #5 (31.3).",
+    ),
+  },
+  {
     date: "11-12",
     kind: "board",
     source: "lmarena.ai",

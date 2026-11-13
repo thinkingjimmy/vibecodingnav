@@ -79,7 +79,7 @@ describe("picks", () => {
     const official = webRows.filter((row) => isOfficialBoardRow(row));
     const provisional = webRows.filter((row) => row.provisional);
     expect(official[0]?.modelSlug).toBe(picks.top?.modelSlug);
-    expect(picks.top).toMatchObject({ modelSlug: "claude-fable-5-2", score: 1836, rank: 1 });
+    expect(picks.top).toMatchObject({ modelSlug: "claude-fable-5-2", score: 1838, rank: 1 });
     expect(provisional).toHaveLength(1);
     expect(provisional[0]).toMatchObject({ label: "ernie-5.5-flash-preview", score: 1668, votes: "N/A" });
     expect(provisional[0]?.rank).toBeUndefined();
@@ -98,7 +98,7 @@ describe("picks", () => {
     expect(getHome("zh").cards.every((card) => card.rows.every((row) => !row.name.includes("Ernie")))).toBe(true);
     expect(getBenchmark("zh", "lmarena-webdev")?.provisional?.[0]).toMatchObject({ name: "ernie-5.5-flash-preview", score: "1668", votes: "N/A" });
     expect(picks.value?.modelSlug).toBe("claude-opus-5-5");
-    expect(picks.value?.score).toBe(1814);
+    expect(picks.value?.score).toBe(1815);
     expect(picks.open?.modelSlug).toBe("deepseek-v4-1-flash");
   });
 
@@ -120,16 +120,19 @@ describe("picks", () => {
       "https://surgehq.ai/blog/sudo-l7",
     ]);
     expect(getBenchmark("zh", "sudo-l7")?.leaderboard?.map((row) => [row.name, row.scoreNumber])).toEqual([
+      ["Claude Fable 5.2", 52.2],
       ["Claude Sonnet 5.5", 50.6],
-      ["Claude Opus 5.5", 45.6],
+      ["Claude Opus 5.5", 46.1],
       ["GPT 6.1 Sol", 33.9],
       ["Claude Fable 5.1", 32.2],
       ["GPT 6 Astra", 31.1],
+      ["MiniMax M3.1 Flash", 18.9],
       ["Qwen 3.8 Max", 16.7],
       ["Kimi K3.1 Pro", 16.7],
       ["Gemini 4 Argon", 16.1],
-      ["Muse Wonder", 16.1],
+      ["Muse Wonder 1.0", 16.1],
       ["Hy4 Preview", 15.6],
+      ["Inkling 2 Small", 14.1],
       ["Mistral Large 4", 13.9],
       ["Muse Spark 1.3", 12.8],
       ["Kimi K3", 12.2],
@@ -153,7 +156,7 @@ describe("picks", () => {
     ]);
     expect(all).toEqual(home);
     expect(getBenchmark("zh", "slop-index")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(resolvePicks("write-docs").top?.modelSlug).toBe("grok-4-5");
+    expect(resolvePicks("write-docs").top?.modelSlug).toBe("gpt-5-6-sol");
     expect(getScenario("zh", "refactor")).toBeUndefined();
     expect(getScenario("zh", "open-frontend")).toBeUndefined();
     expect(getScenario("zh", "saas")).toBeUndefined();
@@ -173,23 +176,23 @@ describe("picks", () => {
 
   it("keeps each public board complete and in source order", () => {
     const web = getScenario("zh", "web-frontend");
-    expect(web?.boards[0]?.rows).toHaveLength(157);
-    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-fable-5.2-xhigh", rank: 1, score: "1836" });
-    expect(web?.boards[0]?.rows[1]).toMatchObject({ name: "claude-opus-5.5-max", rank: 2, score: "1814" });
+    expect(web?.boards[0]?.rows).toHaveLength(158);
+    expect(web?.boards[0]?.rows[0]).toMatchObject({ name: "claude-fable-5.2-xhigh", rank: 1, score: "1838" });
+    expect(web?.boards[0]?.rows[1]).toMatchObject({ name: "claude-opus-5.5-max", rank: 2, score: "1815" });
     expect(web?.boards[0]?.rows[3]).toMatchObject({ name: "gemini-4-carbon-high", rank: 4, score: "1768" });
     expect(web?.boards[0]?.rows[5]).toMatchObject({ name: "gpt-6.1-sol-max", rank: 6, score: "1743" });
     expect(web?.boards[0]?.rows[6]).toMatchObject({ name: "claude-fable-5.1-max", rank: 7, score: "1742" });
-    expect(web?.boards[0]?.rows[10]).toMatchObject({ name: "kimi-k3.1-pro-max", rank: 11, score: "1688" });
-    expect(web?.boards[0]?.rows[12]).toMatchObject({ name: "gpt-6.1-terra-max", rank: 13, score: "1679" });
-    expect(web?.boards[0]?.rows[21]).toMatchObject({ name: "inkling-2-small", rank: 22, score: "1646" });
-    expect(web?.boards[0]?.rows[17]).toMatchObject({ name: "kimi-k3-max", rank: 18, score: "1658" });
-    expect(web?.boards[0]?.rows[20]).toMatchObject({ name: "muse-wonder-max", rank: 21, score: "1649" });
+    expect(web?.boards[0]?.rows[9]).toMatchObject({ name: "gemini-4-hydrogen-high", rank: 10, score: "1704" });
+    expect(web?.boards[0]?.rows[11]).toMatchObject({ name: "kimi-k3.1-pro-max", rank: 12, score: "1687" });
+    expect(web?.boards[0]?.rows[13]).toMatchObject({ name: "gpt-6.1-terra-max", rank: 14, score: "1678" });
+    expect(web?.boards[0]?.rows[20]).toMatchObject({ name: "muse-spark-1.3-max", rank: 21, score: "1655" });
+    expect(web?.boards[0]?.rows[22]).toMatchObject({ name: "inkling-2-small", rank: 23, score: "1647" });
     expect(web?.rows.some((row) => row.price === "$0.6k")).toBe(false);
 
     const android = getScenario("zh", "android-app");
     expect(android?.boards.map((board) => [board.id, board.rows.length])).toEqual([
       ["current", 17],
-      ["sudo", 16],
+      ["sudo", 19],
       ["deepswe", 28],
       ["frontiercode", 102],
     ]);
@@ -228,8 +231,10 @@ describe("picks", () => {
       ["creative", 146],
     ]);
     const slop = writeDocs?.boards[0]?.rows ?? [];
-    expect(slop[0]).toMatchObject({ name: "Inkling Small", rank: 1, score: "76", price: "$0.82" });
-    expect(slop[57]).toMatchObject({ name: "Gemini 3.8 Flash", rank: 58, score: "35" });
+    expect(slop[0]).toMatchObject({ name: "GPT-5.6 Sol", rank: 1, score: "74", price: "$17.5" });
+    expect(slop[1]).toMatchObject({ name: "GLM-5.3", rank: 2, score: "71" });
+    expect(slop[4]).toMatchObject({ name: "Sonnet 5.5", rank: 5, score: "69" });
+    expect(slop[57]).toMatchObject({ name: "Seed 2.1 Turbo", rank: 58, score: "35" });
     expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(58);
     const creative = getBenchmark("zh", "eqbench-creative-writing");
     expect(creative?.leaderboard).toHaveLength(146);
@@ -237,7 +242,7 @@ describe("picks", () => {
     expect(creative?.leaderboard?.[1]).toMatchObject({ name: "kimi-k3.1-pro", rank: 2, score: "2172.6" });
     expect(creative?.leaderboard?.[9]).toMatchObject({ name: "muse-wonder", rank: 10, score: "2007.0" });
     expect(creative?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(157);
+    expect(getBenchmark("zh", "lmarena-webdev")?.leaderboard).toHaveLength(158);
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
     expect(androidBench?.versions?.[0]?.current).toBe(true);
@@ -259,8 +264,8 @@ describe("picks", () => {
       ["slop-index", "像真人", "article", 1],
       ["eqbench-creative-writing", "创意写作", "pen-nib", 0.6],
     ]);
-    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT-6 Astra/);
-    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/1/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GLM-5\.3/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/0 项第一/);
     expect(getScenario("en", "web-frontend")?.takeaway?.sentence).toMatch(/first on/i);
     expect(web?.fusion.columns.map((column) => [column.id, column.weight])).toEqual([
       ["lmarena-webdev", 1],
@@ -307,12 +312,12 @@ describe("picks", () => {
       "Next.js 任务",
       "React 任务",
     ]);
-    expect(web?.scoring.chart?.caption).toContain("sudo L7");
-    expect(web?.scoring.chart?.caption).toContain("第 2");
+    expect(web?.scoring.chart?.caption).toContain("LMArena WebDev");
+    expect(web?.scoring.chart?.caption).toContain("第 3");
     expect(web?.scoring.worked).toMatchObject({
-      key: "model:claude-sonnet-5-5",
-      name: "Claude Sonnet 5.5",
-      composite: 89,
+      key: "model:claude-fable-5-2",
+      name: "Claude Fable 5.2",
+      composite: 87,
     });
     expect(web?.scoring.worked?.rows.map((row) => row.board)).toEqual([
       "盲测投票",
@@ -325,17 +330,17 @@ describe("picks", () => {
     ]);
     expect(web?.scoring.worked?.rows).toHaveLength(7);
     const opus = web?.fusion.rows.find((row) => row.slug === "claude-opus-5-5");
-    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([2, 1, 2, null, 2, 1, 1]);
+    expect(opus?.cells.map((cell) => cell?.rank ?? null)).toEqual([2, 1, 3, null, 2, 1, 1]);
     expect(opus).toMatchObject({ compositeLabel: "95", count: 6, total: 7 });
-    expect(opus?.cells[0]?.tip).toContain("1814");
+    expect(opus?.cells[0]?.tip).toContain("1815");
     expect(opus?.cells[0]?.tip).toContain("claude-opus-5.5-max");
     expect(opus?.cells[0]?.tip).toContain("max");
     const fable = web?.fusion.rows.find((row) => row.slug === "claude-fable-5-1");
-    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([7, 3, 4, null, 7, 4, 3]);
+    expect(fable?.cells.map((cell) => cell?.rank ?? null)).toEqual([7, 3, 5, null, 7, 4, 3]);
     expect(fable).toMatchObject({ compositeLabel: "79", count: 6 });
     expect(web?.fusion.rows[0]?.slug).toBe("claude-opus-5-5");
     expect(web?.fusion.rows[1]?.slug).toBe("claude-sonnet-5-5");
-    expect(web?.fusion.rows[2]?.slug).toBe("gpt-6-astra");
+    expect(web?.fusion.rows[2]?.slug).toBe("claude-fable-5-2");
 
     const android = getScenario("zh", "android-app");
     expect(android?.fusion.columns.map((column) => [column.id, column.label, column.weight])).toEqual([
@@ -355,13 +360,13 @@ describe("picks", () => {
       3,
       11,
     ]);
-    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([2, 2, null, 2]);
+    expect(opus55?.cells.map((cell) => cell?.rank ?? null)).toEqual([2, 3, null, 2]);
     expect(opus55).toMatchObject({ compositeLabel: "92", count: 3, total: 4 });
     expect(opus55?.cells[0]?.tip).toContain("claude-code");
     expect(opus55?.cells[0]?.tip).toContain("37.3");
     expect(android?.fusion.rows[0]?.slug).toBe("claude-sonnet-5-5");
     expect(android?.fusion.rows.map((row) => [row.slug, row.compositeLabel]).slice(0, 5)).toEqual([
-      ["claude-sonnet-5-5", "95"],
+      ["claude-sonnet-5-5", "94"],
       ["claude-opus-5-5", "92"],
       ["gpt-6-astra", "79"],
       ["gpt-6-1-sol", "75"],
@@ -451,9 +456,9 @@ describe("picks", () => {
     expect(home[0]?.rows[0]).toMatchObject({ name: "Claude Opus 5.5", rankLabel: "1", score: "95" });
     expect(home[0]?.rows[0]?.detail?.title).toContain("综合 95");
     expect(home[1]?.sources?.map((source) => source.name)).toEqual(["Android Bench", "sudo L7", "DeepSWE v1.1", "FrontierCode"]);
-    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Sonnet 5.5", rankLabel: "1", score: "95" });
+    expect(home[1]?.rows[0]).toMatchObject({ name: "Claude Sonnet 5.5", rankLabel: "1", score: "94" });
     expect(home[1]?.rows.map((row) => [row.name, row.score])).toEqual([
-      ["Claude Sonnet 5.5", "95"],
+      ["Claude Sonnet 5.5", "94"],
       ["Claude Opus 5.5", "92"],
       ["GPT-6 Astra", "79"],
       ["GPT-6.1 Sol", "75"],
@@ -463,11 +468,11 @@ describe("picks", () => {
     expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1", "FrontierCode"]);
     expect(home[3]?.title).toBe("写文档和文案");
     expect(home[3]?.sources?.map((source) => source.name)).toEqual(["The Slop Index", "EQ-Bench Creative Writing v3"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT-6 Astra", rankLabel: "1" });
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GLM-5.3", rankLabel: "1" });
     expect(home[3]?.rows.map((row) => row.name).slice(0, 3)).toEqual([
-      "GPT-6 Astra",
+      "GLM-5.3",
       "GPT 6 Sol",
-      "Claude Haiku 5.5",
+      "Claude Fable 5.1",
     ]);
     expect(home).toHaveLength(4);
   });

@@ -3,18 +3,18 @@
 > L2 | 父级: ../README.md
 
 成员清单
-webdev.json: LMArena WebDev 158 行，2026-11-12 从 lmarena.ai/leaderboard/webdev 的公开榜解析（页面日期仍是 2026-11-10，995,980 票）。157 行有正式名次。Claude Fable 5.2 xHigh 从上一份的 provisional=autoeval（1832，votes N/A，无 rank）转为正式第 1（1836，994 票）；旧 AutoEval 行已删除。当前 1 行 provisional=autoeval 是 Ernie 5.5 Flash Preview（Baidu，1668，votes N/A，无 rank，无 modelSlug），不进综合分。主榜 Cost/Task (P50) 列在可读抓取中为空，未入库
+webdev.json: LMArena WebDev 159 行，2026-11-13 从 lmarena.ai/leaderboard/webdev 的公开榜解析（页面日期 2026-11-11，997,838 票）。158 行有正式名次。Claude Fable 5.2 xHigh 仍是正式第 1（1838，1,215 票）。新增正式行 gemini-4-hydrogen-high 第 10（1704，初步），无 modelSlug。1 行 provisional=autoeval 仍是 Ernie 5.5 Flash Preview（1668，votes N/A，无 rank）。主榜 Cost/Task (P50) 列在可读抓取中为空，未入库
 convex-no.json: Convex No Guidelines 44 行，2026-11-12 从 fabulous-panther-525.convex.cloud runs:leaderboardScores experiment=no_guidelines 抓取。当前版本哈希仍是 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb。新增 google/gemini-4-carbon
 convex-with.json: Convex With Guidelines 44 行，同日同部署的 leaderboardScores 空参数查询。experiment=with_guidelines 仍返回服务器错误。新增 google/gemini-4-carbon 与 deepseek/deepseek-v4-flash。无指南 + 网页没有重抓
 image-to-webdev.json: LMArena Image-to-WebDev 66 行，2026-11-11 从 lmarena.ai/leaderboard/image-to-webdev 解析，榜单日期 2026-11-10，210,832 票。新增 DeepSeek-V4.1-Flash-20261017（max）第 13，与 20260910 档分开。pareto 只属于帕累托页列出的 6 个模型；paretoTaskCost 是该页印出的单任务成本；paretoPrice 与 blend 仍是榜上 token 价的 (输入 + 3×输出) / 4，因为主榜没有单任务成本数值
 android-1.json: Android Bench 历史版本 1.0 的 32 行，基准 slug 是 android-bench。2026-11-09 与页面 August 11th 表逐格核对，32 行一致，未改
 android-long.json: Android Bench 当前版本 2.0 长程的 17 行，同一基准 slug。2026-11-12 从 developer.android.com/bench 的 #long-horizon-task-results 解析，页面写 Latest results as of November 11th。新增 Gemini 4 Carbon（high）第 7、Claude Haiku 5.5（max）第 10、Muse Wonder（max）第 12。Muse 的对话框 id 是 meta/muse-wonder-1.0，展示名是 Muse Wonder，映射到 muse-wonder。DeepSeek V4.1 Flash 1017 的权重图标现为 open。1.0 的 32 行与 August 11th 页面逐列一致，未改。effort 是来源写在模型名上的推理档
 terminal.json: Terminal-Bench 4.0 的 35 行 display
-sudo.json: sudo L7 的 16 行，按页面顺序（不含同页 DAYJOB / GDP.xlsx）
+sudo.json: sudo L7 的 19 行，2026-11-13 从 surgehq.ai/benchmarks/sudo-l7 的公开主榜解析（页面 Last Published 2026-11-12，不含 DAYJOB / GDP.xlsx）。同分并列。MiniMax M3.1 Flash 与 Inkling 2 Small 没有 modelSlug
 deepswe.json: DeepSWE v1.1 的 28 行 Best 配置，2026-10-11 从 https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json 抓取（generated_at 2026-09-22）；每模型只保留 Pass@1 最高的一档推理配置
 frontiercode.json: FrontierCode 2.0 Main 的 102 行（26 模型 × 全部推理档），2026-10-28 从 https://cognition.com/data/frontier-code-2.0/data.json 抓取；# 为最佳推理档名次；完整 JSON 含 Obsidian 3（公开 HTML 表省略）
 frontiercode-1.json: FrontierCode 1.1 Main 的 130 行归档，2026-10-13 从旧 data.json 的 v1_1 抓取
-slop-index.json: The Slop Index 58 行，2026-10-28 从 theslopindex.com/leaderboard 抓取（2,170 票）；来源是 slop 越高越差、#1 最渣，本站反转为最少 slop 为 #1，score 存 100 − Slop Score
+slop-index.json: The Slop Index 58 行，2026-11-13 用 theslopindex.com/bench.json 的机械轴和 /api/leaderboard 的现场 Elo 重算（2,456 票）。来源 Slop Score 越高越差、#1 最渣；本站反转，score 存 100 − 页面四舍五入后的 Slop Score。sourceSlop 是该整数，sourceSlopRaw 是未四舍五入的来源分，arena/concise/templating/rhythm/tells 是页面上各轴的整数
 eqbench-creative-writing.json: EQ-Bench Creative Writing v3 146 行，2026-10-29 从 eqbench.com/creative_writing.html 的 creative_writing.js（v=1.0.91）嵌入 CSV 抓取；主指标归一化 Elo（越高越好）
 
 这些文件是来源页的逐行副本。`results.ts` 只做模型页映射，不删行、不重排。框架评测的行写在 `results.ts`，不进这些 JSON。Slop Index 是唯一在入库前反转名次与分数方向的榜，说明写在基准与场景文案里。

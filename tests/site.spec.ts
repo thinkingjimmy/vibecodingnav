@@ -95,7 +95,7 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await page.goto("/zh/benchmarks/lmarena-webdev/");
   await expect(page.getByText("前端 Web 开发")).toBeVisible();
   await expect(page.getByRole("link", { name: "claude-fable-5.2-xhigh" })).toBeVisible();
-  await expect(page.getByText("1836").first()).toBeVisible();
+  await expect(page.getByText("1838").first()).toBeVisible();
   await expect(page.getByRole("heading", { name: "AutoEval，非正式" })).toBeVisible();
   await expect(page.getByText("1668").first()).toBeVisible();
   await expect(page.getByRole("row").filter({ hasText: "claude-fable-5.2-xhigh" }).getByText("1", { exact: true })).toBeVisible();
@@ -108,7 +108,7 @@ test("web benchmark keeps the full source board", async ({ page }) => {
   await expect(page.getByText("devstral-medium-2507")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "deepseek-v4.1-flash-20261017-max" })).toBeVisible();
   const deepseek = page.getByRole("row").filter({ hasText: "deepseek-v4.1-flash-20261017-max" });
-  await expect(deepseek.getByText("17", { exact: true })).toBeVisible();
+  await expect(deepseek.getByText("18", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: /显示全部/ }).click();
   await expect(page.getByText("granite-4.1-8b")).toBeVisible();
 });
@@ -333,8 +333,8 @@ test("web scenario scoring modal and fused table sticky head", async ({ page }) 
   await expect(scoringDialog.getByText("综合分怎么算")).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "公式" })).toBeVisible();
   await expect(scoringDialog.getByRole("heading", { name: "一个例子" })).toBeVisible();
-  await expect(scoringDialog.getByText(/Claude Sonnet 5\.5 的综合分是 89/)).toBeVisible();
-  await expect(scoringDialog.getByText(/拿下 sudo L7 第 1/)).toBeVisible();
+  await expect(scoringDialog.getByText(/Claude Fable 5\.2 的综合分是 87/)).toBeVisible();
+  await expect(scoringDialog.getByText(/拿下 LMArena WebDev 第 1/)).toBeVisible();
   await expect(scoringDialog.getByText("Esc 关闭")).toHaveCount(0);
   const scoringClose = scoringDialog.getByRole("button", { name: "关闭" });
   await expect(scoringClose).toBeVisible();

@@ -1,6 +1,15 @@
 [
   {
     "rank": 1,
+    "label": "Claude Fable 5.2",
+    "effort": "Adaptive/Max",
+    "score": 52.2,
+    "scoreText": "52.2",
+    "modelSlug": "claude-fable-5-2",
+    "vendor": "anthropic"
+  },
+  {
+    "rank": 2,
     "label": "Claude Sonnet 5.5",
     "effort": "Adaptive/Max",
     "score": 50.6,
@@ -9,16 +18,16 @@
     "vendor": "anthropic"
   },
   {
-    "rank": 2,
+    "rank": 3,
     "label": "Claude Opus 5.5",
     "effort": "Adaptive/Max",
-    "score": 45.6,
-    "scoreText": "45.6",
+    "score": 46.1,
+    "scoreText": "46.1",
     "modelSlug": "claude-opus-5-5",
     "vendor": "anthropic"
   },
   {
-    "rank": 3,
+    "rank": 4,
     "label": "GPT 6.1 Sol",
     "effort": "Max reasoning",
     "score": 33.9,
@@ -27,7 +36,7 @@
     "vendor": "openai"
   },
   {
-    "rank": 4,
+    "rank": 5,
     "label": "Claude Fable 5.1",
     "effort": "Adaptive/Max",
     "score": 32.2,
@@ -36,7 +45,7 @@
     "vendor": "anthropic"
   },
   {
-    "rank": 5,
+    "rank": 6,
     "label": "GPT 6 Astra",
     "effort": "Max reasoning",
     "score": 31.1,
@@ -45,7 +54,15 @@
     "vendor": "openai"
   },
   {
-    "rank": 6,
+    "rank": 7,
+    "label": "MiniMax M3.1 Flash",
+    "effort": "Max reasoning",
+    "score": 18.9,
+    "scoreText": "18.9",
+    "letter": "MM"
+  },
+  {
+    "rank": 8,
     "label": "Qwen 3.8 Max",
     "effort": "xHigh reasoning",
     "score": 16.7,
@@ -54,7 +71,7 @@
     "vendor": "qwen"
   },
   {
-    "rank": 6,
+    "rank": 8,
     "label": "Kimi K3.1 Pro",
     "effort": "Max reasoning",
     "score": 16.7,
@@ -63,7 +80,7 @@
     "vendor": "kimi"
   },
   {
-    "rank": 8,
+    "rank": 10,
     "label": "Gemini 4 Argon",
     "effort": "High reasoning",
     "score": 16.1,
@@ -72,8 +89,8 @@
     "vendor": "google"
   },
   {
-    "rank": 8,
-    "label": "Muse Wonder",
+    "rank": 10,
+    "label": "Muse Wonder 1.0",
     "effort": "Max reasoning",
     "score": 16.1,
     "scoreText": "16.1",
@@ -81,7 +98,7 @@
     "vendor": "meta"
   },
   {
-    "rank": 10,
+    "rank": 12,
     "label": "Hy4 Preview",
     "effort": "High reasoning",
     "score": 15.6,
@@ -90,7 +107,15 @@
     "vendor": "tencent"
   },
   {
-    "rank": 11,
+    "rank": 13,
+    "label": "Inkling 2 Small",
+    "effort": "xHigh reasoning",
+    "score": 14.1,
+    "scoreText": "14.1",
+    "letter": "I"
+  },
+  {
+    "rank": 14,
     "label": "Mistral Large 4",
     "effort": "High reasoning",
     "score": 13.9,
@@ -98,7 +123,7 @@
     "letter": "M"
   },
   {
-    "rank": 12,
+    "rank": 15,
     "label": "Muse Spark 1.3",
     "effort": "Max reasoning",
     "score": 12.8,
@@ -107,7 +132,7 @@
     "vendor": "meta"
   },
   {
-    "rank": 13,
+    "rank": 16,
     "label": "Kimi K3",
     "effort": "Max reasoning",
     "score": 12.2,
@@ -116,7 +141,7 @@
     "vendor": "kimi"
   },
   {
-    "rank": 13,
+    "rank": 16,
     "label": "Grok 4.7",
     "effort": "xHigh reasoning",
     "score": 12.2,
@@ -125,7 +150,7 @@
     "vendor": "xai"
   },
   {
-    "rank": 15,
+    "rank": 18,
     "label": "Gemini 3.8 Flash",
     "effort": "High reasoning",
     "score": 10.6,
@@ -134,7 +159,7 @@
     "vendor": "google"
   },
   {
-    "rank": 16,
+    "rank": 19,
     "label": "GLM 5.3",
     "effort": "Max reasoning",
     "score": 9.4,
