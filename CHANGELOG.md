@@ -9,6 +9,13 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-16
+
+### 变更
+
+- Convex 有指南列从公开页面使用的 `runs:leaderboardScores`（不带 experiment）重抓，44 行，映射 39。`experiment=with_guidelines` 仍是服务器错误；公开页面的 With Guidelines 分类本身没有 experiment 字段。Gemini 4 Argon 与 Claude Fable 5.2 的精确值是 0.9866071428571429 和 0.9866071428571428，显示都是 98.66，来源顺序是 Argon 在前。这是展示并列，不是明确胜出。无指南列仍是 2026-11-12 的快照。
+- The Slop Index 按 2026-11-16 01:07:31 GMT 的现场投票重算 58 行（2,494 票）。机械轴口径未改，反转仍是 100 − 页面四舍五入后的 Slop Score。反转后 GPT-5.6 Sol 仍是第 1（来源 25.88），Haiku 5.5 第 2（27.73），GLM-5.3 第 11（34.92）。写文档综合分随这张榜重算，权重未改。
+
 ## 2026-11-13
 
 ### 变更

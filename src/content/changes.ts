@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-16",
+    kind: "board",
+    source: "convex.dev",
+    text: tx(
+      "**Convex 有指南与 Slop Index**：有指南列 44 行。Gemini 4 Argon 与 Claude Fable 5.2 都显示 98.66。精确值是 0.9866071428571429 和 0.9866071428571428，页面按返回顺序把 Argon 放在前面。这是展示并列，不是明确胜出。无指南列没有重写，Fable 5.2 仍是 95.54%。Slop Index 58 行按现场投票重算（2,494 票）。反转后 GPT-5.6 Sol 仍是第 1（来源 25.88），Haiku 5.5 第 2（27.73），GLM-5.3 第 11（34.92）。",
+      "**Convex With Guidelines and the Slop Index**: With Guidelines has 44 rows. Gemini 4 Argon and Claude Fable 5.2 both display 98.66. The exact values are 0.9866071428571429 and 0.9866071428571428, and the page lists Argon first because that is the response order. That is a displayed tie, not a clear win. The No Guidelines column was not rewritten; Fable 5.2 is still 95.54% there. The Slop Index recomputed all 58 rows from the live vote (2,494 votes). After inversion GPT-5.6 Sol is still #1 (source 25.88), Haiku 5.5 is #2 (27.73), and GLM-5.3 is #11 (34.92).",
+    ),
+  },
+  {
     date: "11-13",
     kind: "board",
     source: "lmarena.ai",

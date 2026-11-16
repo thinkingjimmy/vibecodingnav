@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { LOBE_VENDORS } from "@/components/vendor-mark";
 import { content } from "@/content";
+import convexWithRows from "@/content/boards/convex-with.json";
+import slopRows from "@/content/boards/slop-index.json";
 import { validateContent } from "@/content/validate";
 import { getBenchmark, getBuild, getHome, getItem, getModel, getScenario, isOfficialBoardRow, listScenarioCards, resolvePicks } from "@/lib/catalog";
 import { daysBetween, isStale } from "@/lib/site";
@@ -232,9 +234,9 @@ describe("picks", () => {
     ]);
     const slop = writeDocs?.boards[0]?.rows ?? [];
     expect(slop[0]).toMatchObject({ name: "GPT-5.6 Sol", rank: 1, score: "74", price: "$17.5" });
-    expect(slop[1]).toMatchObject({ name: "GLM-5.3", rank: 2, score: "71" });
-    expect(slop[4]).toMatchObject({ name: "Sonnet 5.5", rank: 5, score: "69" });
-    expect(slop[57]).toMatchObject({ name: "Seed 2.1 Turbo", rank: 58, score: "35" });
+    expect(slop[1]).toMatchObject({ name: "Haiku 5.5", rank: 2, score: "72" });
+    expect(slop[10]).toMatchObject({ name: "GLM-5.3", rank: 11, score: "65" });
+    expect(slop[57]).toMatchObject({ name: "Gemini 3.8 Flash", rank: 58, score: "33" });
     expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(58);
     const creative = getBenchmark("zh", "eqbench-creative-writing");
     expect(creative?.leaderboard).toHaveLength(146);
@@ -264,7 +266,7 @@ describe("picks", () => {
       ["slop-index", "像真人", "article", 1],
       ["eqbench-creative-writing", "创意写作", "pen-nib", 0.6],
     ]);
-    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GLM-5\.3/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT 6 Sol/);
     expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/0 项第一/);
     expect(getScenario("en", "web-frontend")?.takeaway?.sentence).toMatch(/first on/i);
     expect(web?.fusion.columns.map((column) => [column.id, column.weight])).toEqual([
@@ -468,11 +470,11 @@ describe("picks", () => {
     expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1", "FrontierCode"]);
     expect(home[3]?.title).toBe("写文档和文案");
     expect(home[3]?.sources?.map((source) => source.name)).toEqual(["The Slop Index", "EQ-Bench Creative Writing v3"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "GLM-5.3", rankLabel: "1" });
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 6 Sol", rankLabel: "1" });
     expect(home[3]?.rows.map((row) => row.name).slice(0, 3)).toEqual([
-      "GLM-5.3",
       "GPT 6 Sol",
       "Claude Fable 5.1",
+      "Claude Opus 5",
     ]);
     expect(home).toHaveLength(4);
   });
@@ -487,15 +489,40 @@ describe("picks", () => {
     expect(uplift.find((row) => row.name === "Claude Sonnet 5.5")?.delta).toBe("+9.0");
 
     const convex = getItem("en", "library", "convex")?.evalView;
-    expect(convex?.rows[0]).toMatchObject({ name: "Claude Fable 5.2", baseline: "95.54", assisted: "99.11", rank: 1 });
+    expect(convex?.rows[0]).toMatchObject({ name: "Claude Fable 5.2", baseline: "95.54", assisted: "98.66", rank: 1 });
     expect(convex?.rows[0]?.web).toBeUndefined();
     expect(convex?.rows.find((row) => row.name === "GPT-6 Astra")).toMatchObject({ baseline: "89.73", assisted: "97.1", web: "91.07" });
-    expect(convex?.rows.find((row) => row.name === "Gemini 4 Argon")?.assisted).toBe("98.75");
+    expect(convex?.rows.find((row) => row.name === "Gemini 4 Argon")?.assisted).toBe("98.66");
     expect(convex?.rows.find((row) => row.name === "Gemini 3.1 Pro Preview")?.web).toBeUndefined();
     expect(convex?.showAssisted).toBe(true);
     const rules = getItem("zh", "prompt", "convex-ai-rules")?.evalView;
     expect(rules?.mode).toBe("uplift");
-    expect(rules?.rows.find((row) => row.name === "Claude Opus 5.5")).toMatchObject({ baseline: "89.64", assisted: "97.47", delta: "+7.83" });
+    expect(rules?.rows.find((row) => row.name === "Claude Opus 5.5")).toMatchObject({ baseline: "89.64", assisted: "97.45", delta: "+7.81" });
+  });
+
+  it("keeps the Convex with-guidelines pair a displayed tie and inverts every Slop row", () => {
+    const argon = convexWithRows.find((row) => row.model === "google/gemini-4-argon");
+    const fable = convexWithRows.find((row) => row.model === "anthropic/claude-fable-5.2");
+    expect(argon?.sourceIndex).toBeLessThan(fable?.sourceIndex ?? 0);
+    expect(argon?.totalScore).toBe(0.9866071428571429);
+    expect(fable?.totalScore).toBe(0.9866071428571428);
+    const assisted = content.results.filter((row) => row.benchmark === "convex-evals" && row.arm === "assisted");
+    expect(assisted.find((row) => row.modelSlug === "gemini-4-argon")).toMatchObject({ score: 98.66, rank: 1, asOf: "2026-11-16" });
+    expect(assisted.find((row) => row.modelSlug === "claude-fable-5-2")).toMatchObject({ score: 98.66, rank: 2, asOf: "2026-11-16" });
+    expect(content.results.find((row) => row.benchmark === "convex-evals" && row.arm === "baseline" && row.modelSlug === "claude-fable-5-2")).toMatchObject({ score: 95.54, rank: 1, asOf: "2026-11-12" });
+    const caveats = getBenchmark("zh", "convex-evals")?.caveats ?? "";
+    expect(caveats).toContain("98.66");
+    expect(caveats).toContain("不是明确胜出");
+    const summary = getModel("zh", "claude-fable-5-2")?.summary ?? "";
+    expect(summary).toContain("展示并列");
+    expect(summary).not.toContain("有指南第 1");
+    expect(slopRows).toHaveLength(58);
+    expect(slopRows.every((row) => row.score === 100 - row.sourceSlop)).toBe(true);
+    for (let index = 1; index < slopRows.length; index += 1) {
+      expect(slopRows[index]?.sourceSlopRaw).toBeGreaterThanOrEqual(slopRows[index - 1]?.sourceSlopRaw ?? 0);
+    }
+    expect(slopRows[0]).toMatchObject({ label: "GPT-5.6 Sol", sourceSlopRaw: 25.88, score: 74 });
+    expect(slopRows.find((row) => row.label === "Grok 4.7")?.rank).toBeGreaterThan(20);
 
     const next = getItem("en", "prompt", "nextjs-agents-md")?.evalView?.rows ?? [];
     expect(next.find((row) => row.name === "Claude Opus 5.5")?.delta).toBe("0");

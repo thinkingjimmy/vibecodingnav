@@ -578,7 +578,7 @@ test("framework evals stay on separate boards", async ({ page }) => {
 
   await page.goto("/zh/prompts/convex-ai-rules/");
   await expect(page.getByRole("heading", { name: "有材料相对基线的变化" })).toBeVisible();
-  await expect(page.getByText("+7.83").first()).toBeVisible();
+  await expect(page.getByText("+7.81").first()).toBeVisible();
 
   await page.goto("/zh/prompts/nextjs-agents-md/");
   await expect(page.getByText("+13.0").first()).toBeVisible();

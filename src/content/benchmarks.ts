@@ -263,8 +263,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Slop Index",
     scoreUnit: "",
     compositeKind: "rate",
-    asOf: "2026-11-13",
-    votes: "2,456",
+    asOf: "2026-11-16",
+    votes: "2,494",
     trackedCount: 58,
     table: "score",
     domain: tx("文档与文案", "Docs and copy"),
@@ -285,8 +285,8 @@ export const benchmarks: Benchmark[] = [
       "Arena votes are still accumulating, so the live Elo moves. Mechanical axes are normalized within this board. It does not measure code or UI quality.",
     ),
     updateCadence: tx(
-      "来源 https://theslopindex.com/leaderboard 。机械轴来自同站 /bench.json（run full-merged-v5，58 个模型、64,636 条生成）；人群 Elo 来自 /api/leaderboard?mode=v1&domain=all。本页于 2026-11-13 重算全部 58 行，当时 2,456 票。页面把 Slop Score 四舍五入成整数，越高越渣、#1 最渣。本站分数是 100 − 该整数，最少 slop 为第 1。反转后 GPT-5.6 Sol 第 1（来源 25.9，页面显示 26，本站 74）；GLM-5.3 第 2（来源 29.0）；Sonnet 5.5 第 5（来源 31.3）。",
-      "Source https://theslopindex.com/leaderboard . Mechanical axes come from /bench.json on that site (run full-merged-v5, 58 models, 64,636 generations); crowd Elo comes from /api/leaderboard?mode=v1&domain=all. This page recomputed all 58 rows on 2026-11-13, at 2,456 votes. The page rounds Slop Score to an integer; higher is worse and #1 is sloppiest. This site stores 100 − that integer, so least slop is #1. After inversion GPT-5.6 Sol is #1 (source 25.9, page shows 26, this site 74); GLM-5.3 is #2 (source 29.0); Sonnet 5.5 is #5 (source 31.3).",
+      "来源 https://theslopindex.com/leaderboard 。机械轴仍是同站 /bench.json（run full-merged-v5，58 个模型、64,636 条生成）；人群 Elo 来自 /api/leaderboard?mode=v1&domain=all。该接口没有 Last-Modified，本次响应 Date 是 Mon, 16 Nov 2026 01:07:31 GMT，2,494 票。页面把 Slop Score 四舍五入成整数，越高越渣、#1 最渣。本站分数仍是 100 − 该整数，最少 slop 为第 1，四舍五入规则没有改。反转后 GPT-5.6 Sol 仍是第 1（来源 25.88，页面 26，本站 74）；Haiku 5.5 第 2（来源 27.73）；GLM-5.3 第 11（来源 34.92）。",
+      "Source https://theslopindex.com/leaderboard . Mechanical axes are still /bench.json on that site (run full-merged-v5, 58 models, 64,636 generations); crowd Elo comes from /api/leaderboard?mode=v1&domain=all. That response has no Last-Modified. This fetch's Date header was Mon, 16 Nov 2026 01:07:31 GMT, at 2,494 votes. The page rounds Slop Score to an integer; higher is worse and #1 is sloppiest. This site still stores 100 − that integer, so least slop is #1, and the rounding rule is unchanged. After inversion GPT-5.6 Sol is still #1 (source 25.88, page 26, this site 74); Haiku 5.5 is #2 (source 27.73); GLM-5.3 is #11 (source 34.92).",
     ),
     links: [
       { label: "theslopindex.com/leaderboard", href: "https://theslopindex.com/leaderboard" },
@@ -442,7 +442,7 @@ export const benchmarks: Benchmark[] = [
     shortName: "Convex",
     scoreUnit: "%",
     compositeKind: "rate",
-    asOf: "2026-11-12",
+    asOf: "2026-11-16",
     trackedCount: 44,
     kind: "framework",
     version: "92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb",
@@ -462,12 +462,12 @@ export const benchmarks: Benchmark[] = [
       "The percent is the pass rate on 112 tasks, kept to two decimals. The with-guidelines and web columns appear only when that model has a run. A missing run is not a zero.",
     ),
     caveats: tx(
-      "Convex 自己出题、自己评分。测的是模型加上 Convex，不是框架之间的高低。前排接近满分。无指南与有指南是两次独立查询，不平均、不相加。experiment=with_guidelines 仍返回服务器错误，有指南列用的是同一部署上不带 experiment 的 leaderboardScores。这次无指南和有指南都是 44 行，与当前版本的 modelCount 44 一致。无指南 + 网页本轮没有重抓。",
-      "Convex writes the tasks and grades them. This measures a model together with Convex, not one framework against another. The front is near the ceiling. No Guidelines and With Guidelines are separate queries. They are not averaged or added. experiment=with_guidelines still returns a server error, so the With Guidelines column uses leaderboardScores on the same deployment with no experiment argument. Both arms are 44 rows this time, matching the current version's modelCount of 44. No Guidelines + Web was not refetched.",
+      "Convex 自己出题、自己评分。测的是模型加上 Convex，不是框架之间的高低。前排接近满分。无指南与有指南是两次独立查询，不平均、不相加。公开页面的 With Guidelines 分类没有 experiment 字段，所以客户端调用 leaderboardScores 时不带 experiment。具名参数 experiment=with_guidelines 仍返回服务器错误。这条不带 experiment 的公开查询和无指南、无指南 + 网页是三份不同的结果。有指南列里 Gemini 4 Argon 与 Claude Fable 5.2 都显示 98.66；精确值只差一个浮点末位，页面按返回顺序把 Argon 放在前面，这不是明确胜出。无指南列仍是 2026-11-12 的快照。无指南 + 网页本轮没有重抓。",
+      "Convex writes the tasks and grades them. This measures a model together with Convex, not one framework against another. The front is near the ceiling. No Guidelines and With Guidelines are separate queries. They are not averaged or added. The public page's With Guidelines category has no experiment field, so the client calls leaderboardScores without an experiment. The named argument experiment=with_guidelines still returns a server error. That public query with no experiment is a different result from No Guidelines and from No Guidelines + Web. On With Guidelines, Gemini 4 Argon and Claude Fable 5.2 both display 98.66. Their exact values differ by one floating-point step, and the page lists Argon first because that is the response order. That is not a clear win. The No Guidelines column is still the 2026-11-12 snapshot. No Guidelines + Web was not refetched.",
     ),
     updateCadence: tx(
-      "版本哈希仍是 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb（minted 2026-10-08）。2026-11-12 从 fabulous-panther-525.convex.cloud 的 runs:leaderboardScores 同步：No Guidelines 44 行（映射 39），With Guidelines 44 行（映射 39）。两列都新增 Gemini 4 Carbon：无指南第 6，86.61%（1 次）；有指南第 10，95.54%（1 次）。有指南另新增 DeepSeek V4 Flash（0423 档），与 0731 档分开。未映射的仍是 Crouton Alpha、Hy3、Step 5 Preview、MiniMax M3.1 Flash、Laguna S 2.1。无指南 + 网页仍是 2026-10-08 的旧列。无指南第一仍是 Claude Fable 5.2 95.54%，有指南第一仍是同一模型 99.11%。",
-      "The version hash is still 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb (minted 2026-10-08). On 2026-11-12 this page synced runs:leaderboardScores from fabulous-panther-525.convex.cloud: 44 No Guidelines rows (39 mapped) and 44 With Guidelines rows (39 mapped). Gemini 4 Carbon is new on both: 6th without guidelines at 86.61% (1 run) and 10th with guidelines at 95.54% (1 run). With Guidelines also adds DeepSeek V4 Flash (the 0423 tier), kept separate from 0731. Unmapped: Crouton Alpha, Hy3, Step 5 Preview, MiniMax M3.1 Flash, and Laguna S 2.1. No Guidelines + Web is still the 2026-10-08 column. Claude Fable 5.2 still leads No Guidelines at 95.54% and With Guidelines at 99.11%.",
+      "版本哈希仍是 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb（minted 2026-10-08），当前 modelCount 44。2026-11-16 只重抓有指南列：44 行，映射 39。未映射仍是 Crouton Alpha、Hy3、Step 5 Preview、MiniMax M3.1 Flash、Laguna S 2.1。Gemini 4 Argon 与 Claude Fable 5.2 的有指南精确值分别是 0.9866071428571429 和 0.9866071428571428，显示都是 98.66，来源顺序是 Argon 在前。无指南列没有重写，Fable 5.2 仍是该列的 95.54%。无指南 + 网页仍是 2026-10-08。",
+      "The version hash is still 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb (minted 2026-10-08), and the current modelCount is 44. On 2026-11-16 only the With Guidelines column was refetched: 44 rows, 39 mapped. Unmapped: Crouton Alpha, Hy3, Step 5 Preview, MiniMax M3.1 Flash, and Laguna S 2.1. The exact With Guidelines scores are 0.9866071428571429 for Gemini 4 Argon and 0.9866071428571428 for Claude Fable 5.2. Both display 98.66, and the source lists Argon first. The No Guidelines column was not rewritten; Fable 5.2 is still 95.54% there. No Guidelines + Web is still 2026-10-08.",
     ),
     links: [
       { label: "convex.dev/evals", href: "https://www.convex.dev/evals" },

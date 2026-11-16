@@ -108,19 +108,19 @@ describe("composite method C", () => {
     ]);
     const rows = computeComposite(boards);
     expect(rows.slice(0, 3).map((row) => [row.rank, row.key.replace(/^(model:|label:)/, ""), row.display])).toEqual([
-      [1, "glm-5-3", 87],
-      [2, "gpt-6-sol", 86],
-      [2, "claude-fable-5-1", 86],
+      [1, "gpt-6-sol", 87],
+      [2, "claude-fable-5-1", 85],
+      [3, "claude-opus-5", 84],
     ]);
     const astra = rows.find((row) => row.key === "model:gpt-6-astra")!;
     expect(astra.homeEligible).toBe(true);
-    expect(astra.cells[0]?.rank).toBe(43);
+    expect(astra.cells[0]?.rank).toBe(40);
     expect(astra.cells[1]?.rank).toBe(1);
     const luna = rows.find((row) => row.key === "model:gpt-5-6-luna")!;
-    expect(luna.cells[0]?.rank).toBe(19);
+    expect(luna.cells[0]?.rank).toBe(20);
     expect(luna.display).toBeLessThan(astra.display);
     const haiku = rows.find((row) => row.key === "model:claude-haiku-5-5")!;
-    expect(haiku.cells[0]?.rank).toBe(3);
+    expect(haiku.cells[0]?.rank).toBe(2);
   });
 
   it("halves weight for preliminary rows and missing boards", () => {
@@ -222,11 +222,11 @@ describe("composite method C", () => {
     expect(home[1]?.rows[0]?.unit).toBeUndefined();
     expect(home[1]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#2 · 97", "—", "#4 · 88"]);
     expect(home[2]?.rows.map((row) => row.score)).toEqual(["96", "93", "91", "87", "82"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "GLM-5.3", score: "87" });
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 6 Sol", score: "87" });
     expect(home[3]?.rows.map((row) => [row.name, row.score]).slice(0, 3)).toEqual([
-      ["GLM-5.3", "87"],
-      ["GPT 6 Sol", "86"],
-      ["Claude Fable 5.1", "86"],
+      ["GPT 6 Sol", "87"],
+      ["Claude Fable 5.1", "85"],
+      ["Claude Opus 5", "84"],
     ]);
     expect(home).toHaveLength(4);
   });

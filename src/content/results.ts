@@ -159,7 +159,7 @@ function convexMoney(value: number) {
   return `$${value.toFixed(5).replace(/0+$/, "").replace(/\.$/, "")}`;
 }
 
-function convexArm(rows: ConvexSource[], arm: "baseline" | "assisted"): Result[] {
+function convexArm(rows: ConvexSource[], arm: "baseline" | "assisted", asOf: string): Result[] {
   const sorted = [...rows].sort((a, b) => b.totalScore - a.totalScore || a.sourceIndex - b.sourceIndex);
   let last = Number.NaN;
   let rank = 0;
@@ -172,7 +172,7 @@ function convexArm(rows: ConvexSource[], arm: "baseline" | "assisted"): Result[]
     const mapped = CONVEX_MODEL[row.model];
     if (!mapped) return;
     const runs = `${Math.round(row.runCount)} runs`;
-    out.push(fw("convex-evals", "2026-11-12", mapped.slug, Math.round(row.totalScore * 10000) / 100, {
+    out.push(fw("convex-evals", asOf, mapped.slug, Math.round(row.totalScore * 10000) / 100, {
       arm,
       rank,
       effort: mapped.effort,
@@ -253,7 +253,7 @@ export const results: Result[] = [
   ...board("lmarena-webdev", "2026-11-11", webdevRows as BoardJson[]),
   ...board("lmarena-image-to-webdev", "2026-11-10", imageToWebdevRows as BoardJson[]),
   ...board("terminal-bench-4", "2026-10-06", terminalRows as BoardJson[]),
-  ...board("slop-index", "2026-11-13", slopIndexRows as BoardJson[]),
+  ...board("slop-index", "2026-11-16", slopIndexRows as BoardJson[]),
   ...board("eqbench-creative-writing", "2026-10-29", eqbenchCreativeWritingRows as BoardJson[]),
   ...board("sudo-l7", "2026-11-12", sudoRows as BoardJson[]),
   ...board("deepswe-v1-1", "2026-09-22", deepsweRows as BoardJson[]),
@@ -303,8 +303,8 @@ export const results: Result[] = [
   fw("nextjs-evals", "2026-10-30", "gpt-6-luna", 90, { arm: "assisted", effort: "high", setting: "high · Codex" }),
   fw("nextjs-evals", "2026-10-30", "minimax-m3", 90, { arm: "assisted", setting: "OpenCode" }),
   fw("nextjs-evals", "2026-10-30", "kimi-k2-7-code", 90, { arm: "assisted", setting: "OpenCode" }),
-  ...convexArm(convexNoRows as ConvexSource[], "baseline"),
-  ...convexArm(convexWithRows as ConvexSource[], "assisted"),
+  ...convexArm(convexNoRows as ConvexSource[], "baseline", "2026-11-12"),
+  ...convexArm(convexWithRows as ConvexSource[], "assisted", "2026-11-16"),
   fw("convex-evals", "2026-10-08", "gemini-4-argon", 95.76, { arm: "web", runCost: "$2.77", setting: "4 runs" }),
   fw("convex-evals", "2026-10-08", "claude-opus-5-5", 95.09, { arm: "web", runCost: "$6.83", setting: "4 runs" }),
   fw("convex-evals", "2026-10-08", "gpt-6-1-sol", 92.19, { arm: "web", runCost: "$1.80", setting: "4 runs" }),

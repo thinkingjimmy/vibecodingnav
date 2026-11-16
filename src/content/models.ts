@@ -95,7 +95,7 @@ export const models: Model[] = [
       "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fifth on WebDev at 1764. Tied at 58.2% on Terminal-Bench. Sixth on sudo L7 at 31.1%.",
     ),
     why: [
-      tx("EQ-Bench Creative Writing Elo 仍居首；写文档主榜 Slop 反转后由 Inkling Small / Haiku 一带领先。", "Still first on Creative Writing Elo; after Slop inversion the docs primary board is led by Inkling Small / the Haiku band."),
+      tx("EQ-Bench Creative Writing Elo 仍居首。Slop 反转后第 1 是 GPT-5.6 Sol，Haiku 5.5 第 2。", "Still first on Creative Writing Elo. After Slop inversion GPT-5.6 Sol is #1 and Haiku 5.5 is #2."),
       tx("WebDev 比第一名 Fable 5.2 低 72 分。", "72 points behind Fable 5.2, first on WebDev."),
     ],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
@@ -186,11 +186,14 @@ export const models: Model[] = [
     fetchedAt: "2026-11-12",
     headlines: ["lmarena-webdev", "convex-evals"],
     summary: tx(
-      "WebDev 正式第 1（xHigh，1838，1,215 票）。sudo L7 第 1（Adaptive/Max，52.2%）。上一份抓取里 WebDev 这一行还是 AutoEval，来源给出名次后按正式行计入。Convex 无指南第 1（95.54%，1 次），有指南第 1（99.11%）。和 Fable 5.1 不是同一行。",
-      "Official #1 on WebDev (xHigh, 1838, 1,215 votes). First on sudo L7 (Adaptive/Max, 52.2%). On an earlier fetch the WebDev row was AutoEval; once the source assigned a rank it counts as official. First on Convex without guidelines at 95.54% (1 run) and first with guidelines at 99.11%. A different row from Fable 5.1.",
+      "WebDev 正式第 1（xHigh，1838，1,215 票）。sudo L7 第 1（Adaptive/Max，52.2%）。Convex 无指南第 1（95.54%，1 次）。有指南显示 98.66%（2 次），与 Gemini 4 Argon 的 98.66% 相同；来源精确值是 Argon 0.9866071428571429、Fable 0.9866071428571428，页面按返回顺序把 Argon 放在前面。这是展示并列，不是 Argon 明确更好。和 Fable 5.1 不是同一行。",
+      "Official #1 on WebDev (xHigh, 1838, 1,215 votes). First on sudo L7 (Adaptive/Max, 52.2%). First on Convex without guidelines at 95.54% (1 run). With guidelines it displays 98.66% (2 runs), the same display as Gemini 4 Argon. The exact source values are Argon 0.9866071428571429 and Fable 0.9866071428571428, and the page lists Argon first because that is the response order. That is a displayed tie, not a clear win for Argon. A different row from Fable 5.1.",
     ),
-    why: [tx("WebDev 正式第 1，两列 Convex 也各是当前来源的第一。列与列、榜与榜没有合成一个分。", "Official #1 on WebDev, and first on each current Convex column. Columns and boards are not merged into one score.")],
-    whyNot: [tx("WebDev 1,215 票，置信区间 +21/−21，名次范围 1–2，和 Opus 5.5 Max 1815 仍可能互换。", "WebDev has 1,215 votes, a +21/−21 interval, and a 1–2 rank band, so it can still trade places with Opus 5.5 Max at 1815.")],
+    why: [tx("WebDev 正式第 1，Convex 无指南也是第 1。有指南列与 Argon 显示同为 98.66，不把列与列合成一个分。", "Official #1 on WebDev, and #1 on Convex without guidelines. With guidelines it displays the same 98.66 as Argon. The columns are not merged into one score.")],
+    whyNot: [
+      tx("WebDev 1,215 票，置信区间 +21/−21，名次范围 1–2，和 Opus 5.5 Max 1815 仍可能互换。", "WebDev has 1,215 votes, a +21/−21 interval, and a 1–2 rank band, so it can still trade places with Opus 5.5 Max at 1815."),
+      tx("有指南的 98.66% 不要写成单独夺冠。Argon 排在前面只是来源顺序。", "Do not call the 98.66% with-guidelines score a solo win. Argon is listed first only because of source order."),
+    ],
   }),
   model({
     slug: "claude-opus-4-8",
@@ -590,7 +593,7 @@ export const models: Model[] = [
     vendorName: "OpenAI",
     license: "proprietary",
     licenseLabel: prop,
-    summary: tx("Android Bench 1.0 第三，90.8%，跑分成本 $150.0。DeepSWE v1.1 Best（max）第 4，72.7%。", "Third on Android Bench 1.0 at 90.8%, run cost $150.0. Fourth on DeepSWE v1.1 Best (max) at 72.7%."),
+    summary: tx("Android Bench 1.0 第三，90.8%，跑分成本 $150.0。DeepSWE v1.1 Best（max）第 4，72.7%。Slop Index 反转后第 1：来源 slop 25.88，页面显示 26，本站 74。", "Third on Android Bench 1.0 at 90.8%, run cost $150.0. Fourth on DeepSWE v1.1 Best (max) at 72.7%. After Slop inversion it is #1: source slop 25.88, the page shows 26, this site stores 74."),
     why: [tx("标准任务前三，和 Anthropic 前两名几乎打平。", "Top three on standard tasks, nearly tied with the two Anthropic leaders.")],
     whyNot: [tx("成本 $150，和榜首同一量级。", "At $150, the cost is in the same range as the leader.")],
   }),
@@ -625,14 +628,14 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["android-bench"],
     summary: tx(
-      "The Slop Index 反转后约第 17（100 − Slop = 65）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
-      "About 17th on The Slop Index after inversion (100 − Slop = 65). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
+      "The Slop Index 反转后第 20（来源 slop 39.21，页面 39，本站 61）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
+      "20th on The Slop Index after inversion (source slop 39.21, page 39, this site 61). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
     ),
     why: [
       tx("Android 标准任务只比第一低约 4 个点，成本约为二十四分之一。", "On Android standard tasks, about four points behind first at roughly a twenty-fourth of the cost."),
     ],
     whyNot: [
-      tx("Slop Index 榜首已换成 Haiku 5.5；不要再把它写成最少 slop。", "Haiku 5.5 now leads Slop Index; do not still call this the least-slop model."),
+      tx("Slop Index 反转后的第 1 是 GPT-5.6 Sol，不是这一行。", "GPT-5.6 Sol, not this row, is #1 after Slop inversion."),
       tx("同系列在长程榜只有 10.7% 的是 GPT 6 Luna。复杂多模块工作不要用便宜档单挑。", "The cheap long-horizon row in this family is GPT 6 Luna at 10.7%. Do not give multi-module work to the cheap tier alone."),
     ],
   }),
@@ -698,11 +701,11 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["slop-index"],
     summary: tx(
-      "The Slop Index 反转后约第 4（100 − 28 = 72；来源 #55）。Inkling Small 以 76 居首。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。Convex 基线仍是低成本前排之一。",
-      "About 4th on The Slop Index after inversion (100 − 28 = 72; source #55). Inkling Small leads at 76. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). Still among the low-cost Convex baseline front.",
+      "The Slop Index 反转后第 2（来源 slop 27.73，页面 28，本站 72）。第 1 是 GPT-5.6 Sol。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。Convex 基线仍是低成本前排之一。",
+      "2nd on The Slop Index after inversion (source slop 27.73, page 28, this site 72). GPT-5.6 Sol is #1. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). Still among the low-cost Convex baseline front.",
     ),
     why: [
-      tx("写文档主榜反转后仍在低 slop 前五；token 价格 $0.3。", "Still inside the inverted docs primary top five for low slop; token price $0.3."),
+      tx("写文档主榜反转后第 2，排在 GPT-5.6 Sol 后面；token 价格 $0.3。", "2nd on the inverted docs primary board, behind GPT-5.6 Sol; token price $0.3."),
       tx("Convex 基线上成本仍是前排里最低的一档之一。", "Still among the lowest costs on the Convex baseline."),
     ],
     whyNot: [
