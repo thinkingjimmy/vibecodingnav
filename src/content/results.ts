@@ -250,10 +250,10 @@ function reactBench(): Result[] {
 }
 
 export const results: Result[] = [
-  ...board("lmarena-webdev", "2026-11-11", webdevRows as BoardJson[]),
-  ...board("lmarena-image-to-webdev", "2026-11-10", imageToWebdevRows as BoardJson[]),
+  ...board("lmarena-webdev", "2026-11-13", webdevRows as BoardJson[]),
+  ...board("lmarena-image-to-webdev", "2026-11-13", imageToWebdevRows as BoardJson[]),
   ...board("terminal-bench-4", "2026-10-06", terminalRows as BoardJson[]),
-  ...board("slop-index", "2026-11-16", slopIndexRows as BoardJson[]),
+  ...board("slop-index", "2026-11-17", slopIndexRows as BoardJson[]),
   ...board("eqbench-creative-writing", "2026-10-29", eqbenchCreativeWritingRows as BoardJson[]),
   ...board("sudo-l7", "2026-11-12", sudoRows as BoardJson[]),
   ...board("deepswe-v1-1", "2026-09-22", deepsweRows as BoardJson[]),
@@ -304,7 +304,7 @@ export const results: Result[] = [
   fw("nextjs-evals", "2026-10-30", "minimax-m3", 90, { arm: "assisted", setting: "OpenCode" }),
   fw("nextjs-evals", "2026-10-30", "kimi-k2-7-code", 90, { arm: "assisted", setting: "OpenCode" }),
   ...convexArm(convexNoRows as ConvexSource[], "baseline", "2026-11-12"),
-  ...convexArm(convexWithRows as ConvexSource[], "assisted", "2026-11-16"),
+  ...convexArm(convexWithRows as ConvexSource[], "assisted", "2026-11-17"),
   fw("convex-evals", "2026-10-08", "gemini-4-argon", 95.76, { arm: "web", runCost: "$2.77", setting: "4 runs" }),
   fw("convex-evals", "2026-10-08", "claude-opus-5-5", 95.09, { arm: "web", runCost: "$6.83", setting: "4 runs" }),
   fw("convex-evals", "2026-10-08", "gpt-6-1-sol", 92.19, { arm: "web", runCost: "$1.80", setting: "4 runs" }),

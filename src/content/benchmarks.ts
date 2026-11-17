@@ -146,8 +146,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "WebDev",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-11-11",
-    votes: "997,838",
+    asOf: "2026-11-13",
+    votes: "1,007,405",
     trackedCount: 158,
     table: "webdev",
     sourceFilter: "license",
@@ -169,8 +169,8 @@ export const benchmarks: Benchmark[] = [
       "It measures human preference (does it look right, does it run), not test pass rate. Briefs are mostly single-page demos, so it says little about large codebases or long refactors. Effort tiers of the same model are ranked separately. Preliminary rows have few votes and can move. An AutoEval row has no official rank and no votes. It is a provisional automated result and stays out of the official ranks and the composite. When the source later assigns a rank and votes, that row becomes official. A past AutoEval label does not keep it out, and the old duplicate row is not kept.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期 2026-11-11，票数 997,838。来源写 159 个模型：158 行有正式名次，另 1 行是 AutoEval。2026-11-13 同步。正式第 1 仍是 Claude Fable 5.2（xHigh）1838（+21/−21，1,215 票）。正式第 2 是 Claude Opus 5.5（max）1815。新增正式行 Gemini 4 Hydrogen（High）第 10（1704，初步，1,997 票，价格 $1.50 / $7.50，context N/A），没有单独模型页。当前 AutoEval 仍是 Ernie 5.5 Flash Preview（1668，名次与票数都是 N/A）。主榜 Cost/Task (P50) 列在可读抓取里没有数值，未写入。",
-      "Updated continuously. This page's board date is 2026-11-11, with 997,838 votes. The source says 159 models: 158 have official ranks, and one AutoEval row does not. Synced 2026-11-13. Official #1 is still Claude Fable 5.2 (xHigh) at 1838 (+21/−21, 1,215 votes). Official #2 is Claude Opus 5.5 (max) at 1815. New official row: Gemini 4 Hydrogen (High) at #10 (1704, preliminary, 1,997 votes, $1.50 / $7.50, context N/A), with no separate model page. The current AutoEval row is still Ernie 5.5 Flash Preview (1668, rank and votes both N/A). The Cost/Task (P50) column had no values in the readable fetch, so it is not stored.",
+      "持续更新。本页榜单日期 2026-11-13，票数 1,007,405。来源写 159 个模型：158 行有正式名次，另 1 行是 AutoEval。2026-11-17 同步。正式第 1 是 Claude Fable 5.2（xHigh）1826（+19/−19，1,445 票）。正式第 2 是 Claude Opus 5.5（max）1816。新增正式行 Qwen4-Max（xHigh）第 6（1750，初步，1,814 票，价格 $1.50 / $4.50，context N/A），没有单独模型页；它有名次，不是 AutoEval。Gemini 4 Hydrogen（High）现为第 11（1704，初步，2,046 票）。Claude Opus 5（High）落到第 21（1657）。当前 AutoEval 仍是 Ernie 5.5 Flash Preview（1668，名次与票数都是 N/A）。主榜 Cost/Task (P50) 列在可读抓取里没有数值，未写入。上一份里的 glm-5v-turbo 这次没有出现。",
+      "Updated continuously. This page's board date is 2026-11-13, with 1,007,405 votes. The source says 159 models: 158 have official ranks, and one AutoEval row does not. Synced 2026-11-17. Official #1 is Claude Fable 5.2 (xHigh) at 1826 (+19/−19, 1,445 votes). Official #2 is Claude Opus 5.5 (max) at 1816. New official row: Qwen4-Max (xHigh) at #6 (1750, preliminary, 1,814 votes, $1.50 / $4.50, context N/A), with no separate model page. It has a rank, so it is not AutoEval. Gemini 4 Hydrogen (High) is now #11 (1704, preliminary, 2,046 votes). Claude Opus 5 (High) fell to #21 (1657). The current AutoEval row is still Ernie 5.5 Flash Preview (1668, rank and votes both N/A). The Cost/Task (P50) column had no values in the readable fetch, so it is not stored. glm-5v-turbo from the previous copy is absent.",
     ),
     links: [
       { label: "lmarena.ai/leaderboard/webdev", href: "https://lmarena.ai/leaderboard/webdev" },
@@ -184,8 +184,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Image-to-WebDev",
     scoreUnit: "",
     compositeKind: "arena",
-    asOf: "2026-11-10",
-    votes: "210,832",
+    asOf: "2026-11-13",
+    votes: "213,813",
     trackedCount: 66,
     table: "webdev",
     sourceFilter: "license",
@@ -207,8 +207,8 @@ export const benchmarks: Benchmark[] = [
       "It measures whether a person prefers the generated page, not whether tests pass. Effort tiers and harnesses of the same model are ranked separately. Preliminary rows have fewer votes and can move. This is not the text-prompt WebDev board.",
     ),
     updateCadence: tx(
-      "持续更新。本页榜单日期 2026-11-10（210,832 票、66 行），2026-11-11 同步。新增 DeepSeek-V4.1-Flash-20261017（max）第 13（1609），与 20260910 档分开保留。帕累托页仍列出 6 个最优点，并印单任务成本。主榜 Cost/Task (P50) 列在可读抓取里没有数值。",
-      "Updated continuously. This page's board date is 2026-11-10 (210,832 votes, 66 rows), synced 2026-11-11. DeepSeek-V4.1-Flash-20261017 (max) is new at #13 (1609) and stays separate from the 20260910 tier. The Pareto page still lists six models and prints cost per task. The main table’s Cost/Task (P50) column had no values in the readable fetch.",
+      "持续更新。本页榜单日期 2026-11-13（213,813 票、66 行），2026-11-17 同步。第 1 是 Claude Opus 5.5（max）1756。新增正式行 Qwen4-Max（xHigh）第 6（1674，初步，1,474 票），没有单独模型页。MiMo-V2.6-Flash 现为第 21（1593）。DeepSeek 的 20260910 档第 13（1611），20261017 档第 14（1609），两行仍分开。帕累托页仍列出 6 个最优点，单任务成本是 Opus $7.48、Sonnet $2.35、GPT-6 Sol Max $1.93、Muse Spark 1.3 Max $1.19、DeepSeek-V4.1-Flash-20260910 Max $0.06、MiMo-V2.6-Flash $0.05。主榜 Cost/Task (P50) 列在可读抓取里没有数值。上一份里的 glm-5v-turbo 这次没有出现。",
+      "Updated continuously. This page's board date is 2026-11-13 (213,813 votes, 66 rows), synced 2026-11-17. #1 is Claude Opus 5.5 (max) at 1756. New official row: Qwen4-Max (xHigh) at #6 (1674, preliminary, 1,474 votes), with no separate model page. MiMo-V2.6-Flash is now #21 (1593). DeepSeek's 20260910 tier is #13 (1611) and the 20261017 tier is #14 (1609); the two rows stay separate. The Pareto page still lists six models. Cost per task is Opus $7.48, Sonnet $2.35, GPT-6 Sol Max $1.93, Muse Spark 1.3 Max $1.19, DeepSeek-V4.1-Flash-20260910 Max $0.06, and MiMo-V2.6-Flash $0.05. The main table’s Cost/Task (P50) column had no values in the readable fetch. glm-5v-turbo from the previous copy is absent.",
     ),
     links: [
       { label: "arena.ai/leaderboard/code/image-to-webdev", href: "https://arena.ai/leaderboard/code/image-to-webdev" },
@@ -263,9 +263,9 @@ export const benchmarks: Benchmark[] = [
     shortName: "Slop Index",
     scoreUnit: "",
     compositeKind: "rate",
-    asOf: "2026-11-16",
-    votes: "2,494",
-    trackedCount: 58,
+    asOf: "2026-11-17",
+    votes: "2,507",
+    trackedCount: 70,
     table: "score",
     domain: tx("文档与文案", "Docs and copy"),
     measures: tx(
@@ -273,8 +273,8 @@ export const benchmarks: Benchmark[] = [
       "How chatbot-like a model's writing is across email, blog/essays, tweets, and Discord chat. Higher scores mean less chatbot-like writing.",
     ),
     method: tx(
-      "Slashy 的 The Slop Index。对 58 个前沿模型在 4 个领域、112 个场景上各采多样本，对照 2022 年前真人写作基线。综合分为现场盲测竞技场（40%）加上简洁、模板化、节奏、AI 套话四条机械轴（各 15%）。来源榜 Slop Score 0–100，越高越渣，#1 最渣；本站已反转为最少 slop 为 #1，分数用 100 − Slop Score。开放数据在 GitHub。",
-      "Slashy's The Slop Index. Fifty-eight frontier models, 112 scenarios in four domains, compared with pre-2022 human writing. The blend is a live blind arena (40%) plus conciseness, templating, rhythm, and AI tells (15% each). The source Slop Score is 0–100, higher = worse, #1 = sloppiest; this site inverts so least slop is #1 and stores 100 − Slop Score. Open data is on GitHub.",
+      "Slashy 的 The Slop Index。对 70 个前沿模型在 4 个领域、112 个场景上各采多样本，对照 2022 年前真人写作基线。综合分为现场盲测竞技场（40%）加上简洁、模板化、节奏、AI 套话四条机械轴（各 15%）。来源榜 Slop Score 0–100，越高越渣，#1 最渣；本站已反转为最少 slop 为 #1，分数用 100 − 页面四舍五入后的 Slop Score。开放数据在 GitHub。",
+      "Slashy's The Slop Index. Seventy frontier models, 112 scenarios in four domains, compared with pre-2022 human writing. The blend is a live blind arena (40%) plus conciseness, templating, rhythm, and AI tells (15% each). The source Slop Score is 0–100, higher = worse, #1 = sloppiest; this site inverts so least slop is #1 and stores 100 − the page-rounded Slop Score. Open data is on GitHub.",
     ),
     scoreMeaning: tx(
       "本站分数 = 100 − 来源 Slop Score，越高越像真人。来源榜把最高 slop 排第 1；这里已反转，最少 slop 为第 1。综合分按通过率比值相对榜首归一化。",
@@ -285,8 +285,8 @@ export const benchmarks: Benchmark[] = [
       "Arena votes are still accumulating, so the live Elo moves. Mechanical axes are normalized within this board. It does not measure code or UI quality.",
     ),
     updateCadence: tx(
-      "来源 https://theslopindex.com/leaderboard 。机械轴仍是同站 /bench.json（run full-merged-v5，58 个模型、64,636 条生成）；人群 Elo 来自 /api/leaderboard?mode=v1&domain=all。该接口没有 Last-Modified，本次响应 Date 是 Mon, 16 Nov 2026 01:07:31 GMT，2,494 票。页面把 Slop Score 四舍五入成整数，越高越渣、#1 最渣。本站分数仍是 100 − 该整数，最少 slop 为第 1，四舍五入规则没有改。反转后 GPT-5.6 Sol 仍是第 1（来源 25.88，页面 26，本站 74）；Haiku 5.5 第 2（来源 27.73）；GLM-5.3 第 11（来源 34.92）。",
-      "Source https://theslopindex.com/leaderboard . Mechanical axes are still /bench.json on that site (run full-merged-v5, 58 models, 64,636 generations); crowd Elo comes from /api/leaderboard?mode=v1&domain=all. That response has no Last-Modified. This fetch's Date header was Mon, 16 Nov 2026 01:07:31 GMT, at 2,494 votes. The page rounds Slop Score to an integer; higher is worse and #1 is sloppiest. This site still stores 100 − that integer, so least slop is #1, and the rounding rule is unchanged. After inversion GPT-5.6 Sol is still #1 (source 25.88, page 26, this site 74); Haiku 5.5 is #2 (source 27.73); GLM-5.3 is #11 (source 34.92).",
+      "来源 https://theslopindex.com/leaderboard 。2026-11-17 重算。机械文件已换成 /bench.json 的 full-merged-v6（70 个模型、77,943 条生成），不是上一份的 full-merged-v5。人群 Elo 来自 /api/leaderboard?mode=v1&domain=all，64 行有 Elo。该接口没有 Last-Modified，本次响应 Date 是 Tue, 17 Nov 2026 01:02:19 GMT，2,507 票。页面把 Slop Score 四舍五入成整数，越高越渣、#1 最渣。本站分数仍是 100 − 该整数，最少 slop 为第 1，四舍五入规则没有改。反转后 GPT-5.6 Sol 第 1（来源 27.43，页面 27，本站 73）；Haiku 5.5 第 2（来源 27.66，页面 28，本站 72）；Mercury 2.5 第 5（来源 33.80，页面 34）。没有人群 Elo 的 6 个模型（Hunyuan 4、Inkling 2 Small、Fable 5.2、Nex N2.6、Gemini 4 Carbon、Qwen4 Max）按页面公式把竞技场轴记为中性 50，名次不是完整的人群测量。Mercury 2.5、Hunyuan 4、Inkling 2 Small 没有单独模型页，行仍保留。",
+      "Source https://theslopindex.com/leaderboard . Recomputed 2026-11-17. The mechanical file is now /bench.json run full-merged-v6 (70 models, 77,943 generations), replacing the previous full-merged-v5. Crowd Elo comes from /api/leaderboard?mode=v1&domain=all, with Elo on 64 rows. That response has no Last-Modified. This fetch's Date header was Tue, 17 Nov 2026 01:02:19 GMT, at 2,507 votes. The page rounds Slop Score to an integer; higher is worse and #1 is sloppiest. This site still stores 100 − that integer, so least slop is #1, and the rounding rule is unchanged. After inversion GPT-5.6 Sol is #1 (source 27.43, page 27, this site 73); Haiku 5.5 is #2 (source 27.66, page 28, this site 72); Mercury 2.5 is #5 (source 33.80, page 34). Six models have no crowd Elo (Hunyuan 4, Inkling 2 Small, Fable 5.2, Nex N2.6, Gemini 4 Carbon, Qwen4 Max). The page formula sets their arena axis to a neutral 50, so those ranks are not a complete crowd measurement. Mercury 2.5, Hunyuan 4, and Inkling 2 Small have no model page and the rows are kept.",
     ),
     links: [
       { label: "theslopindex.com/leaderboard", href: "https://theslopindex.com/leaderboard" },
@@ -442,7 +442,7 @@ export const benchmarks: Benchmark[] = [
     shortName: "Convex",
     scoreUnit: "%",
     compositeKind: "rate",
-    asOf: "2026-11-16",
+    asOf: "2026-11-17",
     trackedCount: 44,
     kind: "framework",
     version: "92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb",
@@ -462,12 +462,12 @@ export const benchmarks: Benchmark[] = [
       "The percent is the pass rate on 112 tasks, kept to two decimals. The with-guidelines and web columns appear only when that model has a run. A missing run is not a zero.",
     ),
     caveats: tx(
-      "Convex 自己出题、自己评分。测的是模型加上 Convex，不是框架之间的高低。前排接近满分。无指南与有指南是两次独立查询，不平均、不相加。公开页面的 With Guidelines 分类没有 experiment 字段，所以客户端调用 leaderboardScores 时不带 experiment。具名参数 experiment=with_guidelines 仍返回服务器错误。这条不带 experiment 的公开查询和无指南、无指南 + 网页是三份不同的结果。有指南列里 Gemini 4 Argon 与 Claude Fable 5.2 都显示 98.66；精确值只差一个浮点末位，页面按返回顺序把 Argon 放在前面，这不是明确胜出。无指南列仍是 2026-11-12 的快照。无指南 + 网页本轮没有重抓。",
-      "Convex writes the tasks and grades them. This measures a model together with Convex, not one framework against another. The front is near the ceiling. No Guidelines and With Guidelines are separate queries. They are not averaged or added. The public page's With Guidelines category has no experiment field, so the client calls leaderboardScores without an experiment. The named argument experiment=with_guidelines still returns a server error. That public query with no experiment is a different result from No Guidelines and from No Guidelines + Web. On With Guidelines, Gemini 4 Argon and Claude Fable 5.2 both display 98.66. Their exact values differ by one floating-point step, and the page lists Argon first because that is the response order. That is not a clear win. The No Guidelines column is still the 2026-11-12 snapshot. No Guidelines + Web was not refetched.",
+      "Convex 自己出题、自己评分。测的是模型加上 Convex，不是框架之间的高低。前排接近满分。无指南与有指南是两次独立查询，不平均、不相加。公开页面的 With Guidelines 分类没有 experiment 字段，所以客户端调用 leaderboardScores 时不带 experiment。具名参数 experiment=with_guidelines 仍返回服务器错误。这条不带 experiment 的公开查询和无指南、无指南 + 网页是三份不同的结果。有指南列里 Claude Fable 5.2 重跑后显示 98.81（3 次，精确值 0.9880952380952381），Gemini 4 Argon 仍是 98.66（10 次，精确值 0.9866071428571429）。来源现在把 Fable 放在前面。两边只差约 0.0015，而且次数不一样，这不是有意义的胜出。无指南列仍是 2026-11-12 的 44 行快照，和 2026-11-17 的有指南列不是同一天，并排差值不能当成同日对比。无指南 + 网页本轮没有重抓。",
+      "Convex writes the tasks and grades them. This measures a model together with Convex, not one framework against another. The front is near the ceiling. No Guidelines and With Guidelines are separate queries. They are not averaged or added. The public page's With Guidelines category has no experiment field, so the client calls leaderboardScores without an experiment. The named argument experiment=with_guidelines still returns a server error. That public query with no experiment is a different result from No Guidelines and from No Guidelines + Web. On With Guidelines, Claude Fable 5.2 now displays 98.81 after a rerun (3 runs, exact 0.9880952380952381). Gemini 4 Argon is still 98.66 (10 runs, exact 0.9866071428571429). The source now lists Fable first. The gap is about 0.0015 and the run counts differ, so this is not a meaningful win. The No Guidelines column is still the 44-row snapshot from 2026-11-12. It is not the same day as the 2026-11-17 With Guidelines column, so a side-by-side delta is not a same-day comparison. No Guidelines + Web was not refetched.",
     ),
     updateCadence: tx(
-      "版本哈希仍是 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb（minted 2026-10-08），当前 modelCount 44。2026-11-16 只重抓有指南列：44 行，映射 39。未映射仍是 Crouton Alpha、Hy3、Step 5 Preview、MiniMax M3.1 Flash、Laguna S 2.1。Gemini 4 Argon 与 Claude Fable 5.2 的有指南精确值分别是 0.9866071428571429 和 0.9866071428571428，显示都是 98.66，来源顺序是 Argon 在前。无指南列没有重写，Fable 5.2 仍是该列的 95.54%。无指南 + 网页仍是 2026-10-08。",
-      "The version hash is still 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb (minted 2026-10-08), and the current modelCount is 44. On 2026-11-16 only the With Guidelines column was refetched: 44 rows, 39 mapped. Unmapped: Crouton Alpha, Hy3, Step 5 Preview, MiniMax M3.1 Flash, and Laguna S 2.1. The exact With Guidelines scores are 0.9866071428571429 for Gemini 4 Argon and 0.9866071428571428 for Claude Fable 5.2. Both display 98.66, and the source lists Argon first. The No Guidelines column was not rewritten; Fable 5.2 is still 95.54% there. No Guidelines + Web is still 2026-10-08.",
+      "版本哈希仍是 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb。runs:leaderboardVersions 里当前条目的 modelCount 现为 46。2026-11-17 只重抓有指南列：46 行，映射 39。未映射 7 个：上一份的 Crouton Alpha、Hy3、Step 5 Preview、MiniMax M3.1 Flash、Laguna S 2.1，加上没有模型页的 Hy4 flash（第 18，精确值 0.9107142857142857，显示 91.07，1 次）和 Qwen3.8 Flash（第 40，显示 61.61，1 次）。Hy4 flash 不并进 Hy4 Preview。Fable 5.2 的有指南精确值是 0.9880952380952381（3 次，显示 98.81，sourceIndex 0）。Argon 仍是 0.9866071428571429（10 次，显示 98.66，sourceIndex 1）。GPT-5.6 Terra 落到第 21（显示 89.73）。无指南列没有重写，仍是 2026-11-12 的 44 行，Fable 5.2 在该快照里仍是 95.54%。对照表按这份旧快照排行，所以只存在于新有指南列、又没有模型页的 Hy4 flash 和 Qwen3.8 Flash 不会出现在并排表里。无指南 + 网页仍是 2026-10-08。",
+      "The version hash is still 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb. The current runs:leaderboardVersions entry now reports modelCount 46. On 2026-11-17 only the With Guidelines column was refetched: 46 rows, 39 mapped. Seven are unmapped: the previous Crouton Alpha, Hy3, Step 5 Preview, MiniMax M3.1 Flash, and Laguna S 2.1, plus Hy4 flash (no model page; #18, exact 0.9107142857142857, display 91.07, 1 run) and Qwen3.8 Flash (#40, display 61.61, 1 run). Hy4 flash is not merged into Hy4 Preview. Fable 5.2's With Guidelines exact score is 0.9880952380952381 (3 runs, display 98.81, sourceIndex 0). Argon is still 0.9866071428571429 (10 runs, display 98.66, sourceIndex 1). GPT-5.6 Terra fell to #21 (display 89.73). The No Guidelines column was not rewritten. It is still the 44-row snapshot from 2026-11-12, where Fable 5.2 is 95.54%. The comparison table is ordered by that older snapshot, so Hy4 flash and Qwen3.8 Flash, which exist only on the new With Guidelines column and have no model page, do not appear in the side-by-side table. No Guidelines + Web is still 2026-10-08.",
     ),
     links: [
       { label: "convex.dev/evals", href: "https://www.convex.dev/evals" },

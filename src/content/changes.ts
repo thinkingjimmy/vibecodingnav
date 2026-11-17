@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-17",
+    kind: "board",
+    source: "lmarena.ai",
+    text: tx(
+      "**WebDev、图生网页、Convex 有指南与 Slop Index**：WebDev 页面日期 11-13，1,007,405 票。159 个模型 = 158 行正式名次 + 1 行 AutoEval。Fable 5.2 xHigh 正式第 1（1826，1,445 票）。Qwen4-Max xHigh 是新的正式初步行第 6（1750），不是 AutoEval，也没有模型页。Ernie 5.5 Flash Preview 1668 仍不进综合分。图生网页 213,813 票、66 行，Opus 5.5 Max 第 1（1756），Qwen4-Max 第 6（1674，初步）。Convex 有指南 46 行：Fable 5.2 精确值 0.9880952380952381（显示 98.81，3 次），Argon 仍是 0.9866071428571429（显示 98.66，10 次）。分差约 0.0015，不是有意义的胜出。无指南列仍是 11-12 的快照，并排不是同日对比。Slop Index 70 行，捕获时间 Tue, 17 Nov 2026 01:02:19 GMT，2,507 票，机械文件是 full-merged-v6。反转后 GPT-5.6 Sol 第 1（来源 27.43）。",
+      "**WebDev, Image-to-WebDev, Convex With Guidelines, and the Slop Index**: the WebDev page date is Nov 13, with 1,007,405 votes. 159 models = 158 official ranks plus 1 AutoEval row. Fable 5.2 xHigh is official #1 (1826, 1,445 votes). Qwen4-Max xHigh is a new official preliminary row at #6 (1750). It is not AutoEval and has no model page. Ernie 5.5 Flash Preview at 1668 stays out of the composite. Image-to-WebDev has 213,813 votes and 66 rows. Opus 5.5 Max is #1 (1756), and Qwen4-Max is #6 (1674, preliminary). Convex With Guidelines has 46 rows: Fable 5.2 is exactly 0.9880952380952381 (display 98.81, 3 runs), and Argon is still 0.9866071428571429 (display 98.66, 10 runs). The gap is about 0.0015, not a meaningful win. The No Guidelines column is still the Nov 12 snapshot, so the side-by-side is not a same-day comparison. The Slop Index has 70 rows, captured Tue, 17 Nov 2026 01:02:19 GMT, at 2,507 votes, from mechanical run full-merged-v6. After inversion GPT-5.6 Sol is #1 (source 27.43).",
+    ),
+  },
+  {
     date: "11-16",
     kind: "board",
     source: "convex.dev",

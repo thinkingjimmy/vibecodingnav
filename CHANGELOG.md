@@ -9,6 +9,15 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-17
+
+### 变更
+
+- LMArena WebDev 从 https://lmarena.ai/leaderboard/webdev 全量同步。页面日期 2026-11-13，1,007,405 票。来源 159 个模型 = 158 行正式名次 + 1 行 AutoEval。正式第 1 是 Claude Fable 5.2（xHigh）1826（1,445 票）。新增正式初步行 Qwen4-Max（xHigh）第 6（1750，1,814 票），没有模型页，也不并进 Qwen3.8 Max。Ernie 5.5 Flash Preview 1668 仍是唯一 AutoEval，无官方名次和票数。上一份的 glm-5v-turbo 这次没有出现。
+- LMArena Image-to-WebDev 从 https://lmarena.ai/leaderboard/image-to-webdev 全量同步。页面日期 2026-11-13，213,813 票，66 行。第 1 是 Claude Opus 5.5（max）1756。新增正式初步行 Qwen4-Max（xHigh）第 6（1674，1,474 票），没有模型页。MiMo-V2.6-Flash 第 21（1593）。帕累托页单任务成本改为 Opus $7.48、GPT-6 Sol Max $1.93、Muse Spark 1.3 Max $1.19。散点轴仍是 token 混合价。
+- Convex 有指南列从公开页面使用的 `runs:leaderboardScores`（不带 experiment）重抓，46 行，映射 39。`experiment=with_guidelines` 仍是服务器错误。Fable 5.2 精确值 0.9880952380952381（3 次，显示 98.81），Argon 仍是 0.9866071428571429（10 次，显示 98.66）。分差约 0.0015，不是有意义的胜出。新增未映射 Hy4 flash 与 Qwen3.8 Flash。无指南列仍是 2026-11-12 的 44 行快照，和这次有指南列不是同一天，并排差值不能当成同日对比。
+- The Slop Index 按 Tue, 17 Nov 2026 01:02:19 GMT 的现场数据重算 70 行（2,507 票）。机械文件已换成 full-merged-v6（70 个模型、77,943 条生成），与“机械未变”的观察不一致。反转仍是 100 − 页面四舍五入后的 Slop Score。反转后 GPT-5.6 Sol 第 1（来源 27.43，页面 27，本站 73），Haiku 5.5 第 2（27.66）。6 个没有人群 Elo 的模型按页面公式把竞技场轴记为中性 50。Mercury 2.5、Hunyuan 4、Inkling 2 Small 没有模型页，行仍保留。Web 前端和写文档综合分随这几张榜重算，权重未改。
+
 ## 2026-11-16
 
 ### 变更

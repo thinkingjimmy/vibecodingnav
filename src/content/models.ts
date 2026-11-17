@@ -54,8 +54,8 @@ export const models: Model[] = [
       slugs: ["claude-sonnet-5-5", "gpt-6-astra", "gpt-6-1-sol", "glm-5-3"],
     },
     summary: tx(
-      "Terminal-Bench 仍排第一。WebDev 正式第 2（max，1815），第 1 是 Fable 5.2（xHigh，1838）。Android Bench 2.0 长程第 2（37.3%）。sudo L7 第 3（46.1%）；Fable 5.2 以 52.2% 居首，Sonnet 5.5 第 2（50.6%）。",
-      "Still first on Terminal-Bench. Official #2 on WebDev (max, 1815); Fable 5.2 (xHigh, 1838) is #1. Second on Android Bench 2.0 long-horizon at 37.3%. Third on sudo L7 at 46.1%; Fable 5.2 leads at 52.2%, and Sonnet 5.5 is 2nd at 50.6%.",
+      "Terminal-Bench 仍排第一。WebDev 正式第 2（max，1816），第 1 是 Fable 5.2（xHigh，1826）。Android Bench 2.0 长程第 2（37.3%）。sudo L7 第 3（46.1%）；Fable 5.2 以 52.2% 居首，Sonnet 5.5 第 2（50.6%）。",
+      "Still first on Terminal-Bench. Official #2 on WebDev (max, 1816); Fable 5.2 (xHigh, 1826) is #1. Second on Android Bench 2.0 long-horizon at 37.3%. Third on sudo L7 at 46.1%; Fable 5.2 leads at 52.2%, and Sonnet 5.5 is 2nd at 50.6%.",
     ),
     why: [
       tx(
@@ -73,8 +73,8 @@ export const models: Model[] = [
         "For batch or CI work, GPT-6.1 Sol ties for 3rd on Terminal-Bench at 58.2% and $634.24.",
       ),
       tx(
-        "只做前端：Claude Sonnet 5.5 WebDev 1773 分，价格只有一半（$2 / $10）。",
-        "For frontend only, Claude Sonnet 5.5 scores 1773 on WebDev at half the token price ($2 / $10).",
+        "只做前端：Claude Sonnet 5.5 WebDev 1772 分，价格只有一半（$2 / $10）。",
+        "For frontend only, Claude Sonnet 5.5 scores 1772 on WebDev at half the token price ($2 / $10).",
       ),
       tx("对延迟敏感：Android Bench 长程任务平均耗时 56.6 小时。", "Latency: the Android Bench long run averages 56.6 hours."),
       tx("生产级判断：sudo L7 第 3（46.1%），低于 Fable 5.2 的 52.2% 和 Sonnet 5.5 的 50.6%。", "Production judgment: 3rd on sudo L7 at 46.1%, behind Fable 5.2 at 52.2% and Sonnet 5.5 at 50.6%."),
@@ -91,12 +91,12 @@ export const models: Model[] = [
     priceLabel: "$10 / $50",
     headlines: ["eqbench-creative-writing", "lmarena-webdev"],
     summary: tx(
-      "EQ-Bench Creative Writing v3 第 1（Elo 2176.9）。WebDev 第五，1764 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第六，31.1%。",
-      "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fifth on WebDev at 1764. Tied at 58.2% on Terminal-Bench. Sixth on sudo L7 at 31.1%.",
+      "EQ-Bench Creative Writing v3 第 1（Elo 2176.9）。WebDev 第五，1763 分。Terminal-Bench 与 GPT-6.1 Sol 并列 58.2%。sudo L7 第六，31.1%。",
+      "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fifth on WebDev at 1763. Tied at 58.2% on Terminal-Bench. Sixth on sudo L7 at 31.1%.",
     ),
     why: [
       tx("EQ-Bench Creative Writing Elo 仍居首。Slop 反转后第 1 是 GPT-5.6 Sol，Haiku 5.5 第 2。", "Still first on Creative Writing Elo. After Slop inversion GPT-5.6 Sol is #1 and Haiku 5.5 is #2."),
-      tx("WebDev 比第一名 Fable 5.2 低 72 分。", "72 points behind Fable 5.2, first on WebDev."),
+      tx("WebDev 比第一名 Fable 5.2 低 63 分。", "63 points behind Fable 5.2, first on WebDev."),
     ],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
   }),
@@ -115,7 +115,7 @@ export const models: Model[] = [
       "First on Android Bench 2.0 long-horizon at 40.0% (max, claude-code). 2nd on sudo L7 at 50.6% Adaptive/Max; Fable 5.2 leads at 52.2%. Third on WebDev at 1772 (xHigh). 5th on Supabase without skills at 77%, 86% with skills.",
     ),
     why: [
-      tx("Android 长程第一；sudo L7 第 2。做前端时比 Opus 少 43 分（1772 对 1815），价格是一半。", "Leads Android long-horizon and is 2nd on sudo L7. For frontend, 43 fewer WebDev points than Opus (1772 vs 1815) at half the price."),
+      tx("Android 长程第一；sudo L7 第 2。做前端时比 Opus 少 44 分（1772 对 1816），价格是一半。", "Leads Android long-horizon and is 2nd on sudo L7. For frontend, 44 fewer WebDev points than Opus (1772 vs 1816) at half the price."),
     ],
     whyNot: [
       tx("Android 长程平均耗时 70.7 小时、成本约 $1575。", "Android long-horizon averages 70.7 hours and about $1575."),
@@ -152,8 +152,8 @@ export const models: Model[] = [
     fetchedAt: "2026-10-28",
     headlines: ["lmarena-webdev"],
     summary: tx(
-      "Next.js 当前榜第 5（high）97%，有 AGENTS.md 为 94%，成本 $0.083。WebDev 第 12（max）1679 分；Android Bench 2.0 长程第 4（max）28.7%。token 价格 $1 / $5。与 GPT-6.1 Sol 不是同一行。",
-      "5th on the current Next.js board at high with 97% (94% with AGENTS.md) and $0.083. 12th on WebDev at max with 1679. 4th on Android Bench 2.0 long-horizon at max with 28.7%. Token price $1 / $5. A different row from GPT-6.1 Sol.",
+      "Next.js 当前榜第 5（high）97%，有 AGENTS.md 为 94%，成本 $0.083。WebDev 第 14（max）1681 分；Android Bench 2.0 长程第 4（max）28.7%。token 价格 $1 / $5。与 GPT-6.1 Sol 不是同一行。",
+      "5th on the current Next.js board at high with 97% (94% with AGENTS.md) and $0.083. 14th on WebDev at max with 1681. 4th on Android Bench 2.0 long-horizon at max with 28.7%. Token price $1 / $5. A different row from GPT-6.1 Sol.",
     ),
     why: [
       tx("Next.js 已进入 97% 第一档，单次成本低于同档 Sol / Fable。", "Joins the Next.js 97% first tier at a lower run cost than Sol / Fable in that band."),
@@ -170,7 +170,7 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1M",
     priceLabel: "$10 / $50",
-    summary: tx("WebDev 第七，1742 分。GPT-6.1 Sol 第六，1743 分，来源名次没有并成并列。图生网页第三，1724 分。Terminal-Bench 第五，57.9%。", "Seventh on WebDev at 1742. GPT-6.1 Sol is sixth at 1743, and the source does not tie those ranks. Third on Image-to-WebDev at 1724. Fifth on Terminal-Bench at 57.9%."),
+    summary: tx("WebDev 第七，1743 分。GPT-6.1 Sol 第八，1742 分，来源名次没有并成并列。图生网页第三，1722 分。Terminal-Bench 第五，57.9%。", "Seventh on WebDev at 1743. GPT-6.1 Sol is eighth at 1742, and the source does not tie those ranks. Third on Image-to-WebDev at 1722. Fifth on Terminal-Bench at 57.9%."),
     why: [tx("两张活跃榜都在前五。", "Top five on two active boards.")],
     whyNot: [tx("同价位没有比 Astra 更靠前，半价位有 Sonnet 和 Sol。", "Astra ranks higher at the same price. Sonnet and Sol cost half as much.")],
   }),
@@ -186,13 +186,13 @@ export const models: Model[] = [
     fetchedAt: "2026-11-12",
     headlines: ["lmarena-webdev", "convex-evals"],
     summary: tx(
-      "WebDev 正式第 1（xHigh，1838，1,215 票）。sudo L7 第 1（Adaptive/Max，52.2%）。Convex 无指南第 1（95.54%，1 次）。有指南显示 98.66%（2 次），与 Gemini 4 Argon 的 98.66% 相同；来源精确值是 Argon 0.9866071428571429、Fable 0.9866071428571428，页面按返回顺序把 Argon 放在前面。这是展示并列，不是 Argon 明确更好。和 Fable 5.1 不是同一行。",
-      "Official #1 on WebDev (xHigh, 1838, 1,215 votes). First on sudo L7 (Adaptive/Max, 52.2%). First on Convex without guidelines at 95.54% (1 run). With guidelines it displays 98.66% (2 runs), the same display as Gemini 4 Argon. The exact source values are Argon 0.9866071428571429 and Fable 0.9866071428571428, and the page lists Argon first because that is the response order. That is a displayed tie, not a clear win for Argon. A different row from Fable 5.1.",
+      "WebDev 正式第 1（xHigh，1826，1,445 票）。sudo L7 第 1（Adaptive/Max，52.2%）。Convex 无指南快照仍是第 1（95.54%，该快照 1 次，日期 2026-11-12）。有指南列 2026-11-17 重跑后显示 98.81%（3 次，精确值 0.9880952380952381），来源把它排在 Gemini 4 Argon 前面。Argon 仍是 98.66%（10 次，精确值 0.9866071428571429）。分差约 0.0015，次数也不一样，这是很小的重跑差距，不是有意义的胜出。和 Fable 5.1 不是同一行。",
+      "Official #1 on WebDev (xHigh, 1826, 1,445 votes). First on sudo L7 (Adaptive/Max, 52.2%). The Convex no-guidelines snapshot still has it first at 95.54% (1 run in that snapshot, dated 2026-11-12). After the 2026-11-17 with-guidelines rerun it displays 98.81% (3 runs, exact 0.9880952380952381), and the source lists it ahead of Gemini 4 Argon. Argon is still 98.66% (10 runs, exact 0.9866071428571429). The gap is about 0.0015 and the run counts differ. That is a tiny rerun gap, not a meaningful win. A different row from Fable 5.1.",
     ),
-    why: [tx("WebDev 正式第 1，Convex 无指南也是第 1。有指南列与 Argon 显示同为 98.66，不把列与列合成一个分。", "Official #1 on WebDev, and #1 on Convex without guidelines. With guidelines it displays the same 98.66 as Argon. The columns are not merged into one score.")],
+    why: [tx("WebDev 正式第 1，Convex 无指南快照也是第 1。有指南列只比 Argon 高约 0.15 个显示点，不把两列合成一个分。", "Official #1 on WebDev, and #1 on the Convex no-guidelines snapshot. With guidelines it is only about 0.15 display points above Argon. The columns are not merged into one score.")],
     whyNot: [
-      tx("WebDev 1,215 票，置信区间 +21/−21，名次范围 1–2，和 Opus 5.5 Max 1815 仍可能互换。", "WebDev has 1,215 votes, a +21/−21 interval, and a 1–2 rank band, so it can still trade places with Opus 5.5 Max at 1815."),
-      tx("有指南的 98.66% 不要写成单独夺冠。Argon 排在前面只是来源顺序。", "Do not call the 98.66% with-guidelines score a solo win. Argon is listed first only because of source order."),
+      tx("WebDev 1,445 票，置信区间 +19/−19，名次范围 1–2，和 Opus 5.5 Max 1816 仍可能互换。", "WebDev has 1,445 votes, a +19/−19 interval, and a 1–2 rank band, so it can still trade places with Opus 5.5 Max at 1816."),
+      tx("有指南的 98.81% 不要写成对 Argon 的明确胜出。精确分差约 0.0015，Fable 3 次，Argon 10 次。", "Do not call the 98.81% with-guidelines score a clear win over Argon. The exact gap is about 0.0015, with 3 runs for Fable and 10 for Argon."),
     ],
   }),
   model({
@@ -232,7 +232,7 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "1.1M",
     priceLabel: "$2 / $10",
-    summary: tx("WebDev 最高档第 15，1673 分。当前 Android Bench 2.0 长程榜没有这一行。", "15th on WebDev at 1673. It is not on the current Android Bench 2.0 long-horizon board."),
+    summary: tx("WebDev 最高档第 17，1673 分。当前 Android Bench 2.0 长程榜没有这一行。", "17th on WebDev at 1673. It is not on the current Android Bench 2.0 long-horizon board."),
     why: [tx("WebDev 仍在前十五，token 价格与 Sonnet 同档。", "Still inside the WebDev top fifteen, at Sonnet's token price.")],
     whyNot: [tx("Android 长程榜现在看的是 GPT 6.1 Sol，不是这一行。不要把它当成跨模块改造的默认模型。", "The Android long board now lists GPT 6.1 Sol, not this row. Do not make it the default for cross-module migrations.")],
   }),
@@ -246,8 +246,8 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$2 / $10",
     summary: tx(
-      "Next.js 当前榜第 3，基线与有 AGENTS.md 均为 97%。WebDev high 档第 12，1682 分。与 Gemini 4 Carbon 不是同一行。",
-      "3rd on the current Next.js board at 97% with or without AGENTS.md. 12th on WebDev at high effort, 1682. A different row from Gemini 4 Carbon.",
+      "Next.js 当前榜第 3，基线与有 AGENTS.md 均为 97%。WebDev high 档第 15，1679 分。与 Gemini 4 Carbon 不是同一行。",
+      "3rd on the current Next.js board at 97% with or without AGENTS.md. 15th on WebDev at high effort, 1679. A different row from Gemini 4 Carbon.",
     ),
     why: [
       tx("Next.js 与 Opus / Sol / Fable 同处 97% 第一档。", "Shares the Next.js 97% first tier with Opus / Sol / Fable."),
@@ -346,8 +346,8 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$4 / $20",
     fetchedAt: "2026-10-26",
-    summary: tx("WebDev Full（max）第 8，1723 分；原 Wonder（max）第 21，1649 分。Android Bench 2.0 长程第 12（max，13.3%，muse-code，closed weights；对话框 id 是 muse-wonder-1.0）。EQ-Bench Creative Writing 第 10（Elo 2007.0）。几行仍归到同一模型页，榜上分开保留。", "Full (max) is 8th on WebDev at 1723; the original Wonder (max) row is 21st at 1649. 12th on Android Bench 2.0 long-horizon (max, 13.3%, muse-code, closed weights; dialog id muse-wonder-1.0). 10th on EQ-Bench Creative Writing at Elo 2007.0. The rows stay on one model page and remain separate on each board."),
-    why: [tx("Full（max）在 WebDev 第 7，比 Fable 5.1 低 20 分。", "Full (max) is 7th on WebDev, 20 points behind Fable 5.1.")],
+    summary: tx("WebDev Full（max）第 9，1724 分；原 Wonder（max）第 23，1647 分。Android Bench 2.0 长程第 12（max，13.3%，muse-code，closed weights；对话框 id 是 muse-wonder-1.0）。EQ-Bench Creative Writing 第 10（Elo 2007.0）。几行仍归到同一模型页，榜上分开保留。", "Full (max) is 9th on WebDev at 1724; the original Wonder (max) row is 23rd at 1647. 12th on Android Bench 2.0 long-horizon (max, 13.3%, muse-code, closed weights; dialog id muse-wonder-1.0). 10th on EQ-Bench Creative Writing at Elo 2007.0. The rows stay on one model page and remain separate on each board."),
+    why: [tx("Full（max）在 WebDev 第 9，比 Fable 5.1 低 19 分。", "Full (max) is 9th on WebDev, 19 points behind Fable 5.1.")],
     whyNot: [tx("Full 行价格与上下文未公布（N/A），原 Wonder 行仍是 $4 / $20。", "The Full row lists no price or context (N/A); the original Wonder row remains $4 / $20.")],
   }),
   model({
@@ -397,11 +397,11 @@ export const models: Model[] = [
     fetchedAt: "2026-11-09",
     headlines: ["eqbench-creative-writing", "lmarena-webdev", "android-bench"],
     summary: tx(
-      "EQ-Bench Creative Writing v3 第 2（Elo 2172.6）。WebDev 第 12（max，1687）。Android Bench 2.0 长程第 6（max，24.0%，kimi-code，open weights）。sudo L7 与 Qwen 3.8 Max 并列第 8（16.7%）。与 Kimi K3 不是同一行。",
-      "2nd on EQ-Bench Creative Writing v3 (Elo 2172.6). 12th on WebDev at max (1687). 6th on Android Bench 2.0 long-horizon at max (24.0%, kimi-code, open weights). Ties Qwen 3.8 Max at #8 on sudo L7 (16.7%). A different row from Kimi K3.",
+      "EQ-Bench Creative Writing v3 第 2（Elo 2172.6）。WebDev 第 13（max，1686）。Android Bench 2.0 长程第 6（max，24.0%，kimi-code，open weights）。sudo L7 与 Qwen 3.8 Max 并列第 8（16.7%）。与 Kimi K3 不是同一行。",
+      "2nd on EQ-Bench Creative Writing v3 (Elo 2172.6). 13th on WebDev at max (1686). 6th on Android Bench 2.0 long-horizon at max (24.0%, kimi-code, open weights). Ties Qwen 3.8 Max at #8 on sudo L7 (16.7%). A different row from Kimi K3.",
     ),
     why: [
-      tx("创意写作 Elo 紧贴榜首 Astra；WebDev 在第 12，Android 长程第 6。", "Creative Writing Elo sits just behind leader Astra; 12th on WebDev and 6th on Android long-horizon."),
+      tx("创意写作 Elo 紧贴榜首 Astra；WebDev 在第 13，Android 长程第 6。", "Creative Writing Elo sits just behind leader Astra; 13th on WebDev and 6th on Android long-horizon."),
       tx("已出现在 sudo L7 公开榜。", "Already on the public sudo L7 board."),
     ],
     whyNot: [tx("不要和 Kimi K3 的其他榜合成一个分。", "Do not merge this with Kimi K3's other boards into one score.")],
@@ -416,8 +416,8 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$3 / $15",
     summary: tx(
-      "Android Bench 1.0 第四，90.2%，成本 $112.9，但平均耗时 29.6 小时。WebDev 第十八，1658 分。2.0 长程第 14（max）12.0%。",
-      "Fourth on Android Bench 1.0 at 90.2% and $112.9, with a 29.6 hour average. Eighteenth on WebDev at 1658. 14th on 2.0 long-horizon (max) at 12.0%.",
+      "Android Bench 1.0 第四，90.2%，成本 $112.9，但平均耗时 29.6 小时。WebDev 第二十，1658 分。2.0 长程第 14（max）12.0%。",
+      "Fourth on Android Bench 1.0 at 90.2% and $112.9, with a 29.6 hour average. Twentieth on WebDev at 1658. 14th on 2.0 long-horizon (max) at 12.0%.",
     ),
     why: [tx("标准 Android 任务与头部几乎打平，成本低约三分之一。", "Nearly tied with the Android leaders, at about a third less cost.")],
     whyNot: [tx("29.6 小时约为 Claude Opus 5 的两倍多，不适合交互式开发。许可不是常见开源许可。", "29.6 hours is more than double Claude Opus 5, a poor fit for interactive work. The license is not a common open-source license.")],
@@ -431,7 +431,7 @@ export const models: Model[] = [
     licenseLabel: prop,
     context: "500K",
     priceLabel: "$2 / $6",
-    summary: tx("WebDev xhigh 1640 分，名次区间 19–26。上下文 500K，短于这张榜上的 1M 档。", "1640 on WebDev at xhigh, rank band 19–26. 500K context, shorter than the 1M tier."),
+    summary: tx("WebDev xhigh 1640 分，名次区间 23–27。上下文 500K，短于这张榜上的 1M 档。", "1640 on WebDev at xhigh, rank band 23–27. 500K context, shorter than the 1M tier."),
     why: [tx("token 价格 $2 / $6。", "Token price is $2 / $6.")],
     whyNot: [tx("名次区间宽，上下文也更短。", "The rank band is wide and the context is shorter.")],
   }),
@@ -468,11 +468,11 @@ export const models: Model[] = [
     priceLabel: "$0.14 / $0.28",
     headlines: ["lmarena-webdev"],
     summary: tx(
-      "开源许可切片的第一名，WebDev 1634，全局约第 19。MIT，价格 $0.14 / $0.28。",
-      "First in the open-license slice at 1634 on WebDev, about 19th overall. MIT, priced $0.14 / $0.28.",
+      "WebDev 第 26，1639，MIT，价格 $0.14 / $0.28。图生网页第 21，1593。开源切片里更高的是 DeepSeek V4.1 Flash 的 20261017 档（1661）。",
+      "26th on WebDev at 1639, MIT, priced $0.14 / $0.28. 21st on Image-to-WebDev at 1593. DeepSeek V4.1 Flash 20261017 is higher in the open-license slice at 1661.",
     ),
-    why: [tx("要可自托管的前端模型时，它是这张榜上分最高的 MIT 模型。", "When the frontend model must be self-hostable, it is the highest MIT score on this board.")],
-    whyNot: [tx("和闭源第一名差 173 分。不要用它替代 Opus 做榜首那档质量。", "173 points behind the proprietary leader. Do not treat it as a substitute for that tier.")],
+    why: [tx("MIT，价格低。图生网页的帕累托页仍把它列为 $0.05/task 的最优点。", "MIT and inexpensive. The Image-to-WebDev Pareto page still lists it at $0.05/task.")],
+    whyNot: [tx("和 WebDev 第一名差 187 分。开源更高分看 DeepSeek 的 20261017 档。", "187 points behind the WebDev leader. For a higher open-weight score, use the DeepSeek 20261017 tier.")],
   }),
   model({
     slug: "qwen3-8-flash-next",
@@ -483,7 +483,7 @@ export const models: Model[] = [
     licenseLabel: tx("qwen-community", "qwen-community"),
     context: "1M",
     priceLabel: "$0.16 / $0.47",
-    summary: tx("WebDev 1629，初步。许可是 qwen-community，不计入本站的开源许可切片。", "1629 on WebDev, preliminary. The qwen-community license is outside this site's open-license slice."),
+    summary: tx("WebDev 1625，初步。许可是 qwen-community，不计入本站的开源许可切片。", "1625 on WebDev, preliminary. The qwen-community license is outside this site's open-license slice."),
     why: [tx("价格接近 MiMo Flash。", "Priced close to MiMo Flash.")],
     whyNot: [tx("初步，且不是 MIT / Apache 这一档许可。", "Preliminary, and not an MIT or Apache license.")],
   }),
@@ -495,9 +495,9 @@ export const models: Model[] = [
     license: "apache-2.0",
     licenseLabel: apache,
     context: "1M",
-    priceLabel: "$0.83 / $2.50",
-    summary: tx("WebDev 第 20，1631，Apache 2.0，标记为初步。", "20th on WebDev at 1631. Apache 2.0, marked preliminary."),
-    why: [tx("Apache 2.0，分只比 MiMo Flash 低 3 分。", "Apache 2.0, three points behind MiMo Flash.")],
+    priceLabel: "$0.75 / $2.25",
+    summary: tx("WebDev 第 27，1632，Apache 2.0，标记为初步。与没有模型页的 Hy4 flash 不是同一行。", "27th on WebDev at 1632. Apache 2.0, marked preliminary. A different row from Hy4 flash, which has no model page."),
+    why: [tx("Apache 2.0，分比 MiMo Flash 低 7 分。", "Apache 2.0, seven points behind MiMo Flash.")],
     whyNot: [tx("仍是初步结果，名次可能变动。", "Still preliminary, so the rank can move.")],
   }),
   model({
@@ -509,7 +509,7 @@ export const models: Model[] = [
     licenseLabel: mit,
     context: "1.1M",
     priceLabel: "$0.43 / $0.87",
-    summary: tx("WebDev 第 22，1625，MIT。排在 MiMo V2.6 Flash 和 HY4 Preview 后面。", "22nd on WebDev at 1625, MIT. Behind MiMo V2.6 Flash and HY4 Preview."),
+    summary: tx("WebDev 第 30，1624，MIT。排在 MiMo V2.6 Flash 和 HY4 Preview 后面。", "30th on WebDev at 1624, MIT. Behind MiMo V2.6 Flash and HY4 Preview."),
     why: [tx("与 Flash 同一许可，分数接近。", "Same license as Flash, with a close score.")],
     whyNot: [tx("更贵，分数还更低。开源首选仍是 Flash。", "It costs more and scores lower. Flash remains the open primary.")],
   }),
@@ -522,8 +522,8 @@ export const models: Model[] = [
     licenseLabel: mit,
     priceLabel: "$1.40 / $4.40",
     summary: tx(
-      "WebDev 第 25，1621，MIT。Terminal-Bench 第 20，41.8% ± 3.2%，成本 $2.7k。可以自托管。DeepSWE v1.1 Best（max）第 7，69.0%。",
-      "25th on WebDev at 1621, MIT. 20th on Terminal-Bench at 41.8% ± 3.2%, cost $2.7k. Weights can be self-hosted. 7th on DeepSWE v1.1 Best (max) at 69.0%.",
+      "WebDev 第 31，1622，MIT。Terminal-Bench 第 20，41.8% ± 3.2%，成本 $2.7k。可以自托管。DeepSWE v1.1 Best（max）第 7，69.0%。",
+      "31st on WebDev at 1622, MIT. 20th on Terminal-Bench at 41.8% ± 3.2%, cost $2.7k. Weights can be self-hosted. 7th on DeepSWE v1.1 Best (max) at 69.0%.",
     ),
     why: [tx("MIT。Terminal-Bench 上的开源一档。", "MIT. The open-weight pick on Terminal-Bench.")],
     whyNot: [tx("Terminal-Bench 41.8%，明显低于前排闭源模型。", "41.8% on Terminal-Bench, well behind the proprietary front.")],
@@ -549,8 +549,8 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$0.30 / $1.20",
     fetchedAt: "2026-10-20",
-    summary: tx("WebDev 20261017（max）第 18，1664；20260910（max）第 31，1621。图生网页 20260910（max）第 12，1610。Android 长程第 11 是 DeepSeek V4.1 Flash 1017（high）17.3%，这一页现在标成 open weights。LMArena 这两档写的是 MIT。", "WebDev 20261017 (max) is #18 at 1664; 20260910 (max) is #31 at 1621. On Image-to-WebDev, 20260910 (max) is #12 at 1610. Android long-horizon #11 is DeepSeek V4.1 Flash 1017 (high) at 17.3%, and that page now marks the row open weights. LMArena lists both dated tiers as MIT."),
-    why: [tx("MIT，20261017 档在 WebDev 第 16。两档日期在原榜上分开保留。", "MIT. The 20261017 tier is 16th on WebDev. The two dated tiers stay separate on the source board.")],
+    summary: tx("WebDev 20261017（max）第 19，1661；20260910（max）第 33，1621。图生网页 20260910（max）第 13，1611；20261017（max）第 14，1609。Android 长程第 11 是 DeepSeek V4.1 Flash 1017（high）17.3%，这一页现在标成 open weights。LMArena 这两档写的是 MIT。", "WebDev 20261017 (max) is #19 at 1661; 20260910 (max) is #33 at 1621. On Image-to-WebDev, 20260910 (max) is #13 at 1611 and 20261017 (max) is #14 at 1609. Android long-horizon #11 is DeepSeek V4.1 Flash 1017 (high) at 17.3%, and that page now marks the row open weights. LMArena lists both dated tiers as MIT."),
+    why: [tx("MIT，20261017 档在 WebDev 第 19。两档日期在原榜上分开保留。", "MIT. The 20261017 tier is 19th on WebDev. The two dated tiers stay separate on the source board.")],
     whyNot: [tx("融合表仍按既有 modelSlug 取这两档里名次更好的一行，没有新合成第三档。Android 那一行的 closed 标记不要改写成 MIT。", "The fused table still keeps the better rank of these two tiers under the existing model slug; no third tier was merged in. Do not rewrite the Android row's closed-weight mark as MIT.")],
   }),
   model({
@@ -593,7 +593,7 @@ export const models: Model[] = [
     vendorName: "OpenAI",
     license: "proprietary",
     licenseLabel: prop,
-    summary: tx("Android Bench 1.0 第三，90.8%，跑分成本 $150.0。DeepSWE v1.1 Best（max）第 4，72.7%。Slop Index 反转后第 1：来源 slop 25.88，页面显示 26，本站 74。", "Third on Android Bench 1.0 at 90.8%, run cost $150.0. Fourth on DeepSWE v1.1 Best (max) at 72.7%. After Slop inversion it is #1: source slop 25.88, the page shows 26, this site stores 74."),
+    summary: tx("Android Bench 1.0 第三，90.8%，跑分成本 $150.0。DeepSWE v1.1 Best（max）第 4，72.7%。Slop Index 反转后第 1：来源 slop 27.43，页面显示 27，本站 73。", "Third on Android Bench 1.0 at 90.8%, run cost $150.0. Fourth on DeepSWE v1.1 Best (max) at 72.7%. After Slop inversion it is #1: source slop 27.43, the page shows 27, this site stores 73."),
     why: [tx("标准任务前三，和 Anthropic 前两名几乎打平。", "Top three on standard tasks, nearly tied with the two Anthropic leaders.")],
     whyNot: [tx("成本 $150，和榜首同一量级。", "At $150, the cost is in the same range as the leader.")],
   }),
@@ -628,8 +628,8 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["android-bench"],
     summary: tx(
-      "The Slop Index 反转后第 20（来源 slop 39.21，页面 39，本站 61）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
-      "20th on The Slop Index after inversion (source slop 39.21, page 39, this site 61). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
+      "The Slop Index 反转后第 26（来源 slop 40.53，页面 41，本站 59）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
+      "26th on The Slop Index after inversion (source slop 40.53, page 41, this site 59). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
     ),
     why: [
       tx("Android 标准任务只比第一低约 4 个点，成本约为二十四分之一。", "On Android standard tasks, about four points behind first at roughly a twenty-fourth of the cost."),
@@ -701,8 +701,8 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["slop-index"],
     summary: tx(
-      "The Slop Index 反转后第 2（来源 slop 27.73，页面 28，本站 72）。第 1 是 GPT-5.6 Sol。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。Convex 基线仍是低成本前排之一。",
-      "2nd on The Slop Index after inversion (source slop 27.73, page 28, this site 72). GPT-5.6 Sol is #1. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). Still among the low-cost Convex baseline front.",
+      "The Slop Index 反转后第 2（来源 slop 27.66，页面 28，本站 72）。第 1 是 GPT-5.6 Sol。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。Convex 基线仍是低成本前排之一。",
+      "2nd on The Slop Index after inversion (source slop 27.66, page 28, this site 72). GPT-5.6 Sol is #1. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). Still among the low-cost Convex baseline front.",
     ),
     why: [
       tx("写文档主榜反转后第 2，排在 GPT-5.6 Sol 后面；token 价格 $0.3。", "2nd on the inverted docs primary board, behind GPT-5.6 Sol; token price $0.3."),
