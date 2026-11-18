@@ -95,7 +95,7 @@ export const models: Model[] = [
       "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fifth on WebDev at 1763. Tied at 58.2% on Terminal-Bench. Sixth on sudo L7 at 31.1%.",
     ),
     why: [
-      tx("EQ-Bench Creative Writing Elo 仍居首。Slop 反转后第 1 是 GPT-5.6 Sol，Haiku 5.5 第 2。", "Still first on Creative Writing Elo. After Slop inversion GPT-5.6 Sol is #1 and Haiku 5.5 is #2."),
+      tx("EQ-Bench Creative Writing Elo 仍居首。Slop 反转后第 1 是 GPT-5.6 Sol，Haiku 5.5 第 3。", "Still first on Creative Writing Elo. After Slop inversion GPT-5.6 Sol is #1 and Haiku 5.5 is #3."),
       tx("WebDev 比第一名 Fable 5.2 低 63 分。", "63 points behind Fable 5.2, first on WebDev."),
     ],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
@@ -186,8 +186,8 @@ export const models: Model[] = [
     fetchedAt: "2026-11-12",
     headlines: ["lmarena-webdev", "convex-evals"],
     summary: tx(
-      "WebDev 正式第 1（xHigh，1826，1,445 票）。sudo L7 第 1（Adaptive/Max，52.2%）。Convex 无指南快照仍是第 1（95.54%，该快照 1 次，日期 2026-11-12）。有指南列 2026-11-17 重跑后显示 98.81%（3 次，精确值 0.9880952380952381），来源把它排在 Gemini 4 Argon 前面。Argon 仍是 98.66%（10 次，精确值 0.9866071428571429）。分差约 0.0015，次数也不一样，这是很小的重跑差距，不是有意义的胜出。和 Fable 5.1 不是同一行。",
-      "Official #1 on WebDev (xHigh, 1826, 1,445 votes). First on sudo L7 (Adaptive/Max, 52.2%). The Convex no-guidelines snapshot still has it first at 95.54% (1 run in that snapshot, dated 2026-11-12). After the 2026-11-17 with-guidelines rerun it displays 98.81% (3 runs, exact 0.9880952380952381), and the source lists it ahead of Gemini 4 Argon. Argon is still 98.66% (10 runs, exact 0.9866071428571429). The gap is about 0.0015 and the run counts differ. That is a tiny rerun gap, not a meaningful win. A different row from Fable 5.1.",
+      "WebDev 正式第 1（xHigh，1826，1,445 票）。sudo L7 第 1（Adaptive/Max，52.2%）。Convex 无指南快照仍是第 1（95.54%，该快照 1 次，日期 2026-11-12）。有指南列在 2026-11-18 复核后仍显示 98.81%（3 次，精确值 0.9880952380952381，最近一次运行 2026-11-17），来源把它排在 Gemini 4 Argon 前面。Argon 仍是 98.66%（10 次，精确值 0.9866071428571429）。分差约 0.0015，次数也不一样，这是很小的差距，不是有意义的胜出。和 Fable 5.1 不是同一行。",
+      "Official #1 on WebDev (xHigh, 1826, 1,445 votes). First on sudo L7 (Adaptive/Max, 52.2%). The Convex no-guidelines snapshot still has it first at 95.54% (1 run in that snapshot, dated 2026-11-12). The 2026-11-18 with-guidelines check still shows 98.81% (3 runs, exact 0.9880952380952381, latest run 2026-11-17), and the source lists it ahead of Gemini 4 Argon. Argon is still 98.66% (10 runs, exact 0.9866071428571429). The gap is about 0.0015 and the run counts differ. That is a tiny gap, not a meaningful win. A different row from Fable 5.1.",
     ),
     why: [tx("WebDev 正式第 1，Convex 无指南快照也是第 1。有指南列只比 Argon 高约 0.15 个显示点，不把两列合成一个分。", "Official #1 on WebDev, and #1 on the Convex no-guidelines snapshot. With guidelines it is only about 0.15 display points above Argon. The columns are not merged into one score.")],
     whyNot: [
@@ -267,8 +267,8 @@ export const models: Model[] = [
     fetchedAt: "2026-10-29",
     headlines: ["lmarena-webdev", "android-bench", "convex-evals"],
     summary: tx(
-      "WebDev 第 4（high，1768，初步）。Android Bench 2.0 长程第 7（high，23.3%，antigravity-sdk）。Convex 无指南第 6（86.61%，1 次），有指南第 10（95.54%）。与 Gemini 4 Argon 不是同一行。",
-      "4th on WebDev at high effort (1768, preliminary). 7th on Android Bench 2.0 long-horizon (high, 23.3%, antigravity-sdk). 6th on Convex without guidelines at 86.61% (1 run) and 10th with guidelines at 95.54%. A different row from Gemini 4 Argon.",
+      "WebDev 第 4（high，1768，初步）。Android Bench 2.0 长程第 7（high，23.3%，antigravity-sdk）。Convex 无指南第 6（86.61%，1 次）。有指南重跑后显示 95.09%（2 次，精确值 0.9508928571428572，最近一次运行 2026-11-18），与 Grok 4.5 精确值相同，并列第 10。与 Gemini 4 Argon 不是同一行。",
+      "4th on WebDev at high effort (1768, preliminary). 7th on Android Bench 2.0 long-horizon (high, 23.3%, antigravity-sdk). 6th on Convex without guidelines at 86.61% (1 run). After the with-guidelines rerun it displays 95.09% (2 runs, exact 0.9508928571428572, latest run 2026-11-18) and ties Grok 4.5 at #10. A different row from Gemini 4 Argon.",
     ),
     why: [tx("WebDev 已进前五，价格与 Sonnet 同档。", "Already inside the WebDev top five, same token price band as Sonnet.")],
     whyNot: [
@@ -628,8 +628,8 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["android-bench"],
     summary: tx(
-      "The Slop Index 反转后第 26（来源 slop 40.53，页面 41，本站 59）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
-      "26th on The Slop Index after inversion (source slop 40.53, page 41, this site 59). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
+      "The Slop Index 反转后第 22（来源 slop 37.51，页面 38，本站 62）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
+      "22nd on The Slop Index after inversion (source slop 37.51, page 38, this site 62). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
     ),
     why: [
       tx("Android 标准任务只比第一低约 4 个点，成本约为二十四分之一。", "On Android standard tasks, about four points behind first at roughly a twenty-fourth of the cost."),
@@ -701,8 +701,8 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["slop-index"],
     summary: tx(
-      "The Slop Index 反转后第 2（来源 slop 27.66，页面 28，本站 72）。第 1 是 GPT-5.6 Sol。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。Convex 基线仍是低成本前排之一。",
-      "2nd on The Slop Index after inversion (source slop 27.66, page 28, this site 72). GPT-5.6 Sol is #1. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). Still among the low-cost Convex baseline front.",
+      "The Slop Index 反转后第 3（来源 slop 28.26，页面 28，本站 72）。第 1 是 GPT-5.6 Sol，第 2 是 DeepSeek V4.1 Flash。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。Convex 基线仍是低成本前排之一。有指南列第 21（显示 90.09），已不在前 20。",
+      "3rd on The Slop Index after inversion (source slop 28.26, page 28, this site 72). GPT-5.6 Sol is #1 and DeepSeek V4.1 Flash is #2. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). Still among the low-cost Convex baseline front. With guidelines it is #21 (display 90.09), outside the top 20.",
     ),
     why: [
       tx("写文档主榜反转后第 2，排在 GPT-5.6 Sol 后面；token 价格 $0.3。", "2nd on the inverted docs primary board, behind GPT-5.6 Sol; token price $0.3."),

@@ -244,9 +244,10 @@ describe("picks", () => {
     ]);
     const slop = writeDocs?.boards[0]?.rows ?? [];
     expect(slop[0]).toMatchObject({ name: "GPT-5.6 Sol", rank: 1, score: "73", price: "$17.5" });
-    expect(slop[1]).toMatchObject({ name: "Haiku 5.5", rank: 2, score: "72" });
-    expect(slop[12]).toMatchObject({ name: "GLM-5.3", rank: 13, score: "64" });
-    expect(slop[69]).toMatchObject({ name: "Gemini 3.8 Flash", rank: 70, score: "32" });
+    expect(slop[1]).toMatchObject({ name: "DeepSeek V4.1 Flash", rank: 2, score: "73" });
+    expect(slop[2]).toMatchObject({ name: "Haiku 5.5", rank: 3, score: "72" });
+    expect(slop[18]).toMatchObject({ name: "GLM-5.3", rank: 19, score: "64" });
+    expect(slop[69]).toMatchObject({ name: "Seed 2.1 Turbo", rank: 70, score: "34" });
     expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(70);
     const creative = getBenchmark("zh", "eqbench-creative-writing");
     expect(creative?.leaderboard).toHaveLength(146);
@@ -276,7 +277,7 @@ describe("picks", () => {
       ["slop-index", "像真人", "article", 1],
       ["eqbench-creative-writing", "创意写作", "pen-nib", 0.6],
     ]);
-    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT 6 Sol/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/Claude Fable 5\.1/);
     expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/0 项第一/);
     expect(getScenario("en", "web-frontend")?.takeaway?.sentence).toMatch(/first on/i);
     expect(web?.fusion.columns.map((column) => [column.id, column.weight])).toEqual([
@@ -480,11 +481,11 @@ describe("picks", () => {
     expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1", "FrontierCode"]);
     expect(home[3]?.title).toBe("写文档和文案");
     expect(home[3]?.sources?.map((source) => source.name)).toEqual(["The Slop Index", "EQ-Bench Creative Writing v3"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 6 Sol", rankLabel: "1" });
+    expect(home[3]?.rows[0]).toMatchObject({ name: "Claude Fable 5.1", rankLabel: "1" });
     expect(home[3]?.rows.map((row) => row.name).slice(0, 3)).toEqual([
-      "GPT 6 Sol",
-      "Kimi K3.1 Pro",
       "Claude Fable 5.1",
+      "Kimi K3.1 Pro",
+      "Claude Opus 5",
     ]);
     expect(home).toHaveLength(4);
   });
@@ -519,8 +520,16 @@ describe("picks", () => {
     expect(argon?.totalScore).toBe(0.9866071428571429);
     expect(argon?.runCount).toBe(10);
     const assisted = content.results.filter((row) => row.benchmark === "convex-evals" && row.arm === "assisted");
-    expect(assisted.find((row) => row.modelSlug === "claude-fable-5-2")).toMatchObject({ score: 98.81, rank: 1, asOf: "2026-11-17" });
-    expect(assisted.find((row) => row.modelSlug === "gemini-4-argon")).toMatchObject({ score: 98.66, rank: 2, asOf: "2026-11-17" });
+    expect(assisted.find((row) => row.modelSlug === "claude-fable-5-2")).toMatchObject({ score: 98.81, rank: 1, asOf: "2026-11-18" });
+    expect(assisted.find((row) => row.modelSlug === "gemini-4-argon")).toMatchObject({ score: 98.66, rank: 2, asOf: "2026-11-18" });
+    expect(assisted.find((row) => row.modelSlug === "gemini-4-carbon")).toMatchObject({ score: 95.09, rank: 10, asOf: "2026-11-18" });
+    expect(assisted.find((row) => row.modelSlug === "grok-4-5")).toMatchObject({ score: 95.09, rank: 10, asOf: "2026-11-18" });
+    expect(assisted.some((row) => row.modelSlug === "gpt-6-2-sol")).toBe(false);
+    const gpt62 = convexWithRows.find((row) => row.model === "openai/gpt-6.2-sol");
+    const hy4 = convexWithRows.find((row) => row.model === "tencent/hy4-flash");
+    expect(gpt62?.totalScore).toBe(0.9107142857142857);
+    expect(gpt62?.runCount).toBe(1);
+    expect(hy4?.totalScore).toBe(gpt62?.totalScore);
     expect(content.results.find((row) => row.benchmark === "convex-evals" && row.arm === "baseline" && row.modelSlug === "claude-fable-5-2")).toMatchObject({ score: 95.54, rank: 1, asOf: "2026-11-12" });
     expect(content.results.find((row) => row.benchmark === "convex-evals" && row.arm === "web" && row.modelSlug === "claude-opus-5-5")?.asOf).toBe("2026-10-08");
     const caveats = getBenchmark("zh", "convex-evals")?.caveats ?? "";

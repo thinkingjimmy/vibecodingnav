@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-18",
+    kind: "board",
+    source: "theslopindex.com",
+    text: tx(
+      "**Slop Index 与 Convex 有指南**：Slop 70 行重算，捕获时间 Wed, 18 Nov 2026 01:02:49 GMT，2,589 票。机械文件仍是 full-merged-v6（70 个模型、77,943 条生成）。70 行都有人群 Elo，不再有中性 50。反转后 GPT-5.6 Sol 第 1（来源 27.43），DeepSeek V4.1 Flash 第 2（27.49），Haiku 5.5 第 3（28.26）。Convex 有指南 47 行：Fable 5.2 精确值仍是 0.9880952380952381（显示 98.81，3 次），Argon 仍是 0.9866071428571429（显示 98.66，10 次），分差约 0.0015，不是有意义的胜出。Carbon 重跑为 0.9508928571428572（显示 95.09，2 次），与 Grok 4.5 并列第 10。GPT-6.2 Sol 没有模型页，与 Hy4 flash 精确值相同，并列第 18。无指南列仍是 11-12 的快照，并排不是同日对比。",
+      "**Slop Index and Convex With Guidelines**: the Slop Index recomputed all 70 rows, captured Wed, 18 Nov 2026 01:02:49 GMT, at 2,589 votes. The mechanical file is still full-merged-v6 (70 models, 77,943 generations). All 70 rows now have crowd Elo, so none use a neutral 50. After inversion GPT-5.6 Sol is #1 (source 27.43), DeepSeek V4.1 Flash is #2 (27.49), and Haiku 5.5 is #3 (28.26). Convex With Guidelines has 47 rows. Fable 5.2 is still exactly 0.9880952380952381 (display 98.81, 3 runs), and Argon is still 0.9866071428571429 (display 98.66, 10 runs). The gap is about 0.0015, not a meaningful win. Carbon reran to 0.9508928571428572 (display 95.09, 2 runs) and ties Grok 4.5 at #10. GPT-6.2 Sol has no model page and shares its exact score with Hy4 flash, so they tie at #18. The No Guidelines column is still the Nov 12 snapshot, so the side-by-side is not a same-day comparison.",
+    ),
+  },
+  {
     date: "11-17",
     kind: "board",
     source: "lmarena.ai",
