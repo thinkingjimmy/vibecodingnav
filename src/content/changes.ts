@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-19",
+    kind: "board",
+    source: "convex.dev",
+    text: tx(
+      "**Android、sudo L7 与 Convex 124 题**：Android 2.0 长程 18 行，Fable 5.2 与 Sonnet 5.5 都是 40.0，并列第 1，来源 Fable 在前。1.0 未改。sudo L7 主榜 24 行，Fable 5.2 仍是 52.2%；Neon 与 GPT 6.2 Astra 都是 38.3%，并列第 4。Convex 当前版本是 124 题（哈希 32c305f6…，2026-11-18 16:28 SGT）。有指南 GPT-6.1 Sol 0.9758064516129032、Step 5 Preview 0.7580645161290323；无指南分别是 0.9112903225806451 和 0.5645161290322581。112 题旧榜按原日期保留，不和 124 题相减。WebDev 这次没有拿到完整表，全量榜未改。Slop 未改。",
+      "**Android, sudo L7, and Convex 124 tasks**: Android 2.0 long-horizon has 18 rows. Fable 5.2 and Sonnet 5.5 both score 40.0 and share first, with Fable listed first. Version 1.0 was not changed. The sudo L7 main board has 24 rows. Fable 5.2 is still 52.2%. Neon and GPT 6.2 Astra both score 38.3% and share #4. The current Convex version is 124 tasks (hash 32c305f6…, minted 2026-11-18 16:28 SGT). With guidelines, GPT-6.1 Sol is 0.9758064516129032 and Step 5 Preview is 0.7580645161290323. Without guidelines they are 0.9112903225806451 and 0.5645161290322581. The 112-task archive keeps its original dates and is not subtracted from the 124-task scores. The readable WebDev fetch did not include the full table, so that board was left unchanged. Slop was not changed.",
+    ),
+  },
+  {
     date: "11-18",
     kind: "board",
     source: "theslopindex.com",

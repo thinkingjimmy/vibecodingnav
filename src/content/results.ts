@@ -14,6 +14,8 @@ import sudoRows from "./boards/sudo.json";
 import terminalRows from "./boards/terminal.json";
 import convexNoRows from "./boards/convex-no.json";
 import convexWithRows from "./boards/convex-with.json";
+import convex124NoRows from "./boards/convex-124-no.json";
+import convex124WithRows from "./boards/convex-124-with.json";
 import imageToWebdevRows from "./boards/image-to-webdev.json";
 import webdevRows from "./boards/webdev.json";
 import slopIndexRows from "./boards/slop-index.json";
@@ -105,6 +107,7 @@ function board(benchmark: string, asOf: string, rows: BoardJson[], version?: str
 
 interface ConvexSource {
   model: string;
+  formattedName?: string;
   totalScore: number;
   runCount: number;
   averageRunCostUsd: number;
@@ -159,7 +162,7 @@ function convexMoney(value: number) {
   return `$${value.toFixed(5).replace(/0+$/, "").replace(/\.$/, "")}`;
 }
 
-function convexArm(rows: ConvexSource[], arm: "baseline" | "assisted", asOf: string): Result[] {
+function convexArm(rows: ConvexSource[], arm: "baseline" | "assisted", asOf: string, version: string): Result[] {
   const sorted = [...rows].sort((a, b) => b.totalScore - a.totalScore || a.sourceIndex - b.sourceIndex);
   let last = Number.NaN;
   let rank = 0;
@@ -170,9 +173,26 @@ function convexArm(rows: ConvexSource[], arm: "baseline" | "assisted", asOf: str
       last = row.totalScore;
     }
     const mapped = CONVEX_MODEL[row.model];
-    if (!mapped) return;
     const runs = `${Math.round(row.runCount)} runs`;
-    out.push(fw("convex-evals", asOf, mapped.slug, Math.round(row.totalScore * 10000) / 100, {
+    const score = Math.round(row.totalScore * 10000) / 100;
+    if (!mapped) {
+      const label = row.formattedName?.split(": ").slice(1).join(": ") || row.model;
+      out.push({
+        benchmark: "convex-evals",
+        asOf,
+        version,
+        label,
+        letter: label[0]?.toUpperCase() ?? "?",
+        score,
+        arm,
+        rank,
+        setting: runs,
+        runCost: convexMoney(row.averageRunCostUsd),
+      });
+      return;
+    }
+    out.push(fw("convex-evals", asOf, mapped.slug, score, {
+      version,
       arm,
       rank,
       effort: mapped.effort,
@@ -303,33 +323,35 @@ export const results: Result[] = [
   fw("nextjs-evals", "2026-10-30", "gpt-6-luna", 90, { arm: "assisted", effort: "high", setting: "high · Codex" }),
   fw("nextjs-evals", "2026-10-30", "minimax-m3", 90, { arm: "assisted", setting: "OpenCode" }),
   fw("nextjs-evals", "2026-10-30", "kimi-k2-7-code", 90, { arm: "assisted", setting: "OpenCode" }),
-  ...convexArm(convexNoRows as ConvexSource[], "baseline", "2026-11-12"),
-  ...convexArm(convexWithRows as ConvexSource[], "assisted", "2026-11-18"),
-  fw("convex-evals", "2026-10-08", "gemini-4-argon", 95.76, { arm: "web", runCost: "$2.77", setting: "4 runs" }),
-  fw("convex-evals", "2026-10-08", "claude-opus-5-5", 95.09, { arm: "web", runCost: "$6.83", setting: "4 runs" }),
-  fw("convex-evals", "2026-10-08", "gpt-6-1-sol", 92.19, { arm: "web", runCost: "$1.80", setting: "4 runs" }),
-  fw("convex-evals", "2026-10-08", "gpt-6-astra", 91.07, { arm: "web", runCost: "$8.51", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "claude-fable-5", 89.29, { arm: "web", runCost: "$9.63", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "claude-fable-5-1", 89.29, { arm: "web", runCost: "$13.60", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "gpt-5-6-sol", 89.29, { arm: "web", runCost: "$2.62", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "claude-sonnet-5-5", 88.39, { arm: "web", runCost: "$1.62", setting: "5 runs" }),
-  fw("convex-evals", "2026-10-08", "claude-opus-5", 85.71, { arm: "web", runCost: "$6.67", setting: "2 runs" }),
-  fw("convex-evals", "2026-10-08", "claude-opus-4-8", 85.71, { arm: "web", runCost: "$7.45", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "muse-wonder", 84.46, { arm: "web", runCost: "$8.67", setting: "5 runs" }),
-  fw("convex-evals", "2026-10-08", "claude-sonnet-5", 80.36, { arm: "web", runCost: "$2.42", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "grok-4-5", 80.36, { arm: "web", runCost: "N/A", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "gpt-5-6-terra", 79.46, { arm: "web", runCost: "$2.42", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "claude-haiku-5-5", 78.44, { arm: "web", runCost: "$0.3318", setting: "7 runs" }),
-  fw("convex-evals", "2026-10-08", "deepseek-v4-1-flash", 75, { arm: "web", runCost: "$0.38832", setting: "5 runs" }),
-  fw("convex-evals", "2026-10-08", "kimi-k3", 74.55, { arm: "web", runCost: "$2.14", setting: "2 runs" }),
-  fw("convex-evals", "2026-10-08", "muse-spark-1-3", 74.29, { arm: "web", runCost: "$2.58", setting: "5 runs" }),
-  fw("convex-evals", "2026-10-08", "gpt-6-luna", 69.2, { arm: "web", runCost: "$0.28928", setting: "4 runs" }),
-  fw("convex-evals", "2026-10-08", "gpt-5-6-luna", 61.61, { arm: "web", runCost: "$0.3875", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "minimax-m3", 54.46, { arm: "web", runCost: "$0.94328", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "glm-5-3-flash", 54.02, { arm: "web", runCost: "$0.13019", setting: "2 runs" }),
-  fw("convex-evals", "2026-10-08", "glm-5-2", 52.68, { arm: "web", runCost: "$1.69", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "deepseek-v4-flash", 51.79, { arm: "web", runCost: "$0.42619", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "deepseek-v4-pro", 50.89, { arm: "web", runCost: "$1.00", setting: "1 run" }),
-  fw("convex-evals", "2026-10-08", "glm-5-3", 37.95, { arm: "web", runCost: "$0.44806", setting: "2 runs" }),
+  ...convexArm(convex124NoRows as ConvexSource[], "baseline", "2026-11-19", "124"),
+  ...convexArm(convex124WithRows as ConvexSource[], "assisted", "2026-11-19", "124"),
+  ...convexArm(convexNoRows as ConvexSource[], "baseline", "2026-11-12", "112"),
+  ...convexArm(convexWithRows as ConvexSource[], "assisted", "2026-11-18", "112"),
+  fw("convex-evals", "2026-10-08", "gemini-4-argon", 95.76, { version: "112", arm: "web", runCost: "$2.77", setting: "4 runs" }),
+  fw("convex-evals", "2026-10-08", "claude-opus-5-5", 95.09, { version: "112", arm: "web", runCost: "$6.83", setting: "4 runs" }),
+  fw("convex-evals", "2026-10-08", "gpt-6-1-sol", 92.19, { version: "112", arm: "web", runCost: "$1.80", setting: "4 runs" }),
+  fw("convex-evals", "2026-10-08", "gpt-6-astra", 91.07, { version: "112", arm: "web", runCost: "$8.51", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "claude-fable-5", 89.29, { version: "112", arm: "web", runCost: "$9.63", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "claude-fable-5-1", 89.29, { version: "112", arm: "web", runCost: "$13.60", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "gpt-5-6-sol", 89.29, { version: "112", arm: "web", runCost: "$2.62", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "claude-sonnet-5-5", 88.39, { version: "112", arm: "web", runCost: "$1.62", setting: "5 runs" }),
+  fw("convex-evals", "2026-10-08", "claude-opus-5", 85.71, { version: "112", arm: "web", runCost: "$6.67", setting: "2 runs" }),
+  fw("convex-evals", "2026-10-08", "claude-opus-4-8", 85.71, { version: "112", arm: "web", runCost: "$7.45", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "muse-wonder", 84.46, { version: "112", arm: "web", runCost: "$8.67", setting: "5 runs" }),
+  fw("convex-evals", "2026-10-08", "claude-sonnet-5", 80.36, { version: "112", arm: "web", runCost: "$2.42", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "grok-4-5", 80.36, { version: "112", arm: "web", runCost: "N/A", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "gpt-5-6-terra", 79.46, { version: "112", arm: "web", runCost: "$2.42", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "claude-haiku-5-5", 78.44, { version: "112", arm: "web", runCost: "$0.3318", setting: "7 runs" }),
+  fw("convex-evals", "2026-10-08", "deepseek-v4-1-flash", 75, { version: "112", arm: "web", runCost: "$0.38832", setting: "5 runs" }),
+  fw("convex-evals", "2026-10-08", "kimi-k3", 74.55, { version: "112", arm: "web", runCost: "$2.14", setting: "2 runs" }),
+  fw("convex-evals", "2026-10-08", "muse-spark-1-3", 74.29, { version: "112", arm: "web", runCost: "$2.58", setting: "5 runs" }),
+  fw("convex-evals", "2026-10-08", "gpt-6-luna", 69.2, { version: "112", arm: "web", runCost: "$0.28928", setting: "4 runs" }),
+  fw("convex-evals", "2026-10-08", "gpt-5-6-luna", 61.61, { version: "112", arm: "web", runCost: "$0.3875", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "minimax-m3", 54.46, { version: "112", arm: "web", runCost: "$0.94328", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "glm-5-3-flash", 54.02, { version: "112", arm: "web", runCost: "$0.13019", setting: "2 runs" }),
+  fw("convex-evals", "2026-10-08", "glm-5-2", 52.68, { version: "112", arm: "web", runCost: "$1.69", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "deepseek-v4-flash", 51.79, { version: "112", arm: "web", runCost: "$0.42619", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "deepseek-v4-pro", 50.89, { version: "112", arm: "web", runCost: "$1.00", setting: "1 run" }),
+  fw("convex-evals", "2026-10-08", "glm-5-3", 37.95, { version: "112", arm: "web", runCost: "$0.44806", setting: "2 runs" }),
 ...reactBench(),
 ];

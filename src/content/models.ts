@@ -186,8 +186,8 @@ export const models: Model[] = [
     fetchedAt: "2026-11-12",
     headlines: ["lmarena-webdev", "convex-evals"],
     summary: tx(
-      "WebDev 正式第 1（xHigh，1826，1,445 票）。sudo L7 第 1（Adaptive/Max，52.2%）。Convex 无指南快照仍是第 1（95.54%，该快照 1 次，日期 2026-11-12）。有指南列在 2026-11-18 复核后仍显示 98.81%（3 次，精确值 0.9880952380952381，最近一次运行 2026-11-17），来源把它排在 Gemini 4 Argon 前面。Argon 仍是 98.66%（10 次，精确值 0.9866071428571429）。分差约 0.0015，次数也不一样，这是很小的差距，不是有意义的胜出。和 Fable 5.1 不是同一行。",
-      "Official #1 on WebDev (xHigh, 1826, 1,445 votes). First on sudo L7 (Adaptive/Max, 52.2%). The Convex no-guidelines snapshot still has it first at 95.54% (1 run in that snapshot, dated 2026-11-12). The 2026-11-18 with-guidelines check still shows 98.81% (3 runs, exact 0.9880952380952381, latest run 2026-11-17), and the source lists it ahead of Gemini 4 Argon. Argon is still 98.66% (10 runs, exact 0.9866071428571429). The gap is about 0.0015 and the run counts differ. That is a tiny gap, not a meaningful win. A different row from Fable 5.1.",
+      "WebDev 正式第 1（xHigh，1826，1,445 票）。sudo L7 第 1（Adaptive/Max，52.2%）。Convex 无指南快照仍是第 1（95.54%，该快照 1 次，日期 2026-11-12）。有指南列在 2026-11-18 复核后仍显示 98.81%（3 次，精确值 0.9880952380952381，最近一次运行 2026-11-17），来源把它排在 Gemini 4 Argon 前面。Argon 仍是 98.66%（10 次，精确值 0.9866071428571429）。分差约 0.0015，次数也不一样，这是很小的差距，不是有意义的胜出。这些是 112 题历史版本。当前 124 题还没有这一行，是待重跑，不是 0 分。和 Fable 5.1 不是同一行。",
+      "Official #1 on WebDev (xHigh, 1826, 1,445 votes). First on sudo L7 (Adaptive/Max, 52.2%). The Convex no-guidelines snapshot still has it first at 95.54% (1 run in that snapshot, dated 2026-11-12). The 2026-11-18 with-guidelines check still shows 98.81% (3 runs, exact 0.9880952380952381, latest run 2026-11-17), and the source lists it ahead of Gemini 4 Argon. Argon is still 98.66% (10 runs, exact 0.9866071428571429). The gap is about 0.0015 and the run counts differ. That is a tiny gap, not a meaningful win. Those figures are the archived 112-task version. The current 124-task board does not have this row yet. That is pending, not a zero. A different row from Fable 5.1.",
     ),
     why: [tx("WebDev 正式第 1，Convex 无指南快照也是第 1。有指南列只比 Argon 高约 0.15 个显示点，不把两列合成一个分。", "Official #1 on WebDev, and #1 on the Convex no-guidelines snapshot. With guidelines it is only about 0.15 display points above Argon. The columns are not merged into one score.")],
     whyNot: [
@@ -267,8 +267,8 @@ export const models: Model[] = [
     fetchedAt: "2026-10-29",
     headlines: ["lmarena-webdev", "android-bench", "convex-evals"],
     summary: tx(
-      "WebDev 第 4（high，1768，初步）。Android Bench 2.0 长程第 7（high，23.3%，antigravity-sdk）。Convex 无指南第 6（86.61%，1 次）。有指南重跑后显示 95.09%（2 次，精确值 0.9508928571428572，最近一次运行 2026-11-18），与 Grok 4.5 精确值相同，并列第 10。与 Gemini 4 Argon 不是同一行。",
-      "4th on WebDev at high effort (1768, preliminary). 7th on Android Bench 2.0 long-horizon (high, 23.3%, antigravity-sdk). 6th on Convex without guidelines at 86.61% (1 run). After the with-guidelines rerun it displays 95.09% (2 runs, exact 0.9508928571428572, latest run 2026-11-18) and ties Grok 4.5 at #10. A different row from Gemini 4 Argon.",
+      "WebDev 第 4（high，1768，初步）。Android Bench 2.0 长程第 7（high，23.3%，antigravity-sdk）。Convex 无指南第 6（86.61%，1 次）。112 题快照里有指南重跑后显示 95.09%（2 次，精确值 0.9508928571428572，最近一次运行 2026-11-18），与 Grok 4.5 精确值相同，并列第 10。当前 124 题还没有这一行，是待重跑，不是 0 分。与 Gemini 4 Argon 不是同一行。",
+      "4th on WebDev at high effort (1768, preliminary). 7th on Android Bench 2.0 long-horizon (high, 23.3%, antigravity-sdk). 6th on Convex without guidelines at 86.61% (1 run). On the archived 112-task snapshot, the with-guidelines rerun displays 95.09% (2 runs, exact 0.9508928571428572, latest run 2026-11-18) and ties Grok 4.5 at #10. The current 124-task board does not have this row yet. That is pending, not a zero. A different row from Gemini 4 Argon.",
     ),
     why: [tx("WebDev 已进前五，价格与 Sonnet 同档。", "Already inside the WebDev top five, same token price band as Sonnet.")],
     whyNot: [

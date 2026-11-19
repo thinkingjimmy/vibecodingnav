@@ -18,8 +18,9 @@ const PAGE = 20;
 export interface EvalTableRow {
   rank?: number;
   name: string;
-  vendor: VendorId;
-  href: string;
+  vendor?: VendorId;
+  letter?: string;
+  href?: string;
   setting?: string;
   baseline: string;
   assisted?: string;
@@ -68,13 +69,20 @@ export function EvalTable({
           </thead>
           <tbody>
             {shown.map((row) => (
-              <tr key={`${row.href}-${row.setting ?? ""}-${row.rank ?? ""}`} className="border-t border-line">
+              <tr key={`${row.href ?? row.name}-${row.setting ?? ""}-${row.rank ?? ""}`} className="border-t border-line">
                 <td className="num px-4 py-3 text-mfg">{row.rank ?? "—"}</td>
                 <td className="px-4 py-3">
-                  <Link href={row.href} className="inline-flex items-center gap-2 font-medium link-u">
-                    <VendorMark vendor={row.vendor} />
-                    {row.name}
-                  </Link>
+                  {row.href ? (
+                    <Link href={row.href} className="inline-flex items-center gap-2 font-medium link-u">
+                      <VendorMark vendor={row.vendor} letter={row.letter} />
+                      {row.name}
+                    </Link>
+                  ) : (
+                    <span className="inline-flex items-center gap-2 font-medium">
+                      <VendorMark vendor={row.vendor} letter={row.letter} />
+                      {row.name}
+                    </span>
+                  )}
                   {row.setting ? <div className="num mt-1 text-[11px] text-faint">{row.setting}</div> : null}
                 </td>
                 <td className="num px-4 py-3 text-right">{row.baseline}</td>

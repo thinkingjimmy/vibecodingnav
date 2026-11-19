@@ -569,6 +569,10 @@ test("framework evals stay on separate boards", async ({ page }) => {
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/zh/libraries/convex/");
+  await expect(page.getByText("97.58").first()).toBeVisible();
+  await page.goto("/zh/benchmarks/convex-evals/");
+  await page.getByRole("button", { name: "112 题" }).click();
+  await expect(page.locator("[data-archived=true]")).toBeVisible();
   await expect(page.getByText("95.54").first()).toBeVisible();
   await expect(page.getByRole("columnheader", { name: "有指南" })).toBeVisible();
   await expect(page.getByRole("columnheader", { name: "无指南 + 网页" })).toBeVisible();
@@ -578,7 +582,7 @@ test("framework evals stay on separate boards", async ({ page }) => {
 
   await page.goto("/zh/prompts/convex-ai-rules/");
   await expect(page.getByRole("heading", { name: "有材料相对基线的变化" })).toBeVisible();
-  await expect(page.getByText("+7.81").first()).toBeVisible();
+  await expect(page.getByText("+6.45").first()).toBeVisible();
 
   await page.goto("/zh/prompts/nextjs-agents-md/");
   await expect(page.getByText("+13.0").first()).toBeVisible();

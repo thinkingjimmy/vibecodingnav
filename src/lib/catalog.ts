@@ -87,6 +87,27 @@ export interface VersionBoard {
   updateCadence: string;
   links: { label: string; href: string }[];
   leaderboard?: BoardRow[];
+  evalBoard?: {
+    rows: EvalTableRow[];
+    showAssisted: boolean;
+    showWeb: boolean;
+    assistedLabel: string;
+    webLabel: string;
+  };
+}
+
+export interface EvalTableRow {
+  rank?: number;
+  name: string;
+  vendor?: VendorId;
+  letter?: string;
+  href?: string;
+  setting?: string;
+  baseline: string;
+  assisted?: string;
+  web?: string;
+  delta?: string;
+  cost?: string;
 }
 
 export interface SearchEntry {
@@ -1044,30 +1065,34 @@ export function getItem(locale: Locale, type: Item["type"], slug: string) {
   };
 }
 
-function armRows(benchmarkSlug: string, arm: ResultArm) {
-  return results.filter((result) => result.benchmark === benchmarkSlug && (result.arm ?? "baseline") === arm);
+function armRows(benchmarkSlug: string, arm: ResultArm, versionId?: string) {
+  const selected = versionId ?? currentVersionId(benchmarkSlug);
+  return results.filter((result) => result.benchmark === benchmarkSlug && (result.arm ?? "baseline") === arm && (selected ? result.version === selected : !result.version));
 }
 
 function resultKey(result: Result) {
   return `${result.modelSlug ?? result.label}|${result.effort ?? ""}`;
 }
 
-function frameworkEval(locale: Locale, benchmarkSlug: string, mode: "board" | "uplift" | "unverified", note = "") {
+function frameworkEval(locale: Locale, benchmarkSlug: string, mode: "board" | "uplift" | "unverified", note = "", versionId?: string) {
   const benchmark = benchmarkBy.get(benchmarkSlug)!;
   const dict = getDictionary(locale);
-  const baseline = armRows(benchmarkSlug, "baseline").sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999));
-  const assisted = new Map(armRows(benchmarkSlug, "assisted").map((result) => [resultKey(result), result]));
-  const web = new Map(armRows(benchmarkSlug, "web").map((result) => [resultKey(result), result]));
+  const baseline = armRows(benchmarkSlug, "baseline", versionId).sort((a, b) => (a.rank ?? 999) - (b.rank ?? 999) || (a.label ?? "").localeCompare(b.label ?? ""));
+  const assisted = new Map(armRows(benchmarkSlug, "assisted", versionId).map((result) => [resultKey(result), result]));
+  const web = new Map(armRows(benchmarkSlug, "web", versionId).map((result) => [resultKey(result), result]));
   const rows = baseline.flatMap((result) => {
-    const model = modelBy.get(result.modelSlug ?? "")!;
+    const model = result.modelSlug ? modelBy.get(result.modelSlug) : undefined;
+    if (result.modelSlug && !model) return [];
+    if (!model && !result.label) return [];
     const pair = assisted.get(resultKey(result));
     const webRow = web.get(resultKey(result));
     if (mode === "uplift" && !pair) return [];
     return [{
       rank: result.rank,
-      name: model.name,
-      vendor: model.vendor,
-      href: localePath(locale, `/models/${model.slug}`),
+      name: model?.name ?? result.label ?? "",
+      vendor: model?.vendor ?? result.vendor,
+      letter: result.letter,
+      href: model ? localePath(locale, `/models/${model.slug}`) : undefined,
       setting: result.setting ?? result.effort,
       baseline: formatScore(result.score, benchmark.scoreUnit),
       assisted: pair ? formatScore(pair.score, benchmark.scoreUnit) : undefined,
@@ -1127,23 +1152,33 @@ export function getBenchmark(locale: Locale, slug: string) {
         effort: result.effort,
         kind: result.provisional,
       })),
-    versions: benchmark.versions?.map((version): VersionBoard => ({
-      id: version.id,
-      label: t(locale, version.label),
-      asOf: version.asOf,
-      current: Boolean(version.current),
-      archived: Boolean(version.archived),
-      aliases: version.aliases ?? [],
-      table: version.table,
-      filter: (version.sourceFilter ?? "none") as SourceFilter | "none",
-      measures: t(locale, version.measures),
-      method: t(locale, version.method),
-      scoreMeaning: t(locale, version.scoreMeaning),
-      caveats: t(locale, version.caveats),
-      updateCadence: t(locale, version.updateCadence),
-      links: version.links ?? benchmark.links,
-      leaderboard: version.table ? toBoardRows(locale, slug, version.id) : undefined,
-    })),
+    versions: benchmark.versions?.map((version): VersionBoard => {
+      const evalBoard = benchmark.kind ? frameworkEval(locale, slug, "board", "", version.id) : undefined;
+      return {
+        id: version.id,
+        label: t(locale, version.label),
+        asOf: version.asOf,
+        current: Boolean(version.current),
+        archived: Boolean(version.archived),
+        aliases: version.aliases ?? [],
+        table: version.table,
+        filter: (version.sourceFilter ?? "none") as SourceFilter | "none",
+        measures: t(locale, version.measures),
+        method: t(locale, version.method),
+        scoreMeaning: t(locale, version.scoreMeaning),
+        caveats: t(locale, version.caveats),
+        updateCadence: t(locale, version.updateCadence),
+        links: version.links ?? benchmark.links,
+        leaderboard: version.table ? toBoardRows(locale, slug, version.id) : undefined,
+        evalBoard: evalBoard ? {
+          rows: evalBoard.rows,
+          showAssisted: evalBoard.showAssisted,
+          showWeb: evalBoard.showWeb,
+          assistedLabel: evalBoard.assistedLabel,
+          webLabel: evalBoard.webLabel,
+        } : undefined,
+      };
+    }),
     chart: slug === "lmarena-image-to-webdev" ? imageToWebdevChart(locale) : undefined,
     board: benchmark.kind ? frameworkEval(locale, slug, "board") : undefined,
     scenarios: scenarios.filter((scenario) => scenario.benchmark === slug || scenario.boards?.some((board) => board.benchmark === slug)).map((scenario) => ({ href: localePath(locale, `/scenarios/${scenario.slug}`), title: t(locale, scenario.title) })),

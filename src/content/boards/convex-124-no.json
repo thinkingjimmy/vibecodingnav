@@ -1,0 +1,56 @@
+[
+  {
+    "model": "openai/gpt-6.1-sol",
+    "formattedName": "OpenAI: GPT-6.1 Sol",
+    "totalScore": 0.9112903225806451,
+    "totalScoreErrorBar": 0.0,
+    "runCount": 1.0,
+    "averageRunCostUsd": 1.3467375000000006,
+    "averageRunCostUsdErrorBar": 0.0,
+    "scores": {
+      "000-fundamentals": 1.0,
+      "001-data_modeling": 1.0,
+      "002-queries": 0.9642857142857143,
+      "003-mutations": 1.0,
+      "004-actions": 1.0,
+      "005-idioms": 0.7,
+      "006-clients": 1.0,
+      "007-components": 0.6956521739130435,
+      "008-vector_search": 1.0,
+      "009-file_storage": 1.0,
+      "010-errors": 1.0
+    },
+    "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
+    "matchesSelectedBenchmark": true,
+    "scoreBenchmarkEvalCount": 124.0,
+    "latestRunTime": 1795047766677.0427,
+    "sourceIndex": 0
+  },
+  {
+    "model": "stepfun/step-5-preview",
+    "formattedName": "StepFun: Step 5 Preview",
+    "totalScore": 0.5645161290322581,
+    "totalScoreErrorBar": 0.0,
+    "runCount": 1.0,
+    "averageRunCostUsd": 1.2920065538461534,
+    "averageRunCostUsdErrorBar": 0.0,
+    "scores": {
+      "000-fundamentals": 0.6363636363636364,
+      "001-data_modeling": 0.5882352941176471,
+      "002-queries": 0.8214285714285714,
+      "003-mutations": 0.9,
+      "004-actions": 0.6,
+      "005-idioms": 0.5,
+      "006-clients": 1.0,
+      "007-components": 0.08695652173913043,
+      "008-vector_search": 0.0,
+      "009-file_storage": 0.6,
+      "010-errors": 0.5
+    },
+    "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
+    "matchesSelectedBenchmark": true,
+    "scoreBenchmarkEvalCount": 124.0,
+    "latestRunTime": 1795032289266.3984,
+    "sourceIndex": 1
+  }
+]

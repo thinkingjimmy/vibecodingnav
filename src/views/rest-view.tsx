@@ -128,7 +128,7 @@ export async function BenchmarkView({ locale, params }: { locale: Locale; params
           <PriceChart title={benchmark.chart.title} note={benchmark.chart.note} href={benchmark.chart.href} hrefLabel={benchmark.chart.hrefLabel} points={benchmark.chart.points} />
         </section>
       ) : null}
-      {benchmark.board ? (
+      {benchmark.board && !benchmark.versions?.some((version) => version.evalBoard) ? (
         <section className="pt-16">
           <header className="px-4 pb-4"><h2 className="pt">{dict.benchmark.board}</h2></header>
           <EvalTable rows={benchmark.board.rows} dict={dict} mode="board" assistedLabel={benchmark.board.assistedLabel} webLabel={benchmark.board.webLabel} showAssisted={benchmark.board.showAssisted} showWeb={benchmark.board.showWeb} />

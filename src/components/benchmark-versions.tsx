@@ -9,6 +9,7 @@
 import { useEffect, useState } from "react";
 import type { VersionBoard } from "@/lib/catalog";
 import type { Dictionary } from "@/lib/contracts";
+import { EvalTable } from "./eval-table";
 import { Leaderboard } from "./leaderboard";
 
 function matchVersion(versions: VersionBoard[], token: string | null) {
@@ -78,6 +79,12 @@ export function BenchmarkVersions({ versions, dict }: { versions: VersionBoard[]
           <dd className="space-y-1">{selected.links.map((link) => <a key={link.href} href={link.href} className="num block text-[13px] link-u">{link.label}</a>)}</dd>
         </div>
       </dl>
+      {selected.evalBoard ? (
+        <section className="pt-16">
+          <header className="px-4 pb-4"><h2 className="pt">{dict.benchmark.board}</h2></header>
+          <EvalTable key={selected.id} rows={selected.evalBoard.rows} dict={dict} mode="board" assistedLabel={selected.evalBoard.assistedLabel} webLabel={selected.evalBoard.webLabel} showAssisted={selected.evalBoard.showAssisted} showWeb={selected.evalBoard.showWeb} />
+        </section>
+      ) : null}
       {selected.leaderboard && selected.table ? (
         <section className="pt-16">
           <header className="px-4 pb-4">

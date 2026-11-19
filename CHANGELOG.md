@@ -9,6 +9,15 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-19
+
+### 变更
+
+- Android Bench 2.0 长程从 developer.android.com/bench 同步为 18 行，页面日期 November 18th。Claude Fable 5.2（max）40.0 与 Claude Sonnet 5.5（max）40.0 并列第 1，来源把 Fable 写在前面，不记成超过。1.0 的 32 行未改。
+- sudo L7 公开主榜同步为 24 行。CMS 的 rank 字段仍全是 1，名次按分数并列。Fable 5.2 仍是 52.2% 第 1。Gemini 4 Neon 与 GPT 6.2 Astra 都是 38.3%，并列第 4。不含 DAYJOB / GDP.xlsx。
+- Convex 当前版本换成 124 题，哈希 32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453，发布于 2026-11-18 16:28 SGT。有指南和无指南各 2 行，只含 GPT-6.1 Sol 和未映射的 Step 5 Preview。112 题旧榜按原日期归档：有指南 2026-11-18、无指南 2026-11-12、网页列 2026-10-08。不跨版本相减，缺行是待重跑而不是 0 分。
+- WebDev 这次可读抓取只给出前 15 名、帕累托和未绘制名单，没有完整票数、区间和其余分数行，因此没有用残表覆盖 11 月 13 日的全量榜。Slop Index 本轮未改。
+
 ## 2026-11-18
 
 ### 变更
