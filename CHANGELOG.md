@@ -9,6 +9,14 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-20
+
+### 变更
+
+- sudo L7 公开主榜同步为 25 行。页面 Last Published 是 Thu Nov 19 2026 00:57:56 GMT。CMS rank 仍全是 1，名次按分数并列。Fable 5.2 仍是 52.2% 第 1。GPT 6.2 Astra 与 Gemini 4 Neon 都是 38.3%，并列第 4，来源把 Astra 写在前面。新增未映射 Qwen 4 Max，与 Hy4 Preview 都是 15.6%，并列第 17。Muse Spark 1.3 仍是 12.8%，落到第 21。
+- The Slop Index 按 Fri, 20 Nov 2026 01:04:00 GMT 的现场投票重算 70 行（2,621 票）。机械文件仍是 full-merged-v6（70 个模型、77,943 条生成，Last-Modified Wed, 18 Nov 2026 00:58:42 GMT）。70 行都有人群 Elo。反转仍是 100 − 页面四舍五入后的 Slop Score。反转后 GPT-6 Sol Pro 第 1（来源 26.49，页面 26，本站 74，没有模型页），GPT-5.6 Sol 第 2（27.43），DeepSeek V4.1 Flash 第 3（28.42）。Muse Ember 第 17。Gemini 3.1 Pro 第 21。写文档综合分随这张榜重算，权重未改。
+- Convex 当前 124 题两列各重抓为 10 行，哈希未变，发布时间仍是 2026-11-18 16:28:13 SGT。有指南第 1 是 Fable 5.2（0.9919354838709677，显示 99.19，1 次）。Sonnet 5.5 与 GPT-6.1 Sol 精确分相同，并列第 3。无指南第 1 也是 Fable 5.2（0.9596774193548387，显示 95.97）。GPT-6.2 Astra、GPT-6.2 Sol、Hy4 flash、Step 5 Preview 没有模型页。112 题归档未改。现场网页列已有 5 行，这次没有写进 124 题表。缺行仍是待重跑，不是 0 分。
+
 ## 2026-11-19
 
 ### 变更

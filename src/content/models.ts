@@ -95,7 +95,7 @@ export const models: Model[] = [
       "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fifth on WebDev at 1763. Tied at 58.2% on Terminal-Bench. Sixth on sudo L7 at 31.1%.",
     ),
     why: [
-      tx("EQ-Bench Creative Writing Elo 仍居首。Slop 反转后第 1 是 GPT-5.6 Sol，Haiku 5.5 第 3。", "Still first on Creative Writing Elo. After Slop inversion GPT-5.6 Sol is #1 and Haiku 5.5 is #3."),
+      tx("EQ-Bench Creative Writing Elo 仍居首。Slop 反转后第 1 是没有模型页的 GPT-6 Sol Pro，GPT-5.6 Sol 第 2，Haiku 5.5 第 4。", "Still first on Creative Writing Elo. After Slop inversion GPT-6 Sol Pro, which has no model page, is #1. GPT-5.6 Sol is #2 and Haiku 5.5 is #4."),
       tx("WebDev 比第一名 Fable 5.2 低 63 分。", "63 points behind Fable 5.2, first on WebDev."),
     ],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
@@ -186,10 +186,10 @@ export const models: Model[] = [
     fetchedAt: "2026-11-12",
     headlines: ["lmarena-webdev", "convex-evals"],
     summary: tx(
-      "WebDev 正式第 1（xHigh，1826，1,445 票）。sudo L7 第 1（Adaptive/Max，52.2%）。Convex 无指南快照仍是第 1（95.54%，该快照 1 次，日期 2026-11-12）。有指南列在 2026-11-18 复核后仍显示 98.81%（3 次，精确值 0.9880952380952381，最近一次运行 2026-11-17），来源把它排在 Gemini 4 Argon 前面。Argon 仍是 98.66%（10 次，精确值 0.9866071428571429）。分差约 0.0015，次数也不一样，这是很小的差距，不是有意义的胜出。这些是 112 题历史版本。当前 124 题还没有这一行，是待重跑，不是 0 分。和 Fable 5.1 不是同一行。",
-      "Official #1 on WebDev (xHigh, 1826, 1,445 votes). First on sudo L7 (Adaptive/Max, 52.2%). The Convex no-guidelines snapshot still has it first at 95.54% (1 run in that snapshot, dated 2026-11-12). The 2026-11-18 with-guidelines check still shows 98.81% (3 runs, exact 0.9880952380952381, latest run 2026-11-17), and the source lists it ahead of Gemini 4 Argon. Argon is still 98.66% (10 runs, exact 0.9866071428571429). The gap is about 0.0015 and the run counts differ. That is a tiny gap, not a meaningful win. Those figures are the archived 112-task version. The current 124-task board does not have this row yet. That is pending, not a zero. A different row from Fable 5.1.",
+      "WebDev 正式第 1（xHigh，1826，1,445 票）。sudo L7 第 1（Adaptive/Max，52.2%）。当前 Convex 124 题两列都是第 1，各 1 次：无指南精确值 0.9596774193548387（显示 95.97），有指南精确值 0.9919354838709677（显示 99.19）。112 题历史版本仍是无指南 95.54%（2026-11-12）和有指南 98.81%（3 次，精确值 0.9880952380952381）。Argon 在那份历史榜仍是 98.66%（10 次，精确值 0.9866071428571429）。分差约 0.0015，不是有意义的胜出。Argon 还没有 124 题成绩，是待重跑，不是 0 分。和 Fable 5.1 不是同一行。",
+      "Official #1 on WebDev (xHigh, 1826, 1,445 votes). First on sudo L7 (Adaptive/Max, 52.2%). On the current Convex 124-task board it is #1 in both columns, one run each: No Guidelines is exactly 0.9596774193548387 (display 95.97) and With Guidelines is exactly 0.9919354838709677 (display 99.19). The archived 112-task version is still 95.54% without guidelines (2026-11-12) and 98.81% with guidelines (3 runs, exact 0.9880952380952381). Argon is still 98.66% on that archive (10 runs, exact 0.9866071428571429). The gap is about 0.0015, not a meaningful win. Argon has no 124-task score yet. That is pending, not a zero. A different row from Fable 5.1.",
     ),
-    why: [tx("WebDev 正式第 1，Convex 无指南快照也是第 1。有指南列只比 Argon 高约 0.15 个显示点，不把两列合成一个分。", "Official #1 on WebDev, and #1 on the Convex no-guidelines snapshot. With guidelines it is only about 0.15 display points above Argon. The columns are not merged into one score.")],
+    why: [tx("WebDev 正式第 1。当前 124 题两列都是第 1。112 题有指南只比 Argon 高约 0.15 个显示点，不把两列或两个版本合成一个分。", "Official #1 on WebDev. #1 on both columns of the current 124-task board. On the 112-task archive, with guidelines it is only about 0.15 display points above Argon. Columns and versions are not merged into one score.")],
     whyNot: [
       tx("WebDev 1,445 票，置信区间 +19/−19，名次范围 1–2，和 Opus 5.5 Max 1816 仍可能互换。", "WebDev has 1,445 votes, a +19/−19 interval, and a 1–2 rank band, so it can still trade places with Opus 5.5 Max at 1816."),
       tx("有指南的 98.81% 不要写成对 Argon 的明确胜出。精确分差约 0.0015，Fable 3 次，Argon 10 次。", "Do not call the 98.81% with-guidelines score a clear win over Argon. The exact gap is about 0.0015, with 3 runs for Fable and 10 for Argon."),
@@ -593,7 +593,7 @@ export const models: Model[] = [
     vendorName: "OpenAI",
     license: "proprietary",
     licenseLabel: prop,
-    summary: tx("Android Bench 1.0 第三，90.8%，跑分成本 $150.0。DeepSWE v1.1 Best（max）第 4，72.7%。Slop Index 反转后第 1：来源 slop 27.43，页面显示 27，本站 73。", "Third on Android Bench 1.0 at 90.8%, run cost $150.0. Fourth on DeepSWE v1.1 Best (max) at 72.7%. After Slop inversion it is #1: source slop 27.43, the page shows 27, this site stores 73."),
+    summary: tx("Android Bench 1.0 第三，90.8%，跑分成本 $150.0。DeepSWE v1.1 Best（max）第 4，72.7%。Slop Index 反转后第 2：来源 slop 27.43，页面显示 27，本站 73。第 1 是没有模型页的 GPT-6 Sol Pro（来源 26.49，页面 26，本站 74）。", "Third on Android Bench 1.0 at 90.8%, run cost $150.0. Fourth on DeepSWE v1.1 Best (max) at 72.7%. After Slop inversion it is #2: source slop 27.43, the page shows 27, this site stores 73. #1 is GPT-6 Sol Pro, which has no model page (source 26.49, page 26, this site 74)."),
     why: [tx("标准任务前三，和 Anthropic 前两名几乎打平。", "Top three on standard tasks, nearly tied with the two Anthropic leaders.")],
     whyNot: [tx("成本 $150，和榜首同一量级。", "At $150, the cost is in the same range as the leader.")],
   }),
@@ -628,14 +628,14 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["android-bench"],
     summary: tx(
-      "The Slop Index 反转后第 22（来源 slop 37.51，页面 38，本站 62）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
-      "22nd on The Slop Index after inversion (source slop 37.51, page 38, this site 62). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
+      "The Slop Index 反转后第 23（来源 slop 37.11，页面 37，本站 63）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
+      "23rd on The Slop Index after inversion (source slop 37.11, page 37, this site 63). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
     ),
     why: [
       tx("Android 标准任务只比第一低约 4 个点，成本约为二十四分之一。", "On Android standard tasks, about four points behind first at roughly a twenty-fourth of the cost."),
     ],
     whyNot: [
-      tx("Slop Index 反转后的第 1 是 GPT-5.6 Sol，不是这一行。", "GPT-5.6 Sol, not this row, is #1 after Slop inversion."),
+      tx("Slop Index 反转后的第 1 是没有模型页的 GPT-6 Sol Pro，GPT-5.6 Sol 是第 2，不是这一行。", "GPT-6 Sol Pro, which has no model page, is #1 after Slop inversion. GPT-5.6 Sol is #2, not this row."),
       tx("同系列在长程榜只有 10.7% 的是 GPT 6 Luna。复杂多模块工作不要用便宜档单挑。", "The cheap long-horizon row in this family is GPT 6 Luna at 10.7%. Do not give multi-module work to the cheap tier alone."),
     ],
   }),
@@ -701,11 +701,11 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["slop-index"],
     summary: tx(
-      "The Slop Index 反转后第 3（来源 slop 28.26，页面 28，本站 72）。第 1 是 GPT-5.6 Sol，第 2 是 DeepSeek V4.1 Flash。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。Convex 基线仍是低成本前排之一。有指南列第 21（显示 90.09），已不在前 20。",
-      "3rd on The Slop Index after inversion (source slop 28.26, page 28, this site 72). GPT-5.6 Sol is #1 and DeepSeek V4.1 Flash is #2. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). Still among the low-cost Convex baseline front. With guidelines it is #21 (display 90.09), outside the top 20.",
+      "The Slop Index 反转后第 4（来源 slop 28.70，页面 29，本站 71）。第 1 是没有模型页的 GPT-6 Sol Pro，第 2 是 GPT-5.6 Sol，第 3 是 DeepSeek V4.1 Flash。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。112 题有指南快照是第 21（显示 90.09）。当前 124 题还没有这一行，是待重跑，不是 0 分。",
+      "4th on The Slop Index after inversion (source slop 28.70, page 29, this site 71). GPT-6 Sol Pro, which has no model page, is #1, GPT-5.6 Sol is #2, and DeepSeek V4.1 Flash is #3. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). The 112-task with-guidelines snapshot has it at #21 (display 90.09). The current 124-task board does not have this row yet. That is pending, not a zero.",
     ),
     why: [
-      tx("写文档主榜反转后第 2，排在 GPT-5.6 Sol 后面；token 价格 $0.3。", "2nd on the inverted docs primary board, behind GPT-5.6 Sol; token price $0.3."),
+      tx("写文档主榜反转后第 4；token 价格 $0.3。第 1 没有模型页。", "4th on the inverted docs primary board; token price $0.3. #1 has no model page."),
       tx("Convex 基线上成本仍是前排里最低的一档之一。", "Still among the lowest costs on the Convex baseline."),
     ],
     whyNot: [
@@ -720,8 +720,8 @@ export const models: Model[] = [
     license: "proprietary",
     licenseLabel: prop,
     summary: tx(
-      "Convex No Guidelines 第 20，72.32%。有指南 84.82%；这一行没有 No Guidelines + Web 的运行。ReactBench v1.2 最高一行是 high 档 25.6%。",
-      "20th on Convex No Guidelines at 72.32%. With Guidelines is 84.82%; that row has no No Guidelines + Web run. Its best ReactBench v1.2 row is high at 25.6%.",
+      "112 题 Convex 快照里无指南第 20（72.32%），有指南 84.82%。当前 124 题还没有这一行，是待重跑，不是 0 分。Slop Index 反转后第 21。ReactBench v1.2 最高一行是 high 档 25.6%。",
+      "On the archived 112-task Convex snapshot it is 20th without guidelines at 72.32%, and 84.82% with guidelines. The current 124-task board does not have this row yet. That is pending, not a zero. 21st on The Slop Index after inversion. Its best ReactBench v1.2 row is high at 25.6%.",
     ),
     why: [tx("Convex 基线仍在中段，成本 $3.99。", "Still mid-board on the Convex baseline, at $3.99.")],
     whyNot: [tx("没有网页臂的成绩。缺测不是 0 分，也不要和 Convex 分数加在一起。", "No web-arm score. A missing run is not a zero, and it is not added to the Convex score.")],

@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-20",
+    kind: "board",
+    source: "surgehq.ai / theslopindex.com / convex.dev",
+    text: tx(
+      "**sudo L7、Slop 与 Convex 124 题**：sudo 主榜 25 行，Fable 5.2 仍是 52.2%。Astra 6.2 与 Neon 都是 38.3%，并列第 4，来源 Astra 在前。Qwen 4 Max 与 Hy4 Preview 都是 15.6%，并列第 17，没有模型页。Muse Spark 1.3 落到第 21（12.8%）。Slop 70 行重算，捕获时间 Fri, 20 Nov 2026 01:04:00 GMT，2,621 票。机械文件仍是 full-merged-v6。反转后 GPT-6 Sol Pro 第 1（来源 26.49，没有模型页），GPT-5.6 Sol 第 2（27.43）。Convex 124 题两列各 10 行。有指南 Fable 5.2 精确值 0.9919354838709677（显示 99.19），无指南 0.9596774193548387（显示 95.97）。112 题归档未改，缺行不是 0 分。",
+      "**sudo L7, Slop, and Convex 124 tasks**: the sudo main board has 25 rows. Fable 5.2 is still 52.2%. Astra 6.2 and Neon both score 38.3% and share #4, with Astra first in the source. Qwen 4 Max and Hy4 Preview both score 15.6% and share #17. Qwen 4 Max has no model page. Muse Spark 1.3 falls to #21 (12.8%). The Slop Index recomputed all 70 rows, captured Fri, 20 Nov 2026 01:04:00 GMT, at 2,621 votes. The mechanical file is still full-merged-v6. After inversion GPT-6 Sol Pro is #1 (source 26.49, no model page) and GPT-5.6 Sol is #2 (27.43). Each Convex 124-task column has 10 rows. With guidelines Fable 5.2 is exactly 0.9919354838709677 (display 99.19); without guidelines it is 0.9596774193548387 (display 95.97). The 112-task archive was not changed, and a missing row is not a zero.",
+    ),
+  },
+  {
     date: "11-19",
     kind: "board",
     source: "convex.dev",
