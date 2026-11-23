@@ -173,7 +173,7 @@ describe("picks", () => {
     ]);
     expect(all).toEqual(home);
     expect(getBenchmark("zh", "slop-index")?.scenarios.map((row) => row.href)).toEqual(["/zh/scenarios/write-docs/"]);
-    expect(resolvePicks("write-docs").top?.modelSlug).toBe("gpt-5-6-sol");
+    expect(resolvePicks("write-docs").top?.modelSlug).toBe("deepseek-v4-1-flash");
     expect(getScenario("zh", "refactor")).toBeUndefined();
     expect(getScenario("zh", "open-frontend")).toBeUndefined();
     expect(getScenario("zh", "saas")).toBeUndefined();
@@ -250,12 +250,13 @@ describe("picks", () => {
       ["creative", 146],
     ]);
     const slop = writeDocs?.boards[0]?.rows ?? [];
-    expect(slop[0]).toMatchObject({ name: "GPT-6 Sol Pro", rank: 1, score: "74", price: "$6" });
-    expect(slop[0]?.href).toBeUndefined();
-    expect(slop[1]).toMatchObject({ name: "GPT-5.6 Sol", rank: 2, score: "73", price: "$17.5" });
-    expect(slop[2]).toMatchObject({ name: "DeepSeek V4.1 Flash", rank: 3, score: "72" });
-    expect(slop[16]).toMatchObject({ name: "Muse Ember", rank: 17, score: "65" });
-    expect(slop[69]).toMatchObject({ name: "Seed 2.1 Turbo", rank: 70, score: "36" });
+    expect(slop[0]).toMatchObject({ name: "DeepSeek V4.1 Flash", rank: 1, score: "75" });
+    expect(slop[1]).toMatchObject({ name: "Muse Ember", rank: 2, score: "74" });
+    expect(slop[1]?.href).toBeUndefined();
+    expect(slop[2]).toMatchObject({ name: "GPT-5.6 Sol", rank: 3, score: "73", price: "$17.5" });
+    expect(slop[4]).toMatchObject({ name: "GPT-6 Sol Pro", rank: 5, score: "70" });
+    expect(slop[4]?.href).toBeUndefined();
+    expect(slop[69]).toMatchObject({ name: "Seed 2.1 Turbo", rank: 70, score: "35" });
     expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(70);
     const creative = getBenchmark("zh", "eqbench-creative-writing");
     expect(creative?.leaderboard).toHaveLength(146);
@@ -286,7 +287,7 @@ describe("picks", () => {
       ["slop-index", "像真人", "article", 1],
       ["eqbench-creative-writing", "创意写作", "pen-nib", 0.6],
     ]);
-    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/Claude Fable 5\.1/);
+    expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/GPT 6 Sol/);
     expect(getScenario("zh", "write-docs")?.takeaway?.sentence).toMatch(/0 项第一/);
     expect(getScenario("en", "web-frontend")?.takeaway?.sentence).toMatch(/first on/i);
     expect(web?.fusion.columns.map((column) => [column.id, column.weight])).toEqual([
@@ -490,11 +491,12 @@ describe("picks", () => {
     expect(home[2]?.sources?.map((source) => source.name)).toEqual(["Terminal-Bench 4.0", "DeepSWE v1.1", "FrontierCode"]);
     expect(home[3]?.title).toBe("写文档和文案");
     expect(home[3]?.sources?.map((source) => source.name)).toEqual(["The Slop Index", "EQ-Bench Creative Writing v3"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "Claude Fable 5.1", rankLabel: "1" });
-    expect(home[3]?.rows.map((row) => row.name).slice(0, 3)).toEqual([
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 6 Sol", rankLabel: "1" });
+    expect(home[3]?.rows.map((row) => row.name).slice(0, 4)).toEqual([
+      "GPT 6 Sol",
+      "Claude Opus 5",
       "Claude Fable 5.1",
       "Kimi K3.1 Pro",
-      "Claude Opus 5",
     ]);
     expect(home).toHaveLength(4);
   });
@@ -509,23 +511,24 @@ describe("picks", () => {
     expect(uplift.find((row) => row.name === "Claude Sonnet 5.5")?.delta).toBe("+9.0");
 
     const convex = getItem("en", "library", "convex")?.evalView;
-    expect(convex?.rows.map((row) => row.name)).toEqual([
+    expect(convex?.rows).toHaveLength(27);
+    expect(convex?.rows.map((row) => row.name).slice(0, 8)).toEqual([
       "Claude Fable 5.2",
       "GPT-6.2 Astra",
       "GPT-6.1 Sol",
       "Claude Opus 5.5",
+      "Gemini 4 Argon",
+      "Gemini 4 Carbon",
       "GPT-6.2 Sol",
       "Claude Sonnet 5.5",
-      "Kimi K3.1 Pro",
-      "Hy4 flash",
-      "Step 5 Preview",
-      "DeepSeek V4 Flash",
     ]);
     expect(convex?.rows[0]).toMatchObject({ baseline: "95.97", assisted: "99.19", rank: 1, delta: "+3.22" });
+    expect(convex?.rows[4]).toMatchObject({ baseline: "89.52", assisted: "99.19" });
     expect(convex?.rows[0]?.web).toBeUndefined();
     expect(convex?.rows[1]?.href).toBeUndefined();
-    expect(convex?.rows[7]?.href).toBeUndefined();
-    expect(convex?.rows[8]?.href).toBeUndefined();
+    expect(convex?.rows[6]?.href).toBeUndefined();
+    expect(convex?.rows.find((row) => row.name === "MiMo V2.6 Flash")?.assisted).toBeUndefined();
+    expect(convex?.rows.find((row) => row.name === "Step 5 Preview")?.href).toBeUndefined();
     expect(convex?.showWeb).toBe(false);
     expect(convex?.showAssisted).toBe(true);
     const rules = getItem("zh", "prompt", "convex-ai-rules")?.evalView;
@@ -545,9 +548,12 @@ describe("picks", () => {
     expect(argon?.runCount).toBe(10);
     const assisted = content.results.filter((row) => row.benchmark === "convex-evals" && row.arm === "assisted" && row.version === "112");
     const currentAssisted = content.results.filter((row) => row.benchmark === "convex-evals" && row.arm === "assisted" && row.version === "124");
-    expect(currentAssisted.find((row) => row.modelSlug === "claude-fable-5-2")).toMatchObject({ score: 99.19, rank: 1, asOf: "2026-11-20" });
-    expect(currentAssisted.find((row) => row.modelSlug === "gpt-6-1-sol")).toMatchObject({ score: 97.58, rank: 3, asOf: "2026-11-20" });
-    expect(currentAssisted.find((row) => row.label === "GPT-6.2 Astra")).toMatchObject({ score: 96.77, rank: 5 });
+    expect(currentAssisted.find((row) => row.modelSlug === "claude-fable-5-2")).toMatchObject({ score: 99.19, rank: 1, asOf: "2026-11-23" });
+    expect(currentAssisted.find((row) => row.modelSlug === "gemini-4-argon")).toMatchObject({ score: 99.19, rank: 1, asOf: "2026-11-23" });
+    expect(currentAssisted.find((row) => row.modelSlug === "gpt-6-1-sol")).toMatchObject({ score: 97.58, rank: 4, asOf: "2026-11-23" });
+    expect(currentAssisted.find((row) => row.label === "GPT-6.2 Astra")).toMatchObject({ score: 96.37, rank: 6 });
+    expect(currentAssisted.find((row) => row.label === "GPT-6.2 Sol")).toMatchObject({ score: 93.55, rank: 9 });
+    expect(currentAssisted.find((row) => row.modelSlug === "muse-wonder")).toMatchObject({ score: 93.55, rank: 10 });
     expect(currentAssisted.find((row) => row.label === "Step 5 Preview")?.modelSlug).toBeUndefined();
     expect(assisted.find((row) => row.modelSlug === "claude-fable-5-2")).toMatchObject({ score: 98.81, rank: 1, asOf: "2026-11-18" });
     expect(assisted.find((row) => row.modelSlug === "gemini-4-argon")).toMatchObject({ score: 98.66, rank: 2, asOf: "2026-11-18" });
@@ -570,7 +576,8 @@ describe("picks", () => {
     expect(archivedConvex?.evalBoard?.showWeb).toBe(true);
     expect(archivedConvex?.evalBoard?.rows.find((row) => row.name === "Claude Fable 5.2")).toMatchObject({ baseline: "95.54", assisted: "98.81" });
     expect(current?.versions?.find((version) => version.id === "124")?.evalBoard?.rows.find((row) => row.name === "Claude Fable 5.2")).toMatchObject({ baseline: "95.97", assisted: "99.19" });
-    expect(current?.versions?.find((version) => version.id === "124")?.evalBoard?.rows.some((row) => row.name === "Gemini 4 Argon")).toBe(false);
+    expect(current?.versions?.find((version) => version.id === "124")?.evalBoard?.rows.find((row) => row.name === "Gemini 4 Argon")).toMatchObject({ assisted: "99.19" });
+    expect(current?.versions?.find((version) => version.id === "124")?.evalBoard?.rows.some((row) => row.name === "Gemini 3.1 Pro Preview")).toBe(false);
     const summary = getModel("zh", "claude-fable-5-2")?.summary ?? "";
     expect(summary).toContain("0.9880952380952381");
     expect(summary).toContain("不是有意义的胜出");
@@ -580,15 +587,18 @@ describe("picks", () => {
     for (let index = 1; index < slopRows.length; index += 1) {
       expect(slopRows[index]?.sourceSlopRaw).toBeGreaterThanOrEqual(slopRows[index - 1]?.sourceSlopRaw ?? 0);
     }
-    expect(slopRows[0]).toMatchObject({ label: "GPT-6 Sol Pro", sourceSlopRaw: 26.49, score: 74 });
-    expect(slopRows[0]?.modelSlug).toBeUndefined();
-    expect(slopRows[1]).toMatchObject({ label: "GPT-5.6 Sol", sourceSlopRaw: 27.43, score: 73 });
+    expect(slopRows[0]).toMatchObject({ label: "DeepSeek V4.1 Flash", sourceSlopRaw: 24.72, score: 75, modelSlug: "deepseek-v4-1-flash" });
+    expect(slopRows[1]).toMatchObject({ label: "Muse Ember", sourceSlopRaw: 25.59, score: 74 });
+    expect(slopRows[1]?.modelSlug).toBeUndefined();
+    expect(slopRows[2]).toMatchObject({ label: "GPT-5.6 Sol", sourceSlopRaw: 27.43, score: 73 });
     expect(slopRows.find((row) => row.label === "Mercury 2.5")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Hunyuan 4")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Inkling 2 Small")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Inkling Small")).toBeDefined();
-    expect(slopRows.find((row) => row.label === "Grok 4.7")?.rank).toBe(15);
-    expect(slopRows.find((row) => row.label === "Gemini 3.1 Pro")?.rank).toBe(21);
+    expect(slopRows.find((row) => row.label === "Grok 4.7")?.rank).toBe(11);
+    expect(slopRows.find((row) => row.label === "Gemini 3.1 Pro")?.rank).toBe(12);
+    expect(slopRows.find((row) => row.label === "Inkling 2 Small")?.rank).toBeGreaterThan(20);
+    expect(slopRows.find((row) => row.label === "Sonnet 5.5")?.rank).toBeGreaterThan(20);
     expect(slopRows.find((row) => row.label === "Muse Ember")?.modelSlug).toBeUndefined();
 
     const next = getItem("en", "prompt", "nextjs-agents-md")?.evalView?.rows ?? [];

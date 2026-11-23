@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-23",
+    kind: "board",
+    source: "lmarena.ai / theslopindex.com / convex.dev",
+    text: tx(
+      "**WebDev、图生网页、Slop 与 Convex 124 题**：WebDev 页日期 Nov 22，1,044,803 票，可读抓取仍只有前 15，159 行全量榜未改。图生网页页日期 Nov 20，218,511 票、页头 70 个模型，可读抓取也只有前 15，66 行全量榜未改。Slop 70 行重算，捕获时间 Mon, 23 Nov 2026 01:07:34 GMT，2,715 票。机械文件仍是 full-merged-v6。反转后 DeepSeek V4.1 Flash 第 1（来源 24.72），Muse Ember 第 2（25.59，没有模型页）。Convex 仍是同一 124 题哈希。有指南 26 行，无指南 27 行。Fable 5.2 与 Argon 有指南精确值都是 0.9919354838709677，并列。112 题归档未改，缺行不是 0 分，也不和 112 题相减。",
+      "**WebDev, Image-to-WebDev, Slop, and Convex 124 tasks**: the WebDev page date is Nov 22, with 1,044,803 votes. The readable fetch is still only the top 15, so the 159-row snapshot was not replaced. Image-to-WebDev is dated Nov 20, with 218,511 votes and a 70-model header. That readable fetch is also only the top 15, so the 66-row snapshot was not replaced. The Slop Index recomputed all 70 rows, captured Mon, 23 Nov 2026 01:07:34 GMT, at 2,715 votes. The mechanical file is still full-merged-v6. After inversion DeepSeek V4.1 Flash is #1 (source 24.72) and Muse Ember is #2 (25.59, no model page). Convex is still the same 124-task hash. With Guidelines has 26 rows and No Guidelines has 27. Fable 5.2 and Argon share the exact with-guidelines score 0.9919354838709677. The 112-task archive was not changed. A missing row is not a zero and is not subtracted from the 112-task scores.",
+    ),
+  },
+  {
     date: "11-20",
     kind: "board",
     source: "surgehq.ai / theslopindex.com / convex.dev",

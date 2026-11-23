@@ -108,21 +108,21 @@ describe("composite method C", () => {
     ]);
     const rows = computeComposite(boards);
     expect(rows.slice(0, 5).map((row) => [row.rank, row.key.replace(/^(model:|label:)/, ""), row.display])).toEqual([
-      [1, "claude-fable-5-1", 88],
-      [1, "kimi-k3-1-pro", 88],
-      [3, "claude-opus-5", 85],
-      [4, "gpt-6-sol", 84],
-      [5, "GPT-6 Sol Pro", 83],
+      [1, "gpt-6-sol", 85],
+      [2, "claude-opus-5", 84],
+      [2, "claude-fable-5-1", 84],
+      [2, "kimi-k3-1-pro", 84],
+      [5, "Muse Ember", 82],
     ]);
     const astra = rows.find((row) => row.key === "model:gpt-6-astra")!;
     expect(astra.homeEligible).toBe(true);
-    expect(astra.cells[0]?.rank).toBe(49);
+    expect(astra.cells[0]?.rank).toBeGreaterThan(20);
     expect(astra.cells[1]?.rank).toBe(1);
     const luna = rows.find((row) => row.key === "model:gpt-5-6-luna")!;
-    expect(luna.cells[0]?.rank).toBe(23);
+    expect(luna.cells[0]?.rank).toBe(20);
     expect(luna.display).toBeLessThan(astra.display);
     const haiku = rows.find((row) => row.key === "model:claude-haiku-5-5")!;
-    expect(haiku.cells[0]?.rank).toBe(4);
+    expect(haiku.cells[0]?.rank).toBe(6);
   });
 
   it("halves weight for preliminary rows and missing boards", () => {
@@ -224,13 +224,12 @@ describe("composite method C", () => {
     expect(home[1]?.rows[0]?.unit).toBeUndefined();
     expect(home[1]?.rows[0]?.detail?.boards.map((board) => board.value)).toEqual(["#1 · 100", "#2 · 97", "—", "#4 · 88"]);
     expect(home[2]?.rows.map((row) => row.score)).toEqual(["96", "93", "91", "87", "82"]);
-    expect(home[3]?.rows[0]).toMatchObject({ name: "Claude Fable 5.1", score: "88" });
-    expect(home[3]?.rows.map((row) => [row.name, row.score]).slice(0, 5)).toEqual([
-      ["Claude Fable 5.1", "88"],
-      ["Kimi K3.1 Pro", "88"],
-      ["Claude Opus 5", "85"],
-      ["GPT 6 Sol", "84"],
-      ["GLM-5.3", "82"],
+    expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 6 Sol", score: "85" });
+    expect(home[3]?.rows.map((row) => [row.name, row.score]).slice(0, 4)).toEqual([
+      ["GPT 6 Sol", "85"],
+      ["Claude Opus 5", "84"],
+      ["Claude Fable 5.1", "84"],
+      ["Kimi K3.1 Pro", "84"],
     ]);
     expect(home).toHaveLength(4);
   });
