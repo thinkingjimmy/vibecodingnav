@@ -263,8 +263,8 @@ export const benchmarks: Benchmark[] = [
     shortName: "Slop Index",
     scoreUnit: "",
     compositeKind: "rate",
-    asOf: "2026-11-23",
-    votes: "2,715",
+    asOf: "2026-11-24",
+    votes: "2,746",
     trackedCount: 70,
     table: "score",
     domain: tx("文档与文案", "Docs and copy"),
@@ -281,12 +281,12 @@ export const benchmarks: Benchmark[] = [
       "This site's score is 100 − the source Slop Score; higher is more human-like. The source ranks the highest slop as #1; ranks here are inverted so least slop is #1. Composite uses the pass-rate ratio to the leader.",
     ),
     caveats: tx(
-      "竞技场票数仍在累计，现场 Elo 会变。机械轴相对本榜内模型归一化。这张榜不衡量代码或界面质量。",
-      "Arena votes are still accumulating, so the live Elo moves. Mechanical axes are normalized within this board. It does not measure code or UI quality.",
+      "竞技场票数仍在累计，前排会随新票小幅换位。差零点几个来源分不是换了一位冠军，也没有因此把接近的分数并成并列。机械轴相对本榜内模型归一化。这张榜不衡量代码或界面质量。",
+      "Arena votes are still accumulating, so the front can swap on a small margin. A few tenths of a source point is not a new champion, and close scores are not forced into a tie. Mechanical axes are normalized within this board. It does not measure code or UI quality.",
     ),
     updateCadence: tx(
-      "来源 https://theslopindex.com/leaderboard 。2026-11-23 重算。机械文件仍是 /bench.json 的 full-merged-v6（70 个模型、77,943 条生成，etag 与 11-20 相同）；响应 Last-Modified 是 Sun, 22 Nov 2026 16:23:41 GMT。人群 Elo 来自页面使用的 /api/leaderboard?mode=v1&domain=all。该接口没有 Last-Modified，本次响应 Date 是 Mon, 23 Nov 2026 01:07:34 GMT，2,715 票，70 行都有 Elo，没有使用中性 50。页面把 Slop Score 四舍五入成整数，越高越渣、#1 最渣。本站分数仍是 100 − 该整数。反转后 DeepSeek V4.1 Flash 第 1（来源 24.72，页面 25，本站 75）；Muse Ember 第 2（来源 25.59，页面 26，本站 74，没有模型页）；GPT-5.6 Sol 第 3（来源 27.43，页面 27，本站 73）。GPT-6 Sol Pro 第 5（来源 29.62，页面 30）。Gemini 3.1 Pro 第 12。Inkling 2 Small、Sonnet 5.5、DeepSeek V4、Sonnet 5、GLM-5.3 已不在前 20。",
-      "Source https://theslopindex.com/leaderboard . Recomputed 2026-11-23. The mechanical file is still /bench.json run full-merged-v6 (70 models, 77,943 generations, same etag as Nov 20). Its Last-Modified is Sun, 22 Nov 2026 16:23:41 GMT. Crowd Elo comes from the page's /api/leaderboard?mode=v1&domain=all. That response has no Last-Modified. This fetch's Date header was Mon, 23 Nov 2026 01:07:34 GMT, at 2,715 votes, and all 70 rows have Elo, so none use a neutral 50. The page rounds Slop Score to an integer; higher is worse and #1 is sloppiest. This site still stores 100 − that integer. After inversion DeepSeek V4.1 Flash is #1 (source 24.72, page 25, this site 75); Muse Ember is #2 (source 25.59, page 26, this site 74, no model page); GPT-5.6 Sol is #3 (source 27.43, page 27, this site 73). GPT-6 Sol Pro is #5 (source 29.62, page 30). Gemini 3.1 Pro is #12. Inkling 2 Small, Sonnet 5.5, DeepSeek V4, Sonnet 5, and GLM-5.3 are outside the top 20.",
+      "来源 https://theslopindex.com/leaderboard 。2026-11-24 重算。机械文件仍是 /bench.json 的 full-merged-v6（70 个模型、77,943 条生成，etag 未变）；Last-Modified 仍是 Sun, 22 Nov 2026 16:23:41 GMT。人群 Elo 来自页面使用的 /api/leaderboard?mode=v1&domain=all。该接口没有 Last-Modified，本次响应 Date 是 Tue, 24 Nov 2026 01:05:52 GMT，2,746 票，70 行都有 Elo，没有使用中性 50。页面把 Slop Score 四舍五入成整数。本站分数仍是 100 − 该整数。这次前两名只换了个很小的身位：Muse Ember 来源 25.29（页面 25，本站 75，没有模型页），DeepSeek V4.1 Flash 来源 25.68（页面 26，本站 74）。不是并列，也不是算法改了。GPT-6 Sol Pro 落到第 11（来源 33.26，页面 33）。GLM-5.3 Prime 第 6（来源 30.69）。Particle 1 第 15（来源 35.46，没有模型页）。Nex N2.6 第 23，已不在前 20。",
+      "Source https://theslopindex.com/leaderboard . Recomputed 2026-11-24. The mechanical file is still /bench.json run full-merged-v6 (70 models, 77,943 generations, same etag). Last-Modified is still Sun, 22 Nov 2026 16:23:41 GMT. Crowd Elo comes from the page's /api/leaderboard?mode=v1&domain=all. That response has no Last-Modified. This fetch's Date header was Tue, 24 Nov 2026 01:05:52 GMT, at 2,746 votes, and all 70 rows have Elo, so none use a neutral 50. The page rounds Slop Score to an integer. This site still stores 100 − that integer. The top two only swapped by a small margin: Muse Ember is source 25.29 (page 25, this site 75, no model page) and DeepSeek V4.1 Flash is source 25.68 (page 26, this site 74). They are not tied, and the formula did not change. GPT-6 Sol Pro fell to #11 (source 33.26, page 33). GLM-5.3 Prime is #6 (source 30.69). Particle 1 is #15 (source 35.46, no model page). Nex N2.6 is #23, outside the top 20.",
     ),
     links: [
       { label: "theslopindex.com/leaderboard", href: "https://theslopindex.com/leaderboard" },
@@ -336,7 +336,7 @@ export const benchmarks: Benchmark[] = [
     scoreUnit: "%",
     compositeKind: "rate",
     scope: "general",
-    asOf: "2026-11-20",
+    asOf: "2026-11-24",
     trackedCount: 25,
     table: "score",
     domain: tx("通用编码能力", "General coding ability"),
@@ -357,8 +357,8 @@ export const benchmarks: Benchmark[] = [
       "The board is new, the set is 60 tasks, and the tasks stay private. Models grade against expert rubrics. Surge is an AI data vendor. Per-task costs in the blog are approximate; the leaderboard page has no cost column.",
     ),
     updateCadence: tx(
-      "博客发布于 2026-10-08。页面 Last Published 是 Thu Nov 19 2026 00:57:56 GMT。本页于 2026-11-20 同步公开主榜 25 行，不含 DAYJOB / GDP.xlsx。CMS 的 rank 字段仍全是 1，名次按分数：同分并列，下一名跳号，并列时保留来源行顺序。Fable 5.2 仍是 52.2% 第 1。GPT 6.2 Astra 与 Gemini 4 Neon 都是 38.3%，并列第 4，这次来源把 Astra 写在前面。Qwen 4 Max 与 Hy4 Preview 都是 15.6%，并列第 17，Hy4 在前。Qwen 4 Max 没有模型页，也不并进 Qwen 3.8 Max。Muse Spark 1.3 仍是 12.8%，名次落到第 21。",
-      "The blog was published on 2026-10-08. The page Last Published time is Thu Nov 19 2026 00:57:56 GMT. This page synced all 25 public main-board rows on 2026-11-20, not the DAYJOB / GDP.xlsx side boards. The CMS rank field is still 1 on every row. Ranks follow the score: ties share a rank, the next rank skips, and a tie keeps the source row order. Fable 5.2 is still #1 at 52.2%. GPT 6.2 Astra and Gemini 4 Neon both score 38.3% and share #4, with Astra first in this source order. Qwen 4 Max and Hy4 Preview both score 15.6% and share #17, with Hy4 first. Qwen 4 Max has no model page and is not merged into Qwen 3.8 Max. Muse Spark 1.3 is still 12.8% and is now #21.",
+      "博客发布于 2026-10-08。页面 Last Published 是 Fri Nov 20 2026 20:09:14 GMT，响应 Last-Modified 是 Tue, 24 Nov 2026 00:26:30 GMT。本页于 2026-11-24 同步公开主榜 25 行，不含 DAYJOB / GDP.xlsx。CMS 的 rank 字段仍全是 1，名次按分数：同分并列，下一名跳号。Fable 5.2 仍是 52.2% 第 1。Qwen 4 Max 从 15.6% 变为 22.8%，按分数是第 12，不再和 Hy4 Preview 并列。Hy4 仍是 15.6%，现在单独第 18。MiniMax M3.1 Flash 到 Hy4 的分数没有变。Qwen 4 Max 没有模型页，也不并进 Qwen 3.8 Max。",
+      "The blog was published on 2026-10-08. The page Last Published time is Fri Nov 20 2026 20:09:14 GMT, and the response Last-Modified is Tue, 24 Nov 2026 00:26:30 GMT. This page synced all 25 public main-board rows on 2026-11-24, not the DAYJOB / GDP.xlsx side boards. The CMS rank field is still 1 on every row. Ranks follow the score: ties share a rank and the next rank skips. Fable 5.2 is still #1 at 52.2%. Qwen 4 Max moved from 15.6% to 22.8% and is #12 by score, no longer tied with Hy4 Preview. Hy4 is still 15.6% and is now alone at #18. Scores from MiniMax M3.1 Flash through Hy4 did not change. Qwen 4 Max has no model page and is not merged into Qwen 3.8 Max.",
     ),
     links: [
       { label: "surgehq.ai/benchmarks/sudo-l7", href: "https://surgehq.ai/benchmarks/sudo-l7" },

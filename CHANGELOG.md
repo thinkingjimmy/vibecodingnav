@@ -9,6 +9,13 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-24
+
+### 变更
+
+- sudo L7 公开主榜仍是 25 行。页面 Last Published 是 Fri Nov 20 2026 20:09:14 GMT，响应 Last-Modified 是 Tue, 24 Nov 2026 00:26:30 GMT。CMS rank 仍全是 1。Fable 5.2 仍是 52.2% 第 1。Qwen 4 Max 从 15.6% 变为 22.8%，按分数是第 12，不再和 Hy4 Preview 并列。Hy4 仍是 15.6%，单独第 18。MiniMax M3.1 Flash 到 Hy4 的分数没有变。Qwen 4 Max 仍没有模型页。
+- The Slop Index 按 Tue, 24 Nov 2026 01:05:52 GMT 的现场投票重算 70 行（2,746 票）。机械文件仍是 full-merged-v6（70 个模型、77,943 条生成，etag 未变，Last-Modified 仍是 Sun, 22 Nov 2026 16:23:41 GMT）。70 行都有 Elo。反转仍是 100 − 页面整数。前两名只换了个很小的身位：Muse Ember 来源 25.29（页面 25，本站 75，没有模型页），DeepSeek V4.1 Flash 来源 25.68（页面 26，本站 74）。不是并列。GPT-6 Sol Pro 落到第 11（来源 33.26）。GLM-5.3 Prime 第 6（来源 30.69）。Particle 1 第 15（来源 35.46，没有模型页）。Nex N2.6 第 23。写文档综合分随这张榜重算，权重未改。
+
 ## 2026-11-23
 
 ### 变更

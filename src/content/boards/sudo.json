@@ -96,6 +96,14 @@
   },
   {
     "rank": 12,
+    "label": "Qwen 4 Max",
+    "effort": "xHigh reasoning",
+    "score": 22.8,
+    "scoreText": "22.8",
+    "letter": "Q"
+  },
+  {
+    "rank": 13,
     "label": "MiniMax M3.1 Flash",
     "effort": "Max reasoning",
     "score": 18.9,
@@ -103,7 +111,7 @@
     "letter": "MM"
   },
   {
-    "rank": 13,
+    "rank": 14,
     "label": "Qwen 3.8 Max",
     "effort": "xHigh reasoning",
     "score": 16.7,
@@ -112,7 +120,7 @@
     "vendor": "qwen"
   },
   {
-    "rank": 13,
+    "rank": 14,
     "label": "Kimi K3.1 Pro",
     "effort": "Max reasoning",
     "score": 16.7,
@@ -121,7 +129,7 @@
     "vendor": "kimi"
   },
   {
-    "rank": 15,
+    "rank": 16,
     "label": "Gemini 4 Argon",
     "effort": "High reasoning",
     "score": 16.1,
@@ -130,7 +138,7 @@
     "vendor": "google"
   },
   {
-    "rank": 15,
+    "rank": 16,
     "label": "Muse Wonder 1.0",
     "effort": "Max reasoning",
     "score": 16.1,
@@ -139,21 +147,13 @@
     "vendor": "meta"
   },
   {
-    "rank": 17,
+    "rank": 18,
     "label": "Hy4 Preview",
     "effort": "High reasoning",
     "score": 15.6,
     "scoreText": "15.6",
     "modelSlug": "hy4-preview",
     "vendor": "tencent"
-  },
-  {
-    "rank": 17,
-    "label": "Qwen 4 Max",
-    "effort": "xHigh reasoning",
-    "score": 15.6,
-    "scoreText": "15.6",
-    "letter": "Q"
   },
   {
     "rank": 19,

@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-24",
+    kind: "board",
+    source: "surgehq.ai / theslopindex.com",
+    text: tx(
+      "**sudo L7 与 Slop**：sudo 主榜仍是 25 行。Fable 5.2 仍是 52.2%。Qwen 4 Max 从 15.6% 变为 22.8%，按分数是第 12，不再和 Hy4 并列。Hy4 仍是 15.6%，单独第 18。Qwen 4 Max 没有模型页。Slop 70 行重算，捕获时间 Tue, 24 Nov 2026 01:05:52 GMT，2,746 票。机械文件仍是 full-merged-v6。反转规则没改。前两名只差 0.39：没有模型页的 Muse Ember 来源 25.29，DeepSeek V4.1 Flash 来源 25.68。GPT-6 Sol Pro 落到第 11（33.26）。Particle 1 第 15，没有模型页。Nex N2.6 第 23。",
+      "**sudo L7 and Slop**: the sudo main board is still 25 rows. Fable 5.2 is still 52.2%. Qwen 4 Max moved from 15.6% to 22.8% and is #12 by score, no longer tied with Hy4. Hy4 is still 15.6% and is alone at #18. Qwen 4 Max has no model page. The Slop Index recomputed all 70 rows, captured Tue, 24 Nov 2026 01:05:52 GMT, at 2,746 votes. The mechanical file is still full-merged-v6. The inversion rule did not change. The top two differ by 0.39: Muse Ember, which has no model page, is source 25.29, and DeepSeek V4.1 Flash is source 25.68. GPT-6 Sol Pro fell to #11 (33.26). Particle 1 is #15 and has no model page. Nex N2.6 is #23.",
+    ),
+  },
+  {
     date: "11-23",
     kind: "board",
     source: "lmarena.ai / theslopindex.com / convex.dev",

@@ -142,13 +142,13 @@ describe("picks", () => {
       ["Gemini 4 Hydrogen", 31.7],
       ["GPT 6 Astra", 31.1],
       ["Gemini 4 Carbon", 30.6],
+      ["Qwen 4 Max", 22.8],
       ["MiniMax M3.1 Flash", 18.9],
       ["Qwen 3.8 Max", 16.7],
       ["Kimi K3.1 Pro", 16.7],
       ["Gemini 4 Argon", 16.1],
       ["Muse Wonder 1.0", 16.1],
       ["Hy4 Preview", 15.6],
-      ["Qwen 4 Max", 15.6],
       ["Inkling 2 Small", 14.1],
       ["Mistral Large 4", 13.9],
       ["Muse Spark 1.3", 12.8],
@@ -250,12 +250,12 @@ describe("picks", () => {
       ["creative", 146],
     ]);
     const slop = writeDocs?.boards[0]?.rows ?? [];
-    expect(slop[0]).toMatchObject({ name: "DeepSeek V4.1 Flash", rank: 1, score: "75" });
-    expect(slop[1]).toMatchObject({ name: "Muse Ember", rank: 2, score: "74" });
-    expect(slop[1]?.href).toBeUndefined();
-    expect(slop[2]).toMatchObject({ name: "GPT-5.6 Sol", rank: 3, score: "73", price: "$17.5" });
-    expect(slop[4]).toMatchObject({ name: "GPT-6 Sol Pro", rank: 5, score: "70" });
-    expect(slop[4]?.href).toBeUndefined();
+    expect(slop[0]).toMatchObject({ name: "Muse Ember", rank: 1, score: "75" });
+    expect(slop[0]?.href).toBeUndefined();
+    expect(slop[1]).toMatchObject({ name: "DeepSeek V4.1 Flash", rank: 2, score: "74" });
+    expect(slop[2]).toMatchObject({ name: "GPT-5.6 Sol", rank: 3, score: "71", price: "$17.5" });
+    expect(slop[10]).toMatchObject({ name: "GPT-6 Sol Pro", rank: 11, score: "67" });
+    expect(slop[10]?.href).toBeUndefined();
     expect(slop[69]).toMatchObject({ name: "Seed 2.1 Turbo", rank: 70, score: "35" });
     expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(70);
     const creative = getBenchmark("zh", "eqbench-creative-writing");
@@ -495,8 +495,8 @@ describe("picks", () => {
     expect(home[3]?.rows.map((row) => row.name).slice(0, 4)).toEqual([
       "GPT 6 Sol",
       "Claude Opus 5",
-      "Claude Fable 5.1",
       "Kimi K3.1 Pro",
+      "Claude Fable 5.1",
     ]);
     expect(home).toHaveLength(4);
   });
@@ -587,18 +587,20 @@ describe("picks", () => {
     for (let index = 1; index < slopRows.length; index += 1) {
       expect(slopRows[index]?.sourceSlopRaw).toBeGreaterThanOrEqual(slopRows[index - 1]?.sourceSlopRaw ?? 0);
     }
-    expect(slopRows[0]).toMatchObject({ label: "DeepSeek V4.1 Flash", sourceSlopRaw: 24.72, score: 75, modelSlug: "deepseek-v4-1-flash" });
-    expect(slopRows[1]).toMatchObject({ label: "Muse Ember", sourceSlopRaw: 25.59, score: 74 });
-    expect(slopRows[1]?.modelSlug).toBeUndefined();
-    expect(slopRows[2]).toMatchObject({ label: "GPT-5.6 Sol", sourceSlopRaw: 27.43, score: 73 });
+    expect(slopRows[0]).toMatchObject({ label: "Muse Ember", sourceSlopRaw: 25.29, score: 75 });
+    expect(slopRows[0]?.modelSlug).toBeUndefined();
+    expect(slopRows[1]).toMatchObject({ label: "DeepSeek V4.1 Flash", sourceSlopRaw: 25.68, score: 74, modelSlug: "deepseek-v4-1-flash" });
+    expect(slopRows[2]).toMatchObject({ label: "GPT-5.6 Sol", sourceSlopRaw: 28.57, score: 71 });
     expect(slopRows.find((row) => row.label === "Mercury 2.5")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Hunyuan 4")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Inkling 2 Small")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Inkling Small")).toBeDefined();
-    expect(slopRows.find((row) => row.label === "Grok 4.7")?.rank).toBe(11);
-    expect(slopRows.find((row) => row.label === "Gemini 3.1 Pro")?.rank).toBe(12);
+    expect(slopRows.find((row) => row.label === "GPT-6 Sol Pro")?.rank).toBe(11);
+    expect(slopRows.find((row) => row.label === "GLM-5.3 Prime")?.rank).toBe(6);
+    expect(slopRows.find((row) => row.label === "Particle 1")?.rank).toBe(15);
+    expect(slopRows.find((row) => row.label === "Particle 1")?.modelSlug).toBeUndefined();
+    expect(slopRows.find((row) => row.label === "Nex N2.6")?.rank).toBe(23);
     expect(slopRows.find((row) => row.label === "Inkling 2 Small")?.rank).toBeGreaterThan(20);
-    expect(slopRows.find((row) => row.label === "Sonnet 5.5")?.rank).toBeGreaterThan(20);
     expect(slopRows.find((row) => row.label === "Muse Ember")?.modelSlug).toBeUndefined();
 
     const next = getItem("en", "prompt", "nextjs-agents-md")?.evalView?.rows ?? [];

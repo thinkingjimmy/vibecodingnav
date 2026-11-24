@@ -12,11 +12,11 @@ image-to-webdev.json: LMArena Image-to-WebDev 66 行，2026-11-17 从 lmarena.ai
 android-1.json: Android Bench 历史版本 1.0 的 32 行，基准 slug 是 android-bench。2026-11-09 与页面 August 11th 表逐格核对，32 行一致，未改
 android-long.json: Android Bench 当前版本 2.0 长程的 18 行。2026-11-19 从 developer.android.com/bench 解析，页面写 Latest results as of November 18th。Claude Fable 5.2（max）与 Claude Sonnet 5.5（max）都是 40.0，并列第 1，来源 Fable 在前。1.0 未改
 terminal.json: Terminal-Bench 4.0 的 35 行 display
-sudo.json: sudo L7 公开主榜 25 行，2026-11-20 解析（页面 Last Published Thu Nov 19 2026 00:57:56 GMT，不含 DAYJOB / GDP.xlsx）。CMS rank 全是 1，这里用分数语义名次，同分并列并保留来源顺序。GPT 6.2 Astra 与 Gemini 4 Neon 并列第 4，Astra 在前。Qwen 4 Max 与 Hy4 Preview 并列第 17。Qwen 4 Max、Neon、Astra 6.2、Sol 6.2、Hydrogen 没有 modelSlug
+sudo.json: sudo L7 公开主榜 25 行，2026-11-24 解析（页面 Last Published Fri Nov 20 2026 20:09:14 GMT，响应 Last-Modified Tue, 24 Nov 2026 00:26:30 GMT，不含 DAYJOB / GDP.xlsx）。CMS rank 全是 1。Qwen 4 Max 是 22.8%，第 12，没有 modelSlug，不并进 Qwen 3.8 Max。Hy4 Preview 仍是 15.6%，单独第 18
 deepswe.json: DeepSWE v1.1 的 28 行 Best 配置，2026-10-11 从 https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json 抓取（generated_at 2026-09-22）；每模型只保留 Pass@1 最高的一档推理配置
 frontiercode.json: FrontierCode 2.0 Main 的 102 行（26 模型 × 全部推理档），2026-10-28 从 https://cognition.com/data/frontier-code-2.0/data.json 抓取；# 为最佳推理档名次；完整 JSON 含 Obsidian 3（公开 HTML 表省略）
 frontiercode-1.json: FrontierCode 1.1 Main 的 130 行归档，2026-10-13 从旧 data.json 的 v1_1 抓取
-slop-index.json: The Slop Index 70 行，2026-11-23 用 theslopindex.com/bench.json（full-merged-v6，70 个模型、77,943 条生成，etag 未变，Last-Modified Sun, 22 Nov 2026 16:23:41 GMT）和页面使用的 /api/leaderboard?mode=v1&domain=all 重算。响应 Date 为 Mon, 23 Nov 2026 01:07:34 GMT，2,715 票，70 行都有 Elo。来源 Slop Score 越高越差；本站反转，score 存 100 − 页面四舍五入后的整数。反转后 DeepSeek V4.1 Flash 第 1，Muse Ember 第 2（没有 modelSlug）
+slop-index.json: The Slop Index 70 行，2026-11-24 用 theslopindex.com/bench.json（full-merged-v6，70 个模型、77,943 条生成，etag 未变，Last-Modified 仍是 Sun, 22 Nov 2026 16:23:41 GMT）和页面使用的 /api/leaderboard?mode=v1&domain=all 重算。响应 Date 为 Tue, 24 Nov 2026 01:05:52 GMT，2,746 票，70 行都有 Elo。本站分数仍是 100 − 页面整数。前两名很接近：Muse Ember 来源 25.29（没有 modelSlug），DeepSeek V4.1 Flash 来源 25.68。Particle 1 没有 modelSlug
 eqbench-creative-writing.json: EQ-Bench Creative Writing v3 146 行，2026-10-29 从 eqbench.com/creative_writing.html 的 creative_writing.js（v=1.0.91）嵌入 CSV 抓取；主指标归一化 Elo（越高越好）
 
 这些文件是来源页的逐行副本。`results.ts` 只做模型页映射，不删行、不重排。框架评测的行写在 `results.ts`，不进这些 JSON。Slop Index 是唯一在入库前反转名次与分数方向的榜，说明写在基准与场景文案里。
