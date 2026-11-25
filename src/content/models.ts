@@ -95,7 +95,7 @@ export const models: Model[] = [
       "First on EQ-Bench Creative Writing v3 (Elo 2176.9). Fifth on WebDev at 1763. Tied at 58.2% on Terminal-Bench. Sixth on sudo L7 at 31.1%.",
     ),
     why: [
-      tx("EQ-Bench Creative Writing Elo 仍居首。Slop 的现场票让前两名靠得很近：没有模型页的 Muse Ember 来源 25.29，DeepSeek V4.1 Flash 来源 25.68。GPT-5.6 Sol 仍是第 3。", "Still first on Creative Writing Elo. Live Slop votes leave the top two close: Muse Ember, which has no model page, is source 25.29, and DeepSeek V4.1 Flash is source 25.68. GPT-5.6 Sol is still #3."),
+      tx("EQ-Bench Creative Writing Elo 仍居首。Slop 第 1 仍是没有模型页的 Muse Ember，来源 25.29。DeepSeek V4.1 Flash 仍是第 2，来源 26.58。GPT-5.6 Sol 仍是第 3。", "Still first on Creative Writing Elo. Slop #1 is still Muse Ember, which has no model page, at source 25.29. DeepSeek V4.1 Flash is still #2 at source 26.58. GPT-5.6 Sol is still #3."),
       tx("WebDev 比第一名 Fable 5.2 低 63 分。", "63 points behind Fable 5.2, first on WebDev."),
     ],
     whyNot: [tx("输出 $50 / 百万 tokens，前端和终端都有价格减半甚至更低的邻近名次。", "Output is $50 per million tokens. Nearby ranks cost half of that, or less.")],
@@ -549,7 +549,7 @@ export const models: Model[] = [
     context: "1M",
     priceLabel: "$0.30 / $1.20",
     fetchedAt: "2026-10-20",
-    summary: tx("Slop 现场票这次把它放在第 2：来源 slop 25.68，页面 26，本站 74。没有模型页的 Muse Ember 是 25.29，页面 25，本站 75。差 0.39，不是另一套算法，也不是并列。WebDev 20261017（max）第 19，1661；20260910（max）第 33，1621。图生网页仍是 11 月 13 日快照。Android 长程第 11 是 DeepSeek V4.1 Flash 1017（high）17.3%。LMArena 这两档写的是 MIT。", "Live Slop votes place it 2nd this capture: source slop 25.68, the page shows 26, this site stores 74. Muse Ember, which has no model page, is 25.29, page 25, this site 75. The gap is 0.39. The formula did not change, and the scores are not tied. WebDev 20261017 (max) is #19 at 1661; 20260910 (max) is #33 at 1621. Image-to-WebDev is still the Nov 13 snapshot. Android long-horizon #11 is DeepSeek V4.1 Flash 1017 (high) at 17.3%. LMArena lists both dated tiers as MIT."),
+    summary: tx("Slop 现场票里它仍是第 2：来源 slop 26.58，页面 27，本站 73。没有模型页的 Muse Ember 仍是第 1：来源 25.29，页面 25，本站 75。不是并列，算法也没改。WebDev 20261017（max）第 19，1661；20260910（max）第 33，1621。图生网页仍是 11 月 13 日快照。Android 长程第 11 是 DeepSeek V4.1 Flash 1017（high）17.3%。LMArena 这两档写的是 MIT。", "Live Slop votes still place it 2nd: source slop 26.58, the page shows 27, this site stores 73. Muse Ember, which has no model page, is still #1 at source 25.29, page 25, this site 75. They are not tied, and the formula did not change. WebDev 20261017 (max) is #19 at 1661; 20260910 (max) is #33 at 1621. Image-to-WebDev is still the Nov 13 snapshot. Android long-horizon #11 is DeepSeek V4.1 Flash 1017 (high) at 17.3%. LMArena lists both dated tiers as MIT."),
     why: [tx("MIT，20261017 档在 WebDev 第 19。两档日期在原榜上分开保留。", "MIT. The 20261017 tier is 19th on WebDev. The two dated tiers stay separate on the source board.")],
     whyNot: [tx("融合表仍按既有 modelSlug 取这两档里名次更好的一行，没有新合成第三档。Android 那一行的 closed 标记不要改写成 MIT。", "The fused table still keeps the better rank of these two tiers under the existing model slug; no third tier was merged in. Do not rewrite the Android row's closed-weight mark as MIT.")],
   }),
@@ -593,7 +593,7 @@ export const models: Model[] = [
     vendorName: "OpenAI",
     license: "proprietary",
     licenseLabel: prop,
-    summary: tx("Android Bench 1.0 第三，90.8%，跑分成本 $150.0。DeepSWE v1.1 Best（max）第 4，72.7%。Slop Index 反转后仍是第 3：来源 slop 28.57，页面 29，本站 71。前两名很接近，这次是没有模型页的 Muse Ember 和 DeepSeek V4.1 Flash。", "Third on Android Bench 1.0 at 90.8%, run cost $150.0. Fourth on DeepSWE v1.1 Best (max) at 72.7%. After Slop inversion it is still #3: source slop 28.57, the page shows 29, this site stores 71. The top two are close. This capture has Muse Ember, which has no model page, and then DeepSeek V4.1 Flash."),
+    summary: tx("Android Bench 1.0 第三，90.8%，跑分成本 $150.0。DeepSWE v1.1 Best（max）第 4，72.7%。Slop Index 反转后仍是第 3：来源 slop 28.50，页面 28，本站 72。第 1 仍是没有模型页的 Muse Ember，第 2 仍是 DeepSeek V4.1 Flash。", "Third on Android Bench 1.0 at 90.8%, run cost $150.0. Fourth on DeepSWE v1.1 Best (max) at 72.7%. After Slop inversion it is still #3: source slop 28.50, the page shows 28, this site stores 72. #1 is still Muse Ember, which has no model page, and #2 is still DeepSeek V4.1 Flash."),
     why: [tx("标准任务前三，和 Anthropic 前两名几乎打平。", "Top three on standard tasks, nearly tied with the two Anthropic leaders.")],
     whyNot: [tx("成本 $150，和榜首同一量级。", "At $150, the cost is in the same range as the leader.")],
   }),
@@ -628,14 +628,14 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["android-bench"],
     summary: tx(
-      "The Slop Index 反转后仍是第 20（来源 slop 36.42，页面 36，本站 64）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
-      "Still 20th on The Slop Index after inversion (source slop 36.42, page 36, this site 64). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
+      "The Slop Index 反转后第 19（来源 slop 34.95，页面 35，本站 65）。Android Bench 1.0 第五，87.6%，跑分成本 $7.2。",
+      "19th on The Slop Index after inversion (source slop 34.95, page 35, this site 65). Fifth on Android Bench 1.0 at 87.6%, run cost $7.2.",
     ),
     why: [
       tx("Android 标准任务只比第一低约 4 个点，成本约为二十四分之一。", "On Android standard tasks, about four points behind first at roughly a twenty-fourth of the cost."),
     ],
     whyNot: [
-      tx("Slop 前两名随现场票小幅换位，这一行仍是第 20。", "The Slop top two move a little with live votes. This row is still #20."),
+      tx("Slop 第 1 仍是 Muse Ember。这一行是第 19。", "Muse Ember is still #1 on Slop. This row is #19."),
       tx("同系列在长程榜只有 10.7% 的是 GPT 6 Luna。复杂多模块工作不要用便宜档单挑。", "The cheap long-horizon row in this family is GPT 6 Luna at 10.7%. Do not give multi-module work to the cheap tier alone."),
     ],
   }),
@@ -701,11 +701,11 @@ export const models: Model[] = [
     licenseLabel: prop,
     headlines: ["slop-index"],
     summary: tx(
-      "The Slop Index 反转后第 5（来源 slop 30.57，页面 31，本站 69）。前两名只差 0.39 个来源分。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。当前 Convex 124 题无指南与 Muse Wonder 精确值相同，0.7903225806451613（显示 79.03），并列第 10；有指南第 11，精确值 0.9112903225806451（显示 91.13）。112 题有指南快照仍是第 21（显示 90.09），那是另一版本，不相减。",
-      "5th on The Slop Index after inversion (source slop 30.57, page 31, this site 69). The top two differ by 0.39 source points. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). On the current Convex 124-task board it ties Muse Wonder without guidelines at exactly 0.7903225806451613 (display 79.03, shared #10). With guidelines it is #11 at exactly 0.9112903225806451 (display 91.13). The 112-task with-guidelines snapshot is still #21 (display 90.09). That is another version and is not subtracted.",
+      "The Slop Index 反转后第 4（来源 slop 29.89，页面 30，本站 70）。第 1 仍是没有模型页的 Muse Ember。Android Bench 2.0 长程第 10（max，20.7%，claude-code）。当前 Convex 124 题无指南与 Muse Wonder 精确值相同，0.7903225806451613（显示 79.03），并列第 10；有指南第 11，精确值 0.9112903225806451（显示 91.13）。112 题有指南快照仍是第 21（显示 90.09），那是另一版本，不相减。",
+      "4th on The Slop Index after inversion (source slop 29.89, page 30, this site 70). #1 is still Muse Ember, which has no model page. 10th on Android Bench 2.0 long-horizon (max, 20.7%, claude-code). On the current Convex 124-task board it ties Muse Wonder without guidelines at exactly 0.7903225806451613 (display 79.03, shared #10). With guidelines it is #11 at exactly 0.9112903225806451 (display 91.13). The 112-task with-guidelines snapshot is still #21 (display 90.09). That is another version and is not subtracted.",
     ),
     why: [
-      tx("写文档主榜反转后第 5；token 价格 $0.3。前两名随现场票小幅换位。", "5th on the inverted docs primary board; token price $0.3. The top two move a little with live votes."),
+      tx("写文档主榜反转后第 4；token 价格 $0.3。第 1 仍是 Muse Ember。", "4th on the inverted docs primary board; token price $0.3. Muse Ember is still #1."),
       tx("Convex 基线上成本仍是前排里最低的一档之一。", "Still among the lowest costs on the Convex baseline."),
     ],
     whyNot: [
@@ -720,8 +720,8 @@ export const models: Model[] = [
     license: "proprietary",
     licenseLabel: prop,
     summary: tx(
-      "112 题 Convex 快照里无指南第 20（72.32%），有指南 84.82%。当前 124 题还没有这一行，是待重跑，不是 0 分。Slop Index 反转后仍是第 12（来源 slop 34.12，页面 34，本站 66）。ReactBench v1.2 最高一行是 high 档 25.6%。",
-      "On the archived 112-task Convex snapshot it is 20th without guidelines at 72.32%, and 84.82% with guidelines. The current 124-task board does not have this row yet. That is pending, not a zero. Still 12th on The Slop Index after inversion (source slop 34.12, page 34, this site 66). Its best ReactBench v1.2 row is high at 25.6%.",
+      "112 题 Convex 快照里无指南第 20（72.32%），有指南 84.82%。当前 124 题还没有这一行，是待重跑，不是 0 分。Slop Index 反转后仍是第 12（来源 slop 33.40，页面 33，本站 67）。ReactBench v1.2 最高一行是 high 档 25.6%。",
+      "On the archived 112-task Convex snapshot it is 20th without guidelines at 72.32%, and 84.82% with guidelines. The current 124-task board does not have this row yet. That is pending, not a zero. Still 12th on The Slop Index after inversion (source slop 33.40, page 33, this site 67). Its best ReactBench v1.2 row is high at 25.6%.",
     ),
     why: [tx("Convex 基线仍在中段，成本 $3.99。", "Still mid-board on the Convex baseline, at $3.99.")],
     whyNot: [tx("没有网页臂的成绩。缺测不是 0 分，也不要和 Convex 分数加在一起。", "No web-arm score. A missing run is not a zero, and it is not added to the Convex score.")],

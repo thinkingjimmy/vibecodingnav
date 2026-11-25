@@ -273,7 +273,7 @@ export const results: Result[] = [
   ...board("lmarena-webdev", "2026-11-13", webdevRows as BoardJson[]),
   ...board("lmarena-image-to-webdev", "2026-11-13", imageToWebdevRows as BoardJson[]),
   ...board("terminal-bench-4", "2026-10-06", terminalRows as BoardJson[]),
-  ...board("slop-index", "2026-11-24", slopIndexRows as BoardJson[]),
+  ...board("slop-index", "2026-11-25", slopIndexRows as BoardJson[]),
   ...board("eqbench-creative-writing", "2026-10-29", eqbenchCreativeWritingRows as BoardJson[]),
   ...board("sudo-l7", "2026-11-24", sudoRows as BoardJson[]),
   ...board("deepswe-v1-1", "2026-09-22", deepsweRows as BoardJson[]),

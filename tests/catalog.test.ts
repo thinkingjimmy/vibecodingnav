@@ -252,11 +252,12 @@ describe("picks", () => {
     const slop = writeDocs?.boards[0]?.rows ?? [];
     expect(slop[0]).toMatchObject({ name: "Muse Ember", rank: 1, score: "75" });
     expect(slop[0]?.href).toBeUndefined();
-    expect(slop[1]).toMatchObject({ name: "DeepSeek V4.1 Flash", rank: 2, score: "74" });
-    expect(slop[2]).toMatchObject({ name: "GPT-5.6 Sol", rank: 3, score: "71", price: "$17.5" });
-    expect(slop[10]).toMatchObject({ name: "GPT-6 Sol Pro", rank: 11, score: "67" });
-    expect(slop[10]?.href).toBeUndefined();
-    expect(slop[69]).toMatchObject({ name: "Seed 2.1 Turbo", rank: 70, score: "35" });
+    expect(slop[1]).toMatchObject({ name: "DeepSeek V4.1 Flash", rank: 2, score: "73" });
+    expect(slop[2]).toMatchObject({ name: "GPT-5.6 Sol", rank: 3, score: "72", price: "$17.5" });
+    expect(slop[9]).toMatchObject({ name: "GPT-6 Sol Pro", rank: 10, score: "67" });
+    expect(slop[9]?.href).toBeUndefined();
+    expect(slop[10]).toMatchObject({ name: "Grok 4.6", rank: 11, score: "67" });
+    expect(slop[69]).toMatchObject({ name: "Seed 2.1 Turbo", rank: 70, score: "37" });
     expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(70);
     const creative = getBenchmark("zh", "eqbench-creative-writing");
     expect(creative?.leaderboard).toHaveLength(146);
@@ -494,9 +495,9 @@ describe("picks", () => {
     expect(home[3]?.rows[0]).toMatchObject({ name: "GPT 6 Sol", rankLabel: "1" });
     expect(home[3]?.rows.map((row) => row.name).slice(0, 4)).toEqual([
       "GPT 6 Sol",
-      "Claude Opus 5",
       "Kimi K3.1 Pro",
       "Claude Fable 5.1",
+      "Claude Opus 5",
     ]);
     expect(home).toHaveLength(4);
   });
@@ -589,17 +590,21 @@ describe("picks", () => {
     }
     expect(slopRows[0]).toMatchObject({ label: "Muse Ember", sourceSlopRaw: 25.29, score: 75 });
     expect(slopRows[0]?.modelSlug).toBeUndefined();
-    expect(slopRows[1]).toMatchObject({ label: "DeepSeek V4.1 Flash", sourceSlopRaw: 25.68, score: 74, modelSlug: "deepseek-v4-1-flash" });
-    expect(slopRows[2]).toMatchObject({ label: "GPT-5.6 Sol", sourceSlopRaw: 28.57, score: 71 });
+    expect(slopRows[1]).toMatchObject({ label: "DeepSeek V4.1 Flash", sourceSlopRaw: 26.58, sourceSlop: 27, score: 73, modelSlug: "deepseek-v4-1-flash" });
+    expect(slopRows[2]).toMatchObject({ label: "GPT-5.6 Sol", sourceSlopRaw: 28.5, sourceSlop: 28, score: 72 });
     expect(slopRows.find((row) => row.label === "Mercury 2.5")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Hunyuan 4")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Inkling 2 Small")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Inkling Small")).toBeDefined();
-    expect(slopRows.find((row) => row.label === "GPT-6 Sol Pro")?.rank).toBe(11);
-    expect(slopRows.find((row) => row.label === "GLM-5.3 Prime")?.rank).toBe(6);
-    expect(slopRows.find((row) => row.label === "Particle 1")?.rank).toBe(15);
-    expect(slopRows.find((row) => row.label === "Particle 1")?.modelSlug).toBeUndefined();
-    expect(slopRows.find((row) => row.label === "Nex N2.6")?.rank).toBe(23);
+    expect(slopRows.find((row) => row.label === "GPT-6 Sol Pro")?.rank).toBe(10);
+    expect(slopRows.find((row) => row.label === "Grok 4.6")).toMatchObject({ rank: 11, sourceSlopRaw: 33.24, sourceSlop: 33, score: 67, modelSlug: "grok-4-6" });
+    expect(slopRows.find((row) => row.label === "GLM-5.3 Prime")?.rank).toBe(5);
+    const particle = slopRows.find((row) => row.label === "Particle 1");
+    expect(particle).toMatchObject({ rank: 15, sourceSlopRaw: 34.35, sourceSlop: 34, score: 66 });
+    expect(particle?.modelSlug).toBeUndefined();
+    expect(particle?.score).toBe(66);
+    expect(particle?.sourceSlop).toBe(34);
+    expect(slopRows.find((row) => row.label === "Nex N2.6")?.rank).toBe(26);
     expect(slopRows.find((row) => row.label === "Inkling 2 Small")?.rank).toBeGreaterThan(20);
     expect(slopRows.find((row) => row.label === "Muse Ember")?.modelSlug).toBeUndefined();
 

@@ -9,6 +9,14 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-25
+
+### 变更
+
+- The Slop Index 按 Wed, 25 Nov 2026 01:02:16 GMT 的现场投票重算 70 行（2,766 票）。机械文件仍是 full-merged-v6（70 个模型、77,943 条生成，etag 与 11-24 相同）。响应 Last-Modified 是 Wed, 25 Nov 2026 00:37:21 GMT。70 行都有 Elo。页面整数是 JavaScript `Math.round`，本站分数仍是 100 − 该整数。第 1 仍是 Muse Ember，来源 25.29（页面 25，本站 75，没有模型页）。DeepSeek V4.1 Flash 仍是第 2，来源 26.58（页面 27，本站 73）。Grok 4.6 从第 8 落到第 11，来源 33.24（页面 33，本站 67），已不在前 10。写文档综合分随这张榜重算，权重未改。
+- 核对 11 月 24 日 Particle 1：当时入库是来源 35.46、页面整数 35、本站 65。100 − 35 = 65，JSON 里的分数就是 65。说明写成 64 是报告笔误，不是榜上的错分。这次捕获是来源 34.35、页面 34、本站 66。
+- LMArena WebDev 没有改。2026-11-25 打开公开页时，lmarena.ai 转到 arena.ai 并返回 Cloudflare 403，没有读到完整榜，也没有读到 Neon 或 Hydrogen 的档位原文。不能证明 High 改成 xHigh 是同一条改名。快照仍是 2026-11-13 的 159 行，gemini-4-hydrogen-high 仍是第 11（1704）。快照里没有 Neon。
+
 ## 2026-11-24
 
 ### 变更

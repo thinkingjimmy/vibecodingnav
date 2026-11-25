@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-25",
+    kind: "board",
+    source: "theslopindex.com / arena.ai",
+    text: tx(
+      "**Slop 与 WebDev**：Slop 70 行重算，捕获时间 Wed, 25 Nov 2026 01:02:16 GMT，2,766 票。机械文件仍是 full-merged-v6。反转仍是 100 − 页面整数。第 1 仍是没有模型页的 Muse Ember，来源 25.29。DeepSeek V4.1 Flash 仍是第 2，来源 26.58。Grok 4.6 落到第 11，来源 33.24，已不在前 10。11 月 24 日 Particle 1 的入库是页面 35、本站 65；说明里的 64 是笔误。这次是页面 34、本站 66。WebDev 公开页返回 Cloudflare 403，没有改 11 月 13 日的 159 行，也没有改 Hydrogen 的 High 标签。",
+      "**Slop and WebDev**: the Slop Index recomputed all 70 rows, captured Wed, 25 Nov 2026 01:02:16 GMT, at 2,766 votes. The mechanical file is still full-merged-v6. Inversion is still 100 − the page integer. #1 is still Muse Ember, which has no model page, at source 25.29. DeepSeek V4.1 Flash is still #2 at source 26.58. Grok 4.6 fell to #11 at source 33.24, outside the top 10. The Nov 24 Particle 1 row stored page 35 and site 65; the written 64 was a report typo. This capture is page 34 and site 66. The WebDev page returned Cloudflare 403, so the Nov 13 159-row snapshot and the Hydrogen High label were not changed.",
+    ),
+  },
+  {
     date: "11-24",
     kind: "board",
     source: "surgehq.ai / theslopindex.com",

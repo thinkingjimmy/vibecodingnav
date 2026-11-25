@@ -3,7 +3,7 @@
 > L2 | 父级: ../README.md
 
 成员清单
-webdev.json: LMArena WebDev 159 行，2026-11-17 从 lmarena.ai/leaderboard/webdev 的公开榜解析（页面日期 2026-11-13，1,007,405 票）。158 行有正式名次。Claude Fable 5.2 xHigh 是正式第 1（1826，1,445 票）。新增正式行 qwen4-max-xhigh 第 6（1750，初步，1,814 票），无 modelSlug。gemini-4-hydrogen-high 现为第 11（1704，初步）。1 行 provisional=autoeval 仍是 Ernie 5.5 Flash Preview（1668，votes N/A，无 rank）。上一份的 glm-5v-turbo 这次没有出现。主榜 Cost/Task (P50) 列在可读抓取中为空，未入库
+webdev.json: LMArena WebDev 159 行，2026-11-17 从 lmarena.ai/leaderboard/webdev 的公开榜解析（页面日期 2026-11-13，1,007,405 票）。158 行有正式名次。Claude Fable 5.2 xHigh 是正式第 1（1826，1,445 票）。新增正式行 qwen4-max-xhigh 第 6（1750，初步，1,814 票），无 modelSlug。gemini-4-hydrogen-high 现为第 11（1704，初步）。1 行 provisional=autoeval 仍是 Ernie 5.5 Flash Preview（1668，votes N/A，无 rank）。上一份的 glm-5v-turbo 这次没有出现。主榜 Cost/Task (P50) 列在可读抓取中为空，未入库。2026-11-25 公开页返回 Cloudflare 403，没有改分数、日期或 gemini-4-hydrogen-high；快照里没有 Neon
 convex-no.json: Convex 112 题 No Guidelines 的历史快照，44 行，2026-11-12，本轮未改。哈希 92a60e0bb2f156b5ac44e6ea3f5d03a91deb434b9d002d14819d1fc2b6e35cdb
 convex-with.json: Convex 112 题 With Guidelines 的历史快照，2026-11-18，本轮未改。不和 124 题混表
 convex-124-no.json: 当前 124 题 No Guidelines，2026-11-23 抓取，哈希未变，27 行。MiMo-V2.6-Flash 只在这一列。GPT-6.2 Astra、GPT-6.2 Sol、Hy4 flash、Step 5 Preview、MiniMax M3.1 Flash 没有 modelSlug
@@ -16,7 +16,7 @@ sudo.json: sudo L7 公开主榜 25 行，2026-11-24 解析（页面 Last Publish
 deepswe.json: DeepSWE v1.1 的 28 行 Best 配置，2026-10-11 从 https://deepswe.datacurve.ai/artifacts/v1.1/leaderboard-live.json 抓取（generated_at 2026-09-22）；每模型只保留 Pass@1 最高的一档推理配置
 frontiercode.json: FrontierCode 2.0 Main 的 102 行（26 模型 × 全部推理档），2026-10-28 从 https://cognition.com/data/frontier-code-2.0/data.json 抓取；# 为最佳推理档名次；完整 JSON 含 Obsidian 3（公开 HTML 表省略）
 frontiercode-1.json: FrontierCode 1.1 Main 的 130 行归档，2026-10-13 从旧 data.json 的 v1_1 抓取
-slop-index.json: The Slop Index 70 行，2026-11-24 用 theslopindex.com/bench.json（full-merged-v6，70 个模型、77,943 条生成，etag 未变，Last-Modified 仍是 Sun, 22 Nov 2026 16:23:41 GMT）和页面使用的 /api/leaderboard?mode=v1&domain=all 重算。响应 Date 为 Tue, 24 Nov 2026 01:05:52 GMT，2,746 票，70 行都有 Elo。本站分数仍是 100 − 页面整数。前两名很接近：Muse Ember 来源 25.29（没有 modelSlug），DeepSeek V4.1 Flash 来源 25.68。Particle 1 没有 modelSlug
+slop-index.json: The Slop Index 70 行，2026-11-25 用 theslopindex.com/bench.json（full-merged-v6，70 个模型、77,943 条生成，etag 与 11-24 相同，Last-Modified Wed, 25 Nov 2026 00:37:21 GMT）和页面使用的 /api/leaderboard?mode=v1&domain=all 重算。响应 Date 为 Wed, 25 Nov 2026 01:02:16 GMT，2,766 票，70 行都有 Elo。页面整数是 Math.round。本站分数仍是 100 − 该整数。第 1 仍是 Muse Ember，来源 25.29（没有 modelSlug）。Grok 4.6 第 11。Particle 1 没有 modelSlug，这次是来源 34.35、页面 34、本站 66
 eqbench-creative-writing.json: EQ-Bench Creative Writing v3 146 行，2026-10-29 从 eqbench.com/creative_writing.html 的 creative_writing.js（v=1.0.91）嵌入 CSV 抓取；主指标归一化 Elo（越高越好）
 
 这些文件是来源页的逐行副本。`results.ts` 只做模型页映射，不删行、不重排。框架评测的行写在 `results.ts`，不进这些 JSON。Slop Index 是唯一在入库前反转名次与分数方向的榜，说明写在基准与场景文案里。
