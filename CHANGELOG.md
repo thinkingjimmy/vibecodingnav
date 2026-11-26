@@ -9,6 +9,14 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-26
+
+### 变更
+
+- The Slop Index 按 Thu, 26 Nov 2026 01:01:51 GMT 的现场投票重算 70 行（2,782 票）。机械文件仍是 full-merged-v6（70 个模型、77,943 条生成，etag 未变）。响应 Last-Modified 是 Wed, 25 Nov 2026 18:42:31 GMT。70 行都有 Elo。页面整数仍是 `Math.round`，本站分数仍是 100 − 该整数。这次 DeepSeek V4.1 Flash 是第 1，来源 25.70（页面 26，本站 74）。没有模型页的 Muse Ember 是第 2，来源 26.80（页面 27，本站 73）。差 1.10，不是并列。Haiku 5.5 第 3（来源 26.88）。GPT-6 Sol Pro 第 6（来源 29.17）。Hunyuan 4 Preview 第 10（来源 32.11）。GPT-6 Luna Pro 第 22。写文档综合分随这张榜重算，权重未改。
+- Convex 先核对版本：仍是 124 题，哈希 `32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453`，发布时间仍是 2026-11-18 16:28:13 SGT。公开页面的 With Guidelines 没有 experiment 字段；`experiment=with_guidelines` 仍是服务器错误。有指南 27 行，无指南 28 行。有指南 Fable 5.2 精确值 0.9959677419354839（显示 99.6，2 次），单独第 1。Argon 与没有模型页的 Gemini 4 Neon 精确值都是 0.9919354838709677（显示 99.19），并列第 2，来源 Argon 在前。无指南 Fable 仍是 0.9596774193548387（显示 95.97）。Neon 与 GPT-6.1 Sol 精确值都是 0.9112903225806451（显示 91.13），并列第 3，来源 Neon 在前。112 题归档未改。缺行仍是待重跑，不是 0 分。网页列没有导入。
+- LMArena WebDev 没有改。2026-11-26 公开页仍转到 arena.ai 并返回 Cloudflare 403，没有读到完整榜。没有写入监测里的 AutoEval，11 月 13 日的 159 行和档位标签保持原样。
+
 ## 2026-11-25
 
 ### 变更

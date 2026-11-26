@@ -1,22 +1,22 @@
 [
   {
-    "averageRunCostUsd": 8.931144,
-    "averageRunCostUsdErrorBar": 0.0,
-    "averageRunDurationMs": 13264.621848739496,
-    "averageRunDurationMsErrorBar": 0.0,
+    "averageRunCostUsd": 9.059144,
+    "averageRunCostUsdErrorBar": 0.1280000000000001,
+    "averageRunDurationMs": 13120.47899159664,
+    "averageRunDurationMsErrorBar": 144.1428571428578,
     "averageWebFetchesPerEval": null,
     "averageWebSearchesEstimated": false,
     "averageWebSearchesPerEval": null,
     "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
     "formattedName": "Anthropic: Claude Fable 5.2",
-    "latestRunId": "jn7avhvm0qc78ky4xmhmmcc37s8jkxbf",
-    "latestRunTime": 1795135959414.7517,
+    "latestRunId": "jn7668ktmz6hwh6w1mwbrs11cs8jvzgr",
+    "latestRunTime": 1795479084580.098,
     "matchesSelectedBenchmark": true,
     "model": "anthropic/claude-fable-5.2",
     "modelId": "k57a21gmpr4586nyz9y57cydmh8hxt73",
     "openRouterFirstSeenAt": 1794253781000.0,
     "runCostIsEstimated": false,
-    "runCount": 1.0,
+    "runCount": 2.0,
     "scoreBenchmarkEvalCount": 124.0,
     "scoreBenchmarkMintedAt": 1794990493379.0,
     "scoreBenchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
@@ -53,23 +53,76 @@
     "sourceIndex": 0
   },
   {
-    "averageRunCostUsd": 3.968681,
-    "averageRunCostUsdErrorBar": 0.023247000000000462,
-    "averageRunDurationMs": 5993.548245614035,
-    "averageRunDurationMsErrorBar": 320.1184210526317,
+    "averageRunCostUsd": 3.9771173333333336,
+    "averageRunCostUsdErrorBar": 0.022419309673186345,
+    "averageRunDurationMs": 6720.507089996378,
+    "averageRunDurationMsErrorBar": 1060.7806206671141,
     "averageWebFetchesPerEval": null,
     "averageWebSearchesEstimated": false,
     "averageWebSearchesPerEval": null,
     "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
     "formattedName": "OpenAI: GPT-6.2 Astra",
-    "latestRunId": "jn70k5wnkzz9x8ggbwmhda0dfh8jpm1r",
-    "latestRunTime": 1795334763146.0454,
+    "latestRunId": "jn7452sbv85cp3xr3jkkmtzbxs8jt461",
+    "latestRunTime": 1795536349558.972,
     "matchesSelectedBenchmark": true,
     "model": "openai/gpt-6.2-astra",
     "modelId": "k57cjszsr1ed08ev2vtraa3czx8jf4z3",
     "openRouterFirstSeenAt": 1794938423000.0,
     "runCostIsEstimated": false,
-    "runCount": 2.0,
+    "runCount": 3.0,
+    "scoreBenchmarkEvalCount": 124.0,
+    "scoreBenchmarkMintedAt": 1794990493379.0,
+    "scoreBenchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
+    "scoreErrorBars": {
+      "000-fundamentals": 0.0,
+      "001-data_modeling": 0.0,
+      "002-queries": 0.0,
+      "003-mutations": 0.0,
+      "004-actions": 0.04714045207910316,
+      "005-idioms": 0.0,
+      "006-clients": 0.0,
+      "007-components": 0.0,
+      "008-vector_search": 0.0,
+      "009-file_storage": 0.0,
+      "010-errors": 0.0
+    },
+    "scores": {
+      "000-fundamentals": 0.9090909090909091,
+      "001-data_modeling": 1.0,
+      "002-queries": 0.9642857142857143,
+      "003-mutations": 1.0,
+      "004-actions": 0.9666666666666667,
+      "005-idioms": 0.9,
+      "006-clients": 1.0,
+      "007-components": 0.6956521739130435,
+      "008-vector_search": 1.0,
+      "009-file_storage": 1.0,
+      "010-errors": 1.0
+    },
+    "totalScore": 0.9166666666666666,
+    "totalScoreErrorBar": 0.003801649361217994,
+    "webSearchTelemetryEvalCount": 0.0,
+    "webUsageEvalCount": 0.0,
+    "sourceIndex": 1
+  },
+  {
+    "averageRunCostUsd": 6.672657000000002,
+    "averageRunCostUsdErrorBar": 0.0,
+    "averageRunDurationMs": 26693.21238938053,
+    "averageRunDurationMsErrorBar": 0.0,
+    "averageWebFetchesPerEval": null,
+    "averageWebSearchesEstimated": false,
+    "averageWebSearchesPerEval": null,
+    "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
+    "formattedName": "Google: Gemini 4 Neon",
+    "latestRunId": "jn73j1h5mzmfds21atrtk7m9g58jxj60",
+    "latestRunTime": 1795568088528.154,
+    "matchesSelectedBenchmark": true,
+    "model": "google/gemini-4-neon",
+    "modelId": "k57e7bedsg801mbzza0px2rmwn8jwq57",
+    "openRouterFirstSeenAt": 1795006977000.0,
+    "runCostIsEstimated": false,
+    "runCount": 1.0,
     "scoreBenchmarkEvalCount": 124.0,
     "scoreBenchmarkMintedAt": 1794990493379.0,
     "scoreBenchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
@@ -87,23 +140,23 @@
       "010-errors": 0.0
     },
     "scores": {
-      "000-fundamentals": 0.9090909090909091,
+      "000-fundamentals": 1.0,
       "001-data_modeling": 1.0,
       "002-queries": 0.9642857142857143,
       "003-mutations": 1.0,
       "004-actions": 1.0,
-      "005-idioms": 0.9,
+      "005-idioms": 0.7,
       "006-clients": 1.0,
       "007-components": 0.6956521739130435,
       "008-vector_search": 1.0,
       "009-file_storage": 1.0,
       "010-errors": 1.0
     },
-    "totalScore": 0.9193548387096774,
+    "totalScore": 0.9112903225806451,
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 1
+    "sourceIndex": 2
   },
   {
     "averageRunCostUsd": 1.3467375000000006,
@@ -156,7 +209,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 2
+    "sourceIndex": 3
   },
   {
     "averageRunCostUsd": 4.099452,
@@ -209,7 +262,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 3
+    "sourceIndex": 4
   },
   {
     "averageRunCostUsd": 1.7057240000000002,
@@ -262,26 +315,26 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 4
+    "sourceIndex": 5
   },
   {
-    "averageRunCostUsd": 4.69498386554622,
-    "averageRunCostUsdErrorBar": 0.0,
-    "averageRunDurationMs": 49286.736363636366,
-    "averageRunDurationMsErrorBar": 0.0,
+    "averageRunCostUsd": 4.63181368067227,
+    "averageRunCostUsdErrorBar": 0.06317018487395032,
+    "averageRunDurationMs": 42707.531818181815,
+    "averageRunDurationMsErrorBar": 6579.204545454547,
     "averageWebFetchesPerEval": null,
     "averageWebSearchesEstimated": false,
     "averageWebSearchesPerEval": null,
     "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
     "formattedName": "Google: Gemini 4 Carbon",
-    "latestRunId": "jn7887ffptjnft57xwk40x3a258jjwhz",
-    "latestRunTime": 1795146943907.0818,
+    "latestRunId": "jn72vyyjcpp1n6mb4jhnpa2swn8jrchz",
+    "latestRunTime": 1795406759354.2078,
     "matchesSelectedBenchmark": true,
     "model": "google/gemini-4-carbon",
     "modelId": "k579xn5x3ck08y2cb0v57tm4zx8j1qpe",
     "openRouterFirstSeenAt": 1794326871000.0,
     "runCostIsEstimated": true,
-    "runCount": 1.0,
+    "runCount": 2.0,
     "scoreBenchmarkEvalCount": 124.0,
     "scoreBenchmarkMintedAt": 1794990493379.0,
     "scoreBenchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
@@ -315,60 +368,60 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 5
+    "sourceIndex": 6
   },
   {
-    "averageRunCostUsd": 1.257130666666667,
-    "averageRunCostUsdErrorBar": 0.036124853264600305,
-    "averageRunDurationMs": 5224.726623412404,
-    "averageRunDurationMsErrorBar": 1180.5843538159631,
+    "averageRunCostUsd": 1.2599298750000003,
+    "averageRunCostUsdErrorBar": 0.03165849758630194,
+    "averageRunDurationMs": 6471.8647873791215,
+    "averageRunDurationMsErrorBar": 2389.852581734515,
     "averageWebFetchesPerEval": null,
     "averageWebSearchesEstimated": false,
     "averageWebSearchesPerEval": null,
     "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
     "formattedName": "OpenAI: GPT-6.2 Sol",
-    "latestRunId": "jn7czdzvss2wdh6rgz5sqgy6s58js5fp",
-    "latestRunTime": 1795392784728.3857,
+    "latestRunId": "jn70brdmestdbwdf25jgd7272s8jxm6e",
+    "latestRunTime": 1795594002062.7212,
     "matchesSelectedBenchmark": true,
     "model": "openai/gpt-6.2-sol",
     "modelId": "k5775nca7k9zrk8r480198dbr58jfrrt",
     "openRouterFirstSeenAt": 1794938371000.0,
     "runCostIsEstimated": false,
-    "runCount": 3.0,
+    "runCount": 4.0,
     "scoreBenchmarkEvalCount": 124.0,
     "scoreBenchmarkMintedAt": 1794990493379.0,
     "scoreBenchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
     "scoreErrorBars": {
       "000-fundamentals": 0.0,
-      "001-data_modeling": 0.027729677693590107,
+      "001-data_modeling": 0.02941176470588236,
       "002-queries": 0.0,
       "003-mutations": 0.0,
-      "004-actions": 0.04714045207910316,
-      "005-idioms": 0.04714045207910316,
+      "004-actions": 0.043301270189221926,
+      "005-idioms": 0.043301270189221926,
       "006-clients": 0.0,
-      "007-components": 0.020495848730044893,
+      "007-components": 0.02173913043478265,
       "008-vector_search": 0.0,
-      "009-file_storage": 0.09428090415820632,
-      "010-errors": 0.11785113019775792
+      "009-file_storage": 0.09999999999999998,
+      "010-errors": 0.10825317547305482
     },
     "scores": {
       "000-fundamentals": 1.0,
-      "001-data_modeling": 0.9803921568627452,
+      "001-data_modeling": 0.9705882352941178,
       "002-queries": 0.9642857142857143,
       "003-mutations": 0.9,
-      "004-actions": 0.9666666666666667,
-      "005-idioms": 0.8666666666666667,
+      "004-actions": 0.975,
+      "005-idioms": 0.875,
       "006-clients": 1.0,
-      "007-components": 0.5797101449275361,
+      "007-components": 0.5869565217391304,
       "008-vector_search": 1.0,
-      "009-file_storage": 0.8666666666666667,
-      "010-errors": 0.9166666666666666
+      "009-file_storage": 0.8999999999999999,
+      "010-errors": 0.9375
     },
-    "totalScore": 0.8817204301075269,
-    "totalScoreErrorBar": 0.010058218781650372,
+    "totalScore": 0.8850806451612904,
+    "totalScoreErrorBar": 0.01047611375545691,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 6
+    "sourceIndex": 7
   },
   {
     "averageRunCostUsd": 1.6648759999999998,
@@ -421,7 +474,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 7
+    "sourceIndex": 8
   },
   {
     "averageRunCostUsd": 3.4568099999999986,
@@ -474,7 +527,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 8
+    "sourceIndex": 9
   },
   {
     "averageRunCostUsd": 0.1685363,
@@ -527,7 +580,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 9
+    "sourceIndex": 10
   },
   {
     "averageRunCostUsd": 7.052229600000001,
@@ -580,7 +633,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 10
+    "sourceIndex": 11
   },
   {
     "averageRunCostUsd": 0.25894061499999993,
@@ -633,7 +686,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 11
+    "sourceIndex": 12
   },
   {
     "averageRunCostUsd": 0.22041916296000003,
@@ -686,113 +739,113 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 12
-  },
-  {
-    "averageRunCostUsd": 1.6717284505999999,
-    "averageRunCostUsdErrorBar": 0.0,
-    "averageRunDurationMs": 8227.197674418605,
-    "averageRunDurationMsErrorBar": 0.0,
-    "averageWebFetchesPerEval": null,
-    "averageWebSearchesEstimated": false,
-    "averageWebSearchesPerEval": null,
-    "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
-    "formattedName": "MoonshotAI: Kimi K3.1 Pro",
-    "latestRunId": "jn788j3dac7e4n0s0cp6qjr39x8jhz2w",
-    "latestRunTime": 1795061146518.7488,
-    "matchesSelectedBenchmark": true,
-    "model": "moonshotai/kimi-k3.1-pro",
-    "modelId": "k5736cqhy8m30xg3qfterr3m0n8h3nnb",
-    "openRouterFirstSeenAt": 1792778188000.0,
-    "runCostIsEstimated": false,
-    "runCount": 1.0,
-    "scoreBenchmarkEvalCount": 124.0,
-    "scoreBenchmarkMintedAt": 1794990493379.0,
-    "scoreBenchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
-    "scoreErrorBars": {
-      "000-fundamentals": 0.0,
-      "001-data_modeling": 0.0,
-      "002-queries": 0.0,
-      "003-mutations": 0.0,
-      "004-actions": 0.0,
-      "005-idioms": 0.0,
-      "006-clients": 0.0,
-      "007-components": 0.0,
-      "008-vector_search": 0.0,
-      "009-file_storage": 0.0,
-      "010-errors": 0.0
-    },
-    "scores": {
-      "000-fundamentals": 0.8181818181818182,
-      "001-data_modeling": 0.8823529411764706,
-      "002-queries": 0.8214285714285714,
-      "003-mutations": 0.9,
-      "004-actions": 0.6,
-      "005-idioms": 0.5,
-      "006-clients": 1.0,
-      "007-components": 0.391304347826087,
-      "008-vector_search": 0.0,
-      "009-file_storage": 0.8,
-      "010-errors": 0.75
-    },
-    "totalScore": 0.6935483870967742,
-    "totalScoreErrorBar": 0.0,
-    "webSearchTelemetryEvalCount": 0.0,
-    "webUsageEvalCount": 0.0,
     "sourceIndex": 13
   },
   {
-    "averageRunCostUsd": 0.08740718278319673,
-    "averageRunCostUsdErrorBar": 0.0021339002331967477,
-    "averageRunDurationMs": 19426.35532150776,
-    "averageRunDurationMsErrorBar": 815.4007760532149,
+    "averageRunCostUsd": 0.089734107997541,
+    "averageRunCostUsdErrorBar": 0.0037235532371370297,
+    "averageRunDurationMs": 23445.47217512282,
+    "averageRunDurationMsErrorBar": 5722.748714538382,
     "averageWebFetchesPerEval": null,
     "averageWebSearchesEstimated": false,
     "averageWebSearchesPerEval": null,
     "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
     "formattedName": "Tencent: Hy4 flash",
-    "latestRunId": "jn76zjtmxj5z4mde4br4g4vhy18jp8tk",
-    "latestRunTime": 1795306362090.222,
+    "latestRunId": "jn772k2e0kxdgsnq3ev8k81cch8jvtf2",
+    "latestRunTime": 1795507606875.2576,
     "matchesSelectedBenchmark": true,
     "model": "tencent/hy4-flash",
     "modelId": "k572z5eh5bq94qt5r0y53dq9yd8jc80s",
     "openRouterFirstSeenAt": 1794838706000.0,
     "runCostIsEstimated": true,
+    "runCount": 3.0,
+    "scoreBenchmarkEvalCount": 124.0,
+    "scoreBenchmarkMintedAt": 1794990493379.0,
+    "scoreBenchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
+    "scoreErrorBars": {
+      "000-fundamentals": 0.04285495643554835,
+      "001-data_modeling": 0.0,
+      "002-queries": 0.01683587574253689,
+      "003-mutations": 0.12472191289246473,
+      "004-actions": 0.08164965809277258,
+      "005-idioms": 0.0,
+      "006-clients": 0.15713484026367724,
+      "007-components": 0.03549985134468374,
+      "008-vector_search": 0.2721655269759087,
+      "009-file_storage": 0.09428090415820636,
+      "010-errors": 0.0
+    },
+    "scores": {
+      "000-fundamentals": 0.7575757575757575,
+      "001-data_modeling": 0.8823529411764706,
+      "002-queries": 0.8809523809523809,
+      "003-mutations": 0.8666666666666666,
+      "004-actions": 0.6,
+      "005-idioms": 0.5,
+      "006-clients": 0.8888888888888888,
+      "007-components": 0.30434782608695654,
+      "008-vector_search": 0.3333333333333333,
+      "009-file_storage": 0.7333333333333334,
+      "010-errors": 0.75
+    },
+    "totalScore": 0.6854838709677419,
+    "totalScoreErrorBar": 0.019753949538574043,
+    "webSearchTelemetryEvalCount": 0.0,
+    "webUsageEvalCount": 0.0,
+    "sourceIndex": 14
+  },
+  {
+    "averageRunCostUsd": 1.7440036793,
+    "averageRunCostUsdErrorBar": 0.07227522870000025,
+    "averageRunDurationMs": 8391.177150462314,
+    "averageRunDurationMsErrorBar": 163.97947604370984,
+    "averageWebFetchesPerEval": null,
+    "averageWebSearchesEstimated": false,
+    "averageWebSearchesPerEval": null,
+    "benchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
+    "formattedName": "MoonshotAI: Kimi K3.1 Pro",
+    "latestRunId": "jn7eyygycrfh4j9h5e5e5b3s9h8jw0nv",
+    "latestRunTime": 1795565494170.0142,
+    "matchesSelectedBenchmark": true,
+    "model": "moonshotai/kimi-k3.1-pro",
+    "modelId": "k5736cqhy8m30xg3qfterr3m0n8h3nnb",
+    "openRouterFirstSeenAt": 1792778188000.0,
+    "runCostIsEstimated": false,
     "runCount": 2.0,
     "scoreBenchmarkEvalCount": 124.0,
     "scoreBenchmarkMintedAt": 1794990493379.0,
     "scoreBenchmarkVersion": "32c305f646a2a7502c4112e31ed48f5cb36f022650b026fac526a2e8a8c78453",
     "scoreErrorBars": {
       "000-fundamentals": 0.04545454545454547,
-      "001-data_modeling": 0.0,
-      "002-queries": 0.0,
-      "003-mutations": 0.10000000000000003,
-      "004-actions": 0.09999999999999998,
-      "005-idioms": 0.0,
+      "001-data_modeling": 0.02941176470588236,
+      "002-queries": 0.05357142857142855,
+      "003-mutations": 0.04999999999999999,
+      "004-actions": 0.10000000000000003,
+      "005-idioms": 0.04999999999999999,
       "006-clients": 0.16666666666666669,
-      "007-components": 0.043478260869565216,
-      "008-vector_search": 0.16666666666666666,
-      "009-file_storage": 0.10000000000000003,
+      "007-components": 0.021739130434782622,
+      "008-vector_search": 0.0,
+      "009-file_storage": 0.0,
       "010-errors": 0.0
     },
     "scores": {
       "000-fundamentals": 0.7727272727272727,
-      "001-data_modeling": 0.8823529411764706,
-      "002-queries": 0.8928571428571429,
-      "003-mutations": 0.8,
-      "004-actions": 0.6,
-      "005-idioms": 0.5,
+      "001-data_modeling": 0.9117647058823529,
+      "002-queries": 0.7678571428571428,
+      "003-mutations": 0.8500000000000001,
+      "004-actions": 0.7,
+      "005-idioms": 0.55,
       "006-clients": 0.8333333333333333,
-      "007-components": 0.30434782608695654,
-      "008-vector_search": 0.5,
-      "009-file_storage": 0.7,
+      "007-components": 0.3695652173913043,
+      "008-vector_search": 0.0,
+      "009-file_storage": 0.8,
       "010-errors": 0.75
     },
-    "totalScore": 0.685483870967742,
-    "totalScoreErrorBar": 0.024193548387096808,
+    "totalScore": 0.6814516129032258,
+    "totalScoreErrorBar": 0.012096774193548434,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 14
+    "sourceIndex": 15
   },
   {
     "averageRunCostUsd": 2.3611117499999996,
@@ -845,7 +898,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 15
+    "sourceIndex": 16
   },
   {
     "averageRunCostUsd": 0.09113937500000001,
@@ -898,7 +951,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 16
+    "sourceIndex": 17
   },
   {
     "averageRunCostUsd": 1.3416044999999996,
@@ -951,7 +1004,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 17
+    "sourceIndex": 18
   },
   {
     "averageRunCostUsd": 1.2920065538461534,
@@ -1004,7 +1057,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 18
+    "sourceIndex": 19
   },
   {
     "averageRunCostUsd": 0.22876174999999999,
@@ -1057,7 +1110,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 19
+    "sourceIndex": 20
   },
   {
     "averageRunCostUsd": 0.0397245618,
@@ -1110,7 +1163,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 20
+    "sourceIndex": 21
   },
   {
     "averageRunCostUsd": 0.0907873735859649,
@@ -1163,7 +1216,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 21
+    "sourceIndex": 22
   },
   {
     "averageRunCostUsd": 0.7070949994931707,
@@ -1216,7 +1269,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 22
+    "sourceIndex": 23
   },
   {
     "averageRunCostUsd": 0.3511680697000001,
@@ -1269,7 +1322,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 23
+    "sourceIndex": 24
   },
   {
     "averageRunCostUsd": 0.11102577716551724,
@@ -1322,7 +1375,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 24
+    "sourceIndex": 25
   },
   {
     "averageRunCostUsd": 0.0923377026,
@@ -1375,7 +1428,7 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 25
+    "sourceIndex": 26
   },
   {
     "averageRunCostUsd": 0.2272713116585365,
@@ -1428,6 +1481,6 @@
     "totalScoreErrorBar": 0.0,
     "webSearchTelemetryEvalCount": 0.0,
     "webUsageEvalCount": 0.0,
-    "sourceIndex": 26
+    "sourceIndex": 27
   }
 ]

@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-26",
+    kind: "board",
+    source: "theslopindex.com / convex.dev",
+    text: tx(
+      "**Slop、Convex 124 题与 WebDev**：Slop 70 行重算，捕获时间 Thu, 26 Nov 2026 01:01:51 GMT，2,782 票。机械文件仍是 full-merged-v6。反转仍是 100 − 页面整数。这次第 1 是 DeepSeek V4.1 Flash，来源 25.70。没有模型页的 Muse Ember 是第 2，来源 26.80。差 1.10。Convex 先核对哈希，仍是 124 题、2026-11-18 16:28:13 SGT。有指南 27 行，无指南 28 行。有指南 Fable 精确值 0.9959677419354839（显示 99.6），单独第 1。Argon 与没有模型页的 Neon 精确值相同，并列第 2，来源 Argon 在前。无指南 Neon 与 GPT-6.1 Sol 精确值相同，并列第 3，来源 Neon 在前。112 题归档未改。WebDev 公开页仍是 Cloudflare 403，159 行快照未改。",
+      "**Slop, Convex 124 tasks, and WebDev**: the Slop Index recomputed all 70 rows, captured Thu, 26 Nov 2026 01:01:51 GMT, at 2,782 votes. The mechanical file is still full-merged-v6. Inversion is still 100 − the page integer. DeepSeek V4.1 Flash is #1 this capture at source 25.70. Muse Ember, which has no model page, is #2 at source 26.80. The gap is 1.10. Convex was checked against the hash first. It is still 124 tasks, minted 2026-11-18 16:28:13 SGT. With Guidelines has 27 rows and No Guidelines has 28. With Guidelines, Fable is exactly 0.9959677419354839 (display 99.6) and is alone at #1. Argon and Neon, which has no model page, share the exact score and #2, with Argon first. Without guidelines, Neon and GPT-6.1 Sol share the exact score and #3, with Neon first. The 112-task archive was not changed. The WebDev page is still Cloudflare 403, so the 159-row snapshot was not changed.",
+    ),
+  },
+  {
     date: "11-25",
     kind: "board",
     source: "theslopindex.com / arena.ai",
