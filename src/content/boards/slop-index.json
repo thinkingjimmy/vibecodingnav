@@ -150,6 +150,22 @@
   },
   {
     "rank": 10,
+    "label": "Particle 1",
+    "org": "Particle",
+    "score": 68,
+    "scoreText": "68",
+    "sourceSlop": 32,
+    "sourceSlopRaw": 31.53,
+    "arena": 36,
+    "concise": 13,
+    "templating": 25,
+    "rhythm": 37,
+    "tells": 38,
+    "tokenPrice": "$0.28",
+    "letter": "P"
+  },
+  {
+    "rank": 11,
     "label": "Hunyuan 4 Preview",
     "org": "Tencent",
     "score": 68,
@@ -166,7 +182,7 @@
     "vendor": "tencent"
   },
   {
-    "rank": 11,
+    "rank": 12,
     "label": "GLM-5.3 Prime",
     "org": "Zhipu",
     "score": 68,
@@ -182,7 +198,7 @@
     "letter": "Z"
   },
   {
-    "rank": 12,
+    "rank": 13,
     "label": "Grok 4.6",
     "org": "xAI",
     "score": 68,
@@ -199,7 +215,7 @@
     "vendor": "xai"
   },
   {
-    "rank": 13,
+    "rank": 14,
     "label": "GPT-5.6 Luna",
     "org": "OpenAI",
     "score": 67,
@@ -216,7 +232,7 @@
     "vendor": "openai"
   },
   {
-    "rank": 14,
+    "rank": 15,
     "label": "Gemini 3.1 Pro",
     "org": "Google",
     "score": 67,
@@ -233,7 +249,7 @@
     "vendor": "google"
   },
   {
-    "rank": 15,
+    "rank": 16,
     "label": "Mercury 2.5",
     "org": "Inception",
     "score": 66,
@@ -249,7 +265,24 @@
     "letter": "M"
   },
   {
-    "rank": 16,
+    "rank": 17,
+    "label": "GPT-6 Luna",
+    "org": "OpenAI",
+    "score": 66,
+    "scoreText": "66",
+    "sourceSlop": 34,
+    "sourceSlopRaw": 33.57,
+    "arena": 26,
+    "concise": 1,
+    "templating": 52,
+    "rhythm": 74,
+    "tells": 26,
+    "tokenPrice": "$0.3",
+    "modelSlug": "gpt-6-luna",
+    "vendor": "openai"
+  },
+  {
+    "rank": 18,
     "label": "Hunyuan 4",
     "org": "Tencent",
     "score": 66,
@@ -265,23 +298,7 @@
     "letter": "H"
   },
   {
-    "rank": 17,
-    "label": "Particle 1",
-    "org": "Particle",
-    "score": 66,
-    "scoreText": "66",
-    "sourceSlop": 34,
-    "sourceSlopRaw": 33.73,
-    "arena": 42,
-    "concise": 13,
-    "templating": 25,
-    "rhythm": 37,
-    "tells": 38,
-    "tokenPrice": "$0.28",
-    "letter": "P"
-  },
-  {
-    "rank": 18,
+    "rank": 19,
     "label": "MiniMax M3",
     "org": "MiniMax",
     "score": 66,
@@ -298,7 +315,7 @@
     "vendor": "minimax"
   },
   {
-    "rank": 19,
+    "rank": 20,
     "label": "GLM-5.2",
     "org": "Zhipu",
     "score": 65,
@@ -315,7 +332,7 @@
     "vendor": "zhipu"
   },
   {
-    "rank": 20,
+    "rank": 21,
     "label": "GPT-6 Astra Pro",
     "org": "OpenAI",
     "score": 65,
@@ -331,7 +348,7 @@
     "letter": "O"
   },
   {
-    "rank": 21,
+    "rank": 22,
     "label": "Inkling 2 Small",
     "org": "Thinking Machines",
     "score": 65,
@@ -347,7 +364,7 @@
     "letter": "I"
   },
   {
-    "rank": 22,
+    "rank": 23,
     "label": "GPT-6 Luna Pro",
     "org": "OpenAI",
     "score": 65,
@@ -363,7 +380,7 @@
     "letter": "O"
   },
   {
-    "rank": 23,
+    "rank": 24,
     "label": "GPT-5.6 Terra",
     "org": "OpenAI",
     "score": 65,
@@ -377,23 +394,6 @@
     "tells": 43,
     "tokenPrice": "$8.75",
     "modelSlug": "gpt-5-6-terra",
-    "vendor": "openai"
-  },
-  {
-    "rank": 24,
-    "label": "GPT-6 Luna",
-    "org": "OpenAI",
-    "score": 65,
-    "scoreText": "65",
-    "sourceSlop": 35,
-    "sourceSlopRaw": 35.36,
-    "arena": 31,
-    "concise": 1,
-    "templating": 52,
-    "rhythm": 74,
-    "tells": 26,
-    "tokenPrice": "$0.3",
-    "modelSlug": "gpt-6-luna",
     "vendor": "openai"
   },
   {
@@ -448,22 +448,6 @@
   },
   {
     "rank": 28,
-    "label": "MiniMax M3.1 Flash",
-    "org": "MiniMax",
-    "score": 63,
-    "scoreText": "63",
-    "sourceSlop": 37,
-    "sourceSlopRaw": 36.77,
-    "arena": 39,
-    "concise": 65,
-    "templating": 11,
-    "rhythm": 13,
-    "tells": 51,
-    "tokenPrice": "$0.38",
-    "letter": "M"
-  },
-  {
-    "rank": 29,
     "label": "GPT-6.1 Terra",
     "org": "OpenAI",
     "score": 63,
@@ -478,6 +462,22 @@
     "tokenPrice": "$3",
     "modelSlug": "gpt-6-1-terra",
     "vendor": "openai"
+  },
+  {
+    "rank": 29,
+    "label": "MiniMax M3.1 Flash",
+    "org": "MiniMax",
+    "score": 61,
+    "scoreText": "61",
+    "sourceSlop": 39,
+    "sourceSlopRaw": 38.97,
+    "arena": 45,
+    "concise": 65,
+    "templating": 11,
+    "rhythm": 13,
+    "tells": 51,
+    "tokenPrice": "$0.38",
+    "letter": "M"
   },
   {
     "rank": 30,
@@ -630,6 +630,23 @@
   },
   {
     "rank": 39,
+    "label": "Opus 5.5",
+    "org": "Anthropic",
+    "score": 59,
+    "scoreText": "59",
+    "sourceSlop": 41,
+    "sourceSlopRaw": 41.11,
+    "arena": 41,
+    "concise": 36,
+    "templating": 66,
+    "rhythm": 36,
+    "tells": 28,
+    "tokenPrice": "$12",
+    "modelSlug": "claude-opus-5-5",
+    "vendor": "anthropic"
+  },
+  {
+    "rank": 40,
     "label": "GPT-5.4 Mini",
     "org": "OpenAI",
     "score": 59,
@@ -646,7 +663,7 @@
     "vendor": "openai"
   },
   {
-    "rank": 40,
+    "rank": 41,
     "label": "Mercury 3",
     "org": "Inception",
     "score": 58,
@@ -662,7 +679,7 @@
     "letter": "M"
   },
   {
-    "rank": 41,
+    "rank": 42,
     "label": "GPT-6.1 Sol",
     "org": "OpenAI",
     "score": 58,
@@ -679,7 +696,7 @@
     "vendor": "openai"
   },
   {
-    "rank": 42,
+    "rank": 43,
     "label": "Kimi K3.1 Pro",
     "org": "Moonshot",
     "score": 58,
@@ -696,7 +713,7 @@
     "vendor": "kimi"
   },
   {
-    "rank": 43,
+    "rank": 44,
     "label": "Gemini 4 Hydrogen",
     "org": "Google",
     "score": 58,
@@ -712,7 +729,7 @@
     "letter": "G"
   },
   {
-    "rank": 44,
+    "rank": 45,
     "label": "Gemini 3.7 Flash",
     "org": "Google",
     "score": 57,
@@ -729,7 +746,7 @@
     "vendor": "google"
   },
   {
-    "rank": 45,
+    "rank": 46,
     "label": "Qwen3.8 Max",
     "org": "Alibaba",
     "score": 57,
@@ -744,23 +761,6 @@
     "tokenPrice": "$4",
     "modelSlug": "qwen3-8-max",
     "vendor": "qwen"
-  },
-  {
-    "rank": 46,
-    "label": "Opus 5.5",
-    "org": "Anthropic",
-    "score": 57,
-    "scoreText": "57",
-    "sourceSlop": 43,
-    "sourceSlopRaw": 42.9,
-    "arena": 45,
-    "concise": 36,
-    "templating": 66,
-    "rhythm": 36,
-    "tells": 28,
-    "tokenPrice": "$12",
-    "modelSlug": "claude-opus-5-5",
-    "vendor": "anthropic"
   },
   {
     "rank": 47,
@@ -965,23 +965,6 @@
   },
   {
     "rank": 59,
-    "label": "Opus 4.8",
-    "org": "Anthropic",
-    "score": 52,
-    "scoreText": "52",
-    "sourceSlop": 48,
-    "sourceSlopRaw": 47.83,
-    "arena": 52,
-    "concise": 14,
-    "templating": 62,
-    "rhythm": 55,
-    "tells": 51,
-    "tokenPrice": "$15",
-    "modelSlug": "claude-opus-4-8",
-    "vendor": "anthropic"
-  },
-  {
-    "rank": 60,
     "label": "Mistral Large",
     "org": "Mistral",
     "score": 52,
@@ -997,7 +980,7 @@
     "letter": "M"
   },
   {
-    "rank": 61,
+    "rank": 60,
     "label": "Gemini 4 Carbon",
     "org": "Google",
     "score": 52,
@@ -1014,7 +997,7 @@
     "vendor": "google"
   },
   {
-    "rank": 62,
+    "rank": 61,
     "label": "Muse Spark 1.3",
     "org": "Meta",
     "score": 52,
@@ -1031,7 +1014,7 @@
     "vendor": "meta"
   },
   {
-    "rank": 63,
+    "rank": 62,
     "label": "Qwen3.8 Flash",
     "org": "Alibaba",
     "score": 51,
@@ -1045,6 +1028,23 @@
     "tells": 67,
     "tokenPrice": "$0.31",
     "letter": "A"
+  },
+  {
+    "rank": 63,
+    "label": "Opus 4.8",
+    "org": "Anthropic",
+    "score": 50,
+    "scoreText": "50",
+    "sourceSlop": 50,
+    "sourceSlopRaw": 49.62,
+    "arena": 56,
+    "concise": 14,
+    "templating": 62,
+    "rhythm": 55,
+    "tells": 51,
+    "tokenPrice": "$15",
+    "modelSlug": "claude-opus-4-8",
+    "vendor": "anthropic"
   },
   {
     "rank": 64,
@@ -1065,22 +1065,6 @@
   },
   {
     "rank": 65,
-    "label": "Haiku 4.5",
-    "org": "Anthropic",
-    "score": 50,
-    "scoreText": "50",
-    "sourceSlop": 50,
-    "sourceSlopRaw": 50.33,
-    "arena": 66,
-    "concise": 8,
-    "templating": 38,
-    "rhythm": 58,
-    "tells": 56,
-    "tokenPrice": "$3",
-    "letter": "A"
-  },
-  {
-    "rank": 66,
     "label": "Nemotron 3.5 Lightning",
     "org": "Nvidia",
     "score": 49,
@@ -1096,7 +1080,7 @@
     "letter": "N"
   },
   {
-    "rank": 67,
+    "rank": 66,
     "label": "Qwen3.8 Max Prime",
     "org": "Alibaba",
     "score": 49,
@@ -1109,6 +1093,22 @@
     "rhythm": 79,
     "tells": 67,
     "tokenPrice": "$8",
+    "letter": "A"
+  },
+  {
+    "rank": 67,
+    "label": "Haiku 4.5",
+    "org": "Anthropic",
+    "score": 48,
+    "scoreText": "48",
+    "sourceSlop": 52,
+    "sourceSlopRaw": 52.11,
+    "arena": 70,
+    "concise": 8,
+    "templating": 38,
+    "rhythm": 58,
+    "tells": 56,
+    "tokenPrice": "$3",
     "letter": "A"
   },
   {

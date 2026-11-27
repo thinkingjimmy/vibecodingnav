@@ -103,6 +103,38 @@
   },
   {
     "rank": 7,
+    "label": "Gemini 4 Neon",
+    "score": 26.0,
+    "scoreText": "26.0",
+    "ciText": "12.0–40.7",
+    "ciLow": 12.0,
+    "ciHigh": 40.7,
+    "latency": "25.3",
+    "runCost": "$624.0",
+    "weights": "closed",
+    "agent": "antigravity-sdk",
+    "effort": "high",
+    "completion": "81.3",
+    "letter": "N"
+  },
+  {
+    "rank": 8,
+    "label": "Qwen4-Max",
+    "score": 24.7,
+    "scoreText": "24.7",
+    "ciText": "13.3–36.7",
+    "ciLow": 13.3,
+    "ciHigh": 36.7,
+    "latency": "34.2",
+    "runCost": "$147.7",
+    "weights": "closed",
+    "agent": "qwen-coder",
+    "effort": "xhigh",
+    "completion": "80.8",
+    "letter": "Q"
+  },
+  {
+    "rank": 9,
     "label": "Kimi K3.1 Pro",
     "score": 24.0,
     "scoreText": "24.0",
@@ -119,7 +151,7 @@
     "vendor": "kimi"
   },
   {
-    "rank": 8,
+    "rank": 10,
     "label": "Gemini 4 Carbon",
     "score": 23.3,
     "scoreText": "23.3",
@@ -136,7 +168,7 @@
     "vendor": "google"
   },
   {
-    "rank": 9,
+    "rank": 11,
     "label": "Claude Fable 5.1",
     "score": 22.7,
     "scoreText": "22.7",
@@ -153,7 +185,7 @@
     "vendor": "anthropic"
   },
   {
-    "rank": 10,
+    "rank": 12,
     "label": "Gemini 4 Argon",
     "score": 21.3,
     "scoreText": "21.3",
@@ -170,7 +202,23 @@
     "vendor": "google"
   },
   {
-    "rank": 11,
+    "rank": 12,
+    "label": "Gemini 4 Hydrogen",
+    "score": 21.3,
+    "scoreText": "21.3",
+    "ciText": "9.3–33.3",
+    "ciLow": 9.3,
+    "ciHigh": 33.3,
+    "latency": "21.7",
+    "runCost": "$157.2",
+    "weights": "closed",
+    "agent": "antigravity-sdk",
+    "effort": "high",
+    "completion": "77.8",
+    "letter": "H"
+  },
+  {
+    "rank": 14,
     "label": "Claude Haiku 5.5",
     "score": 20.7,
     "scoreText": "20.7",
@@ -187,7 +235,7 @@
     "vendor": "anthropic"
   },
   {
-    "rank": 12,
+    "rank": 15,
     "label": "DeepSeek V4.1 Flash 1017",
     "score": 17.3,
     "scoreText": "17.3",
@@ -204,7 +252,23 @@
     "vendor": "deepseek"
   },
   {
-    "rank": 13,
+    "rank": 16,
+    "label": "Inkling 2 Small",
+    "score": 16.7,
+    "scoreText": "16.7",
+    "ciText": "7.3–28.7",
+    "ciLow": 7.3,
+    "ciHigh": 28.7,
+    "latency": "38.2",
+    "runCost": "$139.4",
+    "weights": "open",
+    "agent": "pi",
+    "effort": "high",
+    "completion": "71.7",
+    "letter": "I"
+  },
+  {
+    "rank": 17,
     "label": "Muse Wonder",
     "score": 13.3,
     "scoreText": "13.3",
@@ -221,7 +285,7 @@
     "vendor": "meta"
   },
   {
-    "rank": 14,
+    "rank": 18,
     "label": "Qwen3.8 Max",
     "score": 12.5,
     "scoreText": "12.5",
@@ -238,7 +302,7 @@
     "vendor": "qwen"
   },
   {
-    "rank": 15,
+    "rank": 19,
     "label": "Kimi K3",
     "score": 12.0,
     "scoreText": "12.0",
@@ -255,7 +319,7 @@
     "vendor": "kimi"
   },
   {
-    "rank": 16,
+    "rank": 20,
     "label": "GPT 6 Luna",
     "score": 10.7,
     "scoreText": "10.7",
@@ -272,7 +336,7 @@
     "vendor": "openai"
   },
   {
-    "rank": 17,
+    "rank": 21,
     "label": "Gemini 3.8 Flash",
     "score": 8.0,
     "scoreText": "8.0",
@@ -289,7 +353,7 @@
     "vendor": "google"
   },
   {
-    "rank": 18,
+    "rank": 22,
     "label": "Gemini 3.7 Flash",
     "score": 7.3,
     "scoreText": "7.3",
@@ -298,7 +362,7 @@
     "ciHigh": 14.7,
     "latency": "9.9",
     "runCost": "$26.0",
-    "weights": "closed",
+    "weights": "open",
     "agent": "antigravity-sdk",
     "effort": "default",
     "completion": "50.1",

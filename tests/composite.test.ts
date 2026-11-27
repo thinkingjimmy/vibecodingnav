@@ -119,7 +119,7 @@ describe("composite method C", () => {
     expect(astra.cells[0]?.rank).toBeGreaterThan(20);
     expect(astra.cells[1]?.rank).toBe(1);
     const luna = rows.find((row) => row.key === "model:gpt-5-6-luna")!;
-    expect(luna.cells[0]?.rank).toBe(13);
+    expect(luna.cells[0]?.rank).toBe(14);
     expect(luna.display).toBeLessThan(astra.display);
     const haiku = rows.find((row) => row.key === "model:claude-haiku-5-5")!;
     expect(haiku.cells[0]?.rank).toBe(3);

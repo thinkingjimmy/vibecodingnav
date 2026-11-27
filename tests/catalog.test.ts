@@ -209,7 +209,7 @@ describe("picks", () => {
 
     const android = getScenario("zh", "android-app");
     expect(android?.boards.map((board) => [board.id, board.rows.length])).toEqual([
-      ["current", 18],
+      ["current", 22],
       ["sudo", 25],
       ["deepswe", 28],
       ["frontiercode", 102],
@@ -221,18 +221,22 @@ describe("picks", () => {
       [4, "GPT 6.1 Sol", "codex", "max", "29.3", "15.3–42.7", "82.8", "26.6", "$99.5"],
       [5, "GPT 6.1 Terra", "codex", "max", "28.7", "14.0–42.7", "81.1", "18.7", "$178.3"],
       [6, "GPT 6 Astra", "codex", "high", "28.0", "13.3–42.0", "82.2", "7.9", "$375.7"],
-      [7, "Kimi K3.1 Pro", "kimi-code", "max", "24.0", "12.0–37.3", "82.3", "27.4", "$317.4"],
-      [8, "Gemini 4 Carbon", "antigravity-sdk", "high", "23.3", "11.3–36.7", "83.7", "31.0", "$183.6"],
-      [9, "Claude Fable 5.1", "claude-code", "high", "22.7", "10.7–36.0", "82.4", "22.2", "$492.6"],
-      [10, "Gemini 4 Argon", "antigravity-sdk", "high", "21.3", "10.0–33.3", "81.8", "52.8", "$267.6"],
-      [11, "Claude Haiku 5.5", "claude-code", "max", "20.7", "8.0–33.3", "74.3", "22.9", "$191.4"],
-      [12, "DeepSeek V4.1 Flash 1017", "opencode", "high", "17.3", "6.7–28.7", "71.2", "12.0", "$9.9"],
-      [13, "Muse Wonder", "muse-code", "max", "13.3", "4.7–22.7", "74.6", "14.4", "$271.9"],
-      [14, "Qwen3.8 Max", "qwen-coder", "default", "12.5", "4.2–21.7", "75.0", "45.4", "$258.4"],
-      [15, "Kimi K3", "kimi-code", "max", "12.0", "3.3–22.0", "72.8", "66.2", "$418.3"],
-      [16, "GPT 6 Luna", "codex", "default", "10.7", "4.0–17.3", "53.2", "6.2", "$5.3"],
-      [17, "Gemini 3.8 Flash", "antigravity-sdk", "default", "8.0", "3.3–13.3", "47.4", "12.1", "$34.5"],
-      [18, "Gemini 3.7 Flash", "antigravity-sdk", "default", "7.3", "1.3–14.7", "50.1", "9.9", "$26.0"],
+      [7, "Gemini 4 Neon", "antigravity-sdk", "high", "26.0", "12.0–40.7", "81.3", "25.3", "$624.0"],
+      [8, "Qwen4-Max", "qwen-coder", "xhigh", "24.7", "13.3–36.7", "80.8", "34.2", "$147.7"],
+      [9, "Kimi K3.1 Pro", "kimi-code", "max", "24.0", "12.0–37.3", "82.3", "27.4", "$317.4"],
+      [10, "Gemini 4 Carbon", "antigravity-sdk", "high", "23.3", "11.3–36.7", "83.7", "31.0", "$183.6"],
+      [11, "Claude Fable 5.1", "claude-code", "high", "22.7", "10.7–36.0", "82.4", "22.2", "$492.6"],
+      [12, "Gemini 4 Argon", "antigravity-sdk", "high", "21.3", "10.0–33.3", "81.8", "52.8", "$267.6"],
+      [12, "Gemini 4 Hydrogen", "antigravity-sdk", "high", "21.3", "9.3–33.3", "77.8", "21.7", "$157.2"],
+      [14, "Claude Haiku 5.5", "claude-code", "max", "20.7", "8.0–33.3", "74.3", "22.9", "$191.4"],
+      [15, "DeepSeek V4.1 Flash 1017", "opencode", "high", "17.3", "6.7–28.7", "71.2", "12.0", "$9.9"],
+      [16, "Inkling 2 Small", "pi", "high", "16.7", "7.3–28.7", "71.7", "38.2", "$139.4"],
+      [17, "Muse Wonder", "muse-code", "max", "13.3", "4.7–22.7", "74.6", "14.4", "$271.9"],
+      [18, "Qwen3.8 Max", "qwen-coder", "default", "12.5", "4.2–21.7", "75.0", "45.4", "$258.4"],
+      [19, "Kimi K3", "kimi-code", "max", "12.0", "3.3–22.0", "72.8", "66.2", "$418.3"],
+      [20, "GPT 6 Luna", "codex", "default", "10.7", "4.0–17.3", "53.2", "6.2", "$5.3"],
+      [21, "Gemini 3.8 Flash", "antigravity-sdk", "default", "8.0", "3.3–13.3", "47.4", "12.1", "$34.5"],
+      [22, "Gemini 3.7 Flash", "antigravity-sdk", "default", "7.3", "1.3–14.7", "50.1", "9.9", "$26.0"],
     ]);
     const archived = getBenchmark("zh", "android-bench")?.versions?.find((version) => version.id === "1.0");
     expect(archived?.archived).toBe(true);
@@ -257,7 +261,9 @@ describe("picks", () => {
     expect(slop[3]).toMatchObject({ name: "GPT-5.6 Sol", rank: 4, score: "73", price: "$17.5" });
     expect(slop[5]).toMatchObject({ name: "GPT-6 Sol Pro", rank: 6, score: "71" });
     expect(slop[5]?.href).toBeUndefined();
-    expect(slop[11]).toMatchObject({ name: "Grok 4.6", rank: 12, score: "68" });
+    expect(slop[9]).toMatchObject({ name: "Particle 1", rank: 10, score: "68" });
+    expect(slop[9]?.href).toBeUndefined();
+    expect(slop[12]).toMatchObject({ name: "Grok 4.6", rank: 13, score: "68" });
     expect(slop[69]).toMatchObject({ name: "Seed 2.1 Turbo", rank: 70, score: "37" });
     expect(getBenchmark("zh", "slop-index")?.leaderboard).toHaveLength(70);
     const creative = getBenchmark("zh", "eqbench-creative-writing");
@@ -270,7 +276,7 @@ describe("picks", () => {
     const androidBench = getBenchmark("zh", "android-bench");
     expect(androidBench?.versions?.map((version) => version.id)).toEqual(["2.0", "1.0"]);
     expect(androidBench?.versions?.[0]?.current).toBe(true);
-    expect(androidBench?.leaderboard).toHaveLength(18);
+    expect(androidBench?.leaderboard).toHaveLength(22);
     expect(androidBench?.leaderboard?.[0]).toMatchObject({ name: "Claude Fable 5.2", agent: "claude-code", score: "40.0", rank: 1 });
     expect(androidBench?.leaderboard?.[1]).toMatchObject({ name: "Claude Sonnet 5.5", agent: "claude-code", score: "40.0", rank: 1 });
     expect(getBenchmark("en", "android-bench")?.versions?.[1]?.label).toBe("1.0");
@@ -602,13 +608,13 @@ describe("picks", () => {
     expect(slopRows.find((row) => row.label === "Inkling 2 Small")?.modelSlug).toBeUndefined();
     expect(slopRows.find((row) => row.label === "Inkling Small")).toBeDefined();
     expect(slopRows.find((row) => row.label === "GPT-6 Sol Pro")).toMatchObject({ rank: 6, sourceSlopRaw: 29.17, sourceSlop: 29, score: 71 });
-    expect(slopRows.find((row) => row.label === "Grok 4.6")).toMatchObject({ rank: 12, sourceSlopRaw: 32.39, sourceSlop: 32, score: 68, modelSlug: "grok-4-6" });
-    expect(slopRows.find((row) => row.label === "GLM-5.3 Prime")?.rank).toBe(11);
+    expect(slopRows.find((row) => row.label === "Grok 4.6")).toMatchObject({ rank: 13, sourceSlopRaw: 32.39, sourceSlop: 32, score: 68, modelSlug: "grok-4-6" });
+    expect(slopRows.find((row) => row.label === "GLM-5.3 Prime")?.rank).toBe(12);
     const particle = slopRows.find((row) => row.label === "Particle 1");
-    expect(particle).toMatchObject({ rank: 17, sourceSlopRaw: 33.73, sourceSlop: 34, score: 66 });
+    expect(particle).toMatchObject({ rank: 10, sourceSlopRaw: 31.53, sourceSlop: 32, score: 68 });
     expect(particle?.modelSlug).toBeUndefined();
-    expect(particle?.score).toBe(66);
-    expect(particle?.sourceSlop).toBe(34);
+    expect(particle?.score).toBe(68);
+    expect(particle?.sourceSlop).toBe(32);
     expect(slopRows.find((row) => row.label === "Nex N2.6")?.rank).toBe(27);
     expect(slopRows.find((row) => row.label === "Inkling 2 Small")?.rank).toBeGreaterThan(20);
     expect(slopRows.find((row) => row.label === "Muse Ember")?.modelSlug).toBeUndefined();
@@ -663,15 +669,15 @@ describe("backlinks", () => {
 
 describe("stale picks", () => {
   it("withholds the android model once the board is past 90 days", () => {
-    expect(resolvePicks("android-app", "2027-02-16").top?.modelSlug).toBe("claude-fable-5-2");
+    expect(resolvePicks("android-app", "2027-02-23").top?.modelSlug).toBe("claude-fable-5-2");
     const live = getBuild("zh", "android-app");
     expect(live?.roles[0]?.primary.name).toBe("Claude Fable 5.2");
     expect(live?.roles[0]?.alternative).toContain("Claude Opus 5.5");
     expect(live?.roles[0]?.alternative).toContain("不到一半");
-    expect(resolvePicks("android-app", "2027-02-17").top).toBeUndefined();
-    expect(resolvePicks("android-app", "2027-02-17").stale).toBe(true);
+    expect(resolvePicks("android-app", "2027-02-24").top).toBeUndefined();
+    expect(resolvePicks("android-app", "2027-02-24").stale).toBe(true);
 
-    const build = getBuild("zh", "android-app", "2027-02-17");
+    const build = getBuild("zh", "android-app", "2027-02-24");
     expect(build?.stale).toBe(true);
     expect(build?.roles[0]?.primary.stale).toBe(true);
     expect(build?.roles[0]?.primary.name).toBe("模型推荐已撤下");

@@ -9,6 +9,14 @@
 
 本文件记录 VibeCodingNav（前身 AIEvalIndex）的有效迭代。最新记录置顶；尚未完成的工作留在 `docs/CURRENT.md`，只有已经落地的变化进入这里。
 
+## 2026-11-27
+
+### 变更
+
+- Android Bench 2.0 长程从 developer.android.com/bench 全量同步。页面写 Latest results as of November 25th。来源 22 行，映射 18，未映射 4。Claude Fable 5.2（max）与 Claude Sonnet 5.5（max）仍是 40.0，并列第 1，来源 Fable 在前。前六名分数没有变。新增没有模型页的 Gemini 4 Neon（high）26.0 第 7、Qwen4-Max（xhigh）24.7 第 8、Gemini 4 Hydrogen（high）21.3 与 Argon 并列第 12、Inkling 2 Small（high）16.7 第 16。Gemini 3.8 Flash 仍是 8.0 第 21，Gemini 3.7 Flash 仍是 7.3 第 22。1.0 的 32 行未改。
+- The Slop Index 按 Fri, 27 Nov 2026 01:18:26 GMT 的现场投票重算 70 行（2,785 票）。机械文件仍是 full-merged-v6，etag 未变，Last-Modified 是 Fri, 27 Nov 2026 00:55:07 GMT。第 1 仍是 DeepSeek V4.1 Flash，来源 25.70（页面 26，本站 74）。前 9 名的来源分没有变。Particle 1 从第 17 到第 10，来源 31.53（页面 32，本站 68），没有模型页。GPT-6 Luna 第 17，来源 33.57。GPT-6 Astra Pro 第 21。写文档综合分随这张榜重算，权重未改。
+- LMArena WebDev 没有改。2026-11-27 公开页仍转到 arena.ai 并返回 Cloudflare 403。没有写入监测里的 MAI-Code AutoEval，也没有按监测删掉 Ernie。快照仍是 2026-11-13 的 159 行。
+
 ## 2026-11-26
 
 ### 变更

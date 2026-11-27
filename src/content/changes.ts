@@ -10,6 +10,15 @@ const tx = (zh: string, en: string): LText => ({ zh, en });
 
 export const changes: ChangeEntry[] = [
   {
+    date: "11-27",
+    kind: "board",
+    source: "developer.android.com / theslopindex.com",
+    text: tx(
+      "**Android 2.0 与 Slop**：Android 长程 22 行，页面日期 November 25th。Fable 5.2 与 Sonnet 5.5 仍是 40.0，并列第 1，来源 Fable 在前。新增没有模型页的 Neon 26.0、Qwen4-Max 24.7、Hydrogen 21.3（与 Argon 并列第 12）、Inkling 2 Small 16.7。Gemini 3.8 Flash 和 3.7 Flash 仍在表末。1.0 未改。Slop 70 行重算，捕获时间 Fri, 27 Nov 2026 01:18:26 GMT，2,785 票。第 1 仍是 DeepSeek V4.1 Flash，来源 25.70。前 9 名来源分没变。Particle 1 第 10，来源 31.53，没有模型页。WebDev 公开页仍是 Cloudflare 403，159 行快照未改。",
+      "**Android 2.0 and Slop**: the Android long-horizon board has 22 rows, page date November 25th. Fable 5.2 and Sonnet 5.5 are still 40.0 and share #1, with Fable first. New rows without model pages: Neon 26.0, Qwen4-Max 24.7, Hydrogen 21.3 (tied with Argon at #12), and Inkling 2 Small 16.7. Gemini 3.8 Flash and 3.7 Flash are still at the bottom. Version 1.0 was not changed. The Slop Index recomputed all 70 rows, captured Fri, 27 Nov 2026 01:18:26 GMT, at 2,785 votes. #1 is still DeepSeek V4.1 Flash at source 25.70. The top 9 source scores did not change. Particle 1 is #10 at source 31.53 and has no model page. The WebDev page is still Cloudflare 403, so the 159-row snapshot was not changed.",
+    ),
+  },
+  {
     date: "11-26",
     kind: "board",
     source: "theslopindex.com / convex.dev",
